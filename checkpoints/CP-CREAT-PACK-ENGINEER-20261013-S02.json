@@ -1,0 +1,63 @@
+{
+  "task_id": "CREAT-PACK-ENGINEER-SETUP-20261013",
+  "checkpoint": "CP-CREAT-PACK-ENGINEER-20261013-S02",
+  "package_version": "0.1.0",
+  "source_files": 36,
+  "github": {
+    "repository": "tuanvu297/creat-pack-engineer",
+    "url": "https://github.com/tuanvu297/creat-pack-engineer",
+    "visibility": "private",
+    "commit": "34155e2ba89f8b10108e11d5d07c02809e570adb",
+    "tree_sha": "3368b157218e6e5e94c28d8d6e873749c0950fe0",
+    "all_source_tree_hash_verified": true,
+    "learned_knowledge_readback": "PASS",
+    "skill_readback": "PASS"
+  },
+  "drive": {
+    "folder_id": "1I1NRGIHAX7fAP2r2byO1G-au-TwT6u8u",
+    "zip_id": "1Tec2XrsdPDeK5XM4HmC031pbN-bnF-xF",
+    "zip_url": "https://drive.google.com/file/d/1Tec2XrsdPDeK5XM4HmC031pbN-bnF-xF/view",
+    "zip_bytes": 47042,
+    "zip_sha256": "53772e3479eb670bbc53189752236f47d264483348f1a361c00b61be77653291",
+    "download_hash_verified": true,
+    "profile_id": "1sos2G_4QP0FaG3LW22q0RU6JG3yb6aV-",
+    "profile_content_readback": "PASS",
+    "qa_receipt_id": "17fBxGJ0mlvAce0j31_vmrcrzhkYKUu3f"
+  },
+  "levels": {
+    "PACKAGE_BUILT": "PASS",
+    "INSTALL_TEST_PASS": "PASS_WINDOWS_PYTHON_ENTRYPOINT",
+    "LOCAL_FUNCTION_PASS": "PASS_23_TESTS",
+    "AUTH_VERIFIED": "PASS_GITHUB_IDENTITY_AND_DRIVE_READ_WRITE",
+    "LIVE_EXECUTION_PASS": "NOT_APPLICABLE_LOCAL_FOUNDATION",
+    "INTEGRATED_PASS": "UNVERIFIED_AGY_RUNTIME",
+    "DUAL_STORAGE_CHECKPOINT": "PASS_S02_ONLY",
+    "CONTINUOUS_SYNC": "UNVERIFIED",
+    "GLOBAL_SKILL_PROMOTION": "NOT_PERFORMED"
+  },
+  "work_coverage": {
+    "listed": 41,
+    "recent_turns_read": 39,
+    "no_turns_returned": 1,
+    "current_chat": 1,
+    "full_account_history": false
+  },
+  "callback": {
+    "target": "CURRENT_CREAT_PACK_CHAT",
+    "delivery": "final_response_and_durable_receipt",
+    "agy_native_callback": "UNVERIFIED"
+  },
+  "automation": {
+    "id": "creat-pack-h-c-k-thu-t-ai-v-release",
+    "status": "ACTIVE",
+    "schedule": "daily 09:00 Asia/Saigon",
+    "first_execution": "UNVERIFIED"
+  },
+  "limitations": [
+    "Recent-turn review, not exhaustive historical/attachment export",
+    "External AGY runtime active and may advance after snapshot",
+    "No other Work/runtime files changed or tasks replayed",
+    "Candidate skill remains separate from global AGY promotion",
+    "Original Muse Library attachment unchanged"
+  ]
+}
