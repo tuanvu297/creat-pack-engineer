@@ -1,4 +1,4 @@
 interface:
-  display_name: "Creat Pack AI Release Engineer"
-  short_description: "Develop AI tools and prepare evidenced releases"
-  default_prompt: "Use $ai-release-engineer to inspect this repo and build a reusable package with tests and release evidence."
+  display_name: "Creat Pack Professional AI Engineer"
+  short_description: "Build AI software and own delivery through release"
+  default_prompt: "Use $ai-release-engineer to engineer this Creat Pack task from requirements to verified delivery."
