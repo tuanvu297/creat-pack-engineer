@@ -1,0 +1,71 @@
+{
+  "classification": "OBSERVED",
+  "archive_sha256": "5ed9c0394ec288732eed4b4fbb367472662f56ac49124ddd7a16afdd8320b890",
+  "files": [
+    {
+      "path": "bo-giao-viec-muse/bin/muse-app-task",
+      "size": 5432,
+      "sha256": "97a45739b7aa4f35d5716536944eaacd3fb7a4bc0ddba4cc32ff14c817019e8e"
+    },
+    {
+      "path": "bo-giao-viec-muse/bin/muse-thread-files",
+      "size": 1484,
+      "sha256": "cef50b672dda4afc6abe595bc09e2fe036c4c1585151c75ecb95a0ee80e06c42"
+    },
+    {
+      "path": "bo-giao-viec-muse/bin/muse-multi-task",
+      "size": 2567,
+      "sha256": "994f5424c709134c1ff7afe7c1c9af4b2388445ec05fd153c9941a7b16adc32d"
+    },
+    {
+      "path": "bo-giao-viec-muse/README.md",
+      "size": 2577,
+      "sha256": "5715e29d2f20243f37635a813bcf8be0338f04e444104485a36f700297761042"
+    },
+    {
+      "path": "bo-giao-viec-muse/mau-brief.md",
+      "size": 743,
+      "sha256": "a92ad147efe29f8c88ea8f1f5facbcab109f13457b8d4bd9a425281e704f7868"
+    },
+    {
+      "path": "bo-giao-viec-muse/giao-viec-cho-muse.pdf",
+      "size": 230592,
+      "sha256": "7c93938e5e48319c08724c19cf9b2b968c0aec92447c9bd11263063beb6fbf22"
+    },
+    {
+      "path": "bo-giao-viec-muse/cai-dat.sh",
+      "size": 727,
+      "sha256": "0dd7c87ef454072f0e292eed115da6eb963ae3d95ebaf81c4b2c334da88bc322"
+    },
+    {
+      "path": "bo-giao-viec-muse/luat-cho-agent.md",
+      "size": 1070,
+      "sha256": "870b79472af684e4e6aa449dae35ef34dc729eb7989553c08a29afbca14108ef"
+    }
+  ],
+  "secret_scan": {
+    "status": "PASS",
+    "findings": [],
+    "scope": "filename and decoded bytes; compressed PDF streams not decoded"
+  },
+  "executed_input": false,
+  "pdf_text_screen": {
+    "pages": 6,
+    "characters": 5994,
+    "findings": [],
+    "limits": "No OCR of image-only text; no exhaustive binary credential detection"
+  },
+  "syntax": {
+    "bo-giao-viec-muse/bin/muse-app-task": "PASS_SYNTAX_ONLY",
+    "bo-giao-viec-muse/bin/muse-thread-files": "PASS_SYNTAX_ONLY",
+    "bo-giao-viec-muse/bin/muse-multi-task": "PASS_SYNTAX_ONLY"
+  },
+  "statuses": {
+    "PACKAGE_BUILT": "UNVERIFIED_NO_MANIFEST",
+    "INSTALL_TEST_PASS": "UNVERIFIED",
+    "LOCAL_FUNCTION_PASS": "UNVERIFIED",
+    "AUTH_VERIFIED": "UNVERIFIED",
+    "LIVE_EXECUTION_PASS": "UNVERIFIED",
+    "INTEGRATED_PASS": "UNVERIFIED"
+  }
+}

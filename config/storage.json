@@ -1,0 +1,24 @@
+{
+  "github": {
+    "owner": "tuanvu297",
+    "repository": "creat-pack-engineer",
+    "url": "https://github.com/tuanvu297/creat-pack-engineer",
+    "visibility": "private",
+    "default_branch": "main"
+  },
+  "drive": {
+    "profile_folder_id": "1I1NRGIHAX7fAP2r2byO1G-au-TwT6u8u",
+    "profile_folder_url": "https://drive.google.com/drive/folders/1I1NRGIHAX7fAP2r2byO1G-au-TwT6u8u",
+    "parent_system_folder_id": "1grYOuJiPbNT918yessey8SyJxguejAD5",
+    "learning_parent_id": "1zD0S1fR2yOHCz2enI452Kdahv_KneZ0O",
+    "product_ai_allowed": false
+  },
+  "sync_contract": {
+    "mode": "checkpoint_copy_with_readback",
+    "continuous_sync": "UNVERIFIED",
+    "identity": "version + commit + snapshot SHA256 + Drive file ID",
+    "conflict_policy": "Preserve both versions and reconcile; no blind overwrite"
+  },
+  "automation_id": "creat-pack-h-c-k-thu-t-ai-v-release",
+  "secret_policy": "Auth lives in connected provider only; no live auth files in source or snapshots"
+}

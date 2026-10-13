@@ -1,0 +1,39 @@
+{
+  "recorded_at": "2026-10-13T14:03:54.771979+00:00",
+  "source_work": "01a130a2-0a5b-7833-a489-d19c00dcc7db",
+  "source_root": "AGY Core project mirror (read-only inspection)",
+  "files": [
+    {
+      "path": "outputs/AGY-ALL-AI-RUNTIME-OPS-20261013-A1/RUNTIME-REGISTRY-VERIFICATION.json",
+      "sha256": "c9d02de4ae32e49da6c748a9d421e78a796afa16b13bc5237c570fc4098989d2",
+      "size": 1438,
+      "stable_during_read": true,
+      "file_modified_at": "2026-10-13T13:52:55.169511+00:00",
+      "classification": "OBSERVED_FILE",
+      "runtime_reexecuted": false,
+      "raw_content_copied": false
+    },
+    {
+      "path": "outputs/AGY-AI-ROUTING-BENCHMARK-MANUS-20261013-A1/BENCHMARK-REPORT.md",
+      "sha256": "8c3042f615617408a278931fd03711c2e284c7c3cef07f26b1e9019fc1304865",
+      "size": 2369,
+      "stable_during_read": true,
+      "file_modified_at": "2026-10-13T11:10:46.811760+00:00",
+      "classification": "OBSERVED_FILE",
+      "runtime_reexecuted": false,
+      "raw_content_copied": false
+    },
+    {
+      "path": "outputs/AGY-MANUS-API-MCP-20261013-A2/RECOVERY-CALLBACK.json",
+      "sha256": "2dc8acc941b8c0d2ff0e8b2952268bbb3c1f465bdd3029446f3938808762bd9e",
+      "size": 1568,
+      "stable_during_read": true,
+      "file_modified_at": "2026-10-13T13:41:29.147722+00:00",
+      "classification": "OBSERVED_FILE",
+      "runtime_reexecuted": false,
+      "raw_content_copied": false
+    }
+  ],
+  "overall_runtime_acceptance": "UNVERIFIED_BY_THIS_REVIEW",
+  "active_source_may_advance": true
+}

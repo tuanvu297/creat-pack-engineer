@@ -1,0 +1,13 @@
+{
+  "package_name": "ai-release-engineer",
+  "package_version": "0.1.0",
+  "purpose": "Creat Pack: local release toolkit, AI adapter starter and Release Assistant CLI",
+  "runtime_requirements": ["Python >=3.10", "Windows, Linux or macOS; UTF-8 filesystem"],
+  "dependencies": [],
+  "entrypoints": ["bin/release.py", "bin/release.ps1", "bin/release.sh", "templates/ai-adapter/worker.py"],
+  "input_contract": {"build": "Source root plus config/package.json, output directory outside source root", "inspect": "Untrusted ZIP; read only, no execution", "worker": "mission_id, task_id, attempt, idempotency_key, payload"},
+  "output_contract": {"cli": "JSON on stdout; nonzero exit on failure", "release": "ZIP, MANIFEST.json within ZIP, SHA256SUMS.txt and RELEASE-RECEIPT.json outside ZIP", "worker": "Durable local journal and JSON receipt, no live provider"},
+  "authentication_requirements": ["No authentication for local tools", "Live AI provider implementation is not included; credentials must stay external"],
+  "known_limits": ["Signature-based secret scan does not detect every possible secret", "No live AI provider integration", "No automatic execution of input source or its tests", "Test claims for arbitrary input are UNVERIFIED", "Windows validated locally; Linux/macOS execution UNVERIFIED", "Commercial pricing and customer terms are undecided", "Manifest does not hash itself; external ZIP hash covers it", "Archive inspector rejects nested ZIPs and files over 20 MiB"],
+  "test_status": {"INSTALL_TEST_PASS": "UNVERIFIED", "LOCAL_FUNCTION_PASS": "UNVERIFIED", "AUTH_VERIFIED": "UNVERIFIED", "LIVE_EXECUTION_PASS": "UNVERIFIED", "INTEGRATED_PASS": "UNVERIFIED"}
+}

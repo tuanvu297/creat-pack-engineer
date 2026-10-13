@@ -1,0 +1,28 @@
+test_archive_traversal_never_extracted (test_release.ReleaseTests.test_archive_traversal_never_extracted) ... ok
+test_build_verify_and_reproducibility (test_release.ReleaseTests.test_build_verify_and_reproducibility) ... ok
+test_cross_platform_paths_rejected (test_release.ReleaseTests.test_cross_platform_paths_rejected) ... ok
+test_duplicate_case_archive_rejected (test_release.ReleaseTests.test_duplicate_case_archive_rejected) ... ok
+test_manifest_detects_modified_file (test_release.ReleaseTests.test_manifest_detects_modified_file) ... ok
+test_manifest_detects_untracked_file (test_release.ReleaseTests.test_manifest_detects_untracked_file) ... ok
+test_missing_entrypoint_rejected (test_release.ReleaseTests.test_missing_entrypoint_rejected) ... ok
+test_nested_archive_rejected (test_release.ReleaseTests.test_nested_archive_rejected) ... ok
+test_output_inside_source_rejected (test_release.ReleaseTests.test_output_inside_source_rejected) ... ok
+test_output_not_overwritten (test_release.ReleaseTests.test_output_not_overwritten) ... ok
+test_redacted_scan_receipt_can_be_delivered (test_release.ReleaseTests.test_redacted_scan_receipt_can_be_delivered) ... ok
+test_secret_blocks_release (test_release.ReleaseTests.test_secret_blocks_release) ... ok
+test_secret_scan_redacts_values (test_release.ReleaseTests.test_secret_scan_redacts_values) ... ok
+test_size_limit (test_release.ReleaseTests.test_size_limit) ... ok
+test_symlink_archive_rejected (test_release.ReleaseTests.test_symlink_archive_rejected) ... ok
+test_version_mismatch_rejected (test_release.ReleaseTests.test_version_mismatch_rejected) ... ok
+test_contract_rejects_invalid_attempt (test_release.WorkerTests.test_contract_rejects_invalid_attempt) ... ok
+test_duplicate_returns_saved_result (test_release.WorkerTests.test_duplicate_returns_saved_result) ... ok
+test_identity_payload_conflict (test_release.WorkerTests.test_identity_payload_conflict) ... ok
+test_interrupted_pending_is_not_retried (test_release.WorkerTests.test_interrupted_pending_is_not_retried) ... ok
+test_new_key_cannot_bypass_same_task (test_release.WorkerTests.test_new_key_cannot_bypass_same_task) ... ok
+test_stale_lock_never_executes (test_release.WorkerTests.test_stale_lock_never_executes) ... ok
+test_task_identity_does_not_create_user_paths (test_release.WorkerTests.test_task_identity_does_not_create_user_paths) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 0.233s
+
+OK

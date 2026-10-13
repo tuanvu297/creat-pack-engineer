@@ -1,0 +1,12 @@
+{
+  "checked_at": "2026-10-13",
+  "schedule": {"frequency": "daily", "time": "09:00", "timezone": "Asia/Saigon"},
+  "sources": [
+    {"name": "OpenAI skill documentation", "region": "international", "url": "https://developers.openai.com/plugins/build/skills", "type": "official_docs", "observed": "Fetched successfully; skill structure"},
+    {"name": "Astral uv", "region": "international", "url": "https://docs.astral.sh/uv/", "type": "official_docs", "observed": "Fetched successfully; Python tooling"},
+    {"name": "Python Packaging User Guide", "region": "international", "url": "https://packaging.python.org/en/latest/", "type": "official_docs", "observed": "Fetched successfully; packaging guidance"},
+    {"name": "GitHub Changelog", "region": "international", "url": "https://github.blog/changelog/", "type": "official_changelog", "observed": "Fetched successfully; developer platform changes"},
+    {"name": "Viblo Engineering", "region": "Vietnam", "url": "https://engineering.viblo.asia/", "type": "engineering_team_blog", "observed": "Fetched successfully; visible posts include 2024, do not assume freshness"},
+    {"name": "FPT Technology Blog", "region": "Vietnam", "url": "https://fptsoftware.com/resource-center/blogs", "type": "company_blog", "observed": "Fetched successfully; verify technical claims and article dates individually"}
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "recorded_at": "2026-10-13T14:03:55.184654+00:00",
+  "scope": "Creat Pack local release toolkit and demo worker",
+  "runtime": {
+    "python": "3.12.14",
+    "platform": "win32",
+    "runtime_dependencies": [],
+    "validation_only_dependencies": {
+      "PyYAML": "6.0.3"
+    }
+  },
+  "checks": {
+    "LOCAL_FUNCTION_PASS": "PASS",
+    "tests": 23,
+    "failed": 0,
+    "skill_structure": "PASS"
+  },
+  "levels": {
+    "PACKAGE_BUILT": "NOT_BUILT_YET",
+    "INSTALL_TEST_PASS": "UNVERIFIED",
+    "LOCAL_FUNCTION_PASS": "PASS",
+    "AUTH_VERIFIED": "NOT_REQUIRED_LOCAL_DEMO",
+    "LIVE_EXECUTION_PASS": "UNVERIFIED",
+    "INTEGRATED_PASS": "UNVERIFIED"
+  },
+  "limits": [
+    "Local tests are not an independent multi-AI skill calibration",
+    "Windows only tested",
+    "External runtime reports were read, not rerun",
+    "Global AGY skill promotion not performed"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "mission_id": "demo-release-001",
+  "task_id": "count-brief-001",
+  "attempt": 1,
+  "idempotency_key": "demo-release-001/count-brief-001",
+  "payload": {"text": "Creat Pack develops reusable tools and releases with evidence."}
+}
