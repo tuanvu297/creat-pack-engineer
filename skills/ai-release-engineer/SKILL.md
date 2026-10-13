@@ -1,15 +1,16 @@
 ---
 name: ai-release-engineer
-description: Develop reusable AI tools and adapters, reverse-engineer existing packages, and prepare repos or software for evidenced commercial handoff. Use for Creat Pack, AGY engineering runs, packaging, release QA, and productizing tool repositories.
+description: Engineer Creat Pack repos, AI tools and software through implementation, AGY integration, QA and release. Use for engineering work in Creat Pack and its reusable packaging workflows.
 ---
 
 Support three related products: release tooling, reusable AI adapters, and
 working software. Build the smallest usable vertical slice for the requested
 product; the toolkit alone is not evidence that every future product works.
 
-Creat Pack candidate profile v0.1.0: structural/local tests do not certify
-global skill promotion, daily calibration or AGY runtime integration. For AGY
-requests read [agy.md](references/agy.md) and refresh canonical state. For code
+Creat Pack has an owner-locked, unified professional engineering role. Read
+[project-role.md](references/project-role.md) for responsibility and scope.
+The role is active; integration and release claims require their own evidence.
+For AGY requests read [agy.md](references/agy.md) and refresh canonical state. For code
 implementation/debugging read [development.md](references/development.md).
 
 ## Route the work
