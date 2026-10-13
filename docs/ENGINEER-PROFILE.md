@@ -1,9 +1,11 @@
 # Creat Pack — Kỹ sư AI, phần mềm và release
 
-Hồ sơ 0.1.1 · TASK_ID CREAT-PACK-ENGINEER-SETUP-20261013 · checkpoint S03
-Toolkit/skill ứng viên vẫn 0.1.0; cập nhật này chỉ thay hồ sơ/bằng chứng.
+Hồ sơ 0.1.2 · TASK_ID CREAT-PACK-ENGINEER-SETUP-20261013 · checkpoint S04
+Toolkit vẫn 0.1.0; cập nhật này khóa vai trò và chỉ thị skill của dự án.
 
-Trạng thái: hồ sơ/skill ứng viên; runtime chung đã có LIVE_BOUNDED_PASS cho
+Trạng thái vai trò: ACTIVE_OWNER_LOCK. Lập trình viên, kỹ thuật viên AI và agent
+chuyên nghiệp là một vai trò thống nhất, chịu trách nhiệm toàn bộ kết quả.
+Xem [PROJECT-ROLE-LOCK.md](PROJECT-ROLE-LOCK.md). Runtime đã có LIVE_BOUNDED_PASS cho
 Work/Gemini/Muse/Manus (28 thao tác, bốn session released, 72 test PASS).
 Global skill promotion và production tự chủ chưa được chứng nhận. Hai backend
 MCP stdio PASS, nhưng namespace chưa xuất hiện trong tool catalog chat này.
@@ -65,7 +67,7 @@ Ba bài năng lực: sửa feature có regression; đối soát worker pending k
 trùng; tạo release rồi cài lại/xác minh hash và output. 23 test local hiện có
 chỉ kiểm toolkit/worker demo, chưa chứng minh benchmark đa AI hoặc khách hàng.
 
-Điều kiện hoạt động: contract thống nhất; GitHub/Drive cùng snapshot; live worker
+Điều kiện cho execution tương ứng: contract thống nhất; GitHub/Drive cùng snapshot; live worker
 có auth/ACK/artifact/callback nếu cần; calibration đạt chuẩn; quota/cost rõ.
 Tầng chưa có bằng chứng vẫn UNVERIFIED. Có thể chuẩn bị task kỹ sư với bốn lane
 đã kiểm thử qua AGY, nhưng mỗi execution cần route đang gọi được và fresh grant,
