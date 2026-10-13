@@ -4,7 +4,9 @@
 docs/ENGINEER-PROFILE.md, docs/LEARNED-KNOWLEDGE.md và docs/CONNECTIONS.md.
 Các công cụ dưới đây là nền tảng hỗ trợ, chưa là ba sản phẩm thương mại.
 
-Hồ sơ đã cập nhật 0.1.1/S03 sau runtime LIVE_BOUNDED_PASS; toolkit vẫn 0.1.0.
+Vai trò kỹ sư đã khóa theo chỉ thị chủ dự án tại hồ sơ 0.1.2/S04; xem
+[PROJECT-ROLE-LOCK.md](docs/PROJECT-ROLE-LOCK.md). Lập trình, kỹ thuật AI,
+vận hành agent và release có cùng trách nhiệm bàn giao. Toolkit vẫn 0.1.0.
 Xem docs/RUNTIME-UPDATE-20261013-S03.md để phân biệt backend PASS, namespace
 exposure chưa xác minh và production chưa nghiệm thu.
 
@@ -74,10 +76,11 @@ phù hợp; local lock không thay thế database cho nhiều host.
 
 ## Skill và học liên tục
 
-Skill ứng viên ở skills/ai-release-engineer, đã structural validation. Chưa
+Skill dự án ở skills/ai-release-engineer, đã structural validation. Chưa
 promote thành global AGY skill vì mutual-training/calibration chưa xác minh.
-Khi được chấp nhận cài, chép cả thư mục vào ~/.codex/skills, kiểm tra xung đột
-và chạy quick_validate của skill-creator nếu có.
+Skill được cài theo phạm vi workspace Creat Pack tại .agents/skills; không cần
+kích hoạt lại vai trò. Khi cài ở workspace khác, giữ nguyên phạm vi dự án và
+chạy quick_validate của skill-creator nếu có.
 
 Theo dõi nguồn hằng ngày 09:00 Asia/Saigon qua automation của chat. Danh sách
 nguồn ở config/research-sources.json. Không cần scheduler để dùng repo; đọc
@@ -89,4 +92,4 @@ việc tạo lịch không chứng minh một lượt theo dõi đã chạy thà
 
 Xem docs/PRODUCTS.md và RIGHTS.md. Ba hướng có chung nền tảng nhưng mỗi sản phẩm
 cần acceptance riêng. Không phát hành public hoặc cam kết tính năng live trước
-khi có bằng chứng. Đây là repo local; chưa được đẩy GitHub hay bán.
+khi có bằng chứng. Repo riêng tư đã có trên GitHub; sản phẩm chưa được bán.
