@@ -4,6 +4,10 @@
 docs/ENGINEER-PROFILE.md, docs/LEARNED-KNOWLEDGE.md và docs/CONNECTIONS.md.
 Các công cụ dưới đây là nền tảng hỗ trợ, chưa là ba sản phẩm thương mại.
 
+Hồ sơ đã cập nhật 0.1.1/S03 sau runtime LIVE_BOUNDED_PASS; toolkit vẫn 0.1.0.
+Xem docs/RUNTIME-UPDATE-20261013-S03.md để phân biệt backend PASS, namespace
+exposure chưa xác minh và production chưa nghiệm thu.
+
 Nền tảng phát triển repo, tool và phần mềm cho AI, có ba phần sử dụng được:
 
 1. **Release Toolkit:** inspect/scan/build/verify ZIP, manifest và SHA-256.

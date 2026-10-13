@@ -1,0 +1,153 @@
+{
+  "checkpoint": "CP-CREAT-PACK-RUNTIME-UPDATE-20261013-S03",
+  "profile_version": "0.1.1",
+  "toolkit_version": "0.1.0",
+  "recorded_at": "2026-10-13T14:35:21.322718+00:00",
+  "classification": "OBSERVED_ARTIFACT_AND_SOURCE_REVIEW",
+  "runtime_reexecuted": false,
+  "provider_tasks_submitted": 0,
+  "source_work": {
+    "id": "01a130a2-0a5b-7833-a489-d19c00dcc7db",
+    "title": "AGY Core — Work chính",
+    "status_at_read": "idle"
+  },
+  "source_runtime_task_id": "AGY-ALL-AI-RUNTIME-OPS-20261013",
+  "runtime_status": "LIVE_BOUNDED_PASS",
+  "operations": 28,
+  "released_sessions": 4,
+  "runtime_tests": {
+    "passed": 72,
+    "failed": 0,
+    "evidence_file": "TEST_RESULTS.json",
+    "independently_rerun_here": false
+  },
+  "workers": [
+    {
+      "worker_id": "CODEX-WORK",
+      "status": "VERIFIED_PASS",
+      "browser_dispatch_verified": true
+    },
+    {
+      "worker_id": "gemini",
+      "status": "VERIFIED_PASS",
+      "browser_dispatch_verified": true
+    },
+    {
+      "worker_id": "muse",
+      "status": "VERIFIED_PASS",
+      "browser_dispatch_verified": true
+    },
+    {
+      "worker_id": "manus",
+      "status": "VERIFIED_PASS",
+      "browser_dispatch_verified": true
+    }
+  ],
+  "mcp_backends": {
+    "browser": {
+      "status": "VERIFIED_PASS",
+      "server": {
+        "name": "agy-shared-browser-gateway",
+        "version": "0.2.0"
+      },
+      "tools": [
+        "create_session",
+        "navigate",
+        "observe",
+        "click",
+        "type",
+        "extract_text",
+        "release_session"
+      ]
+    },
+    "manus": {
+      "status": "VERIFIED_PASS",
+      "server": {
+        "name": "agy_manus",
+        "version": "0.1.0"
+      },
+      "tools": [
+        "manus_user_me",
+        "manus_available_credits",
+        "manus_task_create",
+        "manus_task_readback"
+      ]
+    }
+  },
+  "callback": {
+    "delivery": "DELIVERED_TO_AGY_CONTROL_PLANE",
+    "delivery_at": "2026-10-13T14:18:02.656Z",
+    "target_verified": true,
+    "qa_in_delivery_receipt": "AGY_REVIEW_PENDING",
+    "interpretation": "Delivery receipt confirms transport, not reading/QA acceptance; later control-plane messages describe bounded PASS."
+  },
+  "scope": "Four known AI lanes and 7 public-demo operations, provider-origin command relay; no provider-native self-browser/continuous unattended/production acceptance",
+  "current_chat_namespace_exposure": "NOT_EXPOSED_IN_CURRENT_TOOL_CATALOG",
+  "production_unattended": "UNVERIFIED",
+  "global_skill_promotion": "NOT_PERFORMED",
+  "source_files": [
+    {
+      "path": "MASTER-CALLBACK.json",
+      "sha256": "2931b195f50445d07725dfc42e1a578323b46ca4651742da9842adf5a12f6399",
+      "bytes": 9381,
+      "stable_during_read": true
+    },
+    {
+      "path": "TEST_RESULTS.json",
+      "sha256": "d82f83b9ef444cc840c7c35ee13d663f29546b96ac71c2158fa3a6a6bd534a02",
+      "bytes": 456,
+      "stable_during_read": true
+    },
+    {
+      "path": "RUNTIME-REGISTRY.json",
+      "sha256": "14f5acc7098f0cdfaad77678f8a29f9a06c4cfeebed129fc453506cf87ac961f",
+      "bytes": 1981,
+      "stable_during_read": true
+    },
+    {
+      "path": "CONFIGURED-MCP-READBACK.json",
+      "sha256": "7bcbd5885b157f6fabd546655df61cfbebdad145c874a7ee9d47bff36f4fa435",
+      "bytes": 1778,
+      "stable_during_read": true
+    },
+    {
+      "path": "REMOTE-SESSION-READBACK.json",
+      "sha256": "ee98cdd87d3f054abd8fd1e703b69a1f84e0c691823283dbb33f63dee440787d",
+      "bytes": 568,
+      "stable_during_read": true
+    },
+    {
+      "path": "DELIVERY-RECEIPT-OWNER-LOCK.json",
+      "sha256": "6ac515287023f00c91fb9b1bcb282f0b90d57df4ae414695ba7e8e2c2470c522",
+      "bytes": 813,
+      "stable_during_read": true
+    },
+    {
+      "path": "FINAL-SECRET-SCAN.json",
+      "sha256": "fab23f090d613ba25a6baa9ff75cd30eb3f3bfff3a979a5b52c12d4c40f1a707",
+      "bytes": 149,
+      "stable_during_read": true
+    }
+  ],
+  "runtime_archive": {
+    "drive_id": "1h9_nXt0alTgmfKrYWAE2SusPVID313Er",
+    "url": "https://drive.google.com/file/d/1h9_nXt0alTgmfKrYWAE2SusPVID313Er/view",
+    "bytes": 12221026,
+    "sha256": "a00512900d9ea88d9710f79bd7fb9b95d3632f68b5b24ef5f51f390392acb859",
+    "drive_download_hash_matches_local": true
+  },
+  "historical_sources_preserved": [
+    "evidence/RUNTIME-SOURCE-SNAPSHOT.json",
+    "checkpoint S02 / GitHub commit 34155e2ba89f8b10108e11d5d07c02809e570adb"
+  ],
+  "canonical_reconciliation": {
+    "START_HERE_modified_at": "2026-10-12T03:20:15.803Z",
+    "DECISION_LOG_modified_at": "2026-10-12T03:20:03.285Z",
+    "note": "Latest local runtime artifacts and control-plane messages are newer than these bootstrap docs; policies preserved, runtime facts refreshed."
+  },
+  "notes": [
+    "RUNTIME-REGISTRY.json retains acceptance_pending text; seven_operations and browser_dispatch_verified now PASS, mode LIVE_BOUNDED_ACCEPTED. Do not turn that into production readiness.",
+    "Existing gl-ai-bridge remains a separate supplied-text/read-only Muse route; its missing AGY endpoint is not a failure of the verified local gateway.",
+    "No credentials, resource balances or runtime SQLite copied into this repository."
+  ]
+}

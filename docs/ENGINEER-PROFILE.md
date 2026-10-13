@@ -1,9 +1,12 @@
 # Creat Pack — Kỹ sư AI, phần mềm và release
 
-Version 0.1.0 · TASK_ID CREAT-PACK-ENGINEER-SETUP-20261013
+Hồ sơ 0.1.1 · TASK_ID CREAT-PACK-ENGINEER-SETUP-20261013 · checkpoint S03
+Toolkit/skill ứng viên vẫn 0.1.0; cập nhật này chỉ thay hồ sơ/bằng chứng.
 
-Trạng thái: hồ sơ/skill ứng viên, có công cụ và test cục bộ; chưa chứng nhận
-worker đa AI, global skill promotion hoặc runtime AGY INTEGRATED.
+Trạng thái: hồ sơ/skill ứng viên; runtime chung đã có LIVE_BOUNDED_PASS cho
+Work/Gemini/Muse/Manus (28 thao tác, bốn session released, 72 test PASS).
+Global skill promotion và production tự chủ chưa được chứng nhận. Hai backend
+MCP stdio PASS, nhưng namespace chưa xuất hiện trong tool catalog chat này.
 Phạm vi hiện tại: xây kỹ sư và kết nối trước; ba hướng sản phẩm triển khai sau.
 
 ## Năng lực và trách nhiệm
@@ -22,7 +25,9 @@ callback/checkpoint → Assistant báo kết quả.
 Không cố định Codex-first/Muse-first. Codex/Work QA/kết nối/kỹ thuật khó trong
 scope được owner giao. Gemini/Muse chỉ thực thi năng lực và tài nguyên hợp lệ
 đã kiểm chứng. Read-only status không chứng minh send/execute; cấu hình không
-chứng minh inference. Bridge hiện chưa có endpoint AGY dispatch được cấu hình.
+chứng minh inference. Fresh local gateway/MCP evidence hiện xác minh bốn lane
+ở bài thử public-demo có lease/idempotency riêng. gl-ai-bridge là route khác,
+vẫn chưa cấu hình endpoint AGY dispatch; không nhầm hai phạm vi này.
 
 Task mang objective đầy đủ, scope/non-goals, acceptance IDs, QA_CONTRACT_VERSION,
 source IDs/commit/snapshot, mission/job/task, attempt, idempotency, checkpoint,
@@ -62,4 +67,8 @@ chỉ kiểm toolkit/worker demo, chưa chứng minh benchmark đa AI hoặc kh�
 
 Điều kiện hoạt động: contract thống nhất; GitHub/Drive cùng snapshot; live worker
 có auth/ACK/artifact/callback nếu cần; calibration đạt chuẩn; quota/cost rõ.
-Tầng chưa có bằng chứng vẫn UNVERIFIED. Trước mắt hoàn thiện hồ sơ và hai kho.
+Tầng chưa có bằng chứng vẫn UNVERIFIED. Có thể chuẩn bị task kỹ sư với bốn lane
+đã kiểm thử qua AGY, nhưng mỗi execution cần route đang gọi được và fresh grant,
+scope/quota/cost/evidence hợp lệ. Không replay bài thử completed. Khi muốn gọi
+MCP trực tiếp từ chat, cần xác minh namespace exposure bằng read-only response.
+Xem docs/RUNTIME-UPDATE-20261013-S03.md; skill calibration/promotion giữ gate riêng.

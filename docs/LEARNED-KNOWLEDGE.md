@@ -1,5 +1,11 @@
 # Kho kiến thức kỹ sư — snapshot 2026-10-13
 
+**Cập nhật hiện hành S03 / hồ sơ 0.1.1:** bốn lane Work/Gemini/Muse/Manus đã
+LIVE_BOUNDED_PASS, 28/28 thao tác, bốn session released, 72/72 test runtime PASS.
+MCP backend stdio PASS; chat/app namespace exposure và production vẫn chưa
+được nghiệm thu ở đây. Phần S02 bên dưới là lịch sử; xem delta S03 và evidence
+riêng trong docs/RUNTIME-UPDATE-20261013-S03.md.
+
 Không cần chờ runtime xong mới ghi. Ghi ngay bài học/thiết kế/lỗi/bằng chứng;
 thêm checkpoint khi runtime đạt milestone. Chỉ chứng nhận production/runtime
 hoặc promote skill khi acceptance tương ứng PASS.
@@ -32,6 +38,7 @@ Giữ riêng truth (OBSERVED/INFERRED/UNVERIFIED), implementation
 (DESIGNED/IMPLEMENTING/TESTED/PASS/INTEGRATED) và acceptance scope.
 Cùng AI có auth PASS ở một route và send chưa có ở route khác.
 
+**Lịch sử S02, đã có delta S03 thay trạng thái runtime hiện hành:**
 Benchmark A1 ghi Gemini/Muse bounded relay, Manus lúc đó EXTERNAL_LIMIT.
 Manus A2 recovery mới hơn ghi text ACK đúng trên cùng task và terminal readback;
 delivery vẫn DURABLE_OUTBOX_AWAITING_AGY_INGESTION. Fresh all-AI ops registry ghi
