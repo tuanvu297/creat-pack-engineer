@@ -1,0 +1,56 @@
+{
+  "checkpoint": "CP-CREAT-PACK-RUNTIME-UPDATE-20261013-S03",
+  "profile_version": "0.1.1",
+  "toolkit_version": "0.1.0",
+  "runtime_status": "LIVE_BOUNDED_PASS",
+  "runtime_source_task_id": "AGY-ALL-AI-RUNTIME-OPS-20261013",
+  "runtime_workers": [
+    "CODEX-WORK",
+    "gemini",
+    "muse",
+    "manus"
+  ],
+  "operations": 28,
+  "released_sessions": 4,
+  "runtime_tests": {
+    "passed": 72,
+    "failed": 0,
+    "source_evidence_verified": true,
+    "independently_rerun_here": false
+  },
+  "mcp_backends": "CONFIGURED_STDIO_PASS",
+  "current_chat_namespace": "NOT_EXPOSED",
+  "production": "UNVERIFIED",
+  "global_skill_promotion": "NOT_PERFORMED",
+  "github": {
+    "repository": "tuanvu297/creat-pack-engineer",
+    "source_commit": "f3c3d24bc19b0b7a16b9c32fdfaa51f8d57ec302",
+    "tree_sha": "c3fd9e9cbbe273cbbc8c8023a82e5448046280e4",
+    "tree_files_verified": 39,
+    "old_S02_checkpoint_preserved": true
+  },
+  "drive": {
+    "profile_id": "1sos2G_4QP0FaG3LW22q0RU6JG3yb6aV-",
+    "learning_id": "12pBPnyLNbjTqLasBiegCT5cuHqXKgsu0",
+    "report_id": "1Hktn5W2x7E0dHGXyW-2Zkp2IsNUpweNl",
+    "snapshot_id": "1bHO4dADnX0soC6qQ3_5zIPYPgRTeXDsA",
+    "snapshot_sha256": "c98fc0a13a0ad5653db760292a207dd8cf025dfbdb99ba28c15a8ac5fe96a5fa",
+    "text_readback": "PASS",
+    "snapshot_download_hash": "PASS"
+  },
+  "runtime_evidence": {
+    "archive_id": "1h9_nXt0alTgmfKrYWAE2SusPVID313Er",
+    "archive_sha256": "a00512900d9ea88d9710f79bd7fb9b95d3632f68b5b24ef5f51f390392acb859",
+    "download_hash_matches_local": true
+  },
+  "changes": {
+    "profile_and_evidence_only": true,
+    "executable_code_unchanged": true,
+    "skill_unchanged": true,
+    "provider_tasks_submitted_here": 0,
+    "other_work_files_modified": false
+  },
+  "secret_scan": "PASS_SIGNATURE_SCAN",
+  "source_checks": "PASS_CONSISTENCY_AND_FULL_GIT_TREE",
+  "delivery_and_acceptance_separate": true
+}
