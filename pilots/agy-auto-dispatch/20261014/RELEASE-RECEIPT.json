@@ -1,0 +1,38 @@
+{
+  "PACKAGE_BUILT": "PASS",
+  "archive_sha256": "6cc3671d62dfd599bdb6e011c7d6114d8063a02f377aebe8de0488fc4ab43d14",
+  "callback": {
+    "delivered_to_external_system": false,
+    "mode": "local_receipt"
+  },
+  "commercial_ready": "UNVERIFIED",
+  "file_count": 27,
+  "known_limits": [
+    "One bounded nonce/sum task class; arbitrary engineering dispatch unimplemented",
+    "Literal fresh-human-only AGY RUN UX remains UNVERIFIED",
+    "Long-term unattended native acceptance verifier remains UNVERIFIED",
+    "Exact desktop primary Work has active writer lock; logical executor used without pretending activation",
+    "No boot/logon service installed; manually restart after computer shutdown",
+    "App-server alpha API version may require compatibility maintenance",
+    "No hostile same-user sandbox; external host state is trusted",
+    "Live A1 ran source0.1.0; source0.1.1 has offline peer QA and retained-journal restart; no live replay",
+    "Monetary cost UNKNOWN; included account route only",
+    "Non-Windows installation/live compatibility UNVERIFIED"
+  ],
+  "manifest_verified": true,
+  "package_name": "agy-auto-dispatch",
+  "package_version": "0.1.1",
+  "released_at": "2026-10-14T13:23:28.252888+00:00",
+  "runtime": "3.12.14",
+  "secret_scan": "PASS_SIGNATURE_SCAN",
+  "test_claims_source": "manifest declarations; verify referenced evidence separately",
+  "test_status": {
+    "AUTH_VERIFIED": "UNVERIFIED",
+    "INSTALL_TEST_PASS": "UNVERIFIED",
+    "INTEGRATED_PASS": "UNVERIFIED",
+    "LIVE_EXECUTION_PASS": "UNVERIFIED",
+    "LOCAL_FUNCTION_PASS": "UNVERIFIED",
+    "PACKAGE_BUILT": "PASS"
+  },
+  "zip": "agy-auto-dispatch-0.1.1.zip"
+}
