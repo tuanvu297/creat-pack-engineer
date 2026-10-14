@@ -1,0 +1,39 @@
+{
+  "source_version": "0.1.1",
+  "source_snapshot_sha256": "79c45cf1b380f4271ba2b2236c303e701b990baaac9e6a1a504492bba16043e1",
+  "recorded_at": "2026-10-14T13:23:27.875258+00:00",
+  "local_tests": {
+    "count": 55,
+    "status": "PASS",
+    "evidence": "TESTS.txt"
+  },
+  "peer_QA": "PASS_LOCAL_SCOPED; PEER-QA-A3.json",
+  "runtime": {
+    "python": "3.12.14",
+    "codex_app_server": "0.162.0-alpha.17.2",
+    "platform": "Windows10 x86_64",
+    "pip_dependencies": []
+  },
+  "test_status": {
+    "PACKAGE_BUILT": "Verified by external release receipt",
+    "INSTALL_TEST_PASS": "External clean extraction receipt required",
+    "LOCAL_FUNCTION_PASS": "PASS_SOURCE_0.1.1_55_TESTS",
+    "AUTH_VERIFIED": "PASS_EXISTING_CHATGPT_AND_GITHUB_CONNECTOR_READBACK",
+    "LIVE_EXECUTION_PASS": "PASS_SCOPED_A1_SOURCE_0.1.0; repaired0.1.1 live UNVERIFIED until fresh Owner slot",
+    "INTEGRATED_PASS": "PASS_SCOPED_DELEGATED_CONTROL_CHAT_A1; literal Owner-only and unattended native verifier UNVERIFIED"
+  },
+  "historical_live": {
+    "mission": "AGY-DISPATCH-PILOT-20261014-A1",
+    "source_version": "0.1.0",
+    "source_sha256": "c05ede1821aa08ea30eba0a09fdcac44125f653cafba4cef78adebd5b2f195cb",
+    "turn_id": "01a13a7f-2ca9-7eb2-8820-50d0afdbd729",
+    "provider_result": {
+      "nonce": "AGY-4ee3d5b31e919725",
+      "sum": 42
+    },
+    "callback_comment_id": 6168915102,
+    "independent_review_comment_id": 6168934887,
+    "native_reviewer_message_id": "0e80aaa5-9ffe-472e-b2af-dc78c28771c5"
+  },
+  "known_limits": "See docs/QA-REPORT.md and config/package.json"
+}
