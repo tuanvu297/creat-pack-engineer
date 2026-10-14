@@ -1,0 +1,38 @@
+{
+  "task_id": "CREAT-PACK-LEARNING-20261014-0900",
+  "sources": [
+    {
+      "id": "10Ph_XvsgytAHsdECGDNkPY94l4EIuTat-4VWtbXrTsY",
+      "title": "AGY START HERE — Canonical Resume & Current State",
+      "url": "https://docs.google.com/document/d/10Ph_XvsgytAHsdECGDNkPY94l4EIuTat-4VWtbXrTsY/edit",
+      "modified_time": "2026-10-12T03:20:15.803Z",
+      "readable_characters": 45309,
+      "revision_id": "NOT_RETURNED"
+    },
+    {
+      "id": "1TFSkLh7ZfAxHq-mYSN-HG2Dp1XJaG_JWcItASe_4tME",
+      "title": "AGY DECISION LOG v1.0 — Canonical Architecture & Operating Decisions",
+      "url": "https://docs.google.com/document/d/1TFSkLh7ZfAxHq-mYSN-HG2Dp1XJaG_JWcItASe_4tME/edit",
+      "modified_time": "2026-10-12T03:20:03.285Z",
+      "readable_characters": 48863,
+      "revision_id": "NOT_RETURNED"
+    },
+    {
+      "id": "1S98IZWRhF5rDdthPO-y5ETb1shHRS9bz0f_J22yzcqc",
+      "title": "AGY THREE-AI SHARED WORKFLOW v1 — Repo, Prompts, QA & Release Gates",
+      "url": "https://docs.google.com/document/d/1S98IZWRhF5rDdthPO-y5ETb1shHRS9bz0f_J22yzcqc/edit",
+      "modified_time": "2026-10-11T23:18:55.728Z",
+      "readable_characters": 19251,
+      "revision_id": "NOT_RETURNED"
+    },
+    {
+      "id": "1mFB9ugcXq9v0K9geDvO8K2-zgn3rWHvSLCAMmct7760",
+      "title": "AGY WORKER ENGINE V2 — CURRENT CHECKPOINT",
+      "url": "https://docs.google.com/document/d/1mFB9ugcXq9v0K9geDvO8K2-zgn3rWHvSLCAMmct7760/edit",
+      "modified_time": "2026-10-12T08:00:41.415Z",
+      "readable_characters": 16846,
+      "revision_id": "NOT_RETURNED"
+    }
+  ],
+  "limits": "No canon mutation; timestamps are provider metadata, not document revision identifiers."
+}
