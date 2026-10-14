@@ -1,0 +1,111 @@
+{
+  "report_id": "AGY-AUTO-DISPATCH-PEER-QA-20261014",
+  "recorded_at": "2026-10-14T13:01:48.298804+00:00",
+  "role": "Independent peer QA of owner-authorized bounded AGY runtime; unified engineering delivery remains parent responsibility",
+  "scope": "Read-only source review and isolated offline mocks/temp SQLite challenges; no live provider call, daemon start, chat message or Work creation by reviewer",
+  "status": "LOCAL_PEER_REPAIR_REQUIRED",
+  "open_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 1,
+    "S3": 0
+  },
+  "python_version": "3.12.14",
+  "source_sha256": {
+    "appserver_client.py": "c3603b3cf033c01d989bd1dabae5591ac3ea61cd00256569d26e66e56d797d08",
+    "daemon.py": "5dcf384ca2640172c2e62b7a1eb612ea043584e764204f1cb16282f98c4597f0",
+    "queue_store.py": "eecaacee91cf52f9b96de830d41f268cc1d985606ab95f0e429097b177fa0361"
+  },
+  "findings": [
+    {
+      "id": "PQA-01",
+      "severity": "S1",
+      "title": "Expired/fenced authority could dispatch before validation",
+      "location": "src/appserver_client.py:rpc; src/daemon.py:beat",
+      "disposition": "REPAIRED_RETEST_PASS",
+      "independent_retest": "Expired heartbeat now sends zero RPCs"
+    },
+    {
+      "id": "PQA-02",
+      "severity": "S2",
+      "title": "Concurrent snapshots could abort mission execution",
+      "location": "src/daemon.py:snapshot",
+      "disposition": "REPAIRED_RETEST_PASS",
+      "independent_retest": "200 concurrent snapshots succeed after lock and unique temporary files"
+    },
+    {
+      "id": "PQA-03",
+      "severity": "S2",
+      "title": "Callback readback omitted mission heartbeat",
+      "location": "src/daemon.py:deliver; src/appserver_client.py:comments",
+      "disposition": "REPAIRED_SOURCE_VERIFIED",
+      "independent_retest": "Callback GET now receives heartbeat; actual network latency not independently exercised"
+    },
+    {
+      "id": "PQA-04",
+      "severity": "S2",
+      "title": "Missing configured ingress identity failed open",
+      "location": "src/queue_store.py:submit",
+      "disposition": "REPAIRED_RETEST_PASS",
+      "independent_retest": "Missing login denied by independently executed offline suite"
+    },
+    {
+      "id": "PQA-05",
+      "severity": "S2",
+      "title": "Legacy intent schema prevented new reservation",
+      "location": "src/queue_store.py:Store.__init__;reserve",
+      "disposition": "REPAIRED_RETEST_PASS",
+      "independent_retest": "Six-column journal migrated; old pending intent preserved with unknown payload; new reservation succeeds"
+    },
+    {
+      "id": "PQA-06",
+      "severity": "S2",
+      "title": "Receipt joined and vanished in unrelated transaction rollback",
+      "location": "src/queue_store.py:receipt;event",
+      "disposition": "REPAIRED_RETEST_PASS",
+      "independent_retest": "Receipt now blocks on store lock, commits independently and remains ACKED after other rollback"
+    },
+    {
+      "id": "PQA-07",
+      "severity": "S2",
+      "title": "Issue-comment declaration alone promoted independent acceptance",
+      "location": "src/queue_store.py:acceptance;confirm_native_acceptance",
+      "disposition": "REPAIRED_OFFLINE_CONTRACT_VERIFIED",
+      "independent_retest": "Legacy declaration rejected; full report remains AGY_REVIEW_REPORTED; missing native receipt cannot promote"
+    },
+    {
+      "id": "PQA-08",
+      "severity": "S2",
+      "title": "Rejected duplicate executor invalidates winning claim",
+      "location": "src/daemon.py:86-88",
+      "disposition": "OPEN_CONFIRMED",
+      "independent_retest": "Preclaimed winner then duplicate Daemon.execute changes mission CLAIMED to EXTERNAL_LIMIT; claim rejection must preserve winner"
+    }
+  ],
+  "independent_tests": {
+    "existing_offline_suite": {
+      "run": 46,
+      "pass": 46
+    },
+    "additional_challenges": [
+      "two independent SQLite connections claim exactly one winner",
+      "PLAN before ACK denied",
+      "renewed grant fences old grant",
+      "restart active state becomes UNCERTAIN and mutation replay denied",
+      "legacy journal migration preserves pending record",
+      "receipt survives unrelated rollback",
+      "callback reconciliation 0 matches stays UNCERTAIN",
+      "callback reconciliation 1 exact authenticated match becomes CALLBACK_DELIVERED without POST",
+      "callback reconciliation 2 matches stays UNCERTAIN and reports ambiguity",
+      "duplicate execute invalidates winner: FAIL"
+    ]
+  },
+  "remaining_limits": [
+    "Continuous native acceptance verifier attachment is not installed; bounded parent may confirm through actual available native read_thread result and durable message/turn/tool receipt",
+    "Native receipt validator checks trusted-host receipt fields; offline synthetic validation is not evidence that an actual independent reviewer responded",
+    "No literal fresh human control-chat input observed by reviewer; test trigger is AI-delegated through control under human owner engineering authorization",
+    "Actual desktop primary thread activation is not claimed; candidate uses logical persistent executor and ephemeral provider contexts",
+    "Actual live inference, connected worker isolation, callback transport and no-new-stored-Work disk evidence are parent/live evidence, not independently reproduced by this reviewer",
+    "No global integration, global promotion or commercial readiness approval from this report"
+  ]
+}
