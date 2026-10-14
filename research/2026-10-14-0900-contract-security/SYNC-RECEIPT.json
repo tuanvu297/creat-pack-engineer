@@ -1,0 +1,67 @@
+{
+  "task_id": "CREAT-PACK-LEARNING-20261014-0900",
+  "checkpoint": "CP-CREAT-PACK-LEARNING-20261014-01",
+  "status": "RESEARCH_EVIDENCE_SYNC_VERIFIED",
+  "github": {
+    "repository": "tuanvu297/creat-pack-engineer",
+    "source_evidence_commit": "6c4f472289939bd98ff91fe36443da21c3b88082",
+    "readback": "6/6 exact content matches"
+  },
+  "drive": {
+    "parent_id": "1zD0S1fR2yOHCz2enI452Kdahv_KneZ0O",
+    "note_id": "1iUD4Ra8kkJEzq_Im71YGdczGoXA73QgP",
+    "note_url": "https://drive.google.com/file/d/1iUD4Ra8kkJEzq_Im71YGdczGoXA73QgP/view?usp=drivesdk",
+    "note_readback": "EXACT_CONTENT_MATCH",
+    "evidence_id": "16oj1UYtrJNnpFr_lhm13h7aa2YdRFYWN",
+    "evidence_url": "https://drive.google.com/file/d/16oj1UYtrJNnpFr_lhm13h7aa2YdRFYWN/view?usp=drivesdk",
+    "evidence_bytes": 23885,
+    "evidence_sha256": "4ccbce8c4f2d47655b564e8ce2795c961d69b951138c52e307dd8fdb0e613e3b",
+    "evidence_readback": "BYTE_FOR_BYTE_MATCH"
+  },
+  "files": [
+    {
+      "path": "research/2026-10-14-0900-contract-security.md",
+      "sha256": "300162610c116f28b03c8729a86f6026a787d5c16a7f6580dfb052ae77c83051"
+    },
+    {
+      "path": "research/2026-10-14-0900-contract-security/BOOTSTRAP.json",
+      "sha256": "7f383b62f5c11c0854ea89c3bb7c29a47deb08f7263c2fa97fe738bb13df80e3"
+    },
+    {
+      "path": "research/2026-10-14-0900-contract-security/experiment.py",
+      "sha256": "c9d5ede05547be8d4b3a867a9960763b05bd41d3e0957ee0bb3f11ce25fc4c38"
+    },
+    {
+      "path": "research/2026-10-14-0900-contract-security/RESULT.json",
+      "sha256": "d6e41eea5cd7f7dbe437d92797769fee9acc5e379f2b89addcfda04891b4d0a8"
+    },
+    {
+      "path": "research/2026-10-14-0900-contract-security/SECRET-COVERAGE.json",
+      "sha256": "3cad6b89d12ab810c67f17f1f584b814615a8bd4fc391f8a898593b6dbe4531f"
+    },
+    {
+      "path": "research/2026-10-14-0900-contract-security/secret_coverage.py",
+      "sha256": "eda7214c9a9563d1e0d2bc64d42d53011accecaf2bcc9154ec50ec7fce3605a2"
+    }
+  ],
+  "findings": {
+    "manifest_interoperability": "GAP_REPRODUCED",
+    "oauth_field_scan": "GAP_REPRODUCED",
+    "self_consistency_vs_provenance": "SCOPED_LIMIT_CONFIRMED"
+  },
+  "candidate_controls": "LOCAL_EXPERIMENT_PASS_ONLY",
+  "secret_scan": {
+    "scope": "Current repo signature scan after research additions",
+    "files_scanned": 46,
+    "status": "PASS",
+    "findings": []
+  },
+  "toolkit_source_unchanged": true,
+  "source_sha256": "8b0ee64835516fa73c9244bc0fb0431284b36434cdd9917a4c752ca79799b043",
+  "global_promotion": "NOT_PERFORMED",
+  "runtime_integrated": "UNVERIFIED",
+  "callback": {
+    "mode": "heartbeat_final_to_owner",
+    "sent_to_other_threads": false
+  }
+}
