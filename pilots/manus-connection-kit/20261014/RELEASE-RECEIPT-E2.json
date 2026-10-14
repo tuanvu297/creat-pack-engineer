@@ -1,0 +1,61 @@
+{
+  "task_id": "AGY-MCK-PILOT-20261014",
+  "recorded_at": "2026-10-14 08:17:32 UTC",
+  "worker_id": "CODEX-WORK",
+  "attempt": 1,
+  "package_version": "0.1.1",
+  "state": "SCOPED_QA_PASS_CALLBACK_DELIVERED_AGY_ACCEPTANCE_PENDING",
+  "levels": {
+    "PACKAGE_BUILT": "PASS",
+    "INSTALL_TEST_PASS": "PASS_WINDOWS_ONLY",
+    "LOCAL_FUNCTION_PASS": "PASS_35_TESTS_AND_INDEPENDENT_EDGE_CASES",
+    "AUTH_VERIFIED": "PASS_EXISTING_PRIVATE_BINDING",
+    "LIVE_EXECUTION_PASS": "PASS_ONE_TASK_A1_A2_SAME_TASK_READBACK",
+    "AI_CAN_USE_PASS": "PASS_SCOPED_CLI_MCP",
+    "CALLBACK_DELIVERY": "PASS_EXACT_READBACK",
+    "INTEGRATED_PASS": "UNVERIFIED",
+    "AUTONOMOUS_AGY_DISPATCH": "UNVERIFIED"
+  },
+  "release": {
+    "url": "https://drive.google.com/file/d/1aGYais22hCReu8FPLtom6vmVT-1PCuzY/view?usp=drivesdk",
+    "sha256": "98d2149ce00714319d4f770afe09ca411c8c8ca58f959467cef705f503334879",
+    "raw_drive_hash_verified": true
+  },
+  "evidence": {
+    "url": "https://drive.google.com/file/d/1ZimBdYMN8O_UcAhpta7hHLfGBw-jMNjL/view?usp=drivesdk",
+    "sha256": "5c1438c905983c4db5c5ae99f0360452544f447892d2c0d0f19d0f84eef53925",
+    "snapshot_scope": "QA before final delivery; this appended receipt supersedes callback pending only",
+    "raw_drive_hash_verified": true
+  },
+  "callback": {
+    "callback_id": "MCK-FINAL-20261014-A2",
+    "task_id": "AGY-MCK-PILOT-20261014",
+    "target": "6acb1ce3-e37c-83ec-9eb7-f795fd5243c1",
+    "target_title": "Thảo luận worker extension",
+    "delivery_status": "DELIVERED_READBACK_VERIFIED",
+    "native_message_turn_id": "61adef74-0872-4295-a5d0-92590630195e",
+    "payload_exact_match": true,
+    "observed_at": "2026-10-14 08:15:16 UTC",
+    "separate_AGY_acceptance": "UNVERIFIED_AWAITING_REVIEW",
+    "global_INTEGRATED_PASS": "UNVERIFIED",
+    "scope": "Actual received callback only; no self-issued reviewer acceptance"
+  },
+  "callback_receipt_drive": "https://drive.google.com/file/d/10cP1eoSWkIipofe3AHz1o85rlrilpyD2/view?usp=drivesdk",
+  "source_pr": "https://github.com/tuanvu297/creat-pack-engineer/pull/3",
+  "source_commit": "c09f1e2ddceea18f93a83c5b6aa312629848226d",
+  "receipt_commit": "a50036a34fb3ce31ab8db4c0c4b89bec55fdfe4d",
+  "defect": {
+    "issue": 2,
+    "status": "OPEN_PARTIAL",
+    "remaining": [
+      "Native autonomous AGY→Work activation binding",
+      "Installed continuously running stale watcher",
+      "Separate AGY final acceptance"
+    ]
+  },
+  "provider_creates": 1,
+  "extra_creates": 0,
+  "mutation_retries": 0,
+  "new_Work": 0,
+  "production_published": false
+}
