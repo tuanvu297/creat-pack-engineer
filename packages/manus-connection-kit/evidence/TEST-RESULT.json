@@ -1,0 +1,17 @@
+{
+  "recorded_at": "2026-10-14T08:07:15.194207+00:00",
+  "LOCAL_FUNCTION_PASS": "PASS",
+  "tests": 35,
+  "failed": 0,
+  "scope": "Synthetic offline function/boundary tests and stdio child process; not Manus live",
+  "runtime": {
+    "python": "3.12.14",
+    "platform": "win32",
+    "dependencies": []
+  },
+  "INSTALL_TEST_PASS": "UNVERIFIED",
+  "AUTH_VERIFIED": "UNVERIFIED",
+  "LIVE_EXECUTION_PASS": "UNVERIFIED",
+  "AI_CAN_USE_PASS": "UNVERIFIED",
+  "INTEGRATED_PASS": "UNVERIFIED"
+}
