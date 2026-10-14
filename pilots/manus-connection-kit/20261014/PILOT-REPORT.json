@@ -1,0 +1,122 @@
+{
+  "task_id": "AGY-MCK-PILOT-20261014",
+  "generated_at": "2026-10-14T08:11:41.395841+00:00",
+  "release_version": "0.1.1",
+  "checkpoint": "QA",
+  "archive_sha256": "98d2149ce00714319d4f770afe09ca411c8c8ca58f959467cef705f503334879",
+  "levels": {
+    "PACKAGE_BUILT": {
+      "status": "PASS",
+      "scope": "A2 trusted hash, safe fresh extraction, exact manifest inventory,19 hashes,finite secret screening",
+      "evidence": [
+        "PACKAGE-VERIFICATION-A2.json",
+        "SECRET-SCREENING-A2.json"
+      ]
+    },
+    "INSTALL_TEST_PASS": {
+      "status": "PASS",
+      "scope": "Fresh Windows A2 copy, Python3.12.14/SQLite3.53.1, self-test and stdio handshake/actual read tool",
+      "evidence": [
+        "INSTALL-LOCAL-TESTS-A2.json",
+        "MCP-HANDSHAKE-LIVE-A2.json"
+      ]
+    },
+    "LOCAL_FUNCTION_PASS": {
+      "status": "PASS",
+      "scope": "35 packaged tests plus independently reproduced original failing Adapter cases now denied; expanded wrong types denied; bool true pending, explicit false eligible",
+      "evidence": [
+        "INSTALL-LOCAL-TESTS-A2.json",
+        "INDEPENDENT-EDGE-CASES-A2.json",
+        "SOURCE-DIFF-A2.txt"
+      ]
+    },
+    "AUTH_VERIFIED": {
+      "status": "PASS",
+      "scope": "A1 actual user.me hashed identity; fresh A2 authenticated task GETs under same private key binding. A2 did not re-query user identity.",
+      "evidence": [
+        "AUTH-CLI.json",
+        "CLI-LIVE-READBACK-A2.json",
+        "MCP-HANDSHAKE-LIVE-A2.json"
+      ]
+    },
+    "LIVE_EXECUTION_PASS": {
+      "status": "PASS",
+      "scope": "Same single authorized task was dispatched with A1 and its completed expected result independently revalidated through A2 CLI and MCP. No A2 create was performed.",
+      "evidence": [
+        "PROVIDER-ACK.json",
+        "LIVE-REQUEST.json",
+        "CLI-LIVE-READBACK-A2.json",
+        "MCP-HANDSHAKE-LIVE-A2.json"
+      ]
+    },
+    "AI_CAN_USE_PASS": {
+      "status": "PASS",
+      "scope": "Independent reviewer read clean A2 guides, installed and used actual CLI/MCP task read tools; A1 cached-create interoperability preserved in source diff; no new Work",
+      "evidence": [
+        "REVIEWER-ACK-A2.json",
+        "MCP-HANDSHAKE-LIVE-A2.json",
+        "SOURCE-DIFF-A2.txt"
+      ]
+    },
+    "INTEGRATED_PASS": {
+      "status": "UNVERIFIED",
+      "scope": "Reviewer has not proven external receiving-system ingestion, delivery receipt or separate AGY acceptance",
+      "evidence": [
+        "JOURNAL-SANITIZED-A2.json"
+      ]
+    }
+  },
+  "independent_qa": "INDEPENDENT-QA-A2.json",
+  "A1_acceptance": "FAIL_MCK-QA-001; preserved and fixed in A2",
+  "source": {
+    "repo": "tuanvu297/creat-pack-engineer",
+    "branch": "mck-pilot-20261014",
+    "commit": "c09f1e2ddceea18f93a83c5b6aa312629848226d",
+    "PR": "https://github.com/tuanvu297/creat-pack-engineer/pull/3",
+    "all19_source_files_readback_identical": true
+  },
+  "drive_zip": {
+    "url": "https://drive.google.com/file/d/1aGYais22hCReu8FPLtom6vmVT-1PCuzY/view?usp=drivesdk",
+    "parent_id": "1I1NRGIHAX7fAP2r2byO1G-au-TwT6u8u",
+    "raw_download_sha256_matches": true,
+    "sharing_settings_unchanged": true
+  },
+  "provenance": {
+    "producer": "CODEX-WORK",
+    "independent_reviewer": "/root/mck_independent_qa",
+    "direct_owner_trigger_received": true,
+    "new_app_Work": 0,
+    "first_pass_independent_QA": false,
+    "release_attempts": 2,
+    "bootstrap_failure_count": 1,
+    "owner_trigger_count": 1,
+    "human_interventions_requested_during_pilot": 0,
+    "provider_creates": 1,
+    "provider_mutation_retries": 0,
+    "A2_provider_creates": 0
+  },
+  "resource_observations": {
+    "total_credits_before": 1289,
+    "after": 1288,
+    "attributable_task_cost": "UNKNOWN",
+    "monetary_cost": "UNKNOWN"
+  },
+  "dispatch_defect": {
+    "issue": 2,
+    "status": "OPEN_PARTIAL",
+    "manual_owner_trigger": "PASS",
+    "native_autonomous_AGY_to_Work_activation": "UNVERIFIED",
+    "continuous_stale_monitor_installed": "UNVERIFIED",
+    "demand_polled_guard_and_negative_tests": "PASS"
+  },
+  "callback_delivery": "PENDING_FINAL_CALLBACK",
+  "separate_AGY_acceptance": "UNVERIFIED",
+  "known_limits": [
+    "Windows Python3.12.14 only; Linux/macOS unverified",
+    "A2 live proof is same-task readback; new A2 create was not performed",
+    "Same-user filesystem trust; not a hostile-worker sandbox",
+    "Finite signature scan cannot prove all credential formats",
+    "Customer license/support and production qualification unresolved",
+    "No native automatic Work activation or installed continuous monitoring proved"
+  ]
+}
