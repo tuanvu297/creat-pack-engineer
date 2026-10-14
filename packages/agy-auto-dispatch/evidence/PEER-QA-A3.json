@@ -1,0 +1,114 @@
+{
+  "report_id": "AGY-AUTO-DISPATCH-PEER-QA-A3",
+  "recorded_at": "2026-10-14T13:21:21.027054+00:00",
+  "previous_report": {
+    "path": "D:\\Codex\\agy-auto-dispatch-state\\peer-qa\\PEER-QA-A2.json",
+    "sha256": "9b51fd1a6e96542d6b2e61f30bd6647a9180502df9f009957fd4ef7ba44dc79f",
+    "preserved": true
+  },
+  "role": "Independent peer QA of owner-authorized bounded AGY runtime; unified engineering delivery remains parent responsibility",
+  "scope": "Read-only source review and independently executed offline tests/temp SQLite challenges of optional fixed owner-UX nonce-sum recipe; no live provider/daemon/chat/Work action by reviewer",
+  "source_version": "0.1.1",
+  "status": "PASS_LOCAL_SCOPED",
+  "open_confirmed_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "python_version": "3.12.14",
+  "source_sha256": {
+    "appserver_client.py": "9647494189e720e19c869c56656a4cd99772169257c45316d3c59aec3496b64d",
+    "daemon.py": "746b0dd37f51ee3c9008ef77095f5f80f609fcaf0a5bb6c6f3d9b3e99e092dc8",
+    "queue_store.py": "90f55dc82f2383ba636abcfaa53f01d52f6036db2dc88cd313f2005a07201063"
+  },
+  "bounded_recipe_contract": {
+    "mode": "BOUNDED_OWNER_UX_NONCE_SUM",
+    "mutable_inputs": [
+      "nonce",
+      "a",
+      "b"
+    ],
+    "fixed_fields": [
+      "mission_id",
+      "task_id",
+      "target_executor",
+      "attempt",
+      "idempotency_key",
+      "owner_scope_ref",
+      "callback_target",
+      "QA_CONTRACT_VERSION",
+      "task_kind"
+    ],
+    "second_identity": "one configured binding, separately selected only for its nonempty string mission_id",
+    "auth_scope": "configured authenticated GitHub publisher and finite unexpired authority; does not cryptographically prove a human author",
+    "original_A1": "exact payload-hash authorization preserved",
+    "repeat_behavior": "changed input under same recorded identity/idempotency denied, no blind replay"
+  },
+  "extension_findings": [
+    {
+      "id": "PQA-09",
+      "severity": "S2",
+      "title": "Acceptance for registered second mission ignored",
+      "location": "src/daemon.py:76-83",
+      "disposition": "REPAIRED_RETEST_PASS",
+      "retest": "Registered second mission review reaches AGY_REVIEW_REPORTED; unregistered mission remains excluded; native receipt is still separate"
+    },
+    {
+      "id": "PQA-10",
+      "severity": "S2",
+      "title": "Malformed mission comment crashes when optional policy absent",
+      "location": "src/daemon.py:60-74",
+      "disposition": "REPAIRED_RETEST_PASS",
+      "retest": "Absent and null optional policy normalized; malformed untrusted mission becomes MISSION_SCHEMA_DENIED and following valid mission queues"
+    },
+    {
+      "id": "PQA-11",
+      "severity": "S2",
+      "title": "Malformed review identity raises unhashable set-membership error",
+      "location": "src/daemon.py:79",
+      "disposition": "REPAIRED_RETEST_PASS",
+      "retest": "String guard safely skips list/object/null/int review identities; subsequent valid mission processes in absent/null/registered-policy modes"
+    }
+  ],
+  "independent_tests": {
+    "offline_suite": {
+      "run": 55,
+      "pass": 55,
+      "failed": 0
+    },
+    "additional_binding_challenge": {
+      "fixed_field_mutations_denied": 9,
+      "allowed_nonce_and_integer_endpoints": "accepted QUEUED",
+      "changed_nonce_after_recording": "IDEMPOTENCY_PAYLOAD_CONFLICT"
+    },
+    "final_malformed_ingress_batches": {
+      "policy_modes": [
+        "absent",
+        "null",
+        "registered"
+      ],
+      "review_identity_shapes": [
+        "list",
+        "object",
+        "null",
+        "integer"
+      ],
+      "invalid_mission": "MISSION_SCHEMA_DENIED",
+      "following_valid_mission": "QUEUED in all three modes",
+      "provider_calls": 0
+    }
+  },
+  "prior_repaired_contracts": "A2 PASS_LOCAL_SCOPED retained by full regression run; reports remain append-only",
+  "live_evidence_attribution": "No extra live turn triggered or replayed by peer. A1 live facts remain PARENT_REPORTED_NOT_REPLAYED_BY_PEER as recorded in A2; this extension has offline evidence only.",
+  "remaining_limits": [
+    "Continuous native acceptance verifier attachment is not installed. The bounded parent can confirm actual native control-chat readback through the available read_thread tool and persist grounded message/turn/tool receipt. This is separate from unattended native verification.",
+    "Offline synthetic native receipt exercises schema/state validation only; it is not proof of actual independent reviewer activity.",
+    "Literal fresh human control-chat UX remains UNVERIFIED. Pilot trigger is AI-delegated through control under human owner engineering authorization.",
+    "Actual desktop primary thread activation is not claimed. Runtime uses logical persistent executor, existing Work monitor and ephemeral provider contexts.",
+    "Peer did not invoke live provider inference, start the daemon, send chat messages, read live journal state, or create Work. Live A1 facts are explicitly parent-attributed.",
+    "This report supports LOCAL_FUNCTION_PASS and repaired offline contracts. It is not whole-runtime INTEGRATED_PASS, global promotion, or commercial readiness approval.",
+    "Optional recipe readiness is not evidence of literal fresh human AGY RUN. Native owner input must be separately observed and bound to the compiled nonce/a/b mission.",
+    "A registered second acceptance declaration remains AGY_REVIEW_REPORTED until a trusted host confirms actual independent native reviewer readback. Continuous native verifier attachment remains absent."
+  ]
+}
