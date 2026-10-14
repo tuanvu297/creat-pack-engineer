@@ -1,0 +1,45 @@
+{
+  "release_zip": "agy-auto-dispatch-0.1.1.zip",
+  "release_zip_sha256": "6cc3671d62dfd599bdb6e011c7d6114d8063a02f377aebe8de0488fc4ab43d14",
+  "source_snapshot_sha256": "79c45cf1b380f4271ba2b2236c303e701b990baaac9e6a1a504492bba16043e1",
+  "source_version": "0.1.1",
+  "recorded_at": "2026-10-14T13:34:10.395800+00:00",
+  "relation": "Append-only supplement to immutable pre-A2 RELEASE-QA-0.1.1.json; changes observed scope, not history",
+  "status": "VERIFIED_PASS_SCOPED",
+  "accepted_scope": "FRESH_HUMAN_CONTROL_CHAT_BOUNDED_AUTO_DISPATCH",
+  "PACKAGE_BUILT": "PASS",
+  "INSTALL_TEST_PASS": "PASS_WINDOWS_FRESH_EXTRACTION_ENTRYPOINT_AND55_TESTS",
+  "LOCAL_FUNCTION_PASS": "PASS55_AND_INDEPENDENT_PEER_A3",
+  "AUTH_VERIFIED": "PASS_ACTUAL_CHATGPT_INCLUDED_ROUTE_AND_AUTHENTICATED_GITHUB",
+  "LIVE_EXECUTION_PASS": "PASS_A2_ACTUAL_SOURCE0.1.1_REAL_TURN_VERIFIED_NONCE_AND_SUM",
+  "INTEGRATED_PASS": "PASS_SCOPED_NATIVE_OWNER_INPUT_AND_INDEPENDENT_AGY_RECEIPT",
+  "full_unattended_production": "EXTERNAL_LIMIT_UNVERIFIED_NATIVE_VERIFIER_ATTACHMENT_AND_GENERAL_MISSION_POLICY",
+  "Owner_copy_into_Work": false,
+  "new_stored_Work": 0,
+  "mutation_retries": 0,
+  "mission": "AGY-DISPATCH-OWNER-UX-20261014-A2",
+  "provider_turn_id": "01a13a94-dc58-7962-80bf-541db07a1735",
+  "result": {
+    "nonce": "AGY-0c815fc122e95273",
+    "sum": -2790
+  },
+  "native_receipt": "NATIVE-AGY-ACCEPTANCE-A2.json",
+  "independent_peer_report": "PEER-LIVE-EVIDENCE-A2.json",
+  "secret_scan": "PASS_SIGNATURE_SCAN_ZERO_FINDINGS_RELEASE_AND_SUPPLEMENT",
+  "source_readback": {
+    "GitHub_release_commit": "a9256a642f20a0194a5bc43db27985c71fd25c85",
+    "files_exact_byte_match": 28,
+    "files_total": 28,
+    "Drive_zip_id": "1cfg9LBe6D4_9jdNU1p7luhYYd7I3L8HY",
+    "Drive_download_bytes": 53113,
+    "Drive_SHA256_match": true
+  },
+  "known_limits": [
+    "Persistent unattended native receipt verification not installed; actual engineering host confirmedA2",
+    "Only fixed bounded nonce/sum slots; both consumed, no permission for arbitrary future jobs",
+    "No boot/logon service; computer shutdown requires deliberate wrapper restart",
+    "Windows only tested; alpha app-server compatibility and uptime unverified",
+    "Monetary cost UNKNOWN; no paid API key or purchase",
+    "Issue2 remains OPEN for full architecture acceptance; no global promotion/deploy/merge"
+  ]
+}
