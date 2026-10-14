@@ -1,0 +1,67 @@
+{
+  "source_version": "0.1.1",
+  "source_snapshot_sha256": "79c45cf1b380f4271ba2b2236c303e701b990baaac9e6a1a504492bba16043e1",
+  "inventory": [
+    {
+      "path": "README.md",
+      "sha256": "ee501935ed4161e6f29dbdae9819f7cd7d37d068f68b0eb0ffee2e950d9a1385"
+    },
+    {
+      "path": "VERSION",
+      "sha256": "80447316529fc62014fbaa047fb67c51ac30e32830cda370405349d8d66d196c"
+    },
+    {
+      "path": "bin/agy_queue.py",
+      "sha256": "248553bfb13a5234a8ae20cf7a96686a25611e8a26226a61fcc1529ff6e6eb31"
+    },
+    {
+      "path": "config/package.json",
+      "sha256": "1ad2b19304880922accefb947685b7875dc1ee1e934e92f680cdeef98b18cadb"
+    },
+    {
+      "path": "config/runtime.example.json",
+      "sha256": "7be42eb102968a2b768f60a34b9fc6edc9dc369b02a296edafd33b927ca982c3"
+    },
+    {
+      "path": "docs/ARCHITECTURE-DECISION.md",
+      "sha256": "b17f4f5794fceb48d38a025431dee8c7874c0347c854eb2a674f6de9dbcaad5a"
+    },
+    {
+      "path": "docs/OWNER-CONTROL-RECIPE.md",
+      "sha256": "cf913d614527e39237f2ffb18d5ad3239a899fb23f3b9652707228e5144b1970"
+    },
+    {
+      "path": "docs/QA-REPORT.md",
+      "sha256": "42017df7f72ec93f4c6eff3e43e47ddd40a2ddd6733a054c3af665d01e936c6d"
+    },
+    {
+      "path": "scripts/restart.ps1",
+      "sha256": "7e33ee60ae58021907ee46e3a5773fd8437dd42180281d95efb10ce3279bfa26"
+    },
+    {
+      "path": "scripts/start.ps1",
+      "sha256": "39e28448f08a5f204e4826363b321304e7f8b2122f61dd89369f74003b92c28f"
+    },
+    {
+      "path": "src/appserver_client.py",
+      "sha256": "9647494189e720e19c869c56656a4cd99772169257c45316d3c59aec3496b64d"
+    },
+    {
+      "path": "src/daemon.py",
+      "sha256": "746b0dd37f51ee3c9008ef77095f5f80f609fcaf0a5bb6c6f3d9b3e99e092dc8"
+    },
+    {
+      "path": "src/queue_store.py",
+      "sha256": "90f55dc82f2383ba636abcfaa53f01d52f6036db2dc88cd313f2005a07201063"
+    },
+    {
+      "path": "tests/test_queue.py",
+      "sha256": "0128ee464d7e4ca0be5453a8a3b3acb1e74516d1a32e2fc6869af1d7f3f1b8d3"
+    },
+    {
+      "path": "tests/test_transport.py",
+      "sha256": "f95e16819643d9e111cf981282e23105f3a2f7390ab1fe74cc7f46badfc62906"
+    }
+  ],
+  "scope": "Whitelisted runtime/docs/config/tests; generated evidence and manifest excluded to avoid circular hashes"
+}
