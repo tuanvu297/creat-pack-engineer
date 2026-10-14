@@ -1,0 +1,385 @@
+{
+  "mission_id": "AGY-DISPATCH-PILOT-20261014-A1",
+  "status": "AGY_ACCEPTED",
+  "payload_sha256": "afa5aac10e6cf9ec689a9ed3e10471c61fc47ca2317245e5655104cbc3e80be7",
+  "worker_id": "AGY-PRIMARY-PERSISTENT",
+  "instance_id": "INSTANCE-c20d5500b68445c2b50e0da708d035fc",
+  "grant_id": "G-08811072c4e0490ba80c1a5293d3a81c",
+  "heartbeat": 1791982785.0547373,
+  "ACK": {
+    "attempt": 1,
+    "callback_target": "AGY_CONTROL_CHAT_6acb1ce3-e37c-83ec-9eb7-f795fd5243c1_VIA_GITHUB_ISSUE2",
+    "executor_receipt": {
+      "app_server_pid": 15720,
+      "ephemeral_context_id": "01a13a7e-077a-7b21-9b86-f7083a7f2e43",
+      "instance_id": "INSTANCE-c20d5500b68445c2b50e0da708d035fc",
+      "pid": 17312,
+      "transport_status": "RECEIVED_BY_EXECUTOR"
+    },
+    "expires_at": 1791982819.5925152,
+    "grant_id": "G-08811072c4e0490ba80c1a5293d3a81c",
+    "idempotency_key": "AGY-DISPATCH-PILOT-20261014-A1:ONCE",
+    "instance_id": "INSTANCE-c20d5500b68445c2b50e0da708d035fc",
+    "issued_at": 1791982774.5925152,
+    "lease_id": "G-08811072c4e0490ba80c1a5293d3a81c",
+    "mission_id": "AGY-DISPATCH-PILOT-20261014-A1",
+    "task_id": "AGY-DISPATCH-PILOT-20261014-A1:T1",
+    "timestamp": 1791982774.5959032,
+    "worker_id": "AGY-PRIMARY-PERSISTENT"
+  },
+  "turn_id": "01a13a7f-2ca9-7eb2-8820-50d0afdbd729",
+  "result": {
+    "nonce": "AGY-4ee3d5b31e919725",
+    "sum": 42
+  },
+  "callback_delivery": {
+    "callback_id": "CB-AGY-DISPATCH-PILOT-20261014-A1",
+    "comment_id": 6168915102,
+    "destination": "GitHub issue2; AGY control-chat ingestion/acceptance separate",
+    "readback_match": true,
+    "url": "https://github.com/tuanvu297/creat-pack-engineer/issues/2#issuecomment-6168915102"
+  },
+  "AGY_acceptance": {
+    "native_readback": {
+      "accepted_scope": "ENGINEER_DELEGATED_CONTROL_CHAT_BOUNDED_AUTO_DISPATCH",
+      "literal_owner_only_fresh_UX": "UNVERIFIED",
+      "native_receipt_verifier": "Trusted host verified actual distinct AGY chat response; persistent unattended native-verifier attachment not claimed",
+      "native_turn_id": "1a9cad24-49cc-466a-ae29-a50bd222a1aa",
+      "observed_at": "2026-10-14 13:02:09 UTC",
+      "production_autonomy": "UNVERIFIED",
+      "result_sha256": "60e38ba2a852723e75eccd183f96254da9585b84da6aaba59a6ce935957a28b4",
+      "reviewer_message_id": "0e80aaa5-9ffe-472e-b2af-dc78c28771c5",
+      "source_live_version": "0.1.0; later peer fix0.1.1 requires independent retest",
+      "source_snapshot_for_live": "c05ede1821aa08ea30eba0a09fdcac44125f653cafba4cef78adebd5b2f195cb",
+      "status": "PASS_SCOPED",
+      "target_chat_id": "6acb1ce3-e37c-83ec-9eb7-f795fd5243c1",
+      "verification_method": "mcp__codex_app.read_thread"
+    },
+    "record": {
+      "QA_CONTRACT_VERSION": "1.1",
+      "acceptance_criteria_ids": [
+        "AC01",
+        "AC02",
+        "AC03",
+        "AC04",
+        "AC05",
+        "AC06",
+        "AC07",
+        "AC08",
+        "AC09",
+        "AC10"
+      ],
+      "callback_comment_id": 6168915102,
+      "evidence_ids": [
+        "https://github.com/tuanvu297/creat-pack-engineer/issues/2#issuecomment-6168885047",
+        "https://github.com/tuanvu297/creat-pack-engineer/issues/2#issuecomment-6168911056",
+        "https://github.com/tuanvu297/creat-pack-engineer/issues/2#issuecomment-6168915102"
+      ],
+      "mission_id": "AGY-DISPATCH-PILOT-20261014-A1",
+      "result_sha256": "60e38ba2a852723e75eccd183f96254da9585b84da6aaba59a6ce935957a28b4",
+      "reviewer_id": "AGY-ASSISTANT-CONTROL",
+      "scope": {
+        "accepted": "ENGINEER_DELEGATED_CONTROL_CHAT_BOUNDED_AUTO_DISPATCH",
+        "exact_desktop_work_thread_activation": "NOT_REQUIRED_FOR_THIS_SCOPED_PASS",
+        "literal_human_only_fresh_ux": "UNVERIFIED",
+        "logical_executor": "AGY-PRIMARY-PERSISTENT",
+        "mutation_retries": 0,
+        "new_stored_Work": 0,
+        "production_autonomy": "UNVERIFIED",
+        "result": {
+          "nonce": "AGY-4ee3d5b31e919725",
+          "sum": 42
+        }
+      },
+      "status": "VERIFIED_PASS_SCOPED"
+    },
+    "source": {
+      "comment_id": 6168934887,
+      "url": "https://github.com/tuanvu297/creat-pack-engineer/issues/2#issuecomment-6168934887",
+      "verified_login": "tuanvu297"
+    }
+  },
+  "fault": null,
+  "events": [
+    {
+      "seq": 1,
+      "kind": "QUEUED",
+      "actor": "AGY-CONTROL-INGRESS",
+      "data": {
+        "comment_id": 6168911056,
+        "url": "https://github.com/tuanvu297/creat-pack-engineer/issues/2#issuecomment-6168911056",
+        "verified_login": "tuanvu297"
+      },
+      "timestamp": 1791982774.5858135
+    },
+    {
+      "seq": 2,
+      "kind": "CLAIMED",
+      "actor": "AGY-PRIMARY-PERSISTENT",
+      "data": {
+        "grant_id": "G-08811072c4e0490ba80c1a5293d3a81c",
+        "instance_id": "INSTANCE-c20d5500b68445c2b50e0da708d035fc",
+        "lease_expires_at": 1791982819.5925152
+      },
+      "timestamp": 1791982774.5935104
+    },
+    {
+      "seq": 3,
+      "kind": "ACKED",
+      "actor": "AGY-PRIMARY-PERSISTENT",
+      "data": {
+        "attempt": 1,
+        "callback_target": "AGY_CONTROL_CHAT_6acb1ce3-e37c-83ec-9eb7-f795fd5243c1_VIA_GITHUB_ISSUE2",
+        "executor_receipt": {
+          "app_server_pid": 15720,
+          "ephemeral_context_id": "01a13a7e-077a-7b21-9b86-f7083a7f2e43",
+          "instance_id": "INSTANCE-c20d5500b68445c2b50e0da708d035fc",
+          "pid": 17312,
+          "transport_status": "RECEIVED_BY_EXECUTOR"
+        },
+        "expires_at": 1791982819.5925152,
+        "grant_id": "G-08811072c4e0490ba80c1a5293d3a81c",
+        "idempotency_key": "AGY-DISPATCH-PILOT-20261014-A1:ONCE",
+        "instance_id": "INSTANCE-c20d5500b68445c2b50e0da708d035fc",
+        "issued_at": 1791982774.5925152,
+        "lease_id": "G-08811072c4e0490ba80c1a5293d3a81c",
+        "mission_id": "AGY-DISPATCH-PILOT-20261014-A1",
+        "task_id": "AGY-DISPATCH-PILOT-20261014-A1:T1",
+        "timestamp": 1791982774.5959032,
+        "worker_id": "AGY-PRIMARY-PERSISTENT"
+      },
+      "timestamp": 1791982774.5959032
+    },
+    {
+      "seq": 4,
+      "kind": "PHASE",
+      "actor": "AGY-PRIMARY-PERSISTENT",
+      "data": {
+        "evidence_id": "ACK-G-08811072c4e0490ba80c1a5293d3a81c",
+        "phase": "PLAN"
+      },
+      "timestamp": 1791982774.5982418
+    },
+    {
+      "seq": 5,
+      "kind": "PHASE",
+      "actor": "AGY-PRIMARY-PERSISTENT",
+      "data": {
+        "evidence_id": "EXECUTOR-INSTANCE-c20d5500b68445c2b50e0da708d035fc",
+        "phase": "RUNNING"
+      },
+      "timestamp": 1791982774.6003408
+    },
+    {
+      "seq": 6,
+      "kind": "RESOURCE_READBACK",
+      "actor": "AGY-PRIMARY-PERSISTENT",
+      "data": {
+        "account_type": "chatgpt",
+        "included_route_only": true,
+        "model": "gpt-6.1-sol",
+        "monetary_cost": "UNKNOWN",
+        "primary": {
+          "resetsAt": 1791999642,
+          "usedPercent": 35,
+          "windowDurationMins": 300
+        },
+        "secondary": {
+          "resetsAt": 1792481744,
+          "usedPercent": 58,
+          "windowDurationMins": 10080
+        }
+      },
+      "timestamp": 1791982775.4598777
+    },
+    {
+      "seq": 7,
+      "kind": "INTENT_RESERVED",
+      "actor": "HOST",
+      "data": {
+        "kind": "MODEL_TURN",
+        "payload_sha256": "afa5aac10e6cf9ec689a9ed3e10471c61fc47ca2317245e5655104cbc3e80be7"
+      },
+      "timestamp": 1791982775.4611044
+    },
+    {
+      "seq": 8,
+      "kind": "INTENT_ACK",
+      "actor": "HOST",
+      "data": {
+        "kind": "MODEL_TURN",
+        "receipt": {
+          "context_id": "01a13a7e-077a-7b21-9b86-f7083a7f2e43",
+          "turn_id": "01a13a7f-2ca9-7eb2-8820-50d0afdbd729"
+        }
+      },
+      "timestamp": 1791982775.516296
+    },
+    {
+      "seq": 9,
+      "kind": "PROVIDER_TURN_ACK",
+      "actor": "AGY-PRIMARY-PERSISTENT",
+      "data": {
+        "turn_id": "01a13a7f-2ca9-7eb2-8820-50d0afdbd729"
+      },
+      "timestamp": 1791982775.5172942
+    },
+    {
+      "seq": 10,
+      "kind": "PHASE",
+      "actor": "AGY-PRIMARY-PERSISTENT",
+      "data": {
+        "evidence_id": "TURN-01a13a7f-2ca9-7eb2-8820-50d0afdbd729",
+        "phase": "CHECKPOINT",
+        "provider": {
+          "completion_status": "completed",
+          "model": "gpt-6.1-sol",
+          "monetary_cost": "UNKNOWN",
+          "token_usage": {
+            "last": {
+              "cacheWriteInputTokens": 0,
+              "cachedInputTokens": 0,
+              "inputTokens": 15062,
+              "outputTokens": 46,
+              "reasoningOutputTokens": 13,
+              "totalTokens": 15108
+            },
+            "modelContextWindow": 475000,
+            "total": {
+              "cacheWriteInputTokens": 0,
+              "cachedInputTokens": 0,
+              "inputTokens": 15062,
+              "outputTokens": 46,
+              "reasoningOutputTokens": 13,
+              "totalTokens": 15108
+            }
+          },
+          "turn_id": "01a13a7f-2ca9-7eb2-8820-50d0afdbd729"
+        }
+      },
+      "timestamp": 1791982783.3545203
+    },
+    {
+      "seq": 11,
+      "kind": "RESULT_VERIFIED",
+      "actor": "AGY-PRIMARY-PERSISTENT",
+      "data": {
+        "result": {
+          "nonce": "AGY-4ee3d5b31e919725",
+          "sum": 42
+        },
+        "turn_id": "01a13a7f-2ca9-7eb2-8820-50d0afdbd729"
+      },
+      "timestamp": 1791982783.3575733
+    },
+    {
+      "seq": 12,
+      "kind": "INTENT_RESERVED",
+      "actor": "HOST",
+      "data": {
+        "kind": "CALLBACK_POST",
+        "payload_sha256": "4fea15a53c5be529d63c6709b910496222cafe56615556452bcb70dcb2f46c29"
+      },
+      "timestamp": 1791982783.359452
+    },
+    {
+      "seq": 13,
+      "kind": "INTENT_ACK",
+      "actor": "HOST",
+      "data": {
+        "kind": "CALLBACK_POST",
+        "receipt": {
+          "callback_id": "CB-AGY-DISPATCH-PILOT-20261014-A1",
+          "comment_id": 6168915102
+        }
+      },
+      "timestamp": 1791982784.7871861
+    },
+    {
+      "seq": 14,
+      "kind": "CALLBACK_DELIVERED",
+      "actor": "CALLBACK-ADAPTER",
+      "data": {
+        "callback_id": "CB-AGY-DISPATCH-PILOT-20261014-A1",
+        "comment_id": 6168915102,
+        "destination": "GitHub issue2; AGY control-chat ingestion/acceptance separate",
+        "readback_match": true,
+        "url": "https://github.com/tuanvu297/creat-pack-engineer/issues/2#issuecomment-6168915102"
+      },
+      "timestamp": 1791982786.175701
+    },
+    {
+      "seq": 15,
+      "kind": "AGY_REVIEW_REPORTED",
+      "actor": "AGY-ASSISTANT-CONTROL",
+      "data": {
+        "native_receipt": "UNVERIFIED",
+        "record": {
+          "QA_CONTRACT_VERSION": "1.1",
+          "acceptance_criteria_ids": [
+            "AC01",
+            "AC02",
+            "AC03",
+            "AC04",
+            "AC05",
+            "AC06",
+            "AC07",
+            "AC08",
+            "AC09",
+            "AC10"
+          ],
+          "callback_comment_id": 6168915102,
+          "evidence_ids": [
+            "https://github.com/tuanvu297/creat-pack-engineer/issues/2#issuecomment-6168885047",
+            "https://github.com/tuanvu297/creat-pack-engineer/issues/2#issuecomment-6168911056",
+            "https://github.com/tuanvu297/creat-pack-engineer/issues/2#issuecomment-6168915102"
+          ],
+          "mission_id": "AGY-DISPATCH-PILOT-20261014-A1",
+          "result_sha256": "60e38ba2a852723e75eccd183f96254da9585b84da6aaba59a6ce935957a28b4",
+          "reviewer_id": "AGY-ASSISTANT-CONTROL",
+          "scope": {
+            "accepted": "ENGINEER_DELEGATED_CONTROL_CHAT_BOUNDED_AUTO_DISPATCH",
+            "exact_desktop_work_thread_activation": "NOT_REQUIRED_FOR_THIS_SCOPED_PASS",
+            "literal_human_only_fresh_ux": "UNVERIFIED",
+            "logical_executor": "AGY-PRIMARY-PERSISTENT",
+            "mutation_retries": 0,
+            "new_stored_Work": 0,
+            "production_autonomy": "UNVERIFIED",
+            "result": {
+              "nonce": "AGY-4ee3d5b31e919725",
+              "sum": 42
+            }
+          },
+          "status": "VERIFIED_PASS_SCOPED"
+        },
+        "source": {
+          "comment_id": 6168934887,
+          "url": "https://github.com/tuanvu297/creat-pack-engineer/issues/2#issuecomment-6168934887",
+          "verified_login": "tuanvu297"
+        }
+      },
+      "timestamp": 1791982850.6405585
+    },
+    {
+      "seq": 16,
+      "kind": "AGY_ACCEPTED",
+      "actor": "TRUSTED-HOST-NATIVE-RECEIPT-VERIFIER",
+      "data": {
+        "accepted_scope": "ENGINEER_DELEGATED_CONTROL_CHAT_BOUNDED_AUTO_DISPATCH",
+        "literal_owner_only_fresh_UX": "UNVERIFIED",
+        "native_receipt_verifier": "Trusted host verified actual distinct AGY chat response; persistent unattended native-verifier attachment not claimed",
+        "native_turn_id": "1a9cad24-49cc-466a-ae29-a50bd222a1aa",
+        "observed_at": "2026-10-14 13:02:09 UTC",
+        "production_autonomy": "UNVERIFIED",
+        "result_sha256": "60e38ba2a852723e75eccd183f96254da9585b84da6aaba59a6ce935957a28b4",
+        "reviewer_message_id": "0e80aaa5-9ffe-472e-b2af-dc78c28771c5",
+        "source_live_version": "0.1.0; later peer fix0.1.1 requires independent retest",
+        "source_snapshot_for_live": "c05ede1821aa08ea30eba0a09fdcac44125f653cafba4cef78adebd5b2f195cb",
+        "status": "PASS_SCOPED",
+        "target_chat_id": "6acb1ce3-e37c-83ec-9eb7-f795fd5243c1",
+        "verification_method": "mcp__codex_app.read_thread"
+      },
+      "timestamp": 1791982929.8954175
+    }
+  ]
+}
