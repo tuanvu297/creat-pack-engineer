@@ -1,0 +1,157 @@
+{
+  "report_id": "AGY-AUTO-DISPATCH-PEER-LIVE-EVIDENCE-A2",
+  "recorded_at": "2026-10-14T13:33:42.882418+00:00",
+  "role": "Independent peer evidence QA; engineering delivery remains unified parent responsibility",
+  "scope": "Read-only native control-chat readback, supplied sanitized journal evidence and local release/hash verification. No provider inference, dispatch, daemon/process start, chat message or Work creation by peer.",
+  "verdict": "PASS_SCOPED",
+  "accepted_scope": "FRESH_HUMAN_CONTROL_CHAT_BOUNDED_AUTO_DISPATCH",
+  "mission_id": "AGY-DISPATCH-OWNER-UX-20261014-A2",
+  "source_version": "0.1.1",
+  "open_confirmed_evidence_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "native_independent_observation": {
+    "tool": "mcp__codex_app__read_thread",
+    "chat_id": "6acb1ce3-e37c-83ec-9eb7-f795fd5243c1",
+    "native_turn_id": "e358bf7b-5b11-4ab9-9463-5e1bdaccd245",
+    "user_message_id": "e358bf7b-5b11-4ab9-9463-5e1bdaccd245",
+    "observed_user_input": "AGY run",
+    "separate_readiness_turn_id": "c12f3705-49ed-42b0-90aa-3d2ecd24c610",
+    "reviewer_message_id": "9ff1cd4f-debb-4bbf-a1b3-0b95d7f3949d",
+    "reviewer_message_observation": "Actual completed agent message names A2 mission, nonce, -2790 result and independent bounded fresh-human scope acceptance. Input is separate from the prior engineering readiness instructions.",
+    "classification": "OBSERVED_BY_PEER_NATIVE_READBACK",
+    "full_transcript_saved": false
+  },
+  "execution_and_delivery_checks": {
+    "reconstructed_control_payload_hash": "97f46a117b65fa0f647fe9904487d32a48d3d0be79d710fe21a5435c73bbd235",
+    "payload_hash_match": "PASS",
+    "nonce": "AGY-0c815fc122e95273",
+    "arithmetic": {
+      "a": 6580,
+      "b": -9370,
+      "sum": -2790
+    },
+    "result_sha256": "b0001399c1c5345886b56510d0793c1dcd1f2fab84735c4656d3c21878568378",
+    "result_hash_binding": "PASS_NATIVE_RECEIPT_AND_REVIEW_AND_JOURNAL",
+    "worker_id": "AGY-PRIMARY-PERSISTENT",
+    "worker_instance_and_grant_binding": "PASS",
+    "actual_executor_receipt": "Journal binds daemon PID19824, appserver PID9736, instance and provider context; peer did not restart or challenge live processes",
+    "ACK_before_PLAN": {
+      "status": "PASS",
+      "ACK_seq": 19,
+      "PLAN_seq": 20,
+      "timestamp_order": "strict ACK before PLAN"
+    },
+    "fresh_lease": {
+      "status": "PASS",
+      "ttl_seconds": 45.0,
+      "ACK_inside_lease": true,
+      "result_and_callback_delivery_inside_lease": true,
+      "ACK_to_delivery_seconds": 12.326745748519897
+    },
+    "heartbeat_to_delivery_seconds": 1.8476183414459229,
+    "provider_turn_id": "01a13a94-dc58-7962-80bf-541db07a1735",
+    "provider_completion": "Journal CHECKPOINT has completed provider status and matching turn identity; RESULT_VERIFIED agrees with native independent review",
+    "callback_comment_id": 6169384363,
+    "callback_exact_GET_readback": "Journal readback_match true and distinct callback receipt, independently corroborated by native AGY review; peer did not fetch external comment body again",
+    "review_comment_id": 6169402072,
+    "delivery_review_native_acceptance_order": {
+      "status": "PASS",
+      "delivery_seq": 30,
+      "review_report_seq": 31,
+      "native_confirmed_seq": 32
+    },
+    "QA_contract_version": "1.1",
+    "acceptance_criteria_ids": [
+      "AC01",
+      "AC02",
+      "AC03",
+      "AC04",
+      "AC05",
+      "AC06",
+      "AC07",
+      "AC08",
+      "AC09",
+      "AC10"
+    ],
+    "native_receipt_exactly_persisted": "PASS",
+    "final_sanitized_journal_status": "AGY_ACCEPTED"
+  },
+  "mutation_accounting": {
+    "classification": "OBSERVED_IN_SUPPLIED_SANITIZED_MISSION_SNAPSHOTS",
+    "per_mission_intent_reservations": {
+      "A1": {
+        "MODEL_TURN": 1,
+        "CALLBACK_POST": 1
+      },
+      "A2": {
+        "MODEL_TURN": 1,
+        "CALLBACK_POST": 1
+      }
+    },
+    "combined_counts": {
+      "MODEL_TURN": 2,
+      "CALLBACK_POST": 2
+    },
+    "A2_one_new_each": "PASS",
+    "blind_retry_evidence": "None in either bounded mission snapshot; each has exactly one model intent and one callback intent; no additional live dispatch by peer"
+  },
+  "release_binding": {
+    "archive_path": "D:\\Codex\\agy-auto-dispatch-releases\\0.1.1\\agy-auto-dispatch-0.1.1.zip",
+    "archive_bytes": 53113,
+    "archive_sha256": "6cc3671d62dfd599bdb6e011c7d6114d8063a02f377aebe8de0488fc4ab43d14",
+    "expected_archive_hash_match": "PASS",
+    "source_snapshot_sha256": "79c45cf1b380f4271ba2b2236c303e701b990baaac9e6a1a504492bba16043e1",
+    "snapshot_digest_recipe": "SHA256 of canonical compact sort_keys JSON inventory, ordered by path,sha256",
+    "snapshot_digest_recomputed": "PASS",
+    "inventory_files": 15,
+    "working_source_inventory_matches": "15/15",
+    "ZIP_inventory_matches": "15/15",
+    "ZIP_snapshot_equals_source_snapshot": true,
+    "pre_A2_release_receipts": "Historical 13:23 release receipt/QA conservatively mark repaired-version live/fresh-human checks UNVERIFIED. They are preserved; this report supplements the later observed A2 evidence without changing the released ZIP."
+  },
+  "evidence_files": [
+    {
+      "path": "D:\\Codex\\agy-auto-dispatch-state\\NATIVE-AGY-ACCEPTANCE-A2.json",
+      "sha256": "fb0e270a6abd6c981248965d251d123fe5f56d75515e557584c8abc8d205dfd3"
+    },
+    {
+      "path": "D:\\Codex\\agy-auto-dispatch-state\\PILOT-JOURNAL-SANITIZED-A2.json",
+      "sha256": "39cd17b543ec671163c7bcf9e303bb9c4b7a7516c08e1be781716e8427b015e6"
+    },
+    {
+      "path": "D:\\Codex\\agy-auto-dispatch-state\\PILOT-JOURNAL-SANITIZED-A1.json",
+      "sha256": "110ede394db19755b2c69b6a217d201114c66d4f490f2518153b0e09fd367789"
+    },
+    {
+      "path": "D:\\Codex\\agy-auto-dispatch\\evidence\\SOURCE-SNAPSHOT.json",
+      "sha256": "996644b5bdeedbf4b9e326cb26e761cb1636c60e9947d24d4bccb862d508b81f"
+    },
+    {
+      "path": "D:\\Codex\\agy-auto-dispatch-releases\\0.1.1\\RELEASE-RECEIPT.json",
+      "sha256": "73d012bd019e9bc78f44caf9da1a332312d49b82049dbb4b3c37e1cdbee247b0"
+    },
+    {
+      "path": "D:\\Codex\\agy-auto-dispatch-releases\\0.1.1\\RELEASE-QA-0.1.1.json",
+      "sha256": "3456f75fa691eab212acc2bb3053e6ea1913171b4e09d090d7f55b775a50bd7d"
+    },
+    {
+      "path": "D:\\Codex\\agy-auto-dispatch-releases\\0.1.1\\SHA256SUMS.txt",
+      "sha256": "ca80f16ba070011e8dc2d0d83ac1924eed144a4bb87d8687f6406792e834595f"
+    }
+  ],
+  "remaining_limits": [
+    "Persistent continuous/unattended native acceptance verifier attachment remains UNVERIFIED. This run reached AGY_ACCEPTED after actual bounded parent-host native readback, independently corroborated by peer read_thread.",
+    "Fresh native owner-input UX is PASS_SCOPED for this fixed one-task nonce/sum recipe. General coding dispatch, production autonomy and complete defect closure remain UNVERIFIED.",
+    "Grant HMAC/key material is excluded from sanitized evidence. Peer independently verified temporal and identity binding, and previously tested signing/fencing offline; it did not read private signing keys or independently recompute this live signature.",
+    "No-new-stored-Work=0 is reported by the native review and enforced by reviewed ephemeral-context architecture. Peer did not replay app-server startup or independently enumerate account thread persistence during this evidence review.",
+    "Provider completion and callback exact external GET are represented by host journal evidence and corroborating native independent reviewer, not a new peer provider/connector execution.",
+    "Intent counts are observed across supplied A1/A2 sanitized snapshots, not a new direct live-DB audit.",
+    "Exact desktop primary Work activation is not required for this scoped pass and is not claimed.",
+    "No boot/logon service, non-Windows live compatibility, commercial readiness or global integration approval is established. Monetary cost remains UNKNOWN; recorded route is included ChatGPT account.",
+    "GitHub/Drive checkpoint claims supplied by parent are not independently re-fetched in this peer task. Local ZIP and source snapshot binding are independently verified."
+  ]
+}
