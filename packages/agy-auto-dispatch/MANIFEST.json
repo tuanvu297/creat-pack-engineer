@@ -1,0 +1,212 @@
+{
+  "authentication_requirements": [
+    "Existing ChatGPT account included route and verified usage reserve",
+    "Existing GitHub connector access to private tuanvu297/creat-pack-engineer",
+    "Trusted local host holds unexported grant signing key",
+    "Native control-chat verifier available to engineering host; unattended attachment not installed"
+  ],
+  "created_at": "2026-10-14T13:22:00+00:00",
+  "created_at_policy": "SOURCE_DATE_EPOCH or Unix epoch; real handoff time in external receipt",
+  "declared_test_status": {
+    "INTEGRATED_PASS": "Scoped delegated control-chat pilot only; full Owner-only autonomous acceptance UNVERIFIED",
+    "LIVE_EXECUTION_PASS": "Scoped A1 source0.1.0 only",
+    "LOCAL_FUNCTION_PASS": "See evidence/TEST-RESULT.json"
+  },
+  "dependencies": [
+    {
+      "installation": "No pip dependencies",
+      "name": "Python standard library",
+      "version": "3.12.14 tested"
+    },
+    {
+      "installation": "Use installed authenticated Codex; no credential copy",
+      "name": "Codex app-server",
+      "version": "0.162.0-alpha.17.2 tested"
+    }
+  ],
+  "entrypoints": [
+    "scripts/start.ps1",
+    "scripts/restart.ps1",
+    "bin/agy_queue.py",
+    "src/daemon.py"
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "ee501935ed4161e6f29dbdae9819f7cd7d37d068f68b0eb0ffee2e950d9a1385",
+      "size": 6964
+    },
+    {
+      "path": "VERSION",
+      "sha256": "80447316529fc62014fbaa047fb67c51ac30e32830cda370405349d8d66d196c",
+      "size": 6
+    },
+    {
+      "path": "bin/agy_queue.py",
+      "sha256": "248553bfb13a5234a8ae20cf7a96686a25611e8a26226a61fcc1529ff6e6eb31",
+      "size": 648
+    },
+    {
+      "path": "config/package.json",
+      "sha256": "1ad2b19304880922accefb947685b7875dc1ee1e934e92f680cdeef98b18cadb",
+      "size": 2923
+    },
+    {
+      "path": "config/runtime.example.json",
+      "sha256": "7be42eb102968a2b768f60a34b9fc6edc9dc369b02a296edafd33b927ca982c3",
+      "size": 973
+    },
+    {
+      "path": "docs/ARCHITECTURE-DECISION.md",
+      "sha256": "b17f4f5794fceb48d38a025431dee8c7874c0347c854eb2a674f6de9dbcaad5a",
+      "size": 1867
+    },
+    {
+      "path": "docs/OWNER-CONTROL-RECIPE.md",
+      "sha256": "cf913d614527e39237f2ffb18d5ad3239a899fb23f3b9652707228e5144b1970",
+      "size": 1565
+    },
+    {
+      "path": "docs/QA-REPORT.md",
+      "sha256": "42017df7f72ec93f4c6eff3e43e47ddd40a2ddd6733a054c3af665d01e936c6d",
+      "size": 2412
+    },
+    {
+      "path": "evidence/APP-SERVER-PROBE.json",
+      "sha256": "f1a0b84ff0f2b6c9c657659492213c1cc93ea0c79e3558b39a690275a8c074d7",
+      "size": 892
+    },
+    {
+      "path": "evidence/BOOTSTRAP-FRESHNESS.json",
+      "sha256": "85b725fec9865caa3722dec9bd9976275864595862ba5fafcb5098653b8631b9",
+      "size": 2610
+    },
+    {
+      "path": "evidence/NATIVE-AGY-ACCEPTANCE-A1.json",
+      "sha256": "07d13d4318f707e7acf5a966dc668bef0b8498c286463bbb215b9bb2ac76ddbc",
+      "size": 895
+    },
+    {
+      "path": "evidence/PEER-QA-20261014.json",
+      "sha256": "7264c1acd0fc0cd1d95e12a023abf96a94efb6385f984f905ddf20bfe9ec4238",
+      "size": 5519
+    },
+    {
+      "path": "evidence/PEER-QA-A2.json",
+      "sha256": "9b51fd1a6e96542d6b2e61f30bd6647a9180502df9f009957fd4ef7ba44dc79f",
+      "size": 7435
+    },
+    {
+      "path": "evidence/PEER-QA-A3.json",
+      "sha256": "6811073983f940620ca721a302876fb836808824eb933a098aec2619f4eb71ee",
+      "size": 5715
+    },
+    {
+      "path": "evidence/PILOT-JOURNAL-SANITIZED-A1.json",
+      "sha256": "110ede394db19755b2c69b6a217d201114c66d4f490f2518153b0e09fd367789",
+      "size": 13819
+    },
+    {
+      "path": "evidence/RESTART-READBACK.json",
+      "sha256": "e9c88443aa9cf742c37f8e351237b517ab624aeccbe29c5cd243a946126867c6",
+      "size": 1026
+    },
+    {
+      "path": "evidence/SOURCE-SNAPSHOT-A1.json",
+      "sha256": "12a9575e888503a818b8af5ef73a778f04b95c9029f17d96dd186afc8ad1cf69",
+      "size": 1798
+    },
+    {
+      "path": "evidence/SOURCE-SNAPSHOT.json",
+      "sha256": "996644b5bdeedbf4b9e326cb26e761cb1636c60e9947d24d4bccb862d508b81f",
+      "size": 2329
+    },
+    {
+      "path": "evidence/TEST-RESULT.json",
+      "sha256": "cce26cab13e36c6de688a3d5be077cca649c2f431dce79e09a325f5fd9d40cde",
+      "size": 1609
+    },
+    {
+      "path": "evidence/TESTS.txt",
+      "sha256": "24fb573736a5bdbafa6a71a026d03a23e8e01ce5df0f00c0be82ab688b58b021",
+      "size": 5896
+    },
+    {
+      "path": "scripts/restart.ps1",
+      "sha256": "7e33ee60ae58021907ee46e3a5773fd8437dd42180281d95efb10ce3279bfa26",
+      "size": 487
+    },
+    {
+      "path": "scripts/start.ps1",
+      "sha256": "39e28448f08a5f204e4826363b321304e7f8b2122f61dd89369f74003b92c28f",
+      "size": 1399
+    },
+    {
+      "path": "src/appserver_client.py",
+      "sha256": "9647494189e720e19c869c56656a4cd99772169257c45316d3c59aec3496b64d",
+      "size": 7539
+    },
+    {
+      "path": "src/daemon.py",
+      "sha256": "746b0dd37f51ee3c9008ef77095f5f80f609fcaf0a5bb6c6f3d9b3e99e092dc8",
+      "size": 11423
+    },
+    {
+      "path": "src/queue_store.py",
+      "sha256": "90f55dc82f2383ba636abcfaa53f01d52f6036db2dc88cd313f2005a07201063",
+      "size": 17757
+    },
+    {
+      "path": "tests/test_queue.py",
+      "sha256": "0128ee464d7e4ca0be5453a8a3b3acb1e74516d1a32e2fc6869af1d7f3f1b8d3",
+      "size": 16763
+    },
+    {
+      "path": "tests/test_transport.py",
+      "sha256": "f95e16819643d9e111cf981282e23105f3a2f7390ab1fe74cc7f46badfc62906",
+      "size": 1460
+    }
+  ],
+  "input_contract": {
+    "authorization": "External exact payload registration or one fixed Owner UX binding; fresh signed lease; actual executor ACK required before PLAN",
+    "identity": "mission_id/task_id/attempt=1/idempotency_key/target_executor",
+    "ingress": "AGY_MISSION_V1 newline strict JSON in authenticated issue2 comment",
+    "limits": "nonce token; a/b integer -10000..10000; no arbitrary commands",
+    "task_kind": "codex_nonce_sum only"
+  },
+  "known_limits": [
+    "One bounded nonce/sum task class; arbitrary engineering dispatch unimplemented",
+    "Literal fresh-human-only AGY RUN UX remains UNVERIFIED",
+    "Long-term unattended native acceptance verifier remains UNVERIFIED",
+    "Exact desktop primary Work has active writer lock; logical executor used without pretending activation",
+    "No boot/logon service installed; manually restart after computer shutdown",
+    "App-server alpha API version may require compatibility maintenance",
+    "No hostile same-user sandbox; external host state is trusted",
+    "Live A1 ran source0.1.0; source0.1.1 has offline peer QA and retained-journal restart; no live replay",
+    "Monetary cost UNKNOWN; included account route only",
+    "Non-Windows installation/live compatibility UNVERIFIED"
+  ],
+  "output_contract": {
+    "acceptance": "Actual native independent reviewer receipt required for AGY_ACCEPTED",
+    "callback": "AGY_CALLBACK_V1 plus exact GET readback",
+    "result": "nonce and verified a+b with real provider turn ID",
+    "review": "AGY_ACCEPTANCE_V1 QA1.1 AC01..AC10 becomes AGY_REVIEW_REPORTED",
+    "status": "Read-only localhost status endpoint and external private journal"
+  },
+  "package_name": "agy-auto-dispatch",
+  "package_version": "0.1.1",
+  "purpose": "Bounded persistent logical AGY executor with durable control inbox, fenced local queue and isolated official Codex app-server transport",
+  "runtime_requirements": [
+    "Python >=3.11; tested Windows Python 3.12.14",
+    "Existing signed-in Codex; tested app-server 0.162.0-alpha.17.2",
+    "Windows PowerShell for detached start/restart wrappers"
+  ],
+  "test_status": {
+    "AUTH_VERIFIED": "UNVERIFIED",
+    "INSTALL_TEST_PASS": "UNVERIFIED",
+    "INTEGRATED_PASS": "UNVERIFIED",
+    "LIVE_EXECUTION_PASS": "UNVERIFIED",
+    "LOCAL_FUNCTION_PASS": "UNVERIFIED",
+    "PACKAGE_BUILT": "PASS"
+  }
+}
