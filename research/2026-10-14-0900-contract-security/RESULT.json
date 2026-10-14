@@ -1,0 +1,55 @@
+{
+  "task_id": "CREAT-PACK-LEARNING-20261014-0900",
+  "recorded_at": "2026-10-14T09:03:46.832923+07:00",
+  "runtime": {
+    "python": "3.12.14",
+    "node": "v24.19.0"
+  },
+  "subject": {
+    "toolkit_version": "0.1.0",
+    "source_path": "D:/Codex/ai-release-engineer/src/release_engineer.py",
+    "source_sha256": "8b0ee64835516fa73c9244bc0fb0431284b36434cdd9917a4c752ca79799b043"
+  },
+  "scope": "Synthetic local negative fixtures; research proposals only. No source changes, provider, auth or integration test.",
+  "observations": [
+    {
+      "case": "baseline",
+      "current_toolkit_structure_verification": "PASS",
+      "candidate_strict_parser_accepts": true,
+      "node_json_parser_accepts": true,
+      "zip_sha256": "bddc6d09f2742e044d230bf44406ec59aa30fbcd5d5648357fdb513223df750e"
+    },
+    {
+      "case": "nonfinite",
+      "current_toolkit_structure_verification": "PASS",
+      "candidate_strict_parser_accepts": false,
+      "node_json_parser_accepts": false,
+      "zip_sha256": "5312e29251185ff51421ac8b00937cc115e814b95b7ab78d396e807b35927aea"
+    },
+    {
+      "case": "duplicate",
+      "current_toolkit_structure_verification": "PASS",
+      "candidate_strict_parser_accepts": false,
+      "node_json_parser_accepts": true,
+      "zip_sha256": "7964756e57f5fac70fc99e7f135c679b5eb8f6549237556b60f5e7c505cabf34"
+    }
+  ],
+  "provenance_observation": {
+    "baseline_matches_pinned_digest": true,
+    "replacement_self_consistency": "PASS",
+    "replacement_matches_pinned_digest": false,
+    "publisher_identity_or_signature": "UNVERIFIED_NOT_TESTED",
+    "interpretation": "Self-consistency is not provenance; expected digest must arrive through an independently trusted channel."
+  },
+  "candidate_control_checks": {
+    "baseline_accepted": true,
+    "nonfinite_rejected": true,
+    "duplicate_key_rejected": true,
+    "replacement_digest_rejected": true
+  },
+  "candidate_control_status": "LOCAL_EXPERIMENT_PASS",
+  "current_toolkit_gap": "OBSERVED: NaN/duplicate-key manifests pass structural verify; Node rejects NaN.",
+  "global_skill_promotion": "NOT_PERFORMED",
+  "runtime_integrated": "UNVERIFIED",
+  "product_release": "NOT_BUILT"
+}
