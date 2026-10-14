@@ -1,0 +1,175 @@
+{
+  "reviewer_agent": "/root/mck_independent_qa",
+  "role": "Independent reviewer inside existing AI master",
+  "created_at": "2026-10-14T08:10:26.838802+00:00",
+  "artifact": {
+    "path": "D:/Codex/manus-connection-kit-releases/v0.1.1-A2/manus-connection-kit-0.1.1.zip",
+    "sha256": "98d2149ce00714319d4f770afe09ca411c8c8ca58f959467cef705f503334879",
+    "version": "0.1.1-A2",
+    "source_unchanged": true,
+    "A1_evidence_preserved": true
+  },
+  "grant": {
+    "grant_id": "GRANT-cc829dc80e886702b545771f15237890",
+    "expires_at": 1791965646.9408572,
+    "identity": {
+      "attempt": 1,
+      "idempotency_key": "AGY-MCK-PILOT-20261014:LIVE:A1",
+      "task_id": "AGY-MCK-PILOT-20261014:LIVE-A1",
+      "worker_id": "CODEX-WORK-MCK-QA-A1"
+    },
+    "fresh_ack": "REVIEWER-ACK-A2.json",
+    "same_original_private_state": true,
+    "operations": "read-only existing task reconciliation; no mutations",
+    "actual_reads_before_expiry": true
+  },
+  "overall": "SCOPED_INDEPENDENT_TECHNICAL_QA_PASS_AGY_INTEGRATION_PENDING",
+  "levels": {
+    "PACKAGE_BUILT": {
+      "status": "PASS",
+      "scope": "A2 trusted hash, safe fresh extraction, exact manifest inventory,19 hashes,finite secret screening",
+      "evidence": [
+        "PACKAGE-VERIFICATION-A2.json",
+        "SECRET-SCREENING-A2.json"
+      ]
+    },
+    "INSTALL_TEST_PASS": {
+      "status": "PASS",
+      "scope": "Fresh Windows A2 copy, Python3.12.14/SQLite3.53.1, self-test and stdio handshake/actual read tool",
+      "evidence": [
+        "INSTALL-LOCAL-TESTS-A2.json",
+        "MCP-HANDSHAKE-LIVE-A2.json"
+      ]
+    },
+    "LOCAL_FUNCTION_PASS": {
+      "status": "PASS",
+      "scope": "35 packaged tests plus independently reproduced original failing Adapter cases now denied; expanded wrong types denied; bool true pending, explicit false eligible",
+      "evidence": [
+        "INSTALL-LOCAL-TESTS-A2.json",
+        "INDEPENDENT-EDGE-CASES-A2.json",
+        "SOURCE-DIFF-A2.txt"
+      ]
+    },
+    "AUTH_VERIFIED": {
+      "status": "PASS",
+      "scope": "A1 actual user.me hashed identity; fresh A2 authenticated task GETs under same private key binding. A2 did not re-query user identity.",
+      "evidence": [
+        "AUTH-CLI.json",
+        "CLI-LIVE-READBACK-A2.json",
+        "MCP-HANDSHAKE-LIVE-A2.json"
+      ]
+    },
+    "LIVE_EXECUTION_PASS": {
+      "status": "PASS",
+      "scope": "Same single authorized task was dispatched with A1 and its completed expected result independently revalidated through A2 CLI and MCP. No A2 create was performed.",
+      "evidence": [
+        "PROVIDER-ACK.json",
+        "LIVE-REQUEST.json",
+        "CLI-LIVE-READBACK-A2.json",
+        "MCP-HANDSHAKE-LIVE-A2.json"
+      ]
+    },
+    "AI_CAN_USE_PASS": {
+      "status": "PASS",
+      "scope": "Independent reviewer read clean A2 guides, installed and used actual CLI/MCP task read tools; A1 cached-create interoperability preserved in source diff; no new Work",
+      "evidence": [
+        "REVIEWER-ACK-A2.json",
+        "MCP-HANDSHAKE-LIVE-A2.json",
+        "SOURCE-DIFF-A2.txt"
+      ]
+    },
+    "INTEGRATED_PASS": {
+      "status": "UNVERIFIED",
+      "scope": "Reviewer has not proven external receiving-system ingestion, delivery receipt or separate AGY acceptance",
+      "evidence": [
+        "JOURNAL-SANITIZED-A2.json"
+      ]
+    }
+  },
+  "findings": [
+    {
+      "id": "MCK-QA-001",
+      "original_severity": "S1",
+      "status": "CLOSED_FIXED_AND_INDEPENDENTLY_RETESTED_IN_A2",
+      "classification": "OBSERVED",
+      "criterion": "Pagination completion/schema fail-closed",
+      "change": "Adapter requires exact bool on every provider page; terminal requires has_more is False",
+      "evidence": [
+        "SOURCE-DIFF-A2.txt",
+        "INDEPENDENT-EDGE-CASES-A2.json",
+        "INSTALL-LOCAL-TESTS-A2.json"
+      ],
+      "original_evidence_preserved": "INDEPENDENT-QA.json / INDEPENDENT-EDGE-CASES.json",
+      "no_remaining_observed_blocker_within_review_scope": true
+    }
+  ],
+  "actual_result_predicate": {
+    "expected": {
+      "nonce": "MCKQA-61d2c5a6eed063d0",
+      "sum": 43
+    },
+    "actual": {
+      "nonce": "MCKQA-61d2c5a6eed063d0",
+      "sum": 43
+    },
+    "pass": true,
+    "provider_task_id": "27arBbYC4uajQmPrpaC8Y6",
+    "newest_reply_after_input": true,
+    "stopped": true,
+    "background_jobs": false,
+    "explicit_has_more": false,
+    "pages": 1
+  },
+  "counts": {
+    "A2_provider_create_requests": 0,
+    "total_pilot_provider_create_requests": 1,
+    "A2_provider_mutation_requests": 0,
+    "A2_read_operations": 2,
+    "A2_provider_GET_requests": 4,
+    "mutation_retries": 0,
+    "extra_tasks": 0,
+    "new_Work": 0,
+    "human_interventions_requested_during_review": 0
+  },
+  "resources": {
+    "new_A2_resources_query": false,
+    "prior_observation": {
+      "before": {
+        "free_credits": 989,
+        "next_refresh_time": "1791997200",
+        "total_credits": 1289
+      },
+      "after": {
+        "free_credits": 989,
+        "next_refresh_time": "1791997200",
+        "total_credits": 1288
+      },
+      "total_balance_delta": -1,
+      "actual_attributable_task_cost": "UNKNOWN",
+      "monetary_cost": "UNKNOWN",
+      "quota": "Only credits fields observed; other account quota UNKNOWN"
+    },
+    "monetary_cost": "UNKNOWN",
+    "additional_task_creation_cost": "No new create occurred; no monetary amount asserted"
+  },
+  "limitations": [
+    "A2 live evidence is same-task readback, not a second task or an A2 create",
+    "One Windows pilot;Linux/macOS/production reliability/customer terms unverified",
+    "Independent controller/AGY acceptance and real callback delivery remain separate",
+    "Finite secret scan is not proof of every possible credential format"
+  ],
+  "evidence_files": [
+    "AUTH-CLI.json",
+    "CLI-LIVE-READBACK-A2.json",
+    "INDEPENDENT-EDGE-CASES-A2.json",
+    "INSTALL-LOCAL-TESTS-A2.json",
+    "JOURNAL-SANITIZED-A2.json",
+    "LIVE-REQUEST.json",
+    "MCP-HANDSHAKE-LIVE-A2.json",
+    "PACKAGE-VERIFICATION-A2.json",
+    "PROVIDER-ACK.json",
+    "REVIEWER-ACK-A2.json",
+    "SECRET-SCREENING-A2.json",
+    "SOURCE-DIFF-A2.txt"
+  ]
+}
