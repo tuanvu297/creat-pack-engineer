@@ -1,0 +1,61 @@
+{
+  "report_id": "GEMINI-STEEL-PEER-QA-GUEST",
+  "recorded_at": "2026-10-15T13:57:02.782552+00:00",
+  "verdict": "PASS_LOCAL_PREFLIGHT_SCOPED",
+  "tests": {
+    "run": 28,
+    "pass": 28,
+    "failed": 0,
+    "skipped": 0
+  },
+  "scope": "Offline review and permitted policy/runtime/test corrections only. No provider/network/UI calls, new session/Work, private-state access, token/profile transfer, or authentication interaction by peer.",
+  "source_sha256": {
+    "bin/connection.mjs": "75614eb134ab1998421f50bc8b55822ea39b264f920a10a8ffed824ae7e24464",
+    "src/journal.mjs": "2a25b9016eddfcd32772b509bed8cb13b5db879a3eeb0bf14eca81cfb4a68206",
+    "src/policy.mjs": "95a852077de8c56ec0770526739b892f0639d4c3437d770072d7b8440377d11d",
+    "src/private_paths.mjs": "ef69844ccc359915e8e9da5b4998f92e12c259bad2ad2b1d6145fc009131db9e",
+    "src/runtime.mjs": "6138be706e95190c17c2c92c64c72019b90976ad45bac8f6bb60fee557f35568",
+    "tests/peer.test.mjs": "906b3fda696efc1a232ac6d0f08cd1003d03da74ef32f041d819d053a4170867",
+    "tests/policy.test.mjs": "b7b82c1fab980de36e404affe413ec939e47e3d643bf82db7fe8c6f8b4e238c3"
+  },
+  "prior_reports": [
+    {
+      "path": "D:\\Codex\\agy-gemini-steel\\evidence\\PEER-QA.json",
+      "sha256": "8be80a205d810253ad20640348a7b24293875ddd9663d674ce8b463f7350c1d7",
+      "preserved": true
+    },
+    {
+      "path": "D:\\Codex\\agy-gemini-steel\\evidence\\PEER-QA-REFRESH.json",
+      "sha256": "320ed60a308965c7c217a06b9fb9c7a3f971243838529ee202733c58cf018e03",
+      "preserved": true
+    }
+  ],
+  "root_live_context": {
+    "classification": "PARENT_REPORTED_NOT_REPLAYED_BY_PEER",
+    "Google_auth": "Existing owned remote Chrome rejected sign-in as insecure before credentials. Parent reports no credential entry, token transfer or bypass.",
+    "public_guest": "Parent reports same session public Gemini app with visible contenteditable after one GUEST_APP GET; no FILL/SEND at review request. Guest availability is separate from Google account authentication.",
+    "budget": "Same bounded owned session only; existing hard expiry and one submission policy unchanged. No new session authorized by peer report."
+  },
+  "repairs_and_checks": {
+    "default_denial": "allow_guest_probe must be explicitly boolean true for public guest fallback; missing/false denies fallback; nonboolean opt-in is rejected by policy validation.",
+    "guest_editor": "Only one visible [contenteditable=true] on exact HTTPS gemini.google.com/app or /app/, without query/hash. No fallback to email/password/generic text inputs.",
+    "auth_pages": "Accounts pages rejected before any form access, typing or send, even with guest opt-in. Wrong-host/protocol and non-app conversation/query pages denied.",
+    "send_gate": "Send rechecks current composition page, editor uniqueness and guest policy before clicking. Prior typing alone is not send authority.",
+    "one_guest_GET": "GUEST_APP cached identical receipt does not repeat navigation. Any FILL or SEND intent blocks guest-app navigation; pending REFRESH/GUEST_APP blocks SEND. No create branch in guest-app.",
+    "own_prompt_false_PASS": "Existing user-prompt/no-model-response negative still passes. Matching bound assistant response remains OUTPUT_CANDIDATE_REQUIRES_QA; collection requires matching existing SEND nonce intent.",
+    "classification": "Guest mode is GUEST_WEB_AUTH_UNVERIFIED. Composer or successful guest output cannot establish AUTH_PASS, Google account identity or independent acceptance.",
+    "privacy": "persist_profile=false remains mandatory; no cookies/profile or local Chrome auth are imported. New profile persistence would require separate explicit owner authorization."
+  },
+  "live_and_auth_verdict": {
+    "LIVE_EXECUTION": "UNVERIFIED_BY_PEER",
+    "GOOGLE_ACCOUNT_AUTH": "NOT_VERIFIED; parent reports security rejection",
+    "GUEST_MODEL_OUTPUT": "UNVERIFIED_PENDING_BOUNDED_LIVE_PROBE_AND_QA",
+    "independent_acceptance": "UNVERIFIED"
+  },
+  "limits": [
+    "Run only within current owned-session lifetime and fresh private policy/resource checks. If expired/unavailable, release/reconcile that session; do not create a replacement or retry an uncertain send.",
+    "Policy/journal budget remains one session/one submission. Preserve old CREATE policy/journal identity and use the separate explicit guest policy without rewriting historical evidence.",
+    "This review does not authorize bypass of Google browser security checks, credential automation, captcha solving, profile persistence or importing local browser auth.",
+    "Provider/auth/UI/live claims are parent observations or future evidence; no live provider action was performed by this reviewer. Existing Chrome/runtime outside this candidate was not changed."
+  ]
+}

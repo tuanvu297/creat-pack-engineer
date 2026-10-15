@@ -1,0 +1,12 @@
+{
+  "ok": true,
+  "operation": "collect",
+  "task_id": "AGY-GEMINI-STEEL-20261015-GUEST-A2",
+  "worker_id": "GEMINI-STEEL",
+  "result": {
+    "status": "OUTPUT_NOT_VERIFIED",
+    "nonce_found": false,
+    "answer_excerpt": "Gemini said\n\nACK:AGY-STEEL-A2-731\nSUM:42 (19+23)",
+    "url": "https://gemini.google.com/app/7f340cf9f4764113"
+  }
+}

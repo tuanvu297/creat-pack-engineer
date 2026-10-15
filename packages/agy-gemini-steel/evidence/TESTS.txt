@@ -1,0 +1,44 @@
+✔ private paths reject package descendants including nonexistent children and case aliases (5.666ms)
+✔ private paths resolve junctions before containment checks (2.954ms)
+✔ expired authority permits only cleanup policy and release lease (16.9512ms)
+✔ collect requires matching send identity and permits uncertain same-send reconciliation (15.3208ms)
+✔ accounts auth page is classified without form access or automation (0.8939ms)
+✔ HTTP Gemini pages cannot be sent or collected (0.3167ms)
+✔ composer presence is never reported as authenticated (0.355ms)
+✔ main navigation cannot reuse a static resource allowlist (1.0532ms)
+✔ observed Gemini static host is resource-only; trackers remain denied (0.4864ms)
+✔ refresh is once-only and blocked by pending or completed prompt intents (22.3727ms)
+✔ uncertain refresh blocks send without replaying navigation (10.6363ms)
+✔ refresh refuses account pages, conversations and query redirects (0.5314ms)
+✔ guest fallback defaults denied and policy opt-in is strict boolean (1.1009ms)
+✔ explicit guest permits only one visible public editor and remains AUTH_UNVERIFIED (0.5475ms)
+✔ guest permission never allows auth-page typing or non-app editors (0.3291ms)
+✔ guest-app navigation happens at most once and cannot follow a send intent (14.1114ms)
+✔ exact page origins and secondary resources (2.2875ms)
+✔ SSR F, lookalike, credentials, alternate port denied (0.2513ms)
+✔ auth URLs redact query and path (0.1769ms)
+✔ expired identity or missing resource denies (0.4518ms)
+✔ no profile persistence or expanded budget (0.1998ms)
+✔ secret-shaped input denied (0.4698ms)
+✔ durable once caches identical mutation; changed payload denied (18.4968ms)
+✔ uncertain accepted mutation never repeated (14.7898ms)
+✔ one session bound to one task; fresh lease ACK before PLAN (16.9527ms)
+✔ create disables profile, proxy, captcha and pins bounded project (0.5942ms)
+✔ own prompt cannot satisfy output check (0.3365ms)
+✔ only exact assistant response is output candidate (0.3406ms)
+✔ normalizes only the two exact response bodies (1.7636ms)
+✔ removes one leading known English or Vietnamese UI heading (0.2276ms)
+✔ wrong nonce and invalid nonce syntax cannot pass (0.1467ms)
+✔ wrong sums and alternate arithmetic annotations are denied (0.1494ms)
+✔ extra explanations or internal blank lines are denied (0.1511ms)
+✔ unknown headings or repeated known headings are not stripped (0.1764ms)
+✔ the actual prompt echo cannot satisfy the response grammar (0.1289ms)
+✔ collector preserves original text and labels only an assistant candidate (0.4203ms)
+ℹ tests 36
+ℹ suites 0
+ℹ pass 36
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 189.9118

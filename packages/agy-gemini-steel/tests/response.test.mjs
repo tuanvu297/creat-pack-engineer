@@ -1,0 +1,13 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {normalizeResponse} from '../src/response.mjs';
+import {GeminiSteel} from '../src/runtime.mjs';
+const nonce='NONCE-001',canonical='ACK:NONCE-001\nSUM:42';
+test('normalizes only the two exact response bodies',()=>{assert.equal(normalizeResponse(canonical,nonce),canonical);assert.equal(normalizeResponse(canonical+' (19+23)',nonce),canonical);assert.equal(normalizeResponse('\r\nACK:NONCE-001\r\nSUM:42\r\n',nonce),canonical);});
+test('removes one leading known English or Vietnamese UI heading',()=>{for(const heading of ['Gemini said','Gemini đã nói'])assert.equal(normalizeResponse(heading+'\n\n'+canonical+' (19+23)',nonce),canonical);});
+test('wrong nonce and invalid nonce syntax cannot pass',()=>{assert.equal(normalizeResponse(canonical,'NONCE-002'),null);for(const token of ['',null,'nonce-001','NONCE-001\nSUM:42'])assert.equal(normalizeResponse(canonical,token),null);});
+test('wrong sums and alternate arithmetic annotations are denied',()=>{for(const sum of ['SUM:41','SUM:420','SUM:42 (20+22)','SUM:42 (19+24)','SUM:42 (19+23) 7','SUM:42(19+23)'])assert.equal(normalizeResponse('ACK:'+nonce+'\n'+sum,nonce),null);});
+test('extra explanations or internal blank lines are denied',()=>{for(const text of [canonical+'\nDone','Explanation\n'+canonical,'ACK:'+nonce+'\n\nSUM:42',canonical+' extra'])assert.equal(normalizeResponse(text,nonce),null);});
+test('unknown headings or repeated known headings are not stripped',()=>{for(const heading of ['User said','Gemini said:','The answer is','Gemini said\nGemini said'])assert.equal(normalizeResponse(heading+'\n'+canonical,nonce),null);});
+test('the actual prompt echo cannot satisfy the response grammar',()=>{const prompt='AGY bounded connection test. No tools or external actions. Return exactly two lines: ACK:'+nonce+' and SUM:42 (19+23).';assert.equal(normalizeResponse(prompt,nonce),null);assert.equal(normalizeResponse(prompt+'\n'+canonical,nonce),null);});
+test('collector preserves original text and labels only an assistant candidate',async()=>{const original='Gemini said\n\n'+canonical+' (19+23)',r=new GeminiSteel({},null,null,{});r.page={url:()=> 'https://gemini.google.com/app/conversation',locator:selector=>{assert.equal(selector,'model-response');return{count:async()=>1,last:()=>({innerText:async()=>original})};},innerText:()=>{throw Error('whole-page/user echo must not be read');}};const result=await r.collect(nonce);assert.equal(result.status,'OUTPUT_CANDIDATE_REQUIRES_QA');assert.equal(result.answer_excerpt,original);assert.equal(result.normalized_answer,canonical);});

@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-15T14:03:17.510Z",
+  "status": "BOTH_OWNED_SESSIONS_RELEASED_VERIFIED",
+  "sessions": [
+    {
+      "session_id": "8debbfc8-83b5-4ac6-b95c-e290c8ff07de",
+      "status": "released",
+      "profile_persisted": false
+    },
+    {
+      "session_id": "8ab49c1e-88d3-439b-bfb2-3a02de64b153",
+      "status": "released",
+      "profile_persisted": false
+    }
+  ],
+  "readback": "OfficialSDK GET sameIDs after release ACK/expiry; no resubmission",
+  "cost": "ExistingSteelcredits only; exactproviderbilledusage notcomputed"
+}

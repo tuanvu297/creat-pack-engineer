@@ -1,0 +1,40 @@
+{
+  "report_id": "GEMINI-STEEL-PEER-QA-INITIAL",
+  "recorded_at": "2026-10-15T13:48:23.262997+00:00",
+  "verdict": "PASS_LOCAL_PREFLIGHT_SCOPED",
+  "tests": {
+    "passed": 20,
+    "failed": 0,
+    "skipped": 0
+  },
+  "scope": "Offline source/test review and permitted source corrections only; no network/provider/UI/private-state action by peer.",
+  "source_sha256": {
+    "bin/connection.mjs": "903bb2402bc6b2c3bc182daf3cce18e833536a2bfdee255b777614473365fde6",
+    "src/journal.mjs": "c27896bcc8aa7c2f21a7f5ff6b9b7136bf89407674a8e24cd4abd5640588d3bd",
+    "src/policy.mjs": "0aff655cdd7f058881fb9b5adcfe774b1a9f147ccf5ea84b7d8771c426d9e93a",
+    "src/private_paths.mjs": "ef69844ccc359915e8e9da5b4998f92e12c259bad2ad2b1d6145fc009131db9e",
+    "src/runtime.mjs": "807cb1c3c9ef389838f96d2ff4aaab13c0947b4265a3b725260ac3bfd1cfc70d",
+    "tests/peer.test.mjs": "3a6dd5e32c2fdc8ec35450ec660165a4cecf72fd42dce124df76b4bf5c1f1b44",
+    "tests/policy.test.mjs": "b7b82c1fab980de36e404affe413ec939e47e3d643bf82db7fe8c6f8b4e238c3"
+  },
+  "repairs": [
+    "Windows absolute ESM pathToFileURL root correction retained; CJS/named Chromium fallback plus dependency interface validation before provider call",
+    "Canonical realpath and Windows case/junction-safe external state/config containment",
+    "Collect requires existing matching SEND nonce intent; uncertain matching SEND may be read-only reconciled",
+    "Expired policy/resource freshness cannot block owned-session release; fresh release-only local lease and existing task/SID binding still required",
+    "Top-level navigation cannot reuse static-resource host allowlist",
+    "Send/collect enforce exact HTTPS page allowlist; accounts authentication page receives no form automation"
+  ],
+  "classification": {
+    "ACK": "Fresh local adapter ACK with PID/scope before PLAN; not a provider submission ACK",
+    "AUTH": "Composer presence explicitly AUTH_UNVERIFIED; sign-in/account pages HUMAN_LOGIN_REQUIRED",
+    "OUTPUT": "Exact model-response nonce/sum is candidate requiring independent QA, never automatic PASS"
+  },
+  "limits": [
+    "Live Steel/Gemini/authentication success not established by offline tests.",
+    "Budget enforced in the existing private journal; do not swap/reset state or retry uncertain mutation.",
+    "Release bypass is cleanup-only, not renewed create/send authority.",
+    "Profiles/cookies are not copied; persistence remains disabled and requires new explicit owner consent before any future enablement.",
+    "Existing Chrome/runtime and private session state were not touched by peer."
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "task_id": "AGY-GEMINI-STEEL-20261015",
+  "phases": [
+    {
+      "task_id": "AGY-GEMINI-STEEL-20261015-A1",
+      "session_id": "8debbfc8-83b5-4ac6-b95c-e290c8ff07de",
+      "status": "PROVIDER_RELEASED_CONFIRMED",
+      "create": "ONE_DONE",
+      "navigation": "GeminiHTTP200/fullUI afterexactstaticresourcefix",
+      "authentication": "GOOGLE_REJECTED_BROWSER_BEFORE_CREDENTIAL_ENTRY",
+      "FILL": 0,
+      "SEND": 0,
+      "scope": "Ephemeralconnectionrepair; no model replay"
+    },
+    {
+      "task_id": "AGY-GEMINI-STEEL-20261015-GUEST-A2",
+      "session_id": "8ab49c1e-88d3-439b-bfb2-3a02de64b153",
+      "status": "PROVIDER_RELEASED_CONFIRMED_SEPARATE_READBACK",
+      "create": "ONE_DONE",
+      "FILL": 1,
+      "SEND": 1,
+      "nonce": "AGY-STEEL-A2-731",
+      "actual_reply": "ACK:AGY-STEEL-A2-731;SUM:42(19+23)",
+      "scope": "PublicguestFlashLite,singleboundedtest; noaccountauthority",
+      "original_collector": "OUTPUT_NOT_VERIFIED retained; UIheading/formula formattingfalse-negative under separateQA"
+    }
+  ],
+  "total_session_creates": 2,
+  "total_model_submissions": 1,
+  "mutation_retries": 0,
+  "new_stored_Work": 0,
+  "existing_Chrome_and_shared_gateway": "UNCHANGED",
+  "secret_boundary": "No profilepersistence/cookieimport/keyorviewerURL exported",
+  "overall": "PARTIAL; LIVE_GUEST_BASIC_TEXT observed; AUTHENTICATED_STEEL EXTERNAL_LIMIT",
+  "callback_target": "01a13499-9300-72a3-8944-87f9b3fd2362",
+  "first_probe_ACK_observed_at": "2026-10-15T13:59:11Z",
+  "recorded_at": "2026-10-15T14:03:46.746306+00:00",
+  "closure_evidence": "SESSION-RELEASE-READBACK.json"
+}

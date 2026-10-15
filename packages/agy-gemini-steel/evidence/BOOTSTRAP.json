@@ -1,0 +1,29 @@
+{
+  "task_id": "AGY-GEMINI-STEEL-20261015-A1",
+  "role": "Creat Pack unified Engineer; owner-authorized scoped Steel route repair",
+  "QA_CONTRACT_VERSION": "1.1",
+  "fresh_canon": [
+    {
+      "id": "10Ph_XvsgytAHsdECGDNkPY94l4EIuTat-4VWtbXrTsY",
+      "modified": "2026-10-15T07:54:27.464Z"
+    },
+    {
+      "id": "1TFSkLh7ZfAxHq-mYSN-HG2Dp1XJaG_JWcItASe_4tME",
+      "modified": "2026-10-15T07:21:31.176Z"
+    },
+    {
+      "id": "1S98IZWRhF5rDdthPO-y5ETb1shHRS9bz0f_J22yzcqc",
+      "modified": "2026-10-11T23:18:55.728Z"
+    }
+  ],
+  "owner_request": "Fix Gemini connection on Steel; preserve previous operations",
+  "source_baseline": "Existing shared Steel gateway/demo sources and existing Chrome left unchanged",
+  "resource": "OBSERVED Steel wallet included29.97/30 USD; purchased0, no paymentcard or purchases, no topup performed",
+  "known_issue": "Existing generic gateway lacks Gemini production/auth route; Chrome login is not Steel session auth",
+  "recovery": "One actual Steel create DONE; same sid reconciled via provider GET after local Chromium import failure; no NAVIGATE/FILL/SEND before peer fixes",
+  "scope": "One ephemeral15min session/one synthetic model probe, no importedChromeauth/profilepersistence/productionrights",
+  "truth": "Connection existence OBSERVED; Gemini auth/model output UNVERIFIED pending actual gate",
+  "callback_target": "01a13499-9300-72a3-8944-87f9b3fd2362",
+  "secrets": "All config/key/session-view URLs/SQLite outside package; no actual keys in evidence",
+  "new_Work": 0
+}

@@ -1,0 +1,56 @@
+{
+  "report_id": "GEMINI-STEEL-PEER-QA-REFRESH",
+  "recorded_at": "2026-10-15T13:51:01.983175+00:00",
+  "verdict": "PASS_LOCAL_PREFLIGHT_SCOPED",
+  "tests": {
+    "run": 24,
+    "pass": 24,
+    "failed": 0,
+    "skipped": 0
+  },
+  "previous_report": {
+    "path": "D:\\Codex\\agy-gemini-steel\\evidence\\PEER-QA.json",
+    "sha256": "8be80a205d810253ad20640348a7b24293875ddd9663d674ce8b463f7350c1d7",
+    "preserved": true
+  },
+  "scope": "Source/test corrections and isolated offline test execution only. No provider/network/UI operation or private-state access by peer; original Chrome/runtime and other projects untouched.",
+  "source_sha256": {
+    "bin/connection.mjs": "4579c8f4d951905fa1c540280d7481a17e2f62bb4e6f9a67c455b798a17734ea",
+    "src/journal.mjs": "69c0af0214bac51e901389b490f1eda5ef96f3d9bd498518b7270a262a7d57f4",
+    "src/policy.mjs": "c0857059c78623b47832450bfa75a8cd6d38033dbc49cda67ad13257a24ce0bc",
+    "src/private_paths.mjs": "ef69844ccc359915e8e9da5b4998f92e12c259bad2ad2b1d6145fc009131db9e",
+    "src/runtime.mjs": "d28e330554b5326ff0894fe981d41d9e9d8d9444d16e5ee396643846cf5f139d",
+    "tests/peer.test.mjs": "d3e9e92cd29afaf5f3ae4955c4c1768e9d877be5777c14097d31727980cf333f",
+    "tests/policy.test.mjs": "b7b82c1fab980de36e404affe413ec939e47e3d643bf82db7fe8c6f8b4e238c3"
+  },
+  "material_recovery": {
+    "root_observation": "Parent reported same owned Steel session live and Gemini HTTP200, but exact gemini.gstatic.com JavaScript was blocked. No prompt submission was reported before recovery. This live observation was not independently repeated by peer.",
+    "exact_allowlist_change": "gemini.gstatic.com is permitted as resource only; not a navigable page origin. Tracking hosts remain blocked.",
+    "new_operation": "refresh",
+    "session_scope": "Existing journal-bound task/SID only; no create branch",
+    "navigation_scope": "Exact HTTPS gemini.google.com/app or /app/, no query/hash/conversation/account redirect",
+    "idempotency": "One REFRESH intent; completed cached navigation is not repeated; unknown refresh remains pending and cannot be blindly retried",
+    "ordering_guard": "REFRESH denied after any FILL or SEND intent; SEND denied while REFRESH uncertain/pending",
+    "authority": "Normal fresh policy and capped local operation lease required; this is GET navigation recovery, not model submit or auth automation"
+  },
+  "local_contract_results": {
+    "Windows_canonical_containment": "PASS case aliases, nonexistent descendants and directory junctions; outside sibling allowed",
+    "CJS_import_compatibility": "pathToFileURL retained; named/default Chromium normalization and dependency method checks added before provider create. Live SDK/browser compatibility is parent-observed separately.",
+    "auth_pages": "PASS accounts pages classified HUMAN_LOGIN_REQUIRED without form access/fill/send/collect; composer alone stays COMPOSER_PRESENT_AUTH_UNVERIFIED",
+    "own_prompt_false_PASS": "PASS no model-response cannot pass; exact assistant response is only OUTPUT_CANDIDATE_REQUIRES_QA",
+    "collect_provenance": "PASS must match nonce hash of existing DONE/PENDING SEND intent; mismatched/no-send collect rejected",
+    "cleanup": "PASS expired policy/resource freshness can authorize only owned-session release with new RELEASE_OWNED_SESSION_ONLY local lease; original task/SID binding still mandatory",
+    "network_scope": "PASS full HTTPS host/port/credential validation on send/collect; navigation uses page origins, static request uses resource allowlist",
+    "durability": "PASS original mutation cache/no-uncertain-retry tests retained; refresh pending blocks send"
+  },
+  "remaining_limits": [
+    "LOCAL pass does not prove Google account authentication, successful live Gemini model output, or independent semantic acceptance. Steel session/network/Gemini HTTP claims here are parent-provided observations, not peer network calls.",
+    "The local ACK with PID and operation lease proves adapter receipt, not a provider/model ACK. Exact model output remains a candidate requiring independent QA.",
+    "Human must handle any Google sign-in manually through the official owned session. No password, account-form or captcha automation, cookie/profile transfer, or persisted profile was added.",
+    "persist_profile remains false. Future profile storage needs explicit new owner consent; no existing browser/profile is imported or modified.",
+    "One-session/one-send controls rely on retaining the same private task journal; do not reset/swap state or make a new session to recover an uncertain action.",
+    "The fixed resource repair does not permit wildcard Google hosts, trackers or additional refresh retries. Further observed gaps require their own bounded decision.",
+    "Owned cleanup must be reconciled against the same SID; provider timeout/expiry may require read-only reconciliation. Actual release was not invoked or certified by peer.",
+    "Provider account credit/billing eligibility and current session lifetime must be checked by the active owner-authorized operator. No purchase or paid expansion is authorized by this report."
+  ]
+}

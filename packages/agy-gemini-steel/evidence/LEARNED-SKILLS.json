@@ -1,0 +1,31 @@
+{
+  "status": "PROJECT_LOCAL_LEARNING_CANDIDATE",
+  "promotion": "NONE",
+  "skills": [
+    {
+      "name": "Scoped remote-browser connection recovery",
+      "improved": "Separate accepted session creation from local dependency failures; reconnect sameproviderID instead of creatingreplacement",
+      "truth": "OBSERVED",
+      "evidence": "A1 CREATE DONE + providerGET live for same8debbfc8-83b5-4ac6-b95c-e290c8ff07de; pre-navigation importfailure",
+      "routing_effect": "Future connection repair must read journal/provider before mutation retry"
+    },
+    {
+      "name": "Page origins versus resource origins",
+      "improved": "Geminipage200 can still fail because requiredJS host not allowed; permit exactlyobserved assethost without opening it as mainpage",
+      "truth": "OBSERVED_FAILURE; CORRECTION_PENDING_LIVE_RETEST",
+      "evidence": "OfficialSteelviewer13:46:14GETgemini.google.com/app200, gemini.gstatic.comJSblocked",
+      "routing_effect": "Classify localpolicyfault separately from provider outage or authfailure; changed-policy safeGETrefresh allowed onlybeforeFILL/SEND"
+    }
+  ],
+  "sources": [
+    "https://docs.steel.dev/overview/sessions-api/quickstart",
+    "https://docs.steel.dev/overview/profiles-api/overview",
+    "src/policy.mjs",
+    "src/journal.mjs"
+  ],
+  "limits": [
+    "Localconnection/contextualengineering only",
+    "No globalcanon/skills/competencypromotion",
+    "Google auth and actualGeminiresult remainUNVERIFIED"
+  ]
+}

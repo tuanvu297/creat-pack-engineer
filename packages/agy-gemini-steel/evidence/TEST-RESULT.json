@@ -1,0 +1,10 @@
+{
+  "recorded_at": "2026-10-15T14:07:06.935374+00:00",
+  "LOCAL_FUNCTION_PASS": "PASS_36",
+  "runtime": "Node24.19.0 Windows",
+  "scope": "Independentpeer+root; URLs,authbounds,Windowscontainment,idempotency,expirycleanup,strictguest/parser; offline no provider calls",
+  "INSTALL_TEST_PASS": "UNVERIFIED_CLEAN_NPM_CI_NOT_RUN",
+  "actual_live_scope": "GuestBasicText only; originalrawreply and parserfalse-negative preserved",
+  "AUTH_VERIFIED": "EXTERNAL_LIMIT_GOOGLE_REJECTED_REMOTE_BROWSER",
+  "new_Work": 0
+}

@@ -1,0 +1,167 @@
+{
+  "report_id": "GEMINI-STEEL-PEER-LIVE-GUEST",
+  "recorded_at": "2026-10-15T14:06:58.926823+00:00",
+  "verdict": "PASS_SCOPED",
+  "accepted_scope": "GUEST_BASIC_TEXT",
+  "task_id": "AGY-GEMINI-STEEL-20261015-GUEST-A2",
+  "session_id": "8ab49c1e-88d3-439b-bfb2-3a02de64b153",
+  "peer_scope": "Independent offline inspection of saved response, sanitized journal, local screenshot and release readback; permitted pure reader fix and tests. No provider/network/UI/private-state action or prompt replay by peer.",
+  "historical_false_negative": {
+    "path": "D:\\Codex\\agy-gemini-steel\\evidence\\LIVE-GUEST-RAW.json",
+    "sha256": "b045c911c878485f90a248936f7fff787786ce3cc5db5a6c15cf2c9addaba830",
+    "original_status": "OUTPUT_NOT_VERIFIED",
+    "original_nonce_found": false,
+    "preserved_unchanged": true,
+    "cause": "Reader required flattened ACK/SUM text and rejected known leading Gemini UI heading plus the literal parenthesized arithmetic requested in its own prompt."
+  },
+  "reader_fix": {
+    "function": "src/response.mjs normalizeResponse(text,nonce)",
+    "allowed_normalization": "Outer framing whitespace/CRLF handling; remove only one exact leading Gemini said or Gemini \u0111\u00e3 n\u00f3i UI heading and its blank separator; require exactly two lines.",
+    "accepted_bodies": [
+      "ACK:<exact recorded nonce> then SUM:42",
+      "ACK:<exact recorded nonce> then SUM:42 (19+23)"
+    ],
+    "canonical_answer": "ACK:AGY-STEEL-A2-731\nSUM:42",
+    "negative_coverage": [
+      "wrong nonce",
+      "invalid nonce syntax",
+      "wrong sum",
+      "alternate arithmetic annotation",
+      "extra numbers or explanation",
+      "unknown/repeated heading",
+      "actual prompt echo",
+      "no assistant response selector"
+    ],
+    "runtime_disposition": "Only OUTPUT_CANDIDATE_REQUIRES_QA; original answer_excerpt retained. This independent report supplies the bounded semantic verdict separately."
+  },
+  "local_test_status": {
+    "run": 36,
+    "pass": 36,
+    "failed": 0,
+    "skipped": 0,
+    "latest_fixture_note": "Root changed only the intentional dummy secret fixture construction to split strings; same test runtime value/semantics. Final36-test rerun passed after that change.",
+    "source_sha256": {
+      "bin/connection.mjs": "75614eb134ab1998421f50bc8b55822ea39b264f920a10a8ffed824ae7e24464",
+      "src/journal.mjs": "2a25b9016eddfcd32772b509bed8cb13b5db879a3eeb0bf14eca81cfb4a68206",
+      "src/policy.mjs": "95a852077de8c56ec0770526739b892f0639d4c3437d770072d7b8440377d11d",
+      "src/private_paths.mjs": "ef69844ccc359915e8e9da5b4998f92e12c259bad2ad2b1d6145fc009131db9e",
+      "src/response.mjs": "ea571c1a750efc978eb00c767b07c2e053b62931f83feb62dc84ad2b909a92a4",
+      "src/runtime.mjs": "355c1a891be03e5c68e247d37f704145ec496054c272e4b3ef4d96bb0fe4d873",
+      "tests/peer.test.mjs": "906b3fda696efc1a232ac6d0f08cd1003d03da74ef32f041d819d053a4170867",
+      "tests/policy.test.mjs": "67b4e962cddc7b02c08271ddcfd8622229aee70ce29b94c3101dd60f1a0b6c80",
+      "tests/response.test.mjs": "4d4a0c833b74ff19cceba75e151104bc3f2d36ab468343616ec655aa5ae674db"
+    }
+  },
+  "independent_evidence_checks": {
+    "screenshot": "Locally viewed GUEST-LIVE-PROOF.jpg; actual assistant answer is spatially separate from the user prompt bubble, matches saved nonce/math, and page shows Sign in/Flash-Lite guest UI.",
+    "response_and_nonce": "Exact ACK:AGY-STEEL-A2-731 and SUM:42 (19+23); 19+23=42; no extra explanation.",
+    "prompt_fingerprint": "Reconstructed fixed prompt fingerprint matches FILL intent.",
+    "send_fingerprint": "Recorded nonce fingerprint matches SEND intent.",
+    "session_binding": "CREATE result session ID matches sanitized journal session ID.",
+    "intent_counts": {
+      "CREATE": 1,
+      "NAVIGATE": 1,
+      "FILL": 1,
+      "SEND": 1
+    },
+    "all_intents_done": true,
+    "ACK_before_PLAN": {
+      "connect": {
+        "ACK_n": 1,
+        "PLAN_n": 2,
+        "fresh_within_operation_lease": true
+      },
+      "probe": {
+        "ACK_n": 8,
+        "PLAN_n": 9,
+        "fresh_within_operation_lease": true
+      },
+      "collect": {
+        "ACK_n": 15,
+        "PLAN_n": 16,
+        "fresh_within_operation_lease": true
+      }
+    },
+    "probe_lease_ms": 120000,
+    "send_checkpoint_elapsed_ms_after_probe_ACK": 13911,
+    "send_before_collect": true,
+    "no_own_prompt_PASS": true,
+    "guest_auth_classification": "GUEST_NOT_AUTHENTICATED",
+    "profile_persisted": false
+  },
+  "phase_accounting": {
+    "root_reported_total_sessions": 2,
+    "A1": "Parent reports released and zero FILL/SEND before distinct A2. No uncertain model submission was replayed. Peer did not read A1 private journal.",
+    "A2": "Exactly one CREATE/NAVIGATE/FILL/SEND independently observed in supplied sanitized A2 journal; one bounded guest text proof.",
+    "release_readback": {
+      "status": "BOTH_OWNED_SESSIONS_RELEASED_VERIFIED",
+      "observed_at": "2026-10-15T14:03:17.510Z",
+      "saved_official_SDK_same_ID_statuses": [
+        {
+          "session_id": "8debbfc8-83b5-4ac6-b95c-e290c8ff07de",
+          "status": "released",
+          "profile_persisted": false
+        },
+        {
+          "session_id": "8ab49c1e-88d3-439b-bfb2-3a02de64b153",
+          "status": "released",
+          "profile_persisted": false
+        }
+      ],
+      "peer_provider_GET_performed": false
+    }
+  },
+  "findings": [
+    {
+      "id": "F-RESPONSE-FORMAT-FALSE-NEGATIVE",
+      "severity": "S2",
+      "disposition": "REPAIRED_RETEST_PASS; RAW_HISTORY_PRESERVED",
+      "observed": "Actual assistant response was correct but UI heading/exact requested arithmetic annotation made old strict collector return OUTPUT_NOT_VERIFIED.",
+      "correction": "Pure deterministic whitelist parser; no alternate numbers/explanations accepted; no extra prompt or provider action."
+    }
+  ],
+  "evidence_files": [
+    {
+      "path": "D:\\Codex\\agy-gemini-steel\\evidence\\LIVE-GUEST-RAW.json",
+      "sha256": "b045c911c878485f90a248936f7fff787786ce3cc5db5a6c15cf2c9addaba830"
+    },
+    {
+      "path": "D:\\Codex\\agy-gemini-steel\\evidence\\LIVE-GUEST-JOURNAL.json",
+      "sha256": "d6ec799379a54bb1540f6aabbcfcda9e269c9e3d934b0f8f003848f87fe242ee"
+    },
+    {
+      "path": "D:\\Codex\\agy-gemini-steel\\evidence\\GUEST-LIVE-PROOF.jpg",
+      "sha256": "0bb07b89cb48d0820c4acb21b87fc7e83873b699670bdaff27168221e7052d92"
+    },
+    {
+      "path": "D:\\Codex\\agy-gemini-steel\\evidence\\SESSION-RELEASE-READBACK.json",
+      "sha256": "fae5b537599493b205b26714a6b7535f4bdf0597f7f25a8e6ad0dfe255d92892"
+    },
+    {
+      "path": "D:\\Codex\\agy-gemini-steel\\evidence\\PEER-QA.json",
+      "sha256": "8be80a205d810253ad20640348a7b24293875ddd9663d674ce8b463f7350c1d7"
+    },
+    {
+      "path": "D:\\Codex\\agy-gemini-steel\\evidence\\PEER-QA-REFRESH.json",
+      "sha256": "320ed60a308965c7c217a06b9fb9c7a3f971243838529ee202733c58cf018e03"
+    },
+    {
+      "path": "D:\\Codex\\agy-gemini-steel\\evidence\\PEER-QA-GUEST.json",
+      "sha256": "826efd2cc622c2642cecf064508849febf3b4a1ec631fa9fae62dcfb342b4611"
+    }
+  ],
+  "explicit_non_passes": {
+    "Google_account_AUTH": "EXTERNAL_LIMIT; parent observed remote-browser security rejection before credentials; no login bypass or AUTH_PASS",
+    "general_Gemini_tools_or_account_features": "UNVERIFIED_NOT_GRANTED",
+    "persistent_profile": "DISABLED; future enablement requires separate explicit owner consent",
+    "native_chat_wakeup_or_AGY_acceptance": "UNVERIFIED_NOT_ESTABLISHED",
+    "general_or_production_integration": "UNVERIFIED"
+  },
+  "limits": [
+    "Scoped guest text result is supported by preserved saved evidence, not a new provider execution by reviewer.",
+    "Release states are checked in saved official SDK readback; no new peer provider query. Both owned IDs report released with no persisted profile.",
+    "Existing credits/no purchase is parent-observed; exact billed usage is not computed. No new session/submission authority follows from this report.",
+    "Pure normalization cannot establish DOM role or send provenance alone; model-response selector and matching durable SEND nonce remain mandatory.",
+    "No Google credential entry, cookie/profile transfer, security bypass, local Chrome auth reuse or profile storage is introduced. Existing browser/runtime outside this candidate was not modified by peer."
+  ]
+}

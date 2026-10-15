@@ -1,0 +1,61 @@
+{
+  "package_name": "agy-gemini-steel",
+  "package_version": "0.1.0",
+  "purpose": "Additive owner-authorized Gemini-on-Steel connection adapter; exact-domain bounds, private auth boundary and durable no-blind-retry journal",
+  "runtime_requirements": [
+    "Node>=24; tested24.19.0 Windows",
+    "Existing Steel account/project and eligible credits",
+    "Existing STEEL_API_KEY environment only",
+    "Owner completes Google login on remote session if required"
+  ],
+  "dependencies": [
+    {
+      "name": "steel-sdk",
+      "version": "0.18.0"
+    },
+    {
+      "name": "playwright",
+      "version": "1.64.0"
+    }
+  ],
+  "entrypoints": [
+    "bin/connection.mjs"
+  ],
+  "input_contract": {
+    "commands": [
+      "connect",
+      "status",
+      "probe",
+      "collect",
+      "release"
+    ],
+    "policy": "external task/worker/owner/callback/expiry, fresh eligible resource; one session <=15min and one probe submission",
+    "lease": "Fresh per-invocation local adapter ACK before PLAN; not model ACK",
+    "auth": "No localChrome cookie/profile transfer; persistProfile=false"
+  },
+  "output_contract": {
+    "truth": "connection/auth/actual assistant response/callback/independent acceptance separate",
+    "idempotency": "SQLite WAL/FULL intent reservation before mutation; pending/unknown never automatically resubmitted",
+    "secrets": "Viewer/debug/CDP URLs only in private external state, never evidence/release"
+  },
+  "authentication_requirements": [
+    "Existing environment key, never bundled",
+    "Google remote login if required; human credentials/OTP/CAPTCHA entry direct",
+    "Persistent auth storage requires explicit owner approval and separate validated implementation"
+  ],
+  "known_limits": [
+    "Prototype scoped to synthetic connection test, no general externalaction rights",
+    "No profile persistence or Chrome cookie import",
+    "Google login/account/remote-browser restrictions remain external gates",
+    "New Gemini DOM selectors not LIVE PASS until actual result",
+    "Legacy shared gateway and Chrome remain unchanged",
+    "No unattended native chat wakeup or global promotion",
+    "Signature scan finite coverage"
+  ],
+  "test_status": {
+    "LOCAL_FUNCTION_PASS": "See independent peer and current TEST-RESULT",
+    "AUTH_VERIFIED": "UNVERIFIED until remoteGoogle login",
+    "LIVE_EXECUTION_PASS": "UNVERIFIED until actual model result",
+    "INTEGRATED_PASS": "UNVERIFIED; callbacks and acceptance require separate actual receipts"
+  }
+}
