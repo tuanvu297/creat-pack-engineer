@@ -1,0 +1,25 @@
+{
+  "at": "2026-10-15T14:13:11.934Z",
+  "task_id": "AGY-GEMINI-STEEL-20261015",
+  "native_callback_delivery": "VERIFIED_ACTUAL_READ_THREAD",
+  "independent_AGY_acceptance": "VERIFIED_PASS_SCOPED",
+  "accepted_scope": "GUEST_BASIC_TEXT_ON_STEEL",
+  "target_chat": "AGY Dispatch Result Watch",
+  "chat_id": "6acb1ce3-e37c-83ec-9eb7-f795fd5243c1",
+  "native_turn_id": "58c5e1fc-69bf-47c3-abac-23f4fd775ba0",
+  "reviewer_message_id": "cd253399-80f7-4977-b552-0200f3d5d4fc",
+  "zip_sha256": "b76290963616b9c28aa17590bb568f48435ae91072c00c2021266fa670ad0434",
+  "raw_actual_response_sha256": "b045c911c878485f90a248936f7fff787786ce3cc5db5a6c15cf2c9addaba830",
+  "reviewer_boundaries": [
+    "Google/Pro AUTH EXTERNAL_LIMIT",
+    "Authenticated account features UNVERIFIED",
+    "General tool/production rights NOT_GRANTED",
+    "Native wakeup/global training UNVERIFIED",
+    "A1 zeroFILL/SEND was root/peer-reported rather than independently reconstructed from privateDB by AGY"
+  ],
+  "overall": "PARTIAL",
+  "native_wake": "NOT_PROVEN_BY_THIS_ACTIVE_HOST_CALLBACK",
+  "new_Work": 0,
+  "github_release_commit": "5c4782cb46880bab6d0c86f4ad4eb140a9db9240",
+  "sync_receipt": "SYNC-RECEIPT pendingcallback field is historical; this append-only native receipt confirms later actual delivery/review"
+}
