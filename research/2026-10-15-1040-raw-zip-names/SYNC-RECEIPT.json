@@ -1,0 +1,40 @@
+{
+  "task_id": "CREAT-PACK-LEARNING-20261015-1040",
+  "recorded_at": "2026-10-15 03:45:40 UTC",
+  "status": "RESEARCH_EVIDENCE_SYNC_VERIFIED",
+  "finding": "RAW_ZIP_FILENAME_POLICY_FALSE_ACCEPTS_REPRODUCED",
+  "classification": "OBSERVED_SYNTHETIC_WINDOWS_PYTHON3.12.14",
+  "candidate_control": "4/4 local cases PASS; not applied to toolkit",
+  "github": {
+    "repository": "tuanvu297/creat-pack-engineer",
+    "commit": "af9bae8650aa8f4f41ba70fad16d0d88c138712b",
+    "exact_file_readbacks": 5
+  },
+  "drive": {
+    "parent_id": "1zD0S1fR2yOHCz2enI452Kdahv_KneZ0O",
+    "note_id": "1d0xZ993JST2HwyaQ-zztCzR2hBZo_XuL",
+    "note_readback": "EXACT_CONTENT_MATCH",
+    "evidence_id": "1jRHohT85HGinxJVq9GKgQhpiBTGMdDM4",
+    "evidence_bytes": 8732,
+    "evidence_sha256": "cd57bc6c741af2fd6b8b10c2d3cec92c65b5b60c49f6335669b8d989cba5a4d8",
+    "evidence_readback": "EXACT_SHA256_MATCH"
+  },
+  "source_sha256": "8b0ee64835516fa73c9244bc0fb0431284b36434cdd9917a4c752ca79799b043",
+  "source_unchanged": true,
+  "secret_scan": {
+    "files_scanned": 5,
+    "findings": 0,
+    "status": "PASS_SIGNATURE_SCAN"
+  },
+  "accepted_release_archives": {
+    "checked": 2,
+    "changed_raw_names": 0,
+    "original_SHA256_match": true
+  },
+  "full_regression": "UNVERIFIED_NOT_RUN",
+  "runtime_integrated": "UNVERIFIED_NOT_TESTED",
+  "global_promotion": "NOT_PERFORMED",
+  "provider_tasks": 0,
+  "other_thread_messages": 0,
+  "production_changes": 0
+}
