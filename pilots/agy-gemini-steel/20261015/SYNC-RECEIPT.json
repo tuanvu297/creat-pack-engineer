@@ -1,0 +1,41 @@
+{
+  "at": "2026-10-15T14:09:46.928Z",
+  "task_id": "AGY-GEMINI-STEEL-20261015",
+  "overall": "PARTIAL",
+  "guest_result": "VERIFIED_PASS_SCOPED_GUEST_BASIC_TEXT",
+  "google_auth": "EXTERNAL_LIMIT_GOOGLE_BROWSER_REJECTION",
+  "package_version": "0.1.0",
+  "zip_sha256": "b76290963616b9c28aa17590bb568f48435ae91072c00c2021266fa670ad0434",
+  "github": {
+    "pr": "https://github.com/tuanvu297/creat-pack-engineer/pull/8",
+    "commit": "5c4782cb46880bab6d0c86f4ad4eb140a9db9240",
+    "exact_blob_matches": 36
+  },
+  "drive": {
+    "zip_id": "1pkTeYUNvdak2fND3Njf_Zvr7S2eK3S7Q",
+    "qa_id": "1Rk4gXHCy_rCia5y5sJ-x388rfQX_WuAF",
+    "exact_readback": [
+      {
+        "name": "agy-gemini-steel-0.1.0.zip",
+        "bytes": 73901,
+        "sha256": "b76290963616b9c28aa17590bb568f48435ae91072c00c2021266fa670ad0434",
+        "exact_byte_match": true
+      },
+      {
+        "name": "QA-RELEASE-RECEIPT.json",
+        "bytes": 1382,
+        "sha256": "fa0169fb9ed835f8fe35dfc77a9edc3ad49caa8df5a66c56eff0bea456e1ec69",
+        "exact_byte_match": true
+      }
+    ]
+  },
+  "callback": {
+    "control_chat": "6acb1ce3-e37c-83ec-9eb7-f795fd5243c1",
+    "status": "SENT_AWAITING_ACTUAL_NATIVE_REVIEW",
+    "engineer_result": "Current Engineer chat final; activehost route"
+  },
+  "old_operations": "No changes to signed-in Chrome, shared demo gateway, chat-control runtime or schedules",
+  "model_submissions": 1,
+  "model_mutation_retries": 0,
+  "new_stored_Work": 0
+}
