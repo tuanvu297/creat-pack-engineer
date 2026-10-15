@@ -1,0 +1,98 @@
+{
+  "task_id": "CREAT-PACK-LEARNING-20261015-1040",
+  "observed_at": "2026-10-15T03:42:50.535895+00:00",
+  "classification": "OBSERVED_LOCAL_SYNTHETIC_EXPERIMENT",
+  "runtime": {
+    "python": "3.12.14",
+    "platform": "win32"
+  },
+  "source_sha256": "8b0ee64835516fa73c9244bc0fb0431284b36434cdd9917a4c752ca79799b043",
+  "cases": [
+    {
+      "case": "valid_ascii",
+      "expected_accept": true,
+      "fixture_sha256": "2057ace9387c4bf943027c3041c5717648d805ee2f14966ea9c7b22acceb9b62",
+      "metadata": {
+        "original_repr": "'fixture/a.txt'",
+        "normalized_repr": "'fixture/a.txt'",
+        "name_changed": false
+      },
+      "current": {
+        "accepted": true,
+        "PACKAGE_BUILT": "PASS"
+      },
+      "candidate": {
+        "accepted": true,
+        "PACKAGE_BUILT": "PASS"
+      }
+    },
+    {
+      "case": "valid_unicode",
+      "expected_accept": true,
+      "fixture_sha256": "7925fdfa0143c48aa720a7004b7f07bf8e9853cfb844f8d37da7518b8493f29b",
+      "metadata": {
+        "original_repr": "'fixture/xin-chao-\u0111.txt'",
+        "normalized_repr": "'fixture/xin-chao-\u0111.txt'",
+        "name_changed": false
+      },
+      "current": {
+        "accepted": true,
+        "PACKAGE_BUILT": "PASS"
+      },
+      "candidate": {
+        "accepted": true,
+        "PACKAGE_BUILT": "PASS"
+      }
+    },
+    {
+      "case": "nul_suffix",
+      "expected_accept": false,
+      "fixture_sha256": "7fadc2db3a48234639277cf9050ba1407b4ed5b0babb01382c8cafcf7e2489f5",
+      "metadata": {
+        "original_repr": "'fixture/a\\x00ignored'",
+        "normalized_repr": "'fixture/a'",
+        "name_changed": true
+      },
+      "current": {
+        "accepted": true,
+        "PACKAGE_BUILT": "PASS"
+      },
+      "candidate": {
+        "accepted": false,
+        "error_type": "ValueError",
+        "reason": "RAW_FILENAME_NOT_PRESERVED"
+      }
+    },
+    {
+      "case": "backslash_separator",
+      "expected_accept": false,
+      "fixture_sha256": "e6aa350e54213096e15e2b9c8ba5a3236d3af56bb37bfcd9c1e2ac032d14bf6c",
+      "metadata": {
+        "original_repr": "'fixture\\\\sub\\\\a.txt'",
+        "normalized_repr": "'fixture/sub/a.txt'",
+        "name_changed": true
+      },
+      "current": {
+        "accepted": true,
+        "PACKAGE_BUILT": "PASS"
+      },
+      "candidate": {
+        "accepted": false,
+        "error_type": "ValueError",
+        "reason": "RAW_FILENAME_NOT_PRESERVED"
+      }
+    }
+  ],
+  "candidate_controls_pass": true,
+  "current_negative_false_accepts": [
+    "nul_suffix",
+    "backslash_separator"
+  ],
+  "extracted_members": 0,
+  "executed_members": 0,
+  "provider_tasks": 0,
+  "source_modified": false,
+  "full_regression": "NOT_RUN_RESEARCH_ONLY",
+  "runtime_integrated": "UNVERIFIED",
+  "global_promotion": "NOT_PERFORMED"
+}
