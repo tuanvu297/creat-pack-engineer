@@ -1,0 +1,17 @@
+{
+  "scope": "Read-only raw metadata check of two existing release archives; not a rerun of live tasks",
+  "results": [
+    {
+      "artifact": "agy-auto-dispatch-0.1.1.zip",
+      "sha256": "6cc3671d62dfd599bdb6e011c7d6114d8063a02f377aebe8de0488fc4ab43d14",
+      "entries": 28,
+      "changed_raw_names": 0
+    },
+    {
+      "artifact": "agy-auto-dispatch-evidence-0.1.1.zip",
+      "sha256": "a846be1337c8ee1387848fbe7389295d9d3c57d308f519d56c4391ef0f94cbf1",
+      "entries": 16,
+      "changed_raw_names": 0
+    }
+  ]
+}
