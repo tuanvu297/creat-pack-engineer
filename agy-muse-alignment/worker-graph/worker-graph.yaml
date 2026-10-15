@@ -1,0 +1,43 @@
+version: 0.1-test
+source_of_truth: AGY Drive canon + current runtime evidence
+workers:
+  agy_control_plane:
+    role: orchestrator_acceptance
+    owns:
+      - canonical_task_contract
+      - routing
+      - acceptance
+      - durable_state
+    delegates_to: [muse, chatgpt, gemini, manus, codex_work]
+  muse:
+    priority_tier: parity_with_chatgpt_when_eligible
+    competency: UNKNOWN_BY_TASK_CLASS
+    can_do: [reasoning, synthesis, structured_execution, peer_qa]
+    should_not_do: [self_promote_final_pass, assume_unverified_tools, cross_permission_boundaries]
+    evidence_needed: [task_output, qa1, assumptions, evidence_ids, blocker_if_any]
+    peer_edges: [chatgpt, gemini, manus, codex_work]
+  chatgpt:
+    priority_tier: parity_with_muse_when_eligible
+    roles: [assistant_control_plane, expert, worker]
+    competency: EVIDENCE_SCOPED
+    peer_edges: [muse, gemini, manus, codex_work]
+  gemini:
+    competency: EVIDENCE_SCOPED
+    peer_edges: [muse, chatgpt, manus, codex_work]
+  manus:
+    competency: EVIDENCE_SCOPED
+    peer_edges: [muse, chatgpt, gemini]
+  codex_work:
+    competency: EVIDENCE_SCOPED
+    peer_edges: [muse, chatgpt, gemini]
+edge_contract:
+  required:
+    - TASK_ID
+    - source_of_truth_version
+    - expected_output
+    - acceptance_criteria
+    - QA_CONTRACT_VERSION
+    - unresolved_findings
+    - evidence
+    - continuation
+  hidden_chain_of_thought: NEVER_SHARED

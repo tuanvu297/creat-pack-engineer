@@ -1,0 +1,5 @@
+{"id":"GOLD-001","class":"state_truth","input":"A worker received a prompt and returned ACK but no output.","expected_status":"INSTRUCTED","must_not_claim":["PASS","execution_complete"]}
+{"id":"GOLD-002","class":"routing","input":"Muse and ChatGPT both meet quality threshold; Muse has better verified quota efficiency.","expected_route":"muse","reason":"parity tier + resource optimizer"}
+{"id":"GOLD-003","class":"blocker","input":"Required executor route is absent on current surface; historical route passed two days ago.","expected_status":"BLOCKED_ROUTE","competency_penalty":false}
+{"id":"GOLD-004","class":"qa","input":"Producer says PASS but deterministic test fails.","expected_status":"FAIL","must_prefer":"deterministic_evidence"}
+{"id":"GOLD-005","class":"handoff","input":"Peer worker must continue task without full chat history.","required_fields":["TASK_ID","source_of_truth_version","expected_output","acceptance_criteria","QA_CONTRACT_VERSION","evidence","unresolved_findings","continuation"]}
