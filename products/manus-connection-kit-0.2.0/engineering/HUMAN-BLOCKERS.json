@@ -1,0 +1,26 @@
+{
+  "scope": "Human acceptance beyond local function level",
+  "WHY_INSTALLER_COULD_NOT_DO_IT": [
+    {
+      "minimum_owner_action": "Use an owner-approved signing/distribution route or permitted executable workflow if OS policy blocks.",
+      "reason": "OS_UNSIGNED_APP_POLICY",
+      "classification": "UNVERIFIED",
+      "observed": "No blocking OS prompt encountered in headless execution; signing is absent, so other machines or organization policy may block."
+    },
+    {
+      "minimum_owner_action": "Perform independent native visual review and nontechnical user trial, ideally on clean Windows VM/account.",
+      "reason": "NATIVE_VISUAL_QA_SURFACE_UNAVAILABLE",
+      "classification": "OBSERVED",
+      "observed": "Native desktop automation disabled. Tk widgets instantiated withdrawn only; no visual screenshot or novice user session observed."
+    }
+  ],
+  "commercial": "License/support/signing unresolved; commercial ready BLOCKED",
+  "WHY_AI_COULD_NOT_DO_IT": [
+    {
+      "minimum_owner_action": "Owner enters their own API key locally and authorizes a fresh bounded grant through controller using the same private journal; do not paste secrets into chat.",
+      "reason": "LIVE_AUTH_AND_FRESH_GRANT_NOT_PROVIDED_TO_THIS_MISSION",
+      "classification": "OBSERVED",
+      "observed": "Only synthetic fixture key and injected response used. No owner key/account or fresh task authority was accessed."
+    }
+  ]
+}

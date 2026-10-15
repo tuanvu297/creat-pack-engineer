@@ -1,0 +1,42 @@
+{
+  "mission_id": "AGY-MCK-020-20261015",
+  "QA_CONTRACT_VERSION": "1.1",
+  "authority": "Direct owner instruction in current chat: AGY RUN via Work AI Master, two variants",
+  "role": "AGY / ChatGPT-Assistant Control Plane + owner-authorized Codex/Work engineering",
+  "baseline_version": "0.1.1-A2",
+  "versions": [
+    "0.2.0-ai.1",
+    "0.2.0-human.1"
+  ],
+  "source_root": "D:\\Codex\\manus-connection-kit-upgrade-20261015\\source",
+  "callback_target": "CURRENT_OWNER_CHATGPT_ASSISTANT_CONTROL_PLANE",
+  "acceptance": {
+    "AC01": "Canonical core byte-identical",
+    "AC02": "Verified install and clean isolated state",
+    "AC03": "Update backup/self-test/rollback, no silent update",
+    "AC04": "Human Windows install without Python/terminal",
+    "AC05": "Local secure key input, no logs",
+    "AC06": "MCP local surface and supported-client boundaries",
+    "AC07": "Finite secret scan, inventory and outer hashes",
+    "AC08": "Fresh auth and bounded live test require fresh grant; historical grants never reused",
+    "AC09": "Independent QA per release hash",
+    "AC10": "Durable checkpoint, callback and honest PASS ladder"
+  },
+  "guardrails": [
+    "no public publish/store release",
+    "no purchase/top-up",
+    "no canonical deletion",
+    "no blind retry",
+    "no historical evidence rewrite",
+    "no large architecture migration"
+  ],
+  "cost": "UNKNOWN",
+  "observed_quota": {
+    "five_hour_remaining_percent": 92,
+    "weekly_remaining_percent": 31,
+    "paid_credits": false,
+    "observed_at": "2026-10-15T03:43:55.570776+00:00"
+  },
+  "resource_policy": "Direct owner-scoped work; preserve reserve; no paid API inference",
+  "always_on": "UNVERIFIED; current active session only"
+}

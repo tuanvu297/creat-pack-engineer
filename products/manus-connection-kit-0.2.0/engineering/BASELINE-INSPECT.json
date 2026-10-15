@@ -1,0 +1,25 @@
+{
+  "recorded_at": "2026-10-15T03:43:55.570776+00:00",
+  "classification": "OBSERVED",
+  "archive": "D:\\Codex\\manus-connection-kit-releases\\v0.1.1-A2\\manus-connection-kit-0.1.1.zip",
+  "sha256": "98d2149ce00714319d4f770afe09ca411c8c8ca58f959467cef705f503334879",
+  "core_comparison": [
+    {
+      "path": "src/manus_kit.py",
+      "sha256": "09230eea818b9ef6a4a8913125290a28bbc55f0bae581f58b1088ac0616c4612",
+      "byte_identical": true
+    },
+    {
+      "path": "src/mcp_server.py",
+      "sha256": "b3bf406e19cc1b1ad412912dadf01646fb987a8f00d1b604e186afc3004b5582",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/test_kit.py",
+      "sha256": "f8726e101cdf6ac10eea35f9a57f23f283f79eb6c614696f739449c11887c894",
+      "byte_identical": true
+    }
+  ],
+  "history": "0.1.1 Windows pilot scope only, not new-release acceptance",
+  "new_live_operations": 0
+}

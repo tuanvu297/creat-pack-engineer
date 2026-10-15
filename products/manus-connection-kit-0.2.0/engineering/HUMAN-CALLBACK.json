@@ -1,0 +1,31 @@
+{
+  "native_visual_qa": "UNVERIFIED",
+  "live_execution": "UNVERIFIED",
+  "human_intervention_during_build": 0,
+  "nontechnical_human_usability": "UNVERIFIED",
+  "blocker_class": "A1_LOCK_HANDLE_DEFECT_CORRECTED; A3_REQUIRED_MANIFEST_AND_IMMUTABLE_SNAPSHOT_ADDED",
+  "evidence": [
+    "engineering/HUMAN-BUILD.json",
+    "engineering/HUMAN-UNIT-TEST.json",
+    "engineering/HUMAN-NATIVE-TEST.json",
+    "engineering/human-source-snapshot-A3"
+  ],
+  "first_pass": false,
+  "history_note": "A1 artifactf927... and A2artifact4525... preserved. A2 build script mistakenly retained attempt1 metadata; that historical receipt is unchanged. FinalA3 correctly records attempt3 and its unique source snapshot.",
+  "callback_status": "DELIVERED_TO_PARENT_VIA_COLLABORATION_MESSAGE",
+  "artifact": "engineering/human-dist/Manus-Connection-Kit-Setup.exe",
+  "route": "LOCAL_WINDOWS_ISOLATED_PYINSTALLER",
+  "artifact_sha256": "f49812ecade1231b1003ac135532f68e90db61a9f85df0769110e150ed0815a6",
+  "task_id": "HUMAN-BUILD",
+  "auth": "UNVERIFIED",
+  "clean_vm_or_account": "UNVERIFIED",
+  "retries": 2,
+  "worker": "Work AI Master human-mode worker",
+  "idempotency_key": "AGY-MCK-020-20261015:HUMAN:3",
+  "mission_id": "AGY-MCK-020-20261015",
+  "human_intervention_at_acceptance": "Owner must enter own API key locally; fresh owner-authorized task grant/controller still required. No credentials accessed.",
+  "classification": "OBSERVED",
+  "status": "INSTALL_TEST_PASS / LOCAL_FUNCTION_PASS",
+  "cost_quota": "UNKNOWN",
+  "attempt": 3
+}

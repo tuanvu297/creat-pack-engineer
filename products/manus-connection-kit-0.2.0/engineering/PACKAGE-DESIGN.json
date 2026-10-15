@@ -1,0 +1,19 @@
+{
+  "recorded_at": "2026-10-15T03:43:55.570776+00:00",
+  "status": "DESIGNED",
+  "ai_surface": [
+    "START-HERE.md",
+    "kit/AI-INSTALL.md"
+  ],
+  "human_surface": [
+    "START-HERE.html",
+    "Manus-Connection-Kit-Setup.exe"
+  ],
+  "internal_layout": "source/bin,src,config,tests,docs; exact manifest inventory",
+  "engineering_evidence": "Separate per-mode ZIPs; no internal AGY corpus in consumer",
+  "runtime": "AI: existing Python>=3.10; Human: self-contained Windows runtime, per-user no admin",
+  "secrets": "DPAPI CurrentUser for GUI; own key entry stays local; no owner key copied",
+  "versioning": "SemVer prereleases 0.2.0-ai.1 and 0.2.0-human.1, not commercial-ready",
+  "update": "Explicit owner-assisted trusted archive checksum, backup, verify/test, rollback",
+  "license_support": "UNRESOLVED; commercial-ready blocked"
+}

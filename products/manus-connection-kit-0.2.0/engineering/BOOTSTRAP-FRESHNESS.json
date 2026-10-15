@@ -1,0 +1,34 @@
+{
+  "sources": [
+    {
+      "id": "10Ph_XvsgytAHsdECGDNkPY94l4EIuTat-4VWtbXrTsY",
+      "title": "AGY START HERE — Canonical Resume & Current State",
+      "modified_time": "2026-10-12T03:20:15.803Z",
+      "created_time": "2026-10-09T13:19:26.543Z",
+      "read": "Fresh connector fetch this session",
+      "chars": 45309
+    },
+    {
+      "id": "1TFSkLh7ZfAxHq-mYSN-HG2Dp1XJaG_JWcItASe_4tME",
+      "title": "AGY DECISION LOG v1.0 — Canonical Architecture & Operating Decisions",
+      "modified_time": "2026-10-12T03:20:03.285Z",
+      "created_time": "2026-10-09T13:18:42.922Z",
+      "read": "Fresh connector fetch this session",
+      "chars": 48863
+    },
+    {
+      "id": "1S98IZWRhF5rDdthPO-y5ETb1shHRS9bz0f_J22yzcqc",
+      "title": "AGY THREE-AI SHARED WORKFLOW v1 — Repo, Prompts, QA & Release Gates",
+      "modified_time": "2026-10-11T23:18:55.728Z",
+      "created_time": "2026-10-11T13:12:42.452Z",
+      "read": "Fresh connector fetch this session",
+      "chars": 19251
+    }
+  ],
+  "baseline": "BASELINE-INSPECT.json",
+  "checkpoint": "0.1.1-A2 independent QA plus AGY-ACCEPTANCE-E3; no0.2 checkpoint found",
+  "QA_CONTRACT_VERSION": "1.1",
+  "route": "Current native collaboration workers, scoped owner-authorized Work AI Master; unrelated arithmetic dispatcher not used",
+  "always_on": "UNVERIFIED",
+  "cost": "UNKNOWN"
+}

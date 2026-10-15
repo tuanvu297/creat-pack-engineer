@@ -1,0 +1,66 @@
+{
+  "mission_id": "AGY-MCK-020-20261015",
+  "task_id": "AI-BUILD",
+  "attempt": 1,
+  "idempotency_key": "AGY-MCK-020-20261015:AI:1",
+  "qa_contract_version": "1.1",
+  "worker": "/root/ai_mode",
+  "route": "Work/Codex scoped worker",
+  "reason": "Owner explicitly authorized difficult engineering via Work AI Master",
+  "status": "IMPLEMENTATION_COMPLETE_LOCAL_FUNCTION_PASS",
+  "provenance": "OBSERVED",
+  "first_pass": true,
+  "retries": 0,
+  "human_intervention": [],
+  "files": [
+    "source/bin/kit-manager.py",
+    "source/src/kit_install.py",
+    "source/tests/test_install.py",
+    "source/AI-INSTALL.md",
+    "source/docs/UPDATE-ROLLBACK.md",
+    "source/docs/CORE-CONTROLLER-GUIDE.md"
+  ],
+  "tests": [
+    {
+      "scope": "Installer unit/integration boundary fixtures",
+      "failure": 0,
+      "skip_reason": "Windows denied symlink creation privilege",
+      "skipped": 1,
+      "count": 11,
+      "command": "python -B -m unittest discover -s tests -p test_install.py -v",
+      "observed_result": "PASS",
+      "passed": 10,
+      "id": "AI-INSTALL-UNIT-1"
+    },
+    {
+      "observed_result": "PASS",
+      "command": "python -B -m unittest discover -s tests -v",
+      "count": 46,
+      "scope": "Baseline core plus installer regression",
+      "failure": 0,
+      "skipped": 1,
+      "passed": 45,
+      "id": "AI-ALL-OFFLINE-1"
+    }
+  ],
+  "runtime": "Python 3.12.14",
+  "auth_verified": "UNVERIFIED",
+  "live_execution_pass": "BLOCKED_NO_FRESH_OWNER_GRANT",
+  "integrated_pass": "UNVERIFIED",
+  "provider_requests": 0,
+  "live_credentials_accessed": false,
+  "cost": "UNKNOWN_NOT_OBSERVED",
+  "quota": "UNKNOWN_NOT_OBSERVED",
+  "callback": {
+    "delivery": "Parent collaboration message; no claim of external AGY callback ingestion",
+    "status": "LOCAL_WORKER_CALLBACK_REPORTED_TO_PARENT"
+  },
+  "limitations": [
+    "Python 3.10+ trusted runtime prerequisite",
+    "Publisher signing unavailable; external checksum trust required",
+    "Selected client MCP ingestion unverified",
+    "Active MCP process must stop during maintenance",
+    "Symlink creation test skipped for OS privilege; ZIP link boundary test passed",
+    "License/support unresolved; no commercial-ready claim"
+  ]
+}

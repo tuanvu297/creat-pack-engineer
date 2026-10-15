@@ -1,0 +1,65 @@
+{
+  "status": "PASS",
+  "classification": "OBSERVED",
+  "artifact_sha256": "f49812ecade1231b1003ac135532f68e90db61a9f85df0769110e150ed0815a6",
+  "environment": "Existing Windows workstation, synthetic fresh installation directory; PATH has only System32. Not clean VM/account.",
+  "observations": [
+    {
+      "checkpoint": "FROZEN_OFFLINE_SELF_TEST",
+      "result": {
+        "status": "PASS",
+        "level": "LOCAL_FUNCTION_PASS",
+        "network_requests": 0,
+        "version": "0.2.0-human.1"
+      }
+    },
+    {
+      "checkpoint": "FROZEN_CLEAN_INSTALL",
+      "result": {
+        "status": "PASS",
+        "action": "INSTALLED",
+        "sha256": "f49812ecade1231b1003ac135532f68e90db61a9f85df0769110e150ed0815a6",
+        "path": "C:\\Users\\tuanv\\AppData\\Local\\Temp\\mck-frozen-test-8bwddjyx\\app\\current\\ManusConnectionKit.exe"
+      }
+    },
+    {
+      "checkpoint": "FROZEN_INSTALLED_MCP_STDIO",
+      "result": "PASS",
+      "reply_count": 3,
+      "tools": 8,
+      "network_requests": 0
+    },
+    {
+      "checkpoint": "FROZEN_TRUSTED_UPDATE",
+      "result": {
+        "status": "PASS",
+        "action": "INSTALLED",
+        "sha256": "f49812ecade1231b1003ac135532f68e90db61a9f85df0769110e150ed0815a6",
+        "path": "C:\\Users\\tuanv\\AppData\\Local\\Temp\\mck-frozen-test-8bwddjyx\\app\\current\\ManusConnectionKit.exe"
+      },
+      "prior_fixture_sha256": "f92751002719f36b56ecff23fce2eff98bb96e0156f2db3b3429c5896998ec49"
+    },
+    {
+      "checkpoint": "FROZEN_ROLLBACK",
+      "result": {
+        "status": "PASS",
+        "action": "ROLLED_BACK"
+      }
+    },
+    {
+      "checkpoint": "FROZEN_UNINSTALL",
+      "result": {
+        "status": "PASS",
+        "action": "UNINSTALLED",
+        "private_state": "PRESERVED_FOR_RECONCILIATION"
+      }
+    },
+    {
+      "checkpoint": "PRIVATE_STATE_PRESERVED",
+      "result": "PASS"
+    }
+  ],
+  "live_network_requests": 0,
+  "native_visual_qa": "UNVERIFIED",
+  "nontechnical_human_test": "UNVERIFIED"
+}

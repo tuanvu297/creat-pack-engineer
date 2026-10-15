@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "classification": "OBSERVED",
+  "test_count": 11,
+  "network_requests": 0,
+  "gui": "withdrawn native Tk widgets and handlers; visual layout/human usability UNVERIFIED",
+  "stdout": "",
+  "stderr": "test_activation_failure_rolls_back (test_human.HumanTests.test_activation_failure_rolls_back) ... ok\ntest_auth_missing_key_and_injected_transport (test_human.HumanTests.test_auth_missing_key_and_injected_transport) ... ok\ntest_candidate_failure_preserves_active (test_human.HumanTests.test_candidate_failure_preserves_active) ... ok\ntest_checksum_and_update_requirements (test_human.HumanTests.test_checksum_and_update_requirements) ... ok\ntest_config_no_key_and_offline_selftest (test_human.HumanTests.test_config_no_key_and_offline_selftest) ... ok\ntest_dpapi_ciphertext_update_remove_corruption (test_human.HumanTests.test_dpapi_ciphertext_update_remove_corruption) ... ok\ntest_install_lock_refuses_second_installer (test_human.HumanTests.test_install_lock_refuses_second_installer) ... ok\ntest_install_update_rollback_uninstall_preserves_state (test_human.HumanTests.test_install_update_rollback_uninstall_preserves_state) ... ok\ntest_reparse_root_rejected (test_human.HumanTests.test_reparse_root_rejected) ... ok\ntest_unowned_and_tampered_backup_denied (test_human.HumanTests.test_unowned_and_tampered_backup_denied) ... ok\ntest_withdrawn_gui_key_entry_actions (test_human.HumanTests.test_withdrawn_gui_key_entry_actions) ... ok\n\n----------------------------------------------------------------------\nRan 11 tests in 1.238s\n\nOK\n"
+}

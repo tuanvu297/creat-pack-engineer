@@ -1,0 +1,13 @@
+{
+  "package_name": "manus-connection-kit",
+  "package_version": "0.1.1",
+  "purpose": "Owner-scoped Manus API and shared-journal MCP connection pilot",
+  "runtime_requirements": ["Python >=3.10; standard library sqlite3 + urllib + hmac", "Fresh Windows install evidence must be checked in external receipt; Linux/macOS UNVERIFIED"],
+  "dependencies": [],
+  "entrypoints": ["bin/manus-kit.py", "bin/manus-kit.cmd", "bin/manus-kit.sh"],
+  "input_contract": {"cli":"Documented JSON-output commands; host private state and signed controller grant outside kit", "mcp":"JSON-lines stdio initialize/initialized/tools/list/tools/call; authority not client supplied", "mutations":"Owner authorization + task_id/worker_id/attempt/idempotency_key + fresh scoped grant"},
+  "output_contract": {"cli":"Structured JSON, exit0 command completion or exit1 FAIL_OR_BLOCKED", "evidence":"Durable private SQLite journal and callback outbox", "release":"Manifest hashes, outer checksum and scoped QA receipts"},
+  "authentication_requirements": ["Own MANUS_API_KEY from process environment or Windows User env; never included", "Host controller signs/records grants in private state; grant/authority key excluded"],
+  "known_limits": ["Private pilot; customer license/support terms unresolved", "No native Work activation binding manufactured by this kit", "No schedule/always-on guarantee", "Grant trust assumes protected host filesystem, not same-user sandbox isolation", "Read-only reconcile may use expired valid grant; mutations cannot", "Signature scanner has finite coverage", "One brief lite task authorized in pilot; no purchase/top-up/publish", "Publisher signature/provenance verification separate from internal manifest consistency"],
+  "test_status": {"LOCAL_FUNCTION_PASS":"UNVERIFIED_UNTIL_EVIDENCE", "INSTALL_TEST_PASS":"UNVERIFIED", "AUTH_VERIFIED":"UNVERIFIED", "LIVE_EXECUTION_PASS":"UNVERIFIED", "AI_CAN_USE_PASS":"UNVERIFIED", "INTEGRATED_PASS":"UNVERIFIED"}
+}

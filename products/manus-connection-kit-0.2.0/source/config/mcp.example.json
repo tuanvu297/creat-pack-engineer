@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "manus_connection_kit": {
+      "command": "ABSOLUTE_PYTHON_EXECUTABLE",
+      "args": ["ABSOLUTE_EXTRACTED_KIT/bin/manus-kit.py", "--state", "PRIVATE_STATE_OUTSIDE_KIT", "--grant", "PRIVATE_CONTROLLER_GRANT.json", "mcp"]
+    }
+  }
+}
