@@ -1,0 +1,68 @@
+{
+  "receipt_id": "AGY-AUTO-DISPATCH-FINAL-20261014",
+  "recorded_at": "2026-10-14 13:37:13 UTC",
+  "package_version": "0.1.1",
+  "status": "VERIFIED_PASS_SCOPED",
+  "scope": "FRESH_HUMAN_CONTROL_CHAT_BOUNDED_AUTO_DISPATCH",
+  "full_unattended_status": "EXTERNAL_LIMIT",
+  "source_snapshot_sha256": "79c45cf1b380f4271ba2b2236c303e701b990baaac9e6a1a504492bba16043e1",
+  "GitHub": {
+    "PR": "https://github.com/tuanvu297/creat-pack-engineer/pull/5",
+    "source_and_evidence_commit": "d6fb06ced6ba2833cc6c65566a063c9d7fc4c89f",
+    "release_files_exact_readback": 28,
+    "supplement_files_exact_readback": 13,
+    "merged": false
+  },
+  "Drive": {
+    "folder_id": "1I1NRGIHAX7fAP2r2byO1G-au-TwT6u8u",
+    "release_zip_id": "1cfg9LBe6D4_9jdNU1p7luhYYd7I3L8HY",
+    "release_zip_sha256": "6cc3671d62dfd599bdb6e011c7d6114d8063a02f377aebe8de0488fc4ab43d14",
+    "release_download_bytes": 53113,
+    "evidence_zip_id": "1eMYGwaQk0koQhiWYoGm7M_pj4mljA3Ia",
+    "evidence_zip_sha256": "a846be1337c8ee1387848fbe7389295d9d3c57d308f519d56c4391ef0f94cbf1",
+    "evidence_download_bytes": 25633,
+    "both_download_SHA256_verified": true
+  },
+  "test_levels": {
+    "PACKAGE_BUILT": "PASS",
+    "INSTALL_TEST_PASS": "PASS_WINDOWS",
+    "LOCAL_FUNCTION_PASS": "PASS55_PLUS_INDEPENDENT_QA",
+    "AUTH_VERIFIED": "PASS_SCOPED",
+    "LIVE_EXECUTION_PASS": "PASS_SCOPED_A2_SOURCE0.1.1",
+    "INTEGRATED_PASS": "PASS_SCOPED_NATIVE_OWNER_AND_INDEPENDENT_AGY_RECEIPT"
+  },
+  "A2": {
+    "owner_message_id": "e358bf7b-5b11-4ab9-9463-5e1bdaccd245",
+    "reviewer_message_id": "9ff1cd4f-debb-4bbf-a1b3-0b95d7f3949d",
+    "mission_comment_id": 6169380605,
+    "callback_comment_id": 6169384363,
+    "review_comment_id": 6169402072,
+    "journal_status": "AGY_ACCEPTED",
+    "real_provider_turn": "01a13a94-dc58-7962-80bf-541db07a1735",
+    "result": {
+      "nonce": "AGY-0c815fc122e95273",
+      "sum": -2790
+    }
+  },
+  "daemon": {
+    "pid_at_readback": 19824,
+    "alive_at_readback": true,
+    "logical_worker": "AGY-PRIMARY-PERSISTENT",
+    "store": "D:/Codex/agy-auto-dispatch-state/live-A1/queue.sqlite",
+    "status_url": "http://127.0.0.1:8788/status",
+    "ingress_error": null
+  },
+  "limits": [
+    "Unattended native verifier not installed; engineering host actually confirmedA2",
+    "Only bounded nonce/sum tasks; existing slots consumed",
+    "No boot persistence/general futuremission authority/production deploy",
+    "Issue2 remainsOPEN; productionfullpass unverified"
+  ],
+  "callback": {
+    "release_control_chat_delivery": "PENDING_SEPARATE_OUTBOX_READBACK",
+    "A2_durable_handoff": "OBSERVED",
+    "A2_actual_execution": "OBSERVED",
+    "A2_callback_delivery": "OBSERVED_EXACT_GET",
+    "A2_independent_AGY_acceptance": "OBSERVED_ACTUAL_NATIVE"
+  }
+}

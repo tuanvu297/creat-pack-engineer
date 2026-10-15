@@ -1,0 +1,28 @@
+{
+  "codex_binary": "ABSOLUTE_PATH_TO_EXISTING_AUTHENTICATED_CODEX",
+  "primary_monitor_thread": "01a130a2-0a5b-7833-a489-d19c00dcc7db",
+  "status_port": 8788,
+  "poll_seconds": 8,
+  "turn_timeout": 120,
+  "source_snapshot_sha256": "BUILD_SOURCE_SNAPSHOT_SHA256",
+  "authorization": {
+    "payload_sha256": "EXACT_OWNER_APPROVED_MISSION_HASH",
+    "owner_scope_ref": "DIRECT_OWNER_TASK_REFERENCE",
+    "expires_at": 0,
+    "github_login": "tuanvu297"
+  },
+  "mission": {
+    "mission_id": "AGY-DISPATCH-PILOT-EXAMPLE",
+    "task_id": "AGY-DISPATCH-PILOT-EXAMPLE:T1",
+    "target_executor": "AGY-PRIMARY-PERSISTENT",
+    "attempt": 1,
+    "idempotency_key": "AGY-DISPATCH-PILOT-EXAMPLE:A1",
+    "nonce": "EXAMPLE-NONCE",
+    "a": 19,
+    "b": 23,
+    "owner_scope_ref": "DIRECT_OWNER_TASK_REFERENCE",
+    "callback_target": "AGY_CONTROL_CHAT_6acb1ce3-e37c-83ec-9eb7-f795fd5243c1_VIA_GITHUB_ISSUE2",
+    "QA_CONTRACT_VERSION": "1.1",
+    "task_kind": "codex_nonce_sum"
+  }
+}

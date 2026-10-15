@@ -1,0 +1,61 @@
+{
+  "task_id": "AGY-AUTO-DISPATCH-20261014",
+  "recorded_at": "2026-10-14 09:39:56 UTC",
+  "authority": "Direct owner AGY RUN — ENGINEER AI MASTER; bounded implementation/pilot, no new Work/spend/production/credential changes",
+  "issue2": {
+    "url": "https://github.com/tuanvu297/creat-pack-engineer/issues/2",
+    "updated_at": "2026-10-14T09:12:49Z",
+    "state": "open",
+    "latest_comment": 6164958608
+  },
+  "canon": [
+    {
+      "id": "10Ph_XvsgytAHsdECGDNkPY94l4EIuTat-4VWtbXrTsY",
+      "title": "AGY START HERE — Canonical Resume & Current State",
+      "modified_at": "2026-10-12T03:20:15.803Z",
+      "scope": "Fresh connector read; source contents not copied into release"
+    },
+    {
+      "id": "1TFSkLh7ZfAxHq-mYSN-HG2Dp1XJaG_JWcItASe_4tME",
+      "title": "AGY DECISION LOG v1.0 — Canonical Architecture & Operating Decisions",
+      "modified_at": "2026-10-12T03:20:03.285Z",
+      "scope": "Fresh connector read; source contents not copied into release"
+    },
+    {
+      "id": "1S98IZWRhF5rDdthPO-y5ETb1shHRS9bz0f_J22yzcqc",
+      "title": "AGY THREE-AI SHARED WORKFLOW v1 — Repo, Prompts, QA & Release Gates",
+      "modified_at": "2026-10-11T23:18:55.728Z",
+      "scope": "Fresh connector read; source contents not copied into release"
+    }
+  ],
+  "QA_CONTRACT_VERSION": "1.1",
+  "native_primary_thread": "01a130a2-0a5b-7833-a489-d19c00dcc7db",
+  "engineer_thread": "01a13499-9300-72a3-8944-87f9b3fd2362",
+  "control_chat_id": "6acb1ce3-e37c-83ec-9eb7-f795fd5243c1",
+  "control_chat_current_title": "AGY Dispatch Result Watch",
+  "runtime_observed": {
+    "codex_cli": "0.162.0-alpha.17.2",
+    "auth": "Logged in using ChatGPT",
+    "ordinary_usage_allowed": true,
+    "short_window_used_percent": 84,
+    "remaining_percent": 16,
+    "paid_credits_available": false,
+    "monetary_cost": "UNKNOWN; bounded included route only",
+    "managed_daemon": "CONTROL_SOCKET_UNAVAILABLE; stdio alternative will be probed",
+    "gh_cli": "NOT_FOUND; no credential copying"
+  },
+  "policy": {
+    "no_new_Work": true,
+    "no_publish": true,
+    "no_purchase": true,
+    "no_unrelated_mission_resume": true,
+    "no_synced_source_edits": true,
+    "global_promotion": false
+  },
+  "status": "BOOTSTRAP_FRESHNESS_RECORDED_BEFORE_IMPLEMENTATION",
+  "verification_limits": [
+    "Existing RuntimeCP-AGY-RUNTIME-TESTED-2 is historical; latest Work MCP74/74 source report supersedes its namespace claim, not independently replayed",
+    "No auto-dispatch PASS from handoff or docs",
+    "Missing ingress/activation surfaces require tested alternatives; no repeated no-op retries"
+  ]
+}

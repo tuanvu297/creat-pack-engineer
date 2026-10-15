@@ -1,0 +1,22 @@
+{
+  "files_sha256": {
+    "README.md": "9f7d868d93b69a8a1c52e693fcce48f767ef22fb456a995dbb152b12c1f13c15",
+    "VERSION": "e9dd8507f4bf0c6f42458e41aea833ad0bd3f6127272335eee9bf4d58541ed67",
+    "bin/agy_queue.py": "248553bfb13a5234a8ae20cf7a96686a25611e8a26226a61fcc1529ff6e6eb31",
+    "config/runtime.example.json": "7be42eb102968a2b768f60a34b9fc6edc9dc369b02a296edafd33b927ca982c3",
+    "docs/ARCHITECTURE-DECISION.md": "b17f4f5794fceb48d38a025431dee8c7874c0347c854eb2a674f6de9dbcaad5a",
+    "evidence/APP-SERVER-PROBE.json": "f1a0b84ff0f2b6c9c657659492213c1cc93ea0c79e3558b39a690275a8c074d7",
+    "evidence/BOOTSTRAP-FRESHNESS.json": "85b725fec9865caa3722dec9bd9976275864595862ba5fafcb5098653b8631b9",
+    "scripts/probe_appserver.py": "fd21fed1c843ce8d76b6123360993eca8da98034ac61d43c332f5b6df0fc7b6c",
+    "scripts/probe_connections.py": "98b7323f67e5a6eac1257684eff8649e2b635dcfe7106985dc4c3522b588a5c3",
+    "scripts/probe_ephemeral_apps.py": "daadf1b30bda31220c322a00615b539c9cc63533c8255aab3a6f21ae4d2ec4d6",
+    "scripts/restart.ps1": "7e33ee60ae58021907ee46e3a5773fd8437dd42180281d95efb10ce3279bfa26",
+    "scripts/start.ps1": "e012a537552e96690d91bbe89fffb6d96c3bcf89c69244ea747a2bde89bf135f",
+    "src/appserver_client.py": "c3603b3cf033c01d989bd1dabae5591ac3ea61cd00256569d26e66e56d797d08",
+    "src/daemon.py": "9d7dbfa03fe1b76f3ac720294da85d275c5b67bf7922056e5ce3116ba766edfe",
+    "src/queue_store.py": "ccc9cd0e6894a361e04926ae24fa74773077dce80c13accbaa843add164d6394",
+    "tests/test_queue.py": "ea87c2e20adb389b89fd7a8cb1f542b53bbb8aa1ebefd68aa0bf1a31177f4ffa",
+    "tests/test_transport.py": "f95e16819643d9e111cf981282e23105f3a2f7390ab1fe74cc7f46badfc62906"
+  },
+  "snapshot_sha256": "c05ede1821aa08ea30eba0a09fdcac44125f653cafba4cef78adebd5b2f195cb"
+}

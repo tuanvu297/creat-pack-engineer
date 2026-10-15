@@ -1,0 +1,15 @@
+{
+  "verification_method": "mcp__codex_app.read_thread",
+  "target_chat_id": "6acb1ce3-e37c-83ec-9eb7-f795fd5243c1",
+  "reviewer_message_id": "0e80aaa5-9ffe-472e-b2af-dc78c28771c5",
+  "native_turn_id": "1a9cad24-49cc-466a-ae29-a50bd222a1aa",
+  "status": "PASS_SCOPED",
+  "result_sha256": "60e38ba2a852723e75eccd183f96254da9585b84da6aaba59a6ce935957a28b4",
+  "observed_at": "2026-10-14 13:02:09 UTC",
+  "accepted_scope": "ENGINEER_DELEGATED_CONTROL_CHAT_BOUNDED_AUTO_DISPATCH",
+  "literal_owner_only_fresh_UX": "UNVERIFIED",
+  "production_autonomy": "UNVERIFIED",
+  "source_snapshot_for_live": "c05ede1821aa08ea30eba0a09fdcac44125f653cafba4cef78adebd5b2f195cb",
+  "source_live_version": "0.1.0; later peer fix0.1.1 requires independent retest",
+  "native_receipt_verifier": "Trusted host verified actual distinct AGY chat response; persistent unattended native-verifier attachment not claimed"
+}

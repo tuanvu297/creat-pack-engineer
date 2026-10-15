@@ -1,0 +1,21 @@
+{
+  "receipt_id": "AGY-AUTO-DISPATCH-FINAL-20261014:DELIVERY",
+  "parent_handoff_receipt_sha256": "e5241051cbca23586be2a846ce59ec2635b33a9532102d55bc45239740ca2c30",
+  "relation": "Append-only confirmation supersedes pending callback delivery in earlier handoff snapshot",
+  "target_chat_id": "6acb1ce3-e37c-83ec-9eb7-f795fd5243c1",
+  "target_chat_title": "AGY Dispatch Result Watch",
+  "attempt": 1,
+  "idempotency_key": "AGY-AUTO-DISPATCH-FINAL-20261014:ONCE",
+  "status": "CALLBACK_DELIVERED",
+  "verification_method": "mcp__codex_app.read_thread",
+  "exact_callback_body_readback_match": true,
+  "actual_native_turn_id": "293565fe-ca18-4bdf-995f-5863463ee6f4",
+  "actual_callback_user_message_id": "293565fe-ca18-4bdf-995f-5863463ee6f4",
+  "actual_receiver_agent_message_id": "b3c3f9f9-3ee8-496f-ad38-4107d8240c5c",
+  "receiver_acknowledged_release": true,
+  "AGY_A2_acceptance": "ALREADY_SEPARATELY_VERIFIED_AGY_ACCEPTED",
+  "new_dispatch_from_callback": false,
+  "issue2_state": "OPEN",
+  "full_unattended_status": "EXTERNAL_LIMIT",
+  "recorded_at": "2026-10-14 13:40:44 UTC"
+}

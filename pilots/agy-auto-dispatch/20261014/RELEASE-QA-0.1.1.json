@@ -1,0 +1,22 @@
+{
+  "release_zip_sha256": "6cc3671d62dfd599bdb6e011c7d6114d8063a02f377aebe8de0488fc4ab43d14",
+  "source_snapshot_sha256": "79c45cf1b380f4271ba2b2236c303e701b990baaac9e6a1a504492bba16043e1",
+  "version": "0.1.1",
+  "recorded_at": "2026-10-14T13:23:29.971281+00:00",
+  "PACKAGE_BUILT": "PASS",
+  "INSTALL_TEST_PASS": "PASS_WINDOWS_FRESH_EXTRACTION_ENTRYPOINT_AND55_TESTS",
+  "LOCAL_FUNCTION_PASS": "PASS55_PLUS_INDEPENDENT_PEER_QA",
+  "AUTH_VERIFIED": "PASS_EXISTING_ACCOUNT_CONNECTOR",
+  "LIVE_EXECUTION_PASS": "SCOPED_HISTORICAL_A1_SOURCE0.1.0; release0.1.1 UNVERIFIED until fresh Owner pilot",
+  "INTEGRATED_PASS": "SCOPED_A1; full Owner-only autonomous pipeline UNVERIFIED",
+  "secret_scan": {
+    "status": "PASS_SIGNATURE_SCAN",
+    "findings": 0,
+    "scope": "Every staged file bytes and name; raw DB/keys/grants/config/auth/transcripts excluded",
+    "limitation": "Pattern screening is not proof of absence of every possible secret"
+  },
+  "reproducibility": "PASS_IDENTICAL_ZIP_SHA256_SECOND_BUILD",
+  "manifest_self_hash": "Excluded from inventory; covered by ZIP SHA256",
+  "callback_delivery": "See exact historical readback; release handoff pending external evidence",
+  "issue2": "OPEN_NOT_GLOBAL_VERIFIED_PASS"
+}

@@ -1,0 +1,20 @@
+{
+  "verification_method": "mcp__codex_app.read_thread",
+  "target_chat_id": "6acb1ce3-e37c-83ec-9eb7-f795fd5243c1",
+  "native_turn_id": "e358bf7b-5b11-4ab9-9463-5e1bdaccd245",
+  "reviewer_message_id": "9ff1cd4f-debb-4bbf-a1b3-0b95d7f3949d",
+  "owner_user_message_id": "e358bf7b-5b11-4ab9-9463-5e1bdaccd245",
+  "owner_input_text": "AGY run",
+  "owner_input_origin": "Fresh native user message, distinct from Engineer readiness message c12f3705-49ed-42b0-90aa-3d2ecd24c610; user also confirmed intent here",
+  "status": "PASS_SCOPED",
+  "accepted_scope": "FRESH_HUMAN_CONTROL_CHAT_BOUNDED_AUTO_DISPATCH",
+  "literal_owner_only_fresh_UX": "PASS_SCOPED",
+  "source_snapshot_sha256": "79c45cf1b380f4271ba2b2236c303e701b990baaac9e6a1a504492bba16043e1",
+  "result_sha256": "b0001399c1c5345886b56510d0793c1dcd1f2fab84735c4656d3c21878568378",
+  "callback_comment_id": 6169384363,
+  "review_comment_id": 6169402072,
+  "production_autonomy": "UNVERIFIED",
+  "native_receipt_verifier": "Actual parent host readback; persistent unattended native-verifier attachment still UNVERIFIED",
+  "release_zip_sha256": "6cc3671d62dfd599bdb6e011c7d6114d8063a02f377aebe8de0488fc4ab43d14",
+  "observed_at": "2026-10-14 13:26:41 UTC"
+}

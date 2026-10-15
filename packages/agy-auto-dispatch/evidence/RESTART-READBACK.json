@@ -1,0 +1,25 @@
+{
+  "observed_at": "2026-10-14T13:23:27.874907+00:00",
+  "source_snapshot_sha256": "79c45cf1b380f4271ba2b2236c303e701b990baaac9e6a1a504492bba16043e1",
+  "daemon_binding": {
+    "logical_worker_id": "AGY-PRIMARY-PERSISTENT",
+    "instance_id": "INSTANCE-b60c87240b644c508b426c1af1137b7f",
+    "pid": 19824,
+    "primary_monitor_thread": "01a130a2-0a5b-7833-a489-d19c00dcc7db",
+    "native_thread_activation": "NOT_CLAIMED_ACTIVE_WRITER_LOCK",
+    "provider_context": "EPHEMERAL_NO_STORED_WORK",
+    "started_at": 1791984120.0975733,
+    "transport": "app-server JSON-RPC stdio",
+    "store": "D:\\Codex\\agy-auto-dispatch-state\\live-A1\\queue.sqlite",
+    "app_server_pid": 9736,
+    "provider_context_id": "01a13a93-d220-7a13-beee-69394578ec52"
+  },
+  "daemon_alive": true,
+  "ingress_error": null,
+  "accepted_A1_status": "AGY_ACCEPTED",
+  "intent_counts": {
+    "CALLBACK_POST": 2,
+    "MODEL_TURN": 2
+  },
+  "claim": "Retained accepted A1 remains accepted after safe stop/restart; no A1 replay"
+}

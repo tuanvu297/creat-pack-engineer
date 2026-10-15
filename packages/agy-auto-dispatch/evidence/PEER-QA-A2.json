@@ -1,0 +1,148 @@
+{
+  "report_id": "AGY-AUTO-DISPATCH-PEER-QA-A2",
+  "recorded_at": "2026-10-14T13:05:01.226928+00:00",
+  "previous_report": {
+    "path": "D:\\Codex\\agy-auto-dispatch-state\\peer-qa\\PEER-QA-20261014.json",
+    "sha256": "7264c1acd0fc0cd1d95e12a023abf96a94efb6385f984f905ddf20bfe9ec4238",
+    "preserved": true
+  },
+  "role": "Independent peer QA of owner-authorized bounded AGY runtime; unified engineering delivery remains parent responsibility",
+  "scope": "Read-only source review and isolated offline mocks/temp SQLite challenges; no live provider call, daemon start, chat message or Work creation by reviewer",
+  "source_version": "0.1.1",
+  "status": "PASS_LOCAL_SCOPED",
+  "requested_conditional_disposition": "PASS_LOCAL_SCOPED_IF_RETEST; independent retest completed successfully",
+  "open_confirmed_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "python_version": "3.12.14",
+  "source_sha256": {
+    "appserver_client.py": "c3603b3cf033c01d989bd1dabae5591ac3ea61cd00256569d26e66e56d797d08",
+    "daemon.py": "5dcf384ca2640172c2e62b7a1eb612ea043584e764204f1cb16282f98c4597f0",
+    "queue_store.py": "eecaacee91cf52f9b96de830d41f268cc1d985606ab95f0e429097b177fa0361"
+  },
+  "findings": [
+    {
+      "id": "PQA-01",
+      "severity": "S1",
+      "title": "Expired/fenced authority could dispatch before validation",
+      "location": "src/appserver_client.py:rpc; src/daemon.py:beat",
+      "disposition": "REPAIRED_RETEST_PASS",
+      "independent_retest": "Expired heartbeat now sends zero RPCs"
+    },
+    {
+      "id": "PQA-02",
+      "severity": "S2",
+      "title": "Concurrent snapshots could abort mission execution",
+      "location": "src/daemon.py:snapshot",
+      "disposition": "REPAIRED_RETEST_PASS",
+      "independent_retest": "200 concurrent snapshots succeed after lock and unique temporary files"
+    },
+    {
+      "id": "PQA-03",
+      "severity": "S2",
+      "title": "Callback readback omitted mission heartbeat",
+      "location": "src/daemon.py:deliver; src/appserver_client.py:comments",
+      "disposition": "REPAIRED_SOURCE_VERIFIED",
+      "independent_retest": "Callback GET now receives heartbeat; actual network latency not independently exercised"
+    },
+    {
+      "id": "PQA-04",
+      "severity": "S2",
+      "title": "Missing configured ingress identity failed open",
+      "location": "src/queue_store.py:submit",
+      "disposition": "REPAIRED_RETEST_PASS",
+      "independent_retest": "Missing login denied by independently executed offline suite"
+    },
+    {
+      "id": "PQA-05",
+      "severity": "S2",
+      "title": "Legacy intent schema prevented new reservation",
+      "location": "src/queue_store.py:Store.__init__;reserve",
+      "disposition": "REPAIRED_RETEST_PASS",
+      "independent_retest": "Six-column journal migrated; old pending intent preserved with unknown payload; new reservation succeeds"
+    },
+    {
+      "id": "PQA-06",
+      "severity": "S2",
+      "title": "Receipt joined and vanished in unrelated transaction rollback",
+      "location": "src/queue_store.py:receipt;event",
+      "disposition": "REPAIRED_RETEST_PASS",
+      "independent_retest": "Receipt now blocks on store lock, commits independently and remains ACKED after other rollback"
+    },
+    {
+      "id": "PQA-07",
+      "severity": "S2",
+      "title": "Issue-comment declaration alone promoted independent acceptance",
+      "location": "src/queue_store.py:acceptance;confirm_native_acceptance",
+      "disposition": "REPAIRED_OFFLINE_CONTRACT_VERIFIED",
+      "independent_retest": "Legacy declaration rejected; full report remains AGY_REVIEW_REPORTED; missing native receipt cannot promote"
+    },
+    {
+      "id": "PQA-08",
+      "severity": "S2",
+      "title": "Rejected duplicate executor invalidates winning claim",
+      "location": "src/daemon.py:85-88; src/queue_store.py:209-214",
+      "disposition": "REPAIRED_RETEST_PASS",
+      "independent_retest": "Double execute on CLAIMED, ACKED, RUNNING, CALLBACK_DELIVERED and synthetic AGY_ACCEPTED missions preserves entire status/events, zero provider calls"
+    }
+  ],
+  "independent_tests": {
+    "offline_suite": {
+      "run": 48,
+      "pass": 48,
+      "failed": 0
+    },
+    "custom_final_challenges": {
+      "double_execute_preserves_entire_status_and_events": [
+        "CLAIMED",
+        "ACKED",
+        "RUNNING",
+        "CALLBACK_DELIVERED",
+        "AGY_ACCEPTED (synthetic offline receipt)"
+      ],
+      "cases": 5,
+      "passed": 5,
+      "provider_calls": 0
+    },
+    "earlier_challenge_evidence": [
+      "two independent SQLite connections claim exactly one winner",
+      "PLAN before ACK denied",
+      "renewed grant fences old grant",
+      "restart active state becomes UNCERTAIN and mutation replay denied",
+      "legacy journal migration preserves pending record",
+      "receipt survives unrelated rollback",
+      "callback reconciliation 0 matches stays UNCERTAIN",
+      "callback reconciliation 1 exact authenticated match becomes CALLBACK_DELIVERED without POST",
+      "callback reconciliation 2 matches stays UNCERTAIN and reports ambiguity"
+    ]
+  },
+  "live_A1_evidence": {
+    "classification": "PARENT_REPORTED_NOT_REPLAYED_BY_PEER",
+    "source_version": "0.1.0",
+    "frozen_source_reference": "SOURCE-CHECKPOINT-A1.zip; snapshot SHA prefix c05ede (parent-provided reference)",
+    "observations": [
+      "Control route submitted issue comment 6168911056",
+      "Daemon ACK and grant preceded PLAN",
+      "One app-server turn returned requested nonce and sum42",
+      "Callback 6168915102 had exact GET readback",
+      "AGY review 6168934887 plus actual native independent response were parent-read and confirmed, journal AGY_ACCEPTED"
+    ],
+    "independent_native_response_references": {
+      "message_id": "0e80aaa5-9ffe-472e-b2af-dc78c28771c5",
+      "turn_id": "1a9cad24-49cc-466a-ae29-a50bd222a1aa"
+    },
+    "new_stored_Work": "Parent reports provider context ephemeral and absent from stored-thread listing; unrelated GL automation thread excluded",
+    "current_version_live_execution": "NOT_REPEATED; accepted journal restart/no-replay validation remains parent work"
+  },
+  "remaining_limits": [
+    "Continuous native acceptance verifier attachment is not installed. The bounded parent can confirm actual native control-chat readback through the available read_thread tool and persist grounded message/turn/tool receipt. This is separate from unattended native verification.",
+    "Offline synthetic native receipt exercises schema/state validation only; it is not proof of actual independent reviewer activity.",
+    "Literal fresh human control-chat UX remains UNVERIFIED. Pilot trigger is AI-delegated through control under human owner engineering authorization.",
+    "Actual desktop primary thread activation is not claimed. Runtime uses logical persistent executor, existing Work monitor and ephemeral provider contexts.",
+    "Peer did not invoke live provider inference, start the daemon, send chat messages, read live journal state, or create Work. Live A1 facts are explicitly parent-attributed.",
+    "This report supports LOCAL_FUNCTION_PASS and repaired offline contracts. It is not whole-runtime INTEGRATED_PASS, global promotion, or commercial readiness approval."
+  ]
+}

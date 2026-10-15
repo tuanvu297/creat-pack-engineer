@@ -1,0 +1,32 @@
+{
+  "initialize": {
+    "ok": true,
+    "result": {
+      "userAgent": "Codex Desktop/0.162.0-alpha.17.2 (Windows 10.0.19045; x86_64) dumb (agy_dispatch_probe; 0.1.0)",
+      "codexHome": "C:\\Users\\tuanv\\.codex",
+      "platformFamily": "windows",
+      "platformOs": "windows"
+    },
+    "error": null
+  },
+  "exact_thread_read": {
+    "id": "01a130a2-0a5b-7833-a489-d19c00dcc7db",
+    "name": "AGY Core \u2014 Work ch\u00ednh",
+    "modelProvider": "openai",
+    "cwd": "C:\\Users\\tuanv\\.codex\\.chatgpt-projects\\g-p-6ac7e5f0552081919c6d4408200fcbb1",
+    "status": {
+      "type": "notLoaded"
+    },
+    "ephemeral": false,
+    "source": "vscode",
+    "error": null
+  },
+  "account": {
+    "type": "chatgpt",
+    "requiresOpenaiAuth": true,
+    "error": null
+  },
+  "provider_turns_started": 0,
+  "new_threads_created": 0,
+  "stderr_error_count": 0
+}
