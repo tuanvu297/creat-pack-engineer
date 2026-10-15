@@ -1,0 +1,21 @@
+test_acked_only_collects (test_interop_contract.Contracts.test_acked_only_collects) ... ok
+test_callback_cannot_redirect (test_interop_contract.Contracts.test_callback_cannot_redirect) ... ok
+test_critical_false_pass_zero_in_observed_results (test_interop_contract.Contracts.test_critical_false_pass_zero_in_observed_results) ... ok
+test_expired_lease_rejected (test_interop_contract.Contracts.test_expired_lease_rejected) ... ok
+test_external_action_cannot_expand (test_interop_contract.Contracts.test_external_action_cannot_expand) ... ok
+test_lease_required_after_schema_fixed (test_interop_contract.Contracts.test_lease_required_after_schema_fixed) ... ok
+test_lease_wrong_worker_rejected (test_interop_contract.Contracts.test_lease_wrong_worker_rejected) ... ok
+test_manus_severity_gap_is_retained (test_interop_contract.Contracts.test_manus_severity_gap_is_retained) ... ok
+test_missing_or_mismatched_qa_blocks (test_interop_contract.Contracts.test_missing_or_mismatched_qa_blocks) ... ok
+test_observed_live_placeholder_rejected_both_workers (test_interop_contract.Contracts.test_observed_live_placeholder_rejected_both_workers) ... ok
+test_path_containment_windows_and_posix (test_interop_contract.Contracts.test_path_containment_windows_and_posix) ... ok
+test_secret_input_denied (test_interop_contract.Contracts.test_secret_input_denied) ... ok
+test_strict_fixed_template_compiles (test_interop_contract.Contracts.test_strict_fixed_template_compiles) ... ok
+test_uncertain_never_resubmits (test_interop_contract.Contracts.test_uncertain_never_resubmits) ... ok
+test_unknown_billing_not_eligible (test_interop_contract.Contracts.test_unknown_billing_not_eligible) ... ok
+test_unknown_recovery_state_fail_closed (test_interop_contract.Contracts.test_unknown_recovery_state_fail_closed) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.019s
+
+OK

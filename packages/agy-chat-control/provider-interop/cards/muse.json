@@ -1,0 +1,138 @@
+{
+  "profile_version": "0.1-local",
+  "QA_CONTRACT_VERSION": "1.1",
+  "role": "AGY execution/review worker; engineer/control plane retains mission closure",
+  "CAN_DO": [
+    "supplied_text_planning",
+    "supplied_text_summary",
+    "supplied_text_peer_review",
+    "task_compilation",
+    "staging_file_artifact"
+  ],
+  "SHOULD_NOT_DO": [
+    "Claim attached user desktop/Drive/GitHub/CRM/browser tools without tool evidence",
+    "Production/publish/purchase/auth/security changes",
+    "Repeat UNKNOWN/PENDING submit or old accepted training",
+    "Self-certify install/tests/native file writes from text artifacts",
+    "Treat generated workflow as permission or independent acceptance"
+  ],
+  "BEST_AT": "Candidate strengths only: bounded structured reasoning and proposal artifacts; no cross-provider rank established",
+  "required_context": [
+    "QA1.1 and acceptance IDs",
+    "task/worker/attempt/idempotency",
+    "source snapshot/path/version and supplied data",
+    "scope and forbidden actions",
+    "checkpoint/resume provider ID",
+    "resource eligibility and bounded lease",
+    "concrete output schema",
+    "callback target + human authority reference"
+  ],
+  "input_schema": "task-envelope.example.json; interop_contract.validate_task",
+  "output_schema": "Identity ACK, bounded structured result, evidence/truth statuses, staging artifact; no claimed external side effects",
+  "permission_scope": "Supplied synthetic/non-sensitive text; any sensitive input transmission requires its own destination/scope authorization",
+  "evidence_requirements": [
+    "Prompt SHA256 and durable reservation before send",
+    "Provider ID + actual ACK, output SHA and own taskmarker",
+    "Task-rubric/schema/deterministic QA separate from selfreport",
+    "Artifact path containment/secret screening before adoption",
+    "Host callback receipt distinct from engineer acceptance"
+  ],
+  "failure_patterns": [
+    "Readiness/auth mistaken for execution",
+    "Placeholder output schema copied literally",
+    "Missing lease in handoff",
+    "Unsupported tool and completion claims",
+    "Severity drift"
+  ],
+  "resource_policy": "D045 latest dynamic useful-training; D046 Muse same eligibility tier as ChatGPT, select by observed fit/resources not default ChatGPT-first. No unknown-billing API spend or purchases. Current one-prompt delegation cap is task-specific.",
+  "last_validated_at": "2026-10-15T07:41:34.431383+00:00",
+  "promotion": "KEEP_LOCAL; root engineer review pending; six-direction mutual training and global QA_ALIGNMENT not certified",
+  "worker_id": "MUSE",
+  "transport": "Existing owner-authorized Windows muse-cli0.3.2 wrapper; unofficial web-session protocol, not GL bridge send",
+  "entrypoints": {
+    "runtime": "C:/Users/tuanv/.codex/.chatgpt-projects/g-p-6ac7e5f0552081919c6d4408200fcbb1/work/muse-cli-connection/.venv/Scripts/python.exe",
+    "wrapper": "C:/Users/tuanv/.codex/.chatgpt-projects/g-p-6ac7e5f0552081919c6d4408200fcbb1/work/muse-cli-connection/muse_tools.py"
+  },
+  "auth": "Reuse existing private session in place; do not package/export/copy cookies. Status is read-only. No credential/security changes in this task.",
+  "commands": [
+    "VENV_PYTHON muse_tools.py status",
+    "VENV_PYTHON muse_tools.py single BRIEF --task-id FRESH_ID --idempotency-key FRESH_KEY --out ALLOWED_STAGING --wait45",
+    "VENV_PYTHON muse_tools.py task-status --task-id SAME_ID --idempotency-key SAME_KEY",
+    "VENV_PYTHON muse_tools.py collect SAME_THREAD ALLOWED_STAGING --marker EXACT_OWN_TASK_MARKER"
+  ],
+  "journal": "%USERPROFILE%/.muse-app-out/agy-task-journal.sqlite; task reservation before sessionstart/send",
+  "observed": {
+    "AUTH_VERIFIED": true,
+    "ACTUAL_ACK": true,
+    "ACTUAL_OUTPUT": true,
+    "HOLDOUT_DECISION_PASS": 4,
+    "HOLDOUT_STRICT_PASS": 4,
+    "HOLDOUT_TOTAL": 4,
+    "CRITICAL_FALSE_PASS": 0,
+    "SEVERITY_MISSED_CRITICAL": 0,
+    "COMPILED_HANDOFF_ACCEPTANCE": "FAIL_PROVIDED_TEMPLATE_PLACEHOLDER_AND_MISSING_LEASE",
+    "checks": [
+      {
+        "id": "H1",
+        "pass": true,
+        "diff": {}
+      },
+      {
+        "id": "H2",
+        "pass": true,
+        "diff": {}
+      },
+      {
+        "id": "H3",
+        "pass": true,
+        "diff": {}
+      },
+      {
+        "id": "H4",
+        "pass": true,
+        "diff": {}
+      }
+    ],
+    "artifact": "D:\\Codex\\agy-chat-control\\provider-interop\\artifacts\\muse\\staging\\plan.md",
+    "observed_tools_self_report": [],
+    "observed_tool_claim_limit": "Self-report is not attachment to user desktop/Drive/GitHub or independent execution trace",
+    "LIVE_ROUTE": "VERIFIED_SUPPLIED_TEXT_ROUNDTRIP",
+    "ONE_PROMPT_INTEROP_PASS": false,
+    "QA_ALIGNMENT": "NOT_CERTIFIED",
+    "terminal": "Matching task marker returned complete staged file; Muse worker terminal metadata not exposed by wrapper, therefore no job-lifecycle stopped claim"
+  },
+  "recovery": "On duplicate reservation/conflict do not submit again. Resolve task-status and collect matching history marker. No provider ID on uncertain session-start -> EXTERNAL_LIMIT; no blind create.",
+  "output_collection": "=== FILE: relative/path === fenced complete content; path traversal/drive/symlink/conflict and secret guard; stage only. Current thread90f32280-779c-458f-b58e-9deccd6e2e1d.",
+  "terminal_gate": "Complete marker-matched artifact is observable; wrapper does not expose authoritative job-stopped lifecycle. State that limit; local QA required.",
+  "resource": {
+    "quota": "UNKNOWN",
+    "monetary_cost": "UNKNOWN",
+    "eligibility": "Minimal existing-auth supplied-text smoke only; no subscription/purchase actions"
+  },
+  "current_status": "LIVE_ROUTE_VERIFIED; CORRECTIVE_QA3/3; COMPILED_CHILD_LEASE_FAIL_SUPPLIED_SPEC; OVERALL_PARTIAL",
+  "latest_phase": {
+    "ack": {
+      "task_id": "AGY-CHAT-CONTROL-20261015:INTEROP:MUSE",
+      "attempt": 1,
+      "QA_CONTRACT_VERSION": "1.1",
+      "phase": "CORRECTIVE-A2"
+    },
+    "new_review_checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true
+    },
+    "new_review_pass": 3,
+    "new_review_total": 3,
+    "batch_plan_pass": true,
+    "schema_object_fixed": true,
+    "compiled_task_live_validation_error": "LEASE_EXPIRED_OR_INVALID",
+    "compiled_handoff_PASS": false,
+    "lease": {
+      "owner": "MUSE",
+      "issued_at": "2026-10-15T07:52:58.813937+00:00",
+      "expires_at": "2026-10-15T07:52:00+00:00",
+      "max_submissions": 1
+    }
+  }
+}

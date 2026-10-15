@@ -1,0 +1,88 @@
+{
+  "schema_version": "0.1",
+  "mission": "AGY-CHAT-CONTROL-20261015",
+  "QA_CONTRACT_VERSION": "1.1",
+  "nodes": [
+    "OWNER",
+    "ENGINEER_CHAT",
+    "EXISTING_PRIMARY_WORK",
+    "MANUS",
+    "MUSE",
+    "GEMINI"
+  ],
+  "edges": [
+    {
+      "from": "OWNER",
+      "to": "ENGINEER_CHAT",
+      "class": "native_chat_instruction",
+      "status": "VERIFIED_OWNER_MESSAGE",
+      "evidence": "ACK.json"
+    },
+    {
+      "from": "ENGINEER_CHAT",
+      "to": "EXISTING_PRIMARY_WORK",
+      "class": "native_thread_dispatch",
+      "status": "VERIFIED_NATIVE_ACK",
+      "evidence": "ACK-INGRESS-RECEIPT.json"
+    },
+    {
+      "from": "EXISTING_PRIMARY_WORK",
+      "to": "MANUS",
+      "class": "supplied_text_plan_review_compile_artifact",
+      "status": "LIVE_ROUTE_VERIFIED; HANDOFF_TEMPLATE_RETEST_UNVERIFIED; MANUS_H1_SEVERITY_CALIBRATION_OPEN",
+      "evidence": "cards/manus.json"
+    },
+    {
+      "from": "EXISTING_PRIMARY_WORK",
+      "to": "MUSE",
+      "class": "supplied_text_plan_review_compile_artifact",
+      "status": "LIVE_ROUTE_VERIFIED; HOLDOUT4/4; HANDOFF_TEMPLATE_RETEST_UNVERIFIED",
+      "evidence": "cards/muse.json"
+    },
+    {
+      "from": "EXISTING_PRIMARY_WORK",
+      "to": "GEMINI",
+      "class": "supplied_text_plan_review_compile_artifact",
+      "status": "EXTERNAL_LIMIT_CURRENT_SURFACE_NO_CHROME; API_ELIGIBILITY_UNVERIFIED",
+      "evidence": "cards/gemini.json"
+    },
+    {
+      "from": "MANUS",
+      "to": "ENGINEER_CHAT",
+      "class": "host-mediated_result_callback",
+      "status": "READY_VIA_PRIMARY_WORK; direct provider-native chat route UNVERIFIED"
+    },
+    {
+      "from": "MUSE",
+      "to": "ENGINEER_CHAT",
+      "class": "host-mediated_result_callback",
+      "status": "READY_VIA_PRIMARY_WORK; direct provider-native chat route UNVERIFIED"
+    },
+    {
+      "from": "EXISTING_PRIMARY_WORK",
+      "to": "ENGINEER_CHAT",
+      "class": "native_thread_result_callback",
+      "status": "PENDING_CURRENT_DELIVERY"
+    },
+    {
+      "from": "MUSE",
+      "to": "MANUS",
+      "class": "AGY-mediated supplied-text peer QA",
+      "status": "ALLOWED_BY_FRESH_TASK_CONTRACT; NOT_TESTED_THIS_MISSION; no direct worker-to-worker transport"
+    },
+    {
+      "from": "MANUS",
+      "to": "GEMINI",
+      "class": "AGY-mediated supplied-text peer QA",
+      "status": "CONDITIONAL_ON_GEMINI_ROUTE; NOT_TESTED_THIS_MISSION"
+    }
+  ],
+  "routing_rules": [
+    "Eligibility before optimization",
+    "Muse and ChatGPT same priority tier when eligible",
+    "Select from observed task-class fit/resource/reset/latency/cost/QA burden; no invented best-worker ranking",
+    "Each edge requires identity, QA packet, fresh lease, actual ACK and evidence; independent eligible branches may proceed",
+    "No cloud control-chat namespace or unattended wakeup/native callback inferred from local Work readiness"
+  ],
+  "status": "LOCAL_INTEROP_CANDIDATE; ROOT_INTEGRATION_AND_QA_PENDING"
+}

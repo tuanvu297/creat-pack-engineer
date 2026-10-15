@@ -1,0 +1,18 @@
+{
+  "mission_id": "AGY-CHAT-CONTROL-20261015",
+  "task_id": "AGY-CHAT-CONTROL-20261015:WORKER-INTEROP",
+  "worker_id": "CODEX-WORK-AGY-CORE",
+  "target_thread_id": "01a130a2-0a5b-7833-a489-d19c00dcc7db",
+  "callback_target_thread_id": "01a13499-9300-72a3-8944-87f9b3fd2362",
+  "attempt": 1,
+  "idempotency_key": "AGY-CHAT-CONTROL-20261015:WORKER-INTEROP:ONCE",
+  "issued_at": "2026-10-15 07:33:31 UTC",
+  "scope": "Read-only connection verification, project-local supplied-text onboarding/benchmark packet and bounded existing-resource worker delegation; no CRM production/global promotion/new Work",
+  "quota_before": {
+    "included_codex_allowed": true,
+    "short_used_percent": 25,
+    "weekly_used_percent": 4
+  },
+  "status": "DURABLE_DISPATCH_INTENT_NOT_ACK",
+  "output_root": "D:/Codex/agy-chat-control/provider-interop"
+}

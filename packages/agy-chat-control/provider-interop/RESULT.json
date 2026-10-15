@@ -1,0 +1,59 @@
+{
+  "task_id": "AGY-CHAT-CONTROL-20261015:WORKER-INTEROP",
+  "worker_id": "CODEX-WORK-AGY-CORE",
+  "attempt": 1,
+  "idempotency_key": "AGY-CHAT-CONTROL-20261015:WORKER-INTEROP:ONCE",
+  "status": "PARTIAL_IMPLEMENTED_WITH_VERIFIED_LIVE_ROUTES",
+  "closure": "MANDATORY_20MIN_TIMEBOX_CALLBACK",
+  "at": "2026-10-15 07:53:55 UTC",
+  "ACK": "D:/Codex/agy-chat-control/provider-interop/ACK.json",
+  "native_receipt": "ACK-INGRESS-RECEIPT.json",
+  "delivered_outputs": [
+    "cards/manus.json",
+    "cards/muse.json",
+    "cards/gemini.json",
+    "interop-graph.json",
+    "interop_contract.py",
+    "task-envelope.example.json",
+    "compiled-prompt.example.txt",
+    "probe-evaluation.json",
+    "manus-actual-output.json",
+    "muse-actual-output.json",
+    "artifacts/manus/staging/plan.md",
+    "artifacts/muse/staging/plan.md"
+  ],
+  "tests": {
+    "local_contract_regression": "16/16 PASS; actual log retained in Work tool transcript",
+    "fresh_manus": "ACK+actual output;4/4 safe decisions;3/4 strict severity; stopped/backgroundfalse/fullpagination verified",
+    "fresh_muse": "ACK+ownmarker+actual artifact;4/4 decisions/severity; no authoritative job-stopped metadata exposed",
+    "initial_handoff": "Both copied describe placeholder and omitted lease due supplied-example defect; FAIL retained; strict localtemplatefixed",
+    "correction_phase": "Root explicitly authorized one corrective prompt each <=500words; sent same new training tasks at end of timebox; ACK captured/beingcollected; outputQA PENDING; no new taskcreated",
+    "Gemini": "EXTERNAL_LIMIT: fresh CUA inventory only IAB/MCPapps, no Chrome binding; no paid API unknownbilling called"
+  },
+  "provider_ids": {
+    "manus": "Y79escMcbJhNYHEV3w778x",
+    "muse": "90f32280-779c-458f-b58e-9deccd6e2e1d"
+  },
+  "correction_resume": {
+    "manus": "Read SAME task with manus_probe.py read; correction operation AGY-INTEROP-MANUS:CORRECTIVE-A2:ONCE already ACKED; do not create/resend",
+    "muse": "Collect SAME thread history after exact marker [AGY-INTEROP:MUSE:CORRECTIVE-A2:ONCE]; phase reserved in existing privatejournal; do not resend; session45400 may still return"
+  },
+  "limits": [
+    "Root engineer L2/independent acceptance pending",
+    "No generic cloud namespace/unattended callback claim",
+    "No six-direction mutualtraining/globalQA_ALIGNMENT claim",
+    "Muse terminal lifecycle metadata unverified",
+    "Initial default Manus SDK grant scope included defaultops but probe only permitted create/read; reusable recipe now restrictsscope; corrective grant read/resume maxcreates0",
+    "No root source/globalconfig/canon/CRMwrites/newWork/schedules/purchases; oldCRM not replayed"
+  ],
+  "next_safe_action": "Root integrate/review isolated cards+validator; collect two existing corrective responses and run strict schema/severity/plan checks; restore eligible Chrome binding via existing executor before any Gemini dispatch. Do not replay submitted phases.",
+  "callback_target": "01a13499-9300-72a3-8944-87f9b3fd2362",
+  "latest_addendum": "CORRECTION-RESULT.json",
+  "post_closure_truth": {
+    "manus": "CORRECTIVE_A2 QA3/3 and batchplanPASS; schemaobjectfixed; compiledchildleaseINVALID suppliedspec",
+    "muse": "CORRECTIVE_A2 QA3/3 and batchplanPASS; schemaobjectfixed; compiledchildleaseINVALID suppliedspec",
+    "overall": "PARTIAL; root L2/QA acceptance pending; Gemini route EXTERNAL_LIMIT",
+    "finding_owner": "Codex Work supplied hardcoded lease expiry, not worker incapability",
+    "next_action": "Root enforce dynamic lease + validate_task immediately before every dispatch; no third prompt authorized/performed"
+  }
+}

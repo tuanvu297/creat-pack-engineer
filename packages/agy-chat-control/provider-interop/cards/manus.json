@@ -1,0 +1,147 @@
+{
+  "profile_version": "0.1-local",
+  "QA_CONTRACT_VERSION": "1.1",
+  "role": "AGY execution/review worker; engineer/control plane retains mission closure",
+  "CAN_DO": [
+    "supplied_text_planning",
+    "supplied_text_summary",
+    "supplied_text_peer_review",
+    "task_compilation",
+    "staging_file_artifact"
+  ],
+  "SHOULD_NOT_DO": [
+    "Claim attached user desktop/Drive/GitHub/CRM/browser tools without tool evidence",
+    "Production/publish/purchase/auth/security changes",
+    "Repeat UNKNOWN/PENDING submit or old accepted training",
+    "Self-certify install/tests/native file writes from text artifacts",
+    "Treat generated workflow as permission or independent acceptance"
+  ],
+  "BEST_AT": "Candidate strengths only: bounded structured reasoning and proposal artifacts; no cross-provider rank established",
+  "required_context": [
+    "QA1.1 and acceptance IDs",
+    "task/worker/attempt/idempotency",
+    "source snapshot/path/version and supplied data",
+    "scope and forbidden actions",
+    "checkpoint/resume provider ID",
+    "resource eligibility and bounded lease",
+    "concrete output schema",
+    "callback target + human authority reference"
+  ],
+  "input_schema": "task-envelope.example.json; interop_contract.validate_task",
+  "output_schema": "Identity ACK, bounded structured result, evidence/truth statuses, staging artifact; no claimed external side effects",
+  "permission_scope": "Supplied synthetic/non-sensitive text; any sensitive input transmission requires its own destination/scope authorization",
+  "evidence_requirements": [
+    "Prompt SHA256 and durable reservation before send",
+    "Provider ID + actual ACK, output SHA and own taskmarker",
+    "Task-rubric/schema/deterministic QA separate from selfreport",
+    "Artifact path containment/secret screening before adoption",
+    "Host callback receipt distinct from engineer acceptance"
+  ],
+  "failure_patterns": [
+    "Readiness/auth mistaken for execution",
+    "Placeholder output schema copied literally",
+    "Missing lease in handoff",
+    "Unsupported tool and completion claims",
+    "Severity drift"
+  ],
+  "resource_policy": "D045 latest dynamic useful-training; D046 Muse same eligibility tier as ChatGPT, select by observed fit/resources not default ChatGPT-first. No unknown-billing API spend or purchases. Current one-prompt delegation cap is task-specific.",
+  "last_validated_at": "2026-10-15T07:41:34.431383+00:00",
+  "promotion": "KEEP_LOCAL; root engineer review pending; six-direction mutual training and global QA_ALIGNMENT not certified",
+  "worker_id": "MANUS",
+  "transport": "Existing Manus Connection Kit0.1.1-A2 Python CLI/API; same private journal for CLI/MCP",
+  "entrypoints": {
+    "runtime": "C:/Users/tuanv/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+    "cli": "D:/Codex/manus-connection-kit/bin/manus-kit.py",
+    "probe": "provider-interop/manus_probe.py (only create/read; do not rerun create of completed probe)"
+  },
+  "auth": "MANUS_API_KEY from process/Windows User environment; never package/print. Current auth GET verified. Fresh task-local signed grant required; no CRM grant reuse.",
+  "commands": [
+    "python manus-kit.py --state PRIVATE_STATE auth-health",
+    "python manus-kit.py --state PRIVATE_STATE credits",
+    "trusted controller: issue_grant(fresh identity, callback, owner ref, ttl<=900, scope=[create,read],max_creates=1)",
+    "python manus-kit.py --state PRIVATE_STATE --grant PRIVATE_GRANT create --prompt COMPILED_PROMPT",
+    "python manus-kit.py --state PRIVATE_STATE --grant PRIVATE_GRANT read"
+  ],
+  "journal": "Existing standard private Manus Kit journal, outside package; provider task Y79escMcbJhNYHEV3w778x for this probe",
+  "observed": {
+    "AUTH_VERIFIED": true,
+    "ACTUAL_ACK": true,
+    "ACTUAL_OUTPUT": true,
+    "HOLDOUT_DECISION_PASS": 4,
+    "HOLDOUT_STRICT_PASS": 3,
+    "HOLDOUT_TOTAL": 4,
+    "CRITICAL_FALSE_PASS": 0,
+    "SEVERITY_MISSED_CRITICAL": 1,
+    "COMPILED_HANDOFF_ACCEPTANCE": "FAIL_PROVIDED_TEMPLATE_PLACEHOLDER_AND_MISSING_LEASE",
+    "checks": [
+      {
+        "id": "H1",
+        "pass": false,
+        "diff": {
+          "severity": {
+            "expected": "S3",
+            "actual": "S2"
+          }
+        }
+      },
+      {
+        "id": "H2",
+        "pass": true,
+        "diff": {}
+      },
+      {
+        "id": "H3",
+        "pass": true,
+        "diff": {}
+      },
+      {
+        "id": "H4",
+        "pass": true,
+        "diff": {}
+      }
+    ],
+    "artifact": "D:\\Codex\\agy-chat-control\\provider-interop\\artifacts\\manus\\staging\\plan.md",
+    "observed_tools_self_report": [
+      "functions.read"
+    ],
+    "observed_tool_claim_limit": "Self-report is not attachment to user desktop/Drive/GitHub or independent execution trace",
+    "LIVE_ROUTE": "VERIFIED_SUPPLIED_TEXT_ROUNDTRIP",
+    "ONE_PROMPT_INTEROP_PASS": false,
+    "QA_ALIGNMENT": "NOT_CERTIFIED",
+    "terminal": "Manus stopped/background=false/pagination=false"
+  },
+  "recovery": "Never change idempotency to bypass intent; read same provider ID; absent ID/uncertain ACK -> EXTERNAL_LIMIT reconciliation. Follow-up requires separately authorized command key/state, not enabled by this one-prompt task.",
+  "terminal_gate": "stopped + background_jobs=false + latest reply after own user input + has_more=false + scoped task QA",
+  "resource": {
+    "existing_credits_before": 1272,
+    "type": "provider free+refresh existing allowance",
+    "attributed_cost": "UNKNOWN",
+    "topup": false
+  },
+  "current_status": "LIVE_ROUTE_VERIFIED; CORRECTIVE_QA3/3; COMPILED_CHILD_LEASE_FAIL_SUPPLIED_SPEC; OVERALL_PARTIAL",
+  "latest_phase": {
+    "ack": {
+      "task_id": "AGY-CHAT-CONTROL-20261015:INTEROP:MANUS",
+      "attempt": 1,
+      "QA_CONTRACT_VERSION": "1.1",
+      "phase": "CORRECTIVE-A2"
+    },
+    "new_review_checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true
+    },
+    "new_review_pass": 3,
+    "new_review_total": 3,
+    "batch_plan_pass": true,
+    "schema_object_fixed": true,
+    "compiled_task_live_validation_error": "LEASE_EXPIRED_OR_INVALID",
+    "compiled_handoff_PASS": false,
+    "lease": {
+      "owner": "MANUS",
+      "issued_at": "2026-10-15T07:52:58.813937+00:00",
+      "expires_at": "2026-10-15T07:52:00+00:00",
+      "max_submissions": 1
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "tests": 16,
+  "failures": 0,
+  "status": "PASS_LOCAL_ONLY",
+  "details": {
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "c500af",
+      "wall_time_seconds": 0.2696844,
+      "exit_code": 0,
+      "original_token_count": 480,
+      "output": "test_acked_only_collects (test_interop_contract.Contracts.test_acked_only_collects) ... ok\r\ntest_callback_cannot_redirect (test_interop_contract.Contracts.test_callback_cannot_redirect) ... ok\r\ntest_critical_false_pass_zero_in_observed_results (test_interop_contract.Contracts.test_critical_false_pass_zero_in_observed_results) ... ok\r\ntest_expired_lease_rejected (test_interop_contract.Contracts.test_expired_lease_rejected) ... ok\r\ntest_external_action_cannot_expand (test_interop_contract.Contracts.test_external_action_cannot_expand) ... ok\r\ntest_lease_required_after_schema_fixed (test_interop_contract.Contracts.test_lease_required_after_schema_fixed) ... ok\r\ntest_lease_wrong_worker_rejected (test_interop_contract.Contracts.test_lease_wrong_worker_rejected) ... ok\r\ntest_manus_severity_gap_is_retained (test_interop_contract.Contracts.test_manus_severity_gap_is_retained) ... ok\r\ntest_missing_or_mismatched_qa_blocks (test_interop_contract.Contracts.test_missing_or_mismatched_qa_blocks) ... ok\r\ntest_observed_live_placeholder_rejected_both_workers (test_interop_contract.Contracts.test_observed_live_placeholder_rejected_both_workers) ... ok\r\ntest_path_containment_windows_and_posix (test_interop_contract.Contracts.test_path_containment_windows_and_posix) ... ok\r\ntest_secret_input_denied (test_interop_contract.Contracts.test_secret_input_denied) ... ok\r\ntest_strict_fixed_template_compiles (test_interop_contract.Contracts.test_strict_fixed_template_compiles) ... ok\r\ntest_uncertain_never_resubmits (test_interop_contract.Contracts.test_uncertain_never_resubmits) ... ok\r\ntest_unknown_billing_not_eligible (test_interop_contract.Contracts.test_unknown_billing_not_eligible) ... ok\r\ntest_unknown_recovery_state_fail_closed (test_interop_contract.Contracts.test_unknown_recovery_state_fail_closed) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 16 tests in 0.031s\r\n\r\nOK\r\n"
+    }
+  },
+  "qa_layer2": "ROOT_REVIEW_PENDING",
+  "provider_outputs": "probe-evaluation.json",
+  "correction_retest": "PENDING_AT_TIMEBOX"
+}

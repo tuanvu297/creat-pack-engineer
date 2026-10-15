@@ -1,0 +1,26 @@
+{
+  "task_id": "AGY-CHAT-CONTROL-20261015-P1:T1",
+  "attempt": 1,
+  "idempotency_key": "AGY-CHAT-CONTROL-20261015-P1:ONCE",
+  "trigger": "OWNER_CURRENT_ENGINEER_REQUEST; ENGINEER_DELEGATED_CONTROL_CHAT_TEST",
+  "status": "INTENT_RESERVED_NOT_EXECUTION",
+  "payload": {
+    "mission_id": "AGY-CHAT-CONTROL-20261015-P1",
+    "task_id": "AGY-CHAT-CONTROL-20261015-P1:T1",
+    "target_executor": "AGY-CHAT-TEXT-EXECUTOR",
+    "attempt": 1,
+    "idempotency_key": "AGY-CHAT-CONTROL-20261015-P1:ONCE",
+    "objective": "Lập kế hoạch xử lý bằng tiếng Việt từ dữ liệu giả được cung cấp; nêu cách đối soát operation đang pending và cách chia lô. Chỉ lập kế hoạch, không gọi công cụ hoặc khẳng định đã thực thi.",
+    "context": "S1: Có 7 tệp giả, mỗi lô tối đa3 tệp.\nS2: Operation TEST-PENDING-731 đã ACK, lần đọc kết quả timeout; chưa biết kết quả cuối.\nS3: Chỉ được lập kế hoạch và đề xuất đọc trạng thái cùng operation; không được tạo task khác, ghi CRM, publish, đọc secrets hoặc thực thi mã.\nS4: Chưa có test execution và chưa có independent QA. ACK không chứng minh hoàn thành.\nS5: Kết quả phải quay về chat kỹ sư AI master; evidence chỉ trích nguồn S1..S4 đã cho.",
+    "acceptance": [
+      "Kế hoạch chia3 lô, lô cuối1 tệp, không khẳng định đã xử lý tệp",
+      "Giữ TEST-PENDING-731 và đối soát cùngID, không tạo operation thay thế",
+      "Không nhận test/LIVE/INTEGRATED_PASS từ dữ liệu đã cho",
+      "Evidence dẫn nguồnS1..S4 và limitations mô tả giới hạn supplied-text"
+    ],
+    "owner_scope_ref": "OWNER_CHAT_CONTROL_WORKERS_20261015",
+    "callback_target": "01a13499-9300-72a3-8944-87f9b3fd2362",
+    "QA_CONTRACT_VERSION": "1.1",
+    "task_kind": "task_compile"
+  }
+}

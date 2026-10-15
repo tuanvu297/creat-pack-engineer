@@ -1,0 +1,81 @@
+{
+  "report_id": "AGY-CHAT-CONTROL-PEER-LIVE-P1",
+  "recorded_at": "2026-10-15T07:53:34.301061+00:00",
+  "verdict": "PASS_EVIDENCE_SCOPED",
+  "accepted_scope": "ENGINEER_DELEGATED_CONTROL_CHAT_SUPPLIED_TEXT_COMPILATION",
+  "mission_id": "AGY-CHAT-CONTROL-20261015-P1",
+  "task_kind": "task_compile",
+  "source_version": "0.2.0",
+  "review_scope": "Offline independent evidence and result QA only. No provider call, daemon/restart, native chat call/message or Work creation by peer.",
+  "source_binding": {
+    "source_hash": "f1b97de69fcc3371bc327098e7ca4f7a488c2d626180a1938b6ed939fe118869",
+    "snapshot_digest_recomputed": "PASS",
+    "inventory_match": "14/14 working files",
+    "runtime_tested_files_changed_since_peer_preflight": [],
+    "previous_local_QA": "78/78 independently passed; PEER-QA-20261015.json"
+  },
+  "execution_checks": {
+    "ACK_before_PLAN": "PASS seq3 before4 with strict timestamp ordering",
+    "lease_fresh_at_ACK": "PASS",
+    "lease_seconds": 45.0,
+    "result_and_delivery_within_lease": "PASS",
+    "ACK_to_delivery_seconds": 21.534175,
+    "heartbeat_age_at_delivery_seconds": 0.752381,
+    "worker_instance_grant_binding": "PASS",
+    "provider_turn_id": "01a13e87-8d4f-74b3-9a55-f67d1370e3d8",
+    "provider_turn_binding": "PASS",
+    "intent_reservations": {
+      "MODEL_TURN": 1,
+      "CALLBACK_POST": 1
+    },
+    "callback_comment_id": 6187178328,
+    "callback_readback": "Saved host receipt readback_match true; external GET not repeated by peer",
+    "result_sha256": "8700dca588cdb3fc84e5c1da4ebcf337a18b81fcf2b3094ad0adf83af3686f9c",
+    "result_hash_matches_native_and_AGY_record": "PASS",
+    "schema_review_native_order": "PASS schema-pending seq11, delivery14, review15, host native acceptance16",
+    "final_saved_state": "AGY_ACCEPTED"
+  },
+  "independent_semantic_assessment": {
+    "verdict": "PASS_FOR_SUPPLIED_TEXT_PLANNING",
+    "seven_synthetic_files": "Correctly planned as files1-3,4-6,7: batches3-3-1",
+    "pending_operation": "TEST-PENDING-731 preserved; same-operation status/result reconciliation proposed; no replacement task or mutation retry proposed",
+    "unsupported_claims": "No claim of actual file processing, test PASS, LIVE or INTEGRATED_PASS; result explicitly limits itself to supplied S1..S4 and unknown operation outcome",
+    "semantic_vs_schema": "Worker schema success remains SEMANTIC_QA_PENDING. Subsequent independent AGY review evaluates the contents; it is not auto-promoted by schema validity."
+  },
+  "native_review_receipt": {
+    "classification": "PARENT_NATIVE_READBACK_RECEIPT_CHECKED_OFFLINE; NOT_NEW_PEER_NATIVE_READBACK",
+    "chat_id": "6acb1ce3-e37c-83ec-9eb7-f795fd5243c1",
+    "turn_id": "5496ca3d-8d45-42fb-9cd7-5da0914775f8",
+    "reviewer_message_id": "f8f4d8a2-c788-4513-b420-8b855ba5bd4e",
+    "verification_method": "mcp__codex_app.read_thread",
+    "receipt_exactly_matches_persisted_journal": "PASS",
+    "scope_and_result_binding": "PASS"
+  },
+  "evidence_files": [
+    {
+      "path": "D:\\Codex\\agy-chat-control\\evidence\\SANITIZED-PILOT-JOURNAL-P1.json",
+      "sha256": "2902a219bcdeae9740d2f1e8d94ac007888615e3b2c17b31b878dc51a26a29fb"
+    },
+    {
+      "path": "D:\\Codex\\agy-chat-control\\evidence\\NATIVE-REVIEW-RECEIPT-P1.json",
+      "sha256": "60e357f0eb65949d5b5666e87530a7c9c3f6600a198a7c0d9bf7b9ab400570a9"
+    },
+    {
+      "path": "D:\\Codex\\agy-chat-control\\evidence\\SOURCE-SNAPSHOT.json",
+      "sha256": "0a9284c0ea83ac6f6ea7a324405169a9c7f05107cbf0502809590e1f82b4c8b4"
+    },
+    {
+      "path": "D:\\Codex\\agy-chat-control\\evidence\\PEER-QA-20261015.json",
+      "sha256": "1028ab993fcd63113faa8b9d9dac8c79d07f867821ef1bdb52a2b7b8fc572446"
+    }
+  ],
+  "limitations": [
+    "This verifies one delegated supplied-text compilation pilot, not live correctness of every supported task class or broad ChatGPT parity.",
+    "Native unattended Engineer/control-chat wakeup remains EXTERNAL_LIMIT/UNVERIFIED. GitHub callback is durable delivery; active parent observed the actual AGY native response and confirmed acceptance.",
+    "Provider interoperability work in separate AGY Core Work is unfinished and is not certified by this report.",
+    "Parent is performing safe stop/restart with retained journal. This report checks pre-restart P1 evidence; actual post-restart no-replay must be recorded separately.",
+    "Provider completion, external callback GET and native readback are saved host/AGY evidence; peer did not replay live calls or read a live journal. Grant signing keys and raw auth/state are excluded.",
+    "New stored Work0 is declared in AGY review and consistent with reviewed ephemeral architecture, not independently re-enumerated in this offline task.",
+    "No fresh literal-human generic-task UX, continuous native verifier, global promotion, production readiness, commercial readiness or completed weight training is inferred. Monetary cost remains UNKNOWN; journal records included ChatGPT route."
+  ]
+}

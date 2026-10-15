@@ -1,0 +1,131 @@
+{
+  "report_id": "AGY-CHAT-CONTROL-PEER-QA-20261015",
+  "recorded_at": "2026-10-15T07:43:46.542371+00:00",
+  "role": "Independent peer QA; unified engineering delivery remains parent responsibility",
+  "source_version": "0.2.0",
+  "verdict": "PASS_LOCAL_PREFLIGHT_SCOPED",
+  "open_confirmed_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "scope": "Supplied-text analysis, task compilation and code review of supplied text; source inspection, isolated temp SQLite/mocked transport/state tests only. No live inference, provider call, daemon start, native Work/chat message, or source edit by reviewer. Separate provider-interop worker folder not modified; prior release and CRM tasks not replayed.",
+  "source_sha256": {
+    "bin/agy_queue.py": "50fbd24863793c3acb272a456cf088bf1b0f3551d03e62428753086312b24abc",
+    "bin/compile_task.py": "7e11b144d1f1c8a1e2cab75f70ab27b1e136caf189cd19842268c02711e71489",
+    "src/appserver_client.py": "f064c013194626427ed8fa523192b2c0d9e854f6266d656fe698850df68368d5",
+    "src/daemon.py": "1ef2cc30c4fe29e1198162f6cbbc6218eb58e9c0372dba09bb7662b716eba588",
+    "src/queue_store.py": "217d2319a583a90213b89eed56ba3a7f4c92bf5d2ce0d1f5b375443788d7d64f",
+    "src/runtime_health.py": "ae03211dcad972b91630a75232ef7d6a87d7fec2ecdf3628e89a817e46233e83",
+    "src/text_contract.py": "bf4618cb4d460c01def773b84f940b4595e1ae05caa34eec1d86945fbdedb6c3",
+    "tests/test_queue.py": "0128ee464d7e4ca0be5453a8a3b3acb1e74516d1a32e2fc6869af1d7f3f1b8d3",
+    "tests/test_text_contract.py": "340be7fd603c2807d9813f16ec912b579f6155c55517208532fefc8d5a63fdb2",
+    "tests/test_transport.py": "f95e16819643d9e111cf981282e23105f3a2f7390ab1fe74cc7f46badfc62906"
+  },
+  "python_version": "3.12.14",
+  "repaired_findings": [
+    {
+      "id": "CQA-01",
+      "severity": "S2",
+      "title": "Missing/empty namespace policy failed open",
+      "location": "src/queue_store.py:BOUNDED_SUPPLIED_TEXT policy validation",
+      "disposition": "REPAIRED_RETEST_PASS",
+      "retest": "Empty/missing prefix now TEXT_POLICY_SCHEMA_DENIED; nonempty token namespace and allowed-kind list required"
+    },
+    {
+      "id": "CQA-02",
+      "severity": "S2",
+      "title": "Recognized credential signatures bypassed input scan through acceptance or metadata",
+      "location": "src/text_contract.py:validate",
+      "disposition": "REPAIRED_RETEST_PASS",
+      "retest": "Whole-envelope scan now covers objective/context/acceptance and identity metadata; synthetic recognized signatures in task_id and idempotency_key denied before queue/provider"
+    },
+    {
+      "id": "CQA-03",
+      "severity": "S2",
+      "title": "Permitted large output could post callback that readback parser rejects",
+      "location": "src/text_contract.py:validate_result; src/daemon.py:deliver",
+      "disposition": "REPAIRED_RETEST_PASS",
+      "retest": "Aggregate serialized output <=6000 ASCII chars; callback size <=24000 validated before callback POST intent/mutation; oversize output denied"
+    },
+    {
+      "id": "CQA-04",
+      "severity": "S2",
+      "title": "Missing callback/scope fields allowed null equality to bind policy",
+      "location": "src/queue_store.py:BOUNDED_SUPPLIED_TEXT binding validation",
+      "disposition": "REPAIRED_RETEST_PASS",
+      "retest": "Nonempty token-valued configured target_executor/callback_target/owner_scope_ref now required; missing/null policy rejected"
+    },
+    {
+      "id": "CQA-05",
+      "severity": "S2",
+      "title": "Authority could expire while submit waits for transaction",
+      "location": "src/queue_store.py:submit atomic operation",
+      "disposition": "REPAIRED_RETEST_PASS",
+      "retest": "Clock advanced beyond expiry while lock held; admission now OWNER_SCOPE_EXPIRED, zero rows inserted"
+    },
+    {
+      "id": "CQA-06",
+      "severity": "S2",
+      "title": "Per-field-valid input exceeded V2 ingress parser bound",
+      "location": "src/text_contract.py:validate; bin/compile_task.py",
+      "disposition": "REPAIRED_RETEST_PASS",
+      "retest": "Serialized input <=22000 ASCII chars enforced by shared validation/compiler; aggregate-bound regression passes"
+    }
+  ],
+  "independent_tests": {
+    "full_offline_suite": {
+      "run": 78,
+      "pass": 78,
+      "failed": 0
+    },
+    "quota_atomicity": {
+      "independent_SQLite_connections": 8,
+      "configured_max_missions": 3,
+      "admitted": 3,
+      "limited": 5,
+      "other_failures": 0
+    },
+    "semantic_false_PASS_challenge": {
+      "task_classes": [
+        "supplied_text_analysis",
+        "task_compile",
+        "code_review"
+      ],
+      "deliberately_wrong_supplied_result": "schema-valid incorrect arithmetic/test claim fixture",
+      "all_resulting_states": "CHECKPOINT",
+      "all_result_events": "RESULT_SCHEMA_VALIDATED_SEMANTIC_QA_PENDING",
+      "all_callback_statuses": "OUTPUT_RECEIVED_SCHEMA_VALIDATED",
+      "all_semantic_QA": "UNVERIFIED_RECEIVER_REVIEW_REQUIRED",
+      "AGY_acceptance": "null for all three; no semantic PASS promoted"
+    },
+    "final_credential_metadata_negatives": 2,
+    "expiry_after_transaction_wait": "denied; zero admissions",
+    "inherited_contracts": "ACK-before-PLAN, claim/fencing, no mutation replay, independent native-acceptance gate regressions passed"
+  },
+  "policy_assessment": {
+    "authentication": "Configured GitHub login and positive actual comment ID required; not cryptographic proof of literal human origin",
+    "authorization": "Expiry, task class, namespace, fixed worker/callback/scope and finite max-missions policy enforced",
+    "quota_scope": "Total mission count in this private queue, including prior/failed/accepted rows; atomic lifetime queue ceiling, not a global training cap or automatic refill",
+    "claim_scope": "Grant carries specific admitted task kind plus own status/checkpoint/callback capabilities",
+    "output_authority": "Structured strings provide proposed text only; no model-output path grants external action authority",
+    "semantic_acceptance": "Schema validation is separate from receiver semantic review and actual independent native acceptance"
+  },
+  "freshness_health_review": {
+    "implementation": "runtime_health assesses recent emitted_at plus actual PID query; unknown process access is UNVERIFIED, cached alive boolean alone cannot certify liveness",
+    "Windows_probe": "OpenProcess/GetExitCodeProcess, not Windows os.kill; no provider/daemon invoked by peer",
+    "limit": "PID existence and fresh snapshot are not a complete readiness or process-identity attestation"
+  },
+  "remaining_limits": [
+    "No live supplied-text provider execution or connection verification was performed by this peer. Passing preflight does not prove included-account auth, current quota, provider interop or end-to-end semantic quality.",
+    "Existing released nonce/sum pilots and accepted CRM regression are historical separate evidence; none were replayed or used to claim this generic adapter is integrated.",
+    "Receiver must assess the actual task acceptance criteria and evidence. A model can emit unsupported claims that remain unverified text; schema success is not factual correctness, test execution, or semantic acceptance.",
+    "Known secret-signature screening has finite pattern coverage and does not guarantee detection of every secret or disguised/exfiltrated value.",
+    "Model context connector isolation and unexpected tool-activity rejection are reviewed/inherited controls. No new live app-server startup or builtin-tool capability audit was performed by peer.",
+    "Callback to GitHub is durable handoff, not proof of native Engineer/control-chat wakeup. Continuous native delivery and native acceptance-verifier attachment remain EXTERNAL_LIMIT/UNVERIFIED unless separately demonstrated.",
+    "Literal human input must be observed independently; an authenticated compiled envelope alone does not prove a fresh human author.",
+    "Configured finite mission cap limits this bounded queue; D045 maximum useful training does not itself authorize unbounded inference, paid purchases, external mutations or global promotion.",
+    "Global integration, general coding execution, production/CRM writes, weight training, commercial readiness and full defect closure are not approved by this report."
+  ]
+}

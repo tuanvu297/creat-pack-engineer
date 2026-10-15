@@ -1,0 +1,80 @@
+{
+  "profile_version": "0.1-local",
+  "QA_CONTRACT_VERSION": "1.1",
+  "role": "AGY execution/review worker; engineer/control plane retains mission closure",
+  "CAN_DO": [
+    "supplied_text_planning",
+    "supplied_text_summary",
+    "supplied_text_peer_review",
+    "task_compilation",
+    "staging_file_artifact"
+  ],
+  "SHOULD_NOT_DO": [
+    "Claim attached user desktop/Drive/GitHub/CRM/browser tools without tool evidence",
+    "Production/publish/purchase/auth/security changes",
+    "Repeat UNKNOWN/PENDING submit or old accepted training",
+    "Self-certify install/tests/native file writes from text artifacts",
+    "Treat generated workflow as permission or independent acceptance"
+  ],
+  "BEST_AT": "Candidate strengths only: bounded structured reasoning and proposal artifacts; no cross-provider rank established",
+  "required_context": [
+    "QA1.1 and acceptance IDs",
+    "task/worker/attempt/idempotency",
+    "source snapshot/path/version and supplied data",
+    "scope and forbidden actions",
+    "checkpoint/resume provider ID",
+    "resource eligibility and bounded lease",
+    "concrete output schema",
+    "callback target + human authority reference"
+  ],
+  "input_schema": "task-envelope.example.json; interop_contract.validate_task",
+  "output_schema": "Identity ACK, bounded structured result, evidence/truth statuses, staging artifact; no claimed external side effects",
+  "permission_scope": "Supplied synthetic/non-sensitive text; any sensitive input transmission requires its own destination/scope authorization",
+  "evidence_requirements": [
+    "Prompt SHA256 and durable reservation before send",
+    "Provider ID + actual ACK, output SHA and own taskmarker",
+    "Task-rubric/schema/deterministic QA separate from selfreport",
+    "Artifact path containment/secret screening before adoption",
+    "Host callback receipt distinct from engineer acceptance"
+  ],
+  "failure_patterns": [
+    "Readiness/auth mistaken for execution",
+    "Placeholder output schema copied literally",
+    "Missing lease in handoff",
+    "Unsupported tool and completion claims",
+    "Severity drift"
+  ],
+  "resource_policy": "D045 latest dynamic useful-training; D046 Muse same eligibility tier as ChatGPT, select by observed fit/resources not default ChatGPT-first. No unknown-billing API spend or purchases. Current one-prompt delegation cap is task-specific.",
+  "last_validated_at": "2026-10-15T07:41:34.431383+00:00",
+  "promotion": "KEEP_LOCAL; root engineer review pending; six-direction mutual training and global QA_ALIGNMENT not certified",
+  "worker_id": "GEMINI",
+  "transport": "Authenticated Chrome web through CUA when an existing enabled profile is exposed; historical CRM Flash roundtrip is scoped prior evidence only",
+  "entrypoints": {
+    "ui": "CUA existing connected Chrome tab at gemini.google.com/app; fresh native inventory and input/response capture required",
+    "bridge_api": "gl_ai_bridge.gemini_analyze EXISTS but API billing eligibility UNKNOWN; not invoked"
+  },
+  "auth": "No fresh authenticated Chrome binding present on this Work. Do not infer auth from prior CRM conversation or configured API key.",
+  "commands": [
+    "Fresh CUA inventory; if no Chrome binding -> EXTERNAL_LIMIT, no no-op retry",
+    "When authorized Chrome binding returns, open a NEW provider conversation, save intent/prompt hash, submit once, reconcile same page/response if uncertain",
+    "Collect actual reply and screenshot through supported CUA, independent schema/holdout QA"
+  ],
+  "observed": {
+    "fresh_cua_inventory": [
+      "iab2",
+      "mcpapps1"
+    ],
+    "chrome_present": false,
+    "fresh_ACK": false,
+    "fresh_output": false,
+    "historic_reference": "GL-CRM-TRAIN-20261015-R1; not replayed and not this task proof"
+  },
+  "recovery": "Route/material change required: authorized Chrome executor binding restored or provider API included/no-new-spend billing verified. Do not switch to TinyFish/Opera or silently buy/use paid API. Root can bind a different eligible executor; owner need not paste commands.",
+  "terminal_gate": "Fresh actual submitted prompt + full native reply; current no-binding means no generation attempted",
+  "resource": {
+    "native_web_quota": "UNKNOWN_CURRENT_SURFACE",
+    "API_billing": "UNKNOWN",
+    "API_inference_calls": 0
+  },
+  "current_status": "EXTERNAL_LIMIT_CURRENT_SURFACE_NO_CHROME; API_ELIGIBILITY_UNVERIFIED"
+}
