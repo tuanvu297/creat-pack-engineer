@@ -1,0 +1,53 @@
+{
+  "task_id": "CREAT-PACK-LEARNING-20261015-1040",
+  "recorded_at": "2026-10-15 03:42:50 UTC",
+  "role": "Creat Pack unified engineer; research-only local experiment",
+  "sources": [
+    {
+      "id": "10Ph_XvsgytAHsdECGDNkPY94l4EIuTat-4VWtbXrTsY",
+      "title": "AGY START HERE — Canonical Resume & Current State",
+      "modified_time": "2026-10-12T03:20:15.803Z",
+      "revision_id": null
+    },
+    {
+      "id": "1TFSkLh7ZfAxHq-mYSN-HG2Dp1XJaG_JWcItASe_4tME",
+      "title": "AGY DECISION LOG v1.0 — Canonical Architecture & Operating Decisions",
+      "modified_time": "2026-10-12T03:20:03.285Z",
+      "revision_id": null
+    },
+    {
+      "id": "1S98IZWRhF5rDdthPO-y5ETb1shHRS9bz0f_J22yzcqc",
+      "title": "AGY THREE-AI SHARED WORKFLOW v1 — Repo, Prompts, QA & Release Gates",
+      "modified_time": "2026-10-11T23:18:55.728Z",
+      "revision_id": null
+    },
+    {
+      "id": "1mFB9ugcXq9v0K9geDvO8K2-zgn3rWHvSLCAMmct7760",
+      "title": "AGY WORKER ENGINE V2 — CURRENT CHECKPOINT",
+      "modified_time": "2026-10-12T08:00:41.415Z",
+      "revision_id": null
+    }
+  ],
+  "source_version": "Toolkit0.1.0; Python3.12.14 runtime",
+  "github_source_blob_sha": "f7b5c2874e0c6d0a55c5261d41a9f97832fefd9c",
+  "read_set": [
+    "PROJECT-ROLE-LOCK.md",
+    "ENGINEER-PROFILE.md",
+    "LEARNED-KNOWLEDGE.md",
+    "config/research-sources.json",
+    "research.md",
+    "Operating Modelv2",
+    "START HERE",
+    "Decision Log throughD-044",
+    "Shared QAv1.1",
+    "WorkerV2checkpoint",
+    "2026-10-14 research"
+  ],
+  "scope": "Offline synthetic ZIP negative/positive experiments only; no extraction or payload execution; no provider task, runtime mission resume, production/source/credential changes",
+  "storage": {
+    "Drive_folder": "1zD0S1fR2yOHCz2enI452Kdahv_KneZ0O",
+    "binding_read_today": true
+  },
+  "runtime_integrated": "NOT_TESTED",
+  "global_promotion": "NOT_PERFORMED"
+}
