@@ -24,14 +24,17 @@ def main():
    'AUTH_VERIFIED':live.get('AUTH_VERIFIED','UNVERIFIED') if mode=='ai' else 'BLOCKED_LOCAL_CUSTOMER_KEY_BOUNDARY',
    'LIVE_EXECUTION_PASS':live.get('LIVE_EXECUTION_PASS','UNVERIFIED') if mode=='ai' else 'NOT_RUN_READONLY_TEST_CONNECTION_PRODUCT',
    'INTEGRATED_PASS':'UNVERIFIED_DISTINCT_AGY_RECEIVING_SYSTEM_NOT_TESTED','source_core':'Byte-identical to canonical0.1.1-A2; see BASELINE-INSPECT.json',
-   'checkpoint':{'github':'PRIVATE_BRANCH_PENDING_READBACK','drive':'PRIVATE_PROJECT_FOLDER_PENDING_READBACK'},
+   'checkpoint':{'github_source_commit':'d6ee0744ea01573bf7bb7bf4a7b59e20b7141be4','github_mission_readback':'EXACT_CONTENT_MATCH','drive_mission_id':'1fM70ejbpeHZDfYS_yZBkkt-kWZf7Z2fB','drive_mission_metadata_readback':'VERIFIED','final_artifact_readbacks':'See separate SYNC-RECEIPT.json'},
    'minimum_owner_action':['Enter your own key locally and click Test Connection; nontechnical participant confirms visible flow','Resolve license/support and signing before commercial release'] if mode=='human' else ['Import generated local MCP configuration into chosen client if desired; client-specific ingestion unverified'],
    'known_limits':['Current Windows workstation only; clean VM/other OS unverified','No ordinary web-chat bridge','No always-on/autonomous AGY dispatch claim','Unsigned publisher metadata','Finite secret-scan coverage']}
+  if mode=='ai':
+   receipt['pass_ladder'].update(AUTH_VERIFIED=receipt['AUTH_VERIFIED'],LIVE_EXECUTION_PASS=receipt['LIVE_EXECUTION_PASS'],INTEGRATED_PASS=receipt['INTEGRATED_PASS'])
+   receipt['live_independent_readback']='qa/AI-LIVE-INDEPENDENT-READBACK-A3.json'
   receipts[mode]=receipt;write(out/(mode.upper()+'-RELEASE-RECEIPT.json'),receipt)
   # Bundle immutable evidence and reproducible source; never glob private state.
   stage=out/(mode+'-evidence');stage.mkdir()
   selected=[]
-  selected += [p for p in (ROOT/'engineering').iterdir() if p.is_file() and p.suffix in {'.json','.md','.py','.txt'} and p.name not in {'HUMAN-BUILD-LOG.txt'}]
+  selected += [p for p in (ROOT/'engineering').iterdir() if p.is_file() and p.suffix in {'.json','.jsonl','.md','.py','.txt'} and p.name not in {'HUMAN-BUILD-LOG.txt'}]
   selected += [p for p in (ROOT/'qa').iterdir() if p.is_file() and p.suffix in {'.json','.md','.py'}]
   for file in selected:
    rel=file.relative_to(ROOT);dest=stage/rel;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(file.read_bytes())

@@ -1,0 +1,89 @@
+{
+  "mission_id": "AGY-MCK-020-20261015",
+  "task_id": "INDEPENDENT-QA",
+  "attempt": 3,
+  "idempotency_key": "AGY-MCK-020-20261015:QA:3:AI",
+  "QA_CONTRACT_VERSION": "1.1",
+  "artifact": "D:\\Codex\\manus-connection-kit-upgrade-20261015\\release\\AI-A3\\manus-connection-kit-0.2.0-ai.1.zip",
+  "sha256": "9dfd29c46063be497ec099e39264ed6b27457f59f410c1e26c6c7284901060ad",
+  "worker": "independent_qa",
+  "route": "native collaboration Work scoped worker",
+  "live_requests": "One readback sequence: detail+messages; no creates/resume/stop",
+  "real_keys_read": "Authorized existing binding consumed in memory for current read-only provider verification; never printed/exported or archived",
+  "limitations": [
+    "No actual host MCP import; child protocol evidence only",
+    "No GUI/human usability claim",
+    "Provider authentication/live result verified for current owner mission; does not authenticate customer keys or certify actual AI client ingestion"
+  ],
+  "status": "PASS_LOCAL_AND_BOUNDED_LIVE_RESULT_WITH_DECLARED_LIMITATIONS",
+  "source_attempts_preserved": [
+    "AI-INDEPENDENT-QA-A1.json"
+  ],
+  "first_pass": false,
+  "retries": 2,
+  "retry_reason": "A2 controller guide/config fixes; A3 raw ZIP-name rejection correction",
+  "tests_summary": {
+    "independent_checks_passed": 12,
+    "failed": 0,
+    "packaged_offline_tests": 47,
+    "packaged_skips": 1,
+    "skip_reason": "Windows symlink privilege unavailable; separate path cases tested"
+  },
+  "findings": [
+    {
+      "id": "AI-F01",
+      "severity": "S2",
+      "acceptance": [
+        "AC02",
+        "AC03"
+      ],
+      "observed": "Original alternate separator normalization accepted",
+      "expected": "Reject raw alternate separator before extraction",
+      "correction": "Validate orig_filename; reject raw/normalized mismatch",
+      "retest": "AI-ALTERNATE-SEPARATOR-RETEST-A3.json: UNSAFE_PATH_RAW_NAME_NORMALIZED; destination empty",
+      "disposition": "FIXED_AND_RETESTED"
+    }
+  ],
+  "acceptance": {
+    "AC01": "PASS: canonical core/test bytes",
+    "AC02": "PASS: isolated same-host fresh install; clean VM UNVERIFIED",
+    "AC03": "PASS: wrong hash/rejected bad archive, failed tests preserve code, successful update backup+rollback",
+    "AC06": "PASS_LOCAL_STDIO_CHILD; actual selected AI client import UNVERIFIED",
+    "AC07": "PASS_FINITE: manifest hashes/outer hash, producer scan reviewed; unknown secret encodings not proven absent",
+    "AC08": "PASS: root fresh bounded grant, exactly one create, independent read-only result verification; no mutation retries",
+    "AC09": "PASS: independent exact artifact hash",
+    "AC10": "PASS_LOCAL_EVIDENCE_AND_PARENT_CALLBACK; external receiving integration UNVERIFIED"
+  },
+  "pass_ladder": {
+    "PACKAGE_BUILT": "PASS",
+    "INSTALL_TEST_PASS": "PASS_WINDOWS_CURRENT_HOST_ISOLATED_STATE",
+    "LOCAL_FUNCTION_PASS": "PASS",
+    "AUTH_VERIFIED": "PASS_ROOT_AUTH_PLUS_INDEPENDENT_AUTHENTICATED_READ",
+    "LIVE_EXECUTION_PASS": "PASS_ROOT_CREATE_ONCE_PLUS_INDEPENDENT_READBACK",
+    "INTEGRATED_PASS": "UNVERIFIED_REQUIRES_DISTINCT_RECEIVING_SYSTEM"
+  },
+  "evidence": [
+    "AI-TEST-EVIDENCE-A3.json",
+    "AI-ALTERNATE-SEPARATOR-RETEST-A3.json",
+    "../release/AI-A3/SECRET-SCAN.json",
+    "AI-INDEPENDENT-QA-A1.json",
+    "AI-LIVE-INDEPENDENT-READBACK-A3.json",
+    "../engineering/LIVE-RESULT.json"
+  ],
+  "human_intervention": false,
+  "cost": "UNKNOWN",
+  "callback_status": "DELIVERED_TO_ROOT_NATIVE_CONTROL_PLANE",
+  "commercial_ready": "BLOCKED_LICENSE_SUPPORT_UNRESOLVED",
+  "timestamp": "2026-10-15T03:54:08.593904+00:00",
+  "report_revision": "A3-LIVE-SUPPLEMENT",
+  "live_result": {
+    "provider_task_id": "XdLUJBqx82AzN3ZpbJw2Z7",
+    "predicate": "Exact expected nonce and integer sum43",
+    "closure": "STOPPED_WITH_REPLY",
+    "background_jobs": false,
+    "has_more": false,
+    "journal_intents": 1,
+    "QA_mutations": 0,
+    "QA_action": "Read/reconcile only, current fresh mission grant and authorized in-memory credential binding"
+  }
+}

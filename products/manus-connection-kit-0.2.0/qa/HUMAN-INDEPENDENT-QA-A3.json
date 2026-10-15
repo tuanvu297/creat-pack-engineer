@@ -1,0 +1,126 @@
+{
+  "mission_id": "AGY-MCK-020-20261015",
+  "task_id": "INDEPENDENT-QA",
+  "QA_CONTRACT_VERSION": "1.1",
+  "attempt": 3,
+  "idempotency_key": "AGY-MCK-020-20261015:QA:3:HUMAN",
+  "exe": "D:\\Codex\\manus-connection-kit-upgrade-20261015\\engineering\\human-dist\\Manus-Connection-Kit-Setup.exe",
+  "exe_sha256": "f49812ecade1231b1003ac135532f68e90db61a9f85df0769110e150ed0815a6",
+  "live_provider_calls": 0,
+  "real_keys_read": false,
+  "GUI_visual": "UNVERIFIED",
+  "nontechnical_user_usability": "UNVERIFIED",
+  "host_client_import": "UNVERIFIED",
+  "status": "PASS_INSTALL_AND_LOCAL_FUNCTION_WITH_DECLARED_LIMITATIONS",
+  "artifact": "D:/Codex/manus-connection-kit-upgrade-20261015/release/HUMAN-A3/manus-connection-kit-0.2.0-human.1.zip",
+  "artifact_sha256": "5246f39546b064a55abed32d6b5efe5bdb6fe74b19a56156c393b1fce43fdd13",
+  "first_pass": false,
+  "retries": 2,
+  "retry_reason": "A1 Windows lock/path/update defects corrected; A2/A3 maintenance handle/locking/embedded exact manifest refinements",
+  "tests_summary": {
+    "main_independent_checks_passed": 10,
+    "main_failed": 0,
+    "frozen_update_rollback_supplement": "6 steps PASS including expected checksum/backup denial",
+    "boundary_supplement": "3 checks PASS: root junction, DPAPI junction, AI-first coexistence",
+    "internal_source_manifest_files": 23
+  },
+  "findings": [
+    {
+      "id": "H-F01",
+      "severity": "S1",
+      "acceptance": [
+        "AC04"
+      ],
+      "classification": "OBSERVED",
+      "observed": "Windows installer deletes install.lock inside its open handle scope; PermissionError WinError32",
+      "expected": "Clean install exits PASS with lock removed",
+      "correction": "Close lock before final unlink",
+      "retest": "Frozen actual installation in isolated directory without Python PATH",
+      "disposition": "FIXED_AND_INDEPENDENTLY_RETESTED"
+    },
+    {
+      "id": "H-F02",
+      "severity": "S1",
+      "acceptance": [
+        "AC02",
+        "AC05"
+      ],
+      "classification": "OBSERVED_SOURCE_REVIEW",
+      "observed": "Original root resolved before link check; descendant/reparse paths not consistently checked",
+      "expected": "Reject original path reparse points and managed child aliases",
+      "correction": "Ancestor lstat before resolve; reparse checks descendants and DPAPI path",
+      "retest": "Producer junction tests plus independent frozen/source tests",
+      "disposition": "FIXED_AND_INDEPENDENTLY_RETESTED"
+    },
+    {
+      "id": "H-F03",
+      "severity": "S1",
+      "acceptance": [
+        "AC03"
+      ],
+      "classification": "OBSERVED_SOURCE_REVIEW",
+      "observed": "Original updates and rollback lacked mandatory differing-binary checksum/post-test/backup verification",
+      "expected": "Trusted explicit checksum, candidate and post-switch selftest, backup verification and restoration on failure",
+      "correction": "Add checksum gate, pre/post tests and verified rollback",
+      "retest": "Independent synthetic failure injection and frozen install selftest",
+      "disposition": "FIXED_AND_INDEPENDENTLY_RETESTED"
+    },
+    {
+      "id": "H-F04",
+      "severity": "S1",
+      "acceptance": [
+        "AC02",
+        "AC04"
+      ],
+      "classification": "OBSERVED_SOURCE_REVIEW",
+      "observed": "Human default root occupied parent of AI install; AI-first setup made human destination unowned",
+      "expected": "Both modes use distinct mode directories",
+      "correction": "Human .../ManusConnectionKit/human",
+      "retest": "Read corrected default paths and independent coexistence fixture",
+      "disposition": "FIXED_AND_INDEPENDENTLY_RETESTED"
+    }
+  ],
+  "acceptance": {
+    "AC01": "PASS: embedded exact canonical source/test bytes; build/runtime provenance recorded",
+    "AC02": "PASS: actual frozen isolated directory install current Windows workstation; clean VM UNKNOWN",
+    "AC03": "PASS: actual explicit-checksum frozen upgrade from historical dev candidate, tampered backup denied, actual rollback; source candidate failure restore tested",
+    "AC04": "PASS: frozen install/selftest with PATH only System32, no Python invocation by user; native visible/nontechnical onboarding UNVERIFIED",
+    "AC05": "PASS_LOCAL_BOUNDARY: synthetic DPAPI encryption/corrupt key/reparse denial/error redaction; customer key-entry/live auth UNVERIFIED",
+    "AC06": "PASS_LOCAL_STDIO_CHILD: frozen installed MCP handshake/tools/journal/no-grant denial; selected host AI client import UNVERIFIED",
+    "AC07": "PASS_FINITE: trusted outer hash, EXE hash, exact internal source hashes,2entry consumer surface; finite source scan reviewed, unknown secret formats not proven absent",
+    "AC08": "PASS_NO_GRANT_DENY; real customer auth/live UNVERIFIED",
+    "AC09": "PASS: independent exact ZIP and EXE hashes",
+    "AC10": "PASS_LOCAL_EVIDENCE_AND_PARENT_CALLBACK; distinct external integration UNVERIFIED"
+  },
+  "pass_ladder": {
+    "PACKAGE_BUILT": "PASS",
+    "INSTALL_TEST_PASS": "PASS_WINDOWS_CURRENT_WORKSTATION_ISOLATED_DIRECTORY",
+    "LOCAL_FUNCTION_PASS": "PASS",
+    "AUTH_VERIFIED": "UNVERIFIED",
+    "LIVE_EXECUTION_PASS": "UNVERIFIED",
+    "INTEGRATED_PASS": "UNVERIFIED"
+  },
+  "evidence": [
+    "HUMAN-TEST-EVIDENCE-A3.json",
+    "HUMAN-PACKAGE-INVENTORY-A3.json",
+    "HUMAN-FROZEN-UPDATE-ROLLBACK-A3.json",
+    "HUMAN-BOUNDARY-RETEST-A3.json",
+    "HUMAN-INDEPENDENT-QA-A1.json",
+    "../release/HUMAN-A3/SECRET-SCAN.json"
+  ],
+  "limitations": [
+    "No visible native GUI screenshot/visual QA",
+    "No novice human usability participant",
+    "No fresh VM or account",
+    "No actual AI client configuration import",
+    "Synthetic Test Connection response includes AUTH_VERIFIED field as fixture; this is NOT real auth evidence",
+    "Actual frozen update used same-version earlier development candidate, not a published version",
+    "GUI self-maintenance spawn/wait click path not observed; direct maintenance worker tested",
+    "Unsigned binary; publisher reputation unavailable; license/support unresolved"
+  ],
+  "human_intervention": false,
+  "cost": "UNKNOWN",
+  "callback_status": "DELIVERED_TO_ROOT_NATIVE_CONTROL_PLANE",
+  "commercial_ready": "BLOCKED_LICENSE_SUPPORT_UNRESOLVED",
+  "timestamp": "2026-10-15T03:57:06.001437+00:00"
+}

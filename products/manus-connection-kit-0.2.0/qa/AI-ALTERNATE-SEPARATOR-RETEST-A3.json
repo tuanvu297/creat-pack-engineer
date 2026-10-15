@@ -1,0 +1,6 @@
+{
+  "trusted_hash_match": true,
+  "status": "PASS",
+  "reason": "UNSAFE_PATH_RAW_NAME_NORMALIZED",
+  "destination_empty": true
+}

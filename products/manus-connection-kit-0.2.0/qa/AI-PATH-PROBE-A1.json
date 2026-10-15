@@ -1,0 +1,31 @@
+[
+  {
+    "name": "../escape.txt",
+    "result": "UNSAFE_PATH",
+    "extracted": []
+  },
+  {
+    "name": "C:/escape.txt",
+    "result": "UNSAFE_PATH",
+    "extracted": []
+  },
+  {
+    "name": "kit/CON.txt",
+    "result": "UNSAFE_PATH",
+    "extracted": []
+  },
+  {
+    "name": "kit/a/../b",
+    "result": "UNSAFE_PATH",
+    "extracted": []
+  },
+  {
+    "name": "kit/a\\b",
+    "result": "UNEXPECTED_ARCHIVE_ROOT",
+    "extracted": [
+      "kit",
+      "kit/a",
+      "kit/a/b"
+    ]
+  }
+]

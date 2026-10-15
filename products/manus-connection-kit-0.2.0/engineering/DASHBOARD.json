@@ -1,0 +1,11 @@
+{
+  "mission_id": "AGY-MCK-020-20261015",
+  "recorded_at": "2026-10-15T03:57:16.295387+00:00",
+  "ai": "SCOPED_INSTALL_LOCAL_AUTH_ONE_LIVE_TASK_PASS",
+  "human": "SCOPED_INSTALL_LOCAL_FUNCTION_PASS_CUSTOMER_KEY_AND_NOVICE_ACCEPTANCE_PENDING",
+  "commercial": "BLOCKED_LICENSE_SUPPORT_SIGNING",
+  "external_AGY_INTEGRATED": "UNVERIFIED",
+  "progress_percent": null,
+  "evidence": "ACTION-LEDGER.jsonl",
+  "canonical_core_unchanged": true
+}

@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "classification": "OBSERVED",
+  "zip_sha256": "5246f39546b064a55abed32d6b5efe5bdb6fe74b19a56156c393b1fce43fdd13",
+  "exe_sha256": "f49812ecade1231b1003ac135532f68e90db61a9f85df0769110e150ed0815a6",
+  "zip_entries": [
+    "START-HERE.html",
+    "Manus-Connection-Kit-Setup.exe"
+  ],
+  "embedded_source_manifest_verified": 23,
+  "core": [
+    {
+      "path": "src/manus_kit.py",
+      "byte_identical_to_canonical": true
+    },
+    {
+      "path": "src/mcp_server.py",
+      "byte_identical_to_canonical": true
+    },
+    {
+      "path": "tests/test_kit.py",
+      "byte_identical_to_canonical": true
+    }
+  ],
+  "tested_source_matches_embedded_source": true,
+  "coverage": "Full outer ZIP trusted hash+CRC and EXE SHA; internal source manifest exact bytes; source models and runtime notices present. No universal secret-absence proof."
+}

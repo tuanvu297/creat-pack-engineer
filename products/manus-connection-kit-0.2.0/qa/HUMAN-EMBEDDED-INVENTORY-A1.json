@@ -1,0 +1,44 @@
+{
+  "exe_sha256": "4525b8158e2fc81730c1c3146abbfadf0052d370537ce53e1c7d2dcaafb76716",
+  "embedded_names": [
+    "internal\\BUILD-MANIFEST.json",
+    "internal\\HUMAN-GUIDE.md",
+    "internal\\VERSION",
+    "internal\\config\\env.example",
+    "internal\\config\\mcp.example.json",
+    "internal\\config\\package.json",
+    "internal\\runtime-notices\\pyinstaller\\COPYING.txt",
+    "internal\\runtime-notices\\python\\LICENSE.txt",
+    "internal\\runtime-notices\\tk8.6\\license.terms",
+    "internal\\tests\\test_human.py"
+  ],
+  "build_manifest": {
+    "version": "0.2.0-human.1",
+    "files": {
+      "AI-INSTALL.md": "7cec6b23513e35a906580e94b371e21fd6ef415e2599c1a0e5d9ad24242bc9ab",
+      "HUMAN-GUIDE.md": "a47e9d349ae69808b87aed7a1b6f2a3a346947fe5ddc379418114092c3e12fc6",
+      "README.md": "1837809ec9d0823ec589f59ba3aa06385356b0d73bf403c005c32974dbf41d9b",
+      "bin/human-entry.py": "d24c02a33edbcf3ac13190274fe666fd92e7c96a3c708e53ad3c4f25893899ea",
+      "bin/kit-manager.py": "7006f46b8123da5b8d1e1b8f752d7b049b91dd20ab47fa4e5a2c7a9549f5c01d",
+      "bin/manus-kit.cmd": "389138807a15ffcdb618a70c83581e75c80e14032ea94e88bfbe2a3a3ed4e5b2",
+      "bin/manus-kit.py": "1a37836d26c1edd685cfb7c0976243cdb7d10676cd47073086e9d66e9f2c3d7d",
+      "bin/manus-kit.sh": "d3574378e64ae905ca434e95242624ea0ce77231e7bb49d3445372056b725d9a",
+      "config/env.example": "ad7ecec7c03ba50d8dec569d820de51c6761715f3ee441102bd7d40d8c7770ab",
+      "config/mcp.example.json": "e1eb44e09bf7e649245a184c4618d726914fb399ad0105fdf2a58cf6e6110559",
+      "config/package.json": "9e4caff4f6b972e6bc58845e630a8b5a54650ce5682385241297d6d8627d5183",
+      "docs/AGY-DISPATCH.md": "1dc0098ebcd33aef221d1052db860be1a55eef41ce5bed3be2bcd2ebb36fdafe",
+      "docs/CORE-CONTROLLER-GUIDE.md": "8e19eb8aa3948ba4c42e6ef33d9b57a69f173744ead4a9d02d56a8f4e43b0fff",
+      "docs/KNOWN-LIMITATIONS.md": "f6ddf6cc0fd722294e9a3b1e263813dd3fdffc1c8e7cdde86a7162b71195b2f8",
+      "docs/UPDATE-ROLLBACK.md": "59ae2211c2f7c5b281edc5a9ed290f2db707a44314cdf9de4b480b39ca6fedd3",
+      "src/human_ui.py": "424e7e1aac22fd69e5c879d40421f29d4a359b930a38a9dfa82cb22e2b1baae3",
+      "src/kit_install.py": "d86eee6132932c4e6eba1e8e962623831577feba36f37f5e659be9675a168aa6",
+      "src/manus_kit.py": "09230eea818b9ef6a4a8913125290a28bbc55f0bae581f58b1088ac0616c4612",
+      "src/mcp_server.py": "b3bf406e19cc1b1ad412912dadf01646fb987a8f00d1b604e186afc3004b5582",
+      "src/windows_secret.py": "5147b401a0366b2b1291cd2e7111663d85e311c63b3a92183d0995f5d42a5ce8",
+      "tests/test_human.py": "de6fb9fecb06af80236ad044a67a0b186da9168bc1ad4232f91dff84e422b6f9",
+      "tests/test_install.py": "81d3ecf8164018688c30bb70aa10293d27dd591e9bac9f0c676a2e579f02e225",
+      "tests/test_kit.py": "f8726e101cdf6ac10eea35f9a57f23f283f79eb6c614696f739449c11887c894"
+    },
+    "self_hash_exclusion": "EXE is hashed externally after build; internal manifest inventories source inputs."
+  }
+}

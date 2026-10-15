@@ -1,0 +1,19 @@
+from pathlib import Path
+import json,datetime,hashlib
+ROOT=Path(__file__).resolve().parents[1]
+now=datetime.datetime.now(datetime.timezone.utc).isoformat()
+rows=[]
+checkpoints=[('INSPECT','engineering/BASELINE-INSPECT.json','PASS','root'),('NORMALIZE','engineering/PACKAGE-DESIGN.json','PASS_SELECTED_COPY','root'),('PACKAGE_DESIGN','engineering/PACKAGE-DESIGN.json','PASS','root'),('BUILD','engineering/AI-BUILD.json','PASS','ai_mode'),('SECRET_SCAN','release/AI-A3/SECRET-SCAN.json','PASS_FINITE_SCAN','root'),('TEST','qa/AI-TEST-EVIDENCE-A3.json','PASS_SCOPED','independent_qa'),('MANIFEST','release/AI-A3/consumer/kit/MANIFEST.json','PASS','root'),('HASH','release/AI-A3/BUILD-RECEIPT.json','PASS','root'),('RELEASE','release/AI-A3/BUILD-RECEIPT.json','PASS_PACKAGE_BUILT','root'),('CLEAN_INSTALL','qa/AI-TEST-EVIDENCE-A3.json','PASS_CURRENT_WINDOWS_HOST','independent_qa'),('USABILITY','qa/AI-TEST-EVIDENCE-A3.json','PASS_FRESH_AGENT_LOCAL_TOOL_SCOPE','independent_qa'),('LIVE_AUTH_TASK','qa/AI-LIVE-INDEPENDENT-READBACK-A3.json','PASS_ONE_BOUNDED_TASK','root+independent_qa'),('INDEPENDENT_QA','qa/AI-INDEPENDENT-QA-A3.json','PASS_SCOPED','independent_qa'),('CALLBACK','engineering/FINAL-AGY-REPORT.md','INGESTED_CURRENT_CONTROL_PLANE_NOT_EXTERNAL_AGY_ACCEPTANCE','root'),('REPORT','engineering/FINAL-AGY-REPORT.md','DELIVERABLE_REPORT_READY','root')]
+for mode in ['ai','human']:
+ for index,(phase,ref,status,worker) in enumerate(checkpoints):
+  if mode=='human':
+   ref=ref.replace('AI-A3','HUMAN-A3').replace('AI-','HUMAN-')
+   if phase=='BUILD':ref='engineering/HUMAN-BUILD.json';worker='human_mode'
+   if phase=='MANIFEST':ref='engineering/human-tooling/embedded/MANIFEST.json'
+   if phase=='LIVE_AUTH_TASK':ref='engineering/HUMAN-BLOCKERS.json';status='BLOCKED_LOCAL_CUSTOMER_KEY_BOUNDARY'
+   if phase=='USABILITY':ref='engineering/HUMAN-BLOCKERS.json';status='UNVERIFIED_VISUAL_NOVICE_AND_CLEAN_VM'
+  file=ROOT/ref
+  rows.append({'event_id':'MCK020-'+mode.upper()+'-'+str(index+1).zfill(2),'mission_id':'AGY-MCK-020-20261015','task_id':'MCK020:'+mode.upper()+':'+phase,'attempt':3,'idempotency_key':'AGY-MCK-020-20261015:'+mode.upper()+':'+phase+':A3','worker':worker,'route':'NATIVE_WORK_SCOPED_LOCAL_ENGINEERING','reason':'Direct owner approved dual-mode mission','phase':phase,'status':status,'classification':'OBSERVED' if file.exists() else 'UNVERIFIED','first_pass':False if phase in ['BUILD','TEST','INDEPENDENT_QA'] else None,'retries':'See immutable A1/A2 correction receipts; no provider mutation retry','blocker_class':'OWNER_LOCAL_SECRET_OR_USABILITY_EVIDENCE' if mode=='human' and phase in ['USABILITY','LIVE_AUTH_TASK'] else None,'human_intervention':'NONE_REQUESTED_DURING_BUILD_QA; Human own-key visible acceptance pending','evidence_id':ref if file.exists() else None,'evidence_sha256':hashlib.sha256(file.read_bytes()).hexdigest() if file.is_file() else None,'callback_status':'CURRENT_PARENT_INGESTED','cost':'UNKNOWN','quota':'Observed account snapshots in MISSION.json and SYNC-RECEIPT; per-task allocation UNKNOWN','recorded_at':now,'event_provenance':'Backfilled from named observed artifact/worker callbacks; no reconstructed click timestamps'})
+(ROOT/'engineering'/'ACTION-LEDGER.jsonl').write_text('\n'.join(json.dumps(r) for r in rows)+'\n',encoding='utf-8')
+(ROOT/'engineering'/'DASHBOARD.json').write_text(json.dumps({'mission_id':'AGY-MCK-020-20261015','recorded_at':now,'ai':'SCOPED_INSTALL_LOCAL_AUTH_ONE_LIVE_TASK_PASS','human':'SCOPED_INSTALL_LOCAL_FUNCTION_PASS_CUSTOMER_KEY_AND_NOVICE_ACCEPTANCE_PENDING','commercial':'BLOCKED_LICENSE_SUPPORT_SIGNING','external_AGY_INTEGRATED':'UNVERIFIED','progress_percent':None,'evidence':'ACTION-LEDGER.jsonl','canonical_core_unchanged':True},indent=2)+'\n',encoding='utf-8')
+print(json.dumps({'tracked_checkpoints':len(rows),'percent':'UNKNOWN_NOT_ESTIMATED'}))

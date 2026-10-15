@@ -1,0 +1,4 @@
+9dfd29c46063be497ec099e39264ed6b27457f59f410c1e26c6c7284901060ad  manus-connection-kit-0.2.0-ai.1.zip
+5246f39546b064a55abed32d6b5efe5bdb6fe74b19a56156c393b1fce43fdd13  manus-connection-kit-0.2.0-human.1.zip
+5a12eec84f75e399fe2d89926ebf1ecb095df409357d56c259dc0eadf59b4941  manus-connection-kit-0.2.0-ai.1-evidence.zip
+73fa715911d79fe3b37a3710e84687468f69bba5d0a3fd27e74e7f48a67e2e20  manus-connection-kit-0.2.0-human.1-evidence.zip

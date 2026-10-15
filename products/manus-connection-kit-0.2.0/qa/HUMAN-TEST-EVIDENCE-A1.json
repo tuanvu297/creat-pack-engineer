@@ -1,0 +1,301 @@
+{
+  "mission_id": "AGY-MCK-020-20261015",
+  "task_id": "INDEPENDENT-QA",
+  "QA_CONTRACT_VERSION": "1.1",
+  "attempt": 1,
+  "idempotency_key": "AGY-MCK-020-20261015:QA:1:HUMAN",
+  "exe": "D:\\Codex\\manus-connection-kit-upgrade-20261015\\engineering\\human-dist\\Manus-Connection-Kit-Setup.exe",
+  "exe_sha256": "f92751002719f36b56ecff23fce2eff98bb96e0156f2db3b3429c5896998ec49",
+  "tests": [
+    {
+      "test_id": "H-Q01-frozen-offline-selftest-without-Python-PATH",
+      "status": "PASS",
+      "classification": "OBSERVED",
+      "detail": {
+        "status": "PASS",
+        "level": "LOCAL_FUNCTION_PASS",
+        "network_requests": 0,
+        "version": "0.2.0-human.1"
+      }
+    },
+    {
+      "test_id": "H-Q02-frozen-isolated-install",
+      "status": "PASS",
+      "classification": "OBSERVED",
+      "detail": {
+        "status": "PASS",
+        "action": "INSTALLED",
+        "sha256": "f92751002719f36b56ecff23fce2eff98bb96e0156f2db3b3429c5896998ec49",
+        "path": "D:\\Codex\\manus-connection-kit-upgrade-20261015\\qa\\human-independent-qpw_ya3c\\installed\\current\\ManusConnectionKit.exe"
+      }
+    },
+    {
+      "test_id": "H-Q03-installed-binary-hash",
+      "status": "PASS",
+      "classification": "OBSERVED",
+      "detail": {
+        "sha256": "f92751002719f36b56ecff23fce2eff98bb96e0156f2db3b3429c5896998ec49"
+      }
+    },
+    {
+      "test_id": "H-Q04-missing-key-Test-Connection",
+      "status": "PASS",
+      "classification": "OBSERVED",
+      "detail": {
+        "status": "BLOCKED",
+        "reason": "API_KEY_REQUIRED"
+      }
+    },
+    {
+      "test_id": "H-Q05-DPAPI-synthetic-boundary",
+      "status": "PASS",
+      "classification": "OBSERVED",
+      "detail": {
+        "DPAPI": "Windows CurrentUser encrypted roundtrip",
+        "plaintext_absent": true
+      }
+    },
+    {
+      "test_id": "H-Q06-Test-Connection-injected-only-readonly-and-no-key-error-leak",
+      "status": "PASS",
+      "classification": "OBSERVED",
+      "detail": {
+        "test_connection": {
+          "status": "PASS",
+          "level": "AUTH_VERIFIED",
+          "request_id": "synthetic"
+        },
+        "fake_transport_calls": [
+          "user.me"
+        ],
+        "provider_calls": 0,
+        "exception_redacted": {
+          "status": "BLOCKED",
+          "reason": "LOCAL_CONNECTION_ERROR"
+        }
+      }
+    },
+    {
+      "test_id": "H-Q07-frozen-MCP-child",
+      "status": "PASS",
+      "classification": "OBSERVED",
+      "detail": {
+        "transport": "actual frozen installed EXE stdio child",
+        "config": {
+          "mcpServers": {
+            "manus": {
+              "command": "D:\\Codex\\manus-connection-kit-upgrade-20261015\\qa\\human-independent-qpw_ya3c\\installed\\current\\ManusConnectionKit.exe",
+              "args": [
+                "--mcp",
+                "--state",
+                "D:\\Codex\\manus-connection-kit-upgrade-20261015\\qa\\human-independent-qpw_ya3c\\state"
+              ]
+            }
+          }
+        },
+        "responses": [
+          {
+            "id": 1,
+            "jsonrpc": "2.0",
+            "result": {
+              "capabilities": {
+                "tools": {
+                  "listChanged": false
+                }
+              },
+              "protocolVersion": "2025-06-18",
+              "serverInfo": {
+                "name": "manus_connection_kit",
+                "version": "0.1.1"
+              }
+            }
+          },
+          {
+            "id": 2,
+            "jsonrpc": "2.0",
+            "result": {
+              "tools": [
+                {
+                  "description": "Bounded Manus/AGY kit operation; mutating operations require host controller grant",
+                  "inputSchema": {
+                    "additionalProperties": false,
+                    "properties": {},
+                    "required": [],
+                    "type": "object"
+                  },
+                  "name": "manus_auth_health"
+                },
+                {
+                  "description": "Bounded Manus/AGY kit operation; mutating operations require host controller grant",
+                  "inputSchema": {
+                    "additionalProperties": false,
+                    "properties": {},
+                    "required": [],
+                    "type": "object"
+                  },
+                  "name": "manus_available_credits"
+                },
+                {
+                  "description": "Bounded Manus/AGY kit operation; mutating operations require host controller grant",
+                  "inputSchema": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "prompt": {
+                        "maxLength": 8000,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "prompt"
+                    ],
+                    "type": "object"
+                  },
+                  "name": "manus_task_create"
+                },
+                {
+                  "description": "Bounded Manus/AGY kit operation; mutating operations require host controller grant",
+                  "inputSchema": {
+                    "additionalProperties": false,
+                    "properties": {},
+                    "required": [],
+                    "type": "object"
+                  },
+                  "name": "manus_task_readback"
+                },
+                {
+                  "description": "Bounded Manus/AGY kit operation; mutating operations require host controller grant",
+                  "inputSchema": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "command_key": {
+                        "type": "string"
+                      },
+                      "prompt": {
+                        "maxLength": 8000,
+                        "type": "string"
+                      },
+                      "reason": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "prompt",
+                      "command_key",
+                      "reason"
+                    ],
+                    "type": "object"
+                  },
+                  "name": "manus_task_resume"
+                },
+                {
+                  "description": "Bounded Manus/AGY kit operation; mutating operations require host controller grant",
+                  "inputSchema": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "command_key": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [],
+                    "type": "object"
+                  },
+                  "name": "manus_task_stop"
+                },
+                {
+                  "description": "Bounded Manus/AGY kit operation; mutating operations require host controller grant",
+                  "inputSchema": {
+                    "additionalProperties": false,
+                    "properties": {},
+                    "required": [],
+                    "type": "object"
+                  },
+                  "name": "manus_journal_status"
+                },
+                {
+                  "description": "Bounded Manus/AGY kit operation; mutating operations require host controller grant",
+                  "inputSchema": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "task_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "task_id"
+                    ],
+                    "type": "object"
+                  },
+                  "name": "agy_dispatch_status"
+                }
+              ]
+            }
+          },
+          {
+            "id": 3,
+            "jsonrpc": "2.0",
+            "result": {
+              "content": [
+                {
+                  "text": "{\"intents\":[],\"network_requests\":0}",
+                  "type": "text"
+                }
+              ],
+              "isError": false,
+              "structuredContent": {
+                "intents": [],
+                "network_requests": 0
+              }
+            }
+          },
+          {
+            "id": 4,
+            "jsonrpc": "2.0",
+            "result": {
+              "content": [
+                {
+                  "text": "CONTROLLER_GRANT_FILE_REQUIRED",
+                  "type": "text"
+                }
+              ],
+              "isError": true
+            }
+          }
+        ],
+        "provider_calls": 0
+      }
+    },
+    {
+      "test_id": "H-Q08-corrupt-key-failclosed",
+      "status": "PASS",
+      "classification": "OBSERVED",
+      "detail": {
+        "reason": "KEY_DECRYPT_FAILED",
+        "synthetic_key_removed": true
+      }
+    },
+    {
+      "test_id": "H-Q09-update-and-rollback-negative-source-fixtures",
+      "status": "PASS",
+      "classification": "OBSERVED",
+      "detail": {
+        "source_fixture_tests": "explicit checksum, failed post-switch restore, backup tamper denial, successful rollback",
+        "real_update_version": "UNVERIFIED: only one real executable available"
+      }
+    },
+    {
+      "test_id": "H-Q10-frozen-uninstall-preserves-private-state",
+      "status": "PASS",
+      "classification": "OBSERVED",
+      "detail": {
+        "status": "PASS",
+        "action": "UNINSTALLED",
+        "private_state": "PRESERVED_FOR_RECONCILIATION"
+      }
+    }
+  ],
+  "live_provider_calls": 0,
+  "real_keys_read": false,
+  "GUI_visual": "UNVERIFIED",
+  "nontechnical_user_usability": "UNVERIFIED",
+  "host_client_import": "UNVERIFIED"
+}

@@ -1,0 +1,351 @@
+{
+  "mission_id": "AGY-MCK-020-20261015",
+  "task_id": "INDEPENDENT-QA",
+  "attempt": 1,
+  "idempotency_key": "AGY-MCK-020-20261015:QA:1",
+  "QA_CONTRACT_VERSION": "1.1",
+  "artifact": "D:\\Codex\\manus-connection-kit-upgrade-20261015\\release\\AI-A1\\manus-connection-kit-0.2.0-ai.1.zip",
+  "sha256": "40ccf0de9410af35645b2bd3a289423fe72aceb20c4546a2a846d5a84b273280",
+  "worker": "independent_qa",
+  "route": "native collaboration Work scoped worker",
+  "tests": [
+    {
+      "test_id": "AI-Q01-exact-manifest",
+      "status": "PASS",
+      "classification": "OBSERVED",
+      "detail": {
+        "status": "PASS",
+        "version": "0.2.0-ai.1",
+        "files": 18,
+        "bytes": 91837,
+        "authenticity": "EXTERNAL_TRUST_REQUIRED"
+      }
+    },
+    {
+      "test_id": "AI-Q02-baseline-byte-identical",
+      "status": "PASS",
+      "classification": "OBSERVED",
+      "detail": [
+        {
+          "path": "src/manus_kit.py",
+          "sha256": "09230eea818b9ef6a4a8913125290a28bbc55f0bae581f58b1088ac0616c4612",
+          "byte_identical": true
+        },
+        {
+          "path": "src/mcp_server.py",
+          "sha256": "b3bf406e19cc1b1ad412912dadf01646fb987a8f00d1b604e186afc3004b5582",
+          "byte_identical": true
+        },
+        {
+          "path": "tests/test_kit.py",
+          "sha256": "f8726e101cdf6ac10eea35f9a57f23f283f79eb6c614696f739449c11887c894",
+          "byte_identical": true
+        }
+      ]
+    },
+    {
+      "test_id": "AI-Q03-clean-install",
+      "status": "PASS",
+      "classification": "OBSERVED",
+      "detail": {
+        "status": "PASS",
+        "current": "D:\\Codex\\manus-connection-kit-upgrade-20261015\\qa\\ai-clean-q_sv9f34\\isolated install\\current",
+        "python": "C:\\Users\\tuanv\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "state": "D:\\Codex\\manus-connection-kit-upgrade-20261015\\qa\\ai-clean-q_sv9f34\\isolated install\\state",
+        "version": "0.2.0-ai.1",
+        "backup_id": null,
+        "precheck": {
+          "status": "PASS",
+          "scope": "packaged offline tests",
+          "summary": [
+            "Ran 46 tests in 5.977s",
+            "",
+            "OK (skipped=1)"
+          ]
+        },
+        "postcheck": {
+          "status": "PASS",
+          "scope": "packaged offline tests",
+          "summary": [
+            "Ran 46 tests in 7.187s",
+            "",
+            "OK (skipped=1)"
+          ]
+        }
+      }
+    },
+    {
+      "test_id": "AI-Q04-self-test",
+      "status": "PASS",
+      "classification": "OBSERVED",
+      "detail": {
+        "status": "PASS",
+        "scope": "packaged offline tests",
+        "summary": [
+          "Ran 46 tests in 8.360s",
+          "",
+          "OK (skipped=1)"
+        ]
+      }
+    },
+    {
+      "test_id": "AI-Q05-no-key-auth-readiness",
+      "status": "PASS",
+      "classification": "OBSERVED",
+      "detail": {
+        "status": "READY_FOR_OWNER_AUTH_CHECK",
+        "environment_key_present": true,
+        "AUTH_VERIFIED": "UNVERIFIED",
+        "next_action": "Use secure local Human launcher key entry or owner-managed client environment; never paste key into chat."
+      }
+    },
+    {
+      "test_id": "AI-Q06-generated-MCP-child-handshake",
+      "status": "PASS",
+      "classification": "OBSERVED",
+      "detail": {
+        "generated_config": {
+          "mcpServers": {
+            "manus-kit": {
+              "command": "C:\\Users\\tuanv\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+              "args": [
+                "-B",
+                "D:\\Codex\\manus-connection-kit-upgrade-20261015\\qa\\ai-clean-q_sv9f34\\isolated install\\current\\bin\\manus-kit.py",
+                "--state",
+                "D:\\Codex\\manus-connection-kit-upgrade-20261015\\qa\\ai-clean-q_sv9f34\\isolated install\\state",
+                "mcp"
+              ]
+            }
+          }
+        },
+        "responses": [
+          {
+            "id": 1,
+            "jsonrpc": "2.0",
+            "result": {
+              "capabilities": {
+                "tools": {
+                  "listChanged": false
+                }
+              },
+              "protocolVersion": "2025-06-18",
+              "serverInfo": {
+                "name": "manus_connection_kit",
+                "version": "0.1.1"
+              }
+            }
+          },
+          {
+            "id": 2,
+            "jsonrpc": "2.0",
+            "result": {
+              "tools": [
+                {
+                  "description": "Bounded Manus/AGY kit operation; mutating operations require host controller grant",
+                  "inputSchema": {
+                    "additionalProperties": false,
+                    "properties": {},
+                    "required": [],
+                    "type": "object"
+                  },
+                  "name": "manus_auth_health"
+                },
+                {
+                  "description": "Bounded Manus/AGY kit operation; mutating operations require host controller grant",
+                  "inputSchema": {
+                    "additionalProperties": false,
+                    "properties": {},
+                    "required": [],
+                    "type": "object"
+                  },
+                  "name": "manus_available_credits"
+                },
+                {
+                  "description": "Bounded Manus/AGY kit operation; mutating operations require host controller grant",
+                  "inputSchema": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "prompt": {
+                        "maxLength": 8000,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "prompt"
+                    ],
+                    "type": "object"
+                  },
+                  "name": "manus_task_create"
+                },
+                {
+                  "description": "Bounded Manus/AGY kit operation; mutating operations require host controller grant",
+                  "inputSchema": {
+                    "additionalProperties": false,
+                    "properties": {},
+                    "required": [],
+                    "type": "object"
+                  },
+                  "name": "manus_task_readback"
+                },
+                {
+                  "description": "Bounded Manus/AGY kit operation; mutating operations require host controller grant",
+                  "inputSchema": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "command_key": {
+                        "type": "string"
+                      },
+                      "prompt": {
+                        "maxLength": 8000,
+                        "type": "string"
+                      },
+                      "reason": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "prompt",
+                      "command_key",
+                      "reason"
+                    ],
+                    "type": "object"
+                  },
+                  "name": "manus_task_resume"
+                },
+                {
+                  "description": "Bounded Manus/AGY kit operation; mutating operations require host controller grant",
+                  "inputSchema": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "command_key": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [],
+                    "type": "object"
+                  },
+                  "name": "manus_task_stop"
+                },
+                {
+                  "description": "Bounded Manus/AGY kit operation; mutating operations require host controller grant",
+                  "inputSchema": {
+                    "additionalProperties": false,
+                    "properties": {},
+                    "required": [],
+                    "type": "object"
+                  },
+                  "name": "manus_journal_status"
+                },
+                {
+                  "description": "Bounded Manus/AGY kit operation; mutating operations require host controller grant",
+                  "inputSchema": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "task_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "task_id"
+                    ],
+                    "type": "object"
+                  },
+                  "name": "agy_dispatch_status"
+                }
+              ]
+            }
+          },
+          {
+            "id": 3,
+            "jsonrpc": "2.0",
+            "result": {
+              "content": [
+                {
+                  "text": "{\"intents\":[],\"network_requests\":0}",
+                  "type": "text"
+                }
+              ],
+              "isError": false,
+              "structuredContent": {
+                "intents": [],
+                "network_requests": 0
+              }
+            }
+          },
+          {
+            "id": 4,
+            "jsonrpc": "2.0",
+            "result": {
+              "content": [
+                {
+                  "text": "CONTROLLER_GRANT_FILE_REQUIRED",
+                  "type": "text"
+                }
+              ],
+              "isError": true
+            }
+          }
+        ],
+        "provider_requests": 0,
+        "transport": "real child stdio process"
+      }
+    },
+    {
+      "test_id": "AI-Q07-wrong-archive-hash",
+      "status": "PASS",
+      "classification": "OBSERVED",
+      "detail": "ARCHIVE_HASH_MISMATCH"
+    },
+    {
+      "test_id": "AI-Q08-extra-file-rejected",
+      "status": "PASS",
+      "classification": "OBSERVED",
+      "detail": "UNDECLARED_FILE"
+    },
+    {
+      "test_id": "AI-Q09-unsafe-archive-paths",
+      "status": "FAIL",
+      "classification": "OBSERVED",
+      "error": "AssertionError",
+      "detail": "InstallError('UNEXPECTED_ARCHIVE_ROOT')"
+    },
+    {
+      "test_id": "AI-Q10-update-self-test-failure-preserves-current",
+      "status": "PASS",
+      "classification": "OBSERVED",
+      "detail": {
+        "block": "OFFLINE_TEST_FAILED (no provider calls; installation not activated)",
+        "previous_version_preserved": "0.2.0-ai.1"
+      }
+    },
+    {
+      "test_id": "AI-Q11-update-backup-and-explicit-rollback",
+      "status": "PASS",
+      "classification": "OBSERVED",
+      "detail": {
+        "updated": "0.2.0-ai.99",
+        "rolled_back": "0.2.0-ai.1",
+        "backup_id": "114e93ee5ee8406696c7d53ca5728577",
+        "self_tests": "pre/post activation"
+      }
+    },
+    {
+      "test_id": "AI-Q12-uninstall-preserves-state",
+      "status": "PASS",
+      "classification": "OBSERVED",
+      "detail": {
+        "status": "PASS",
+        "application_removed": true,
+        "state_and_backups_preserved": true,
+        "path": "D:\\Codex\\manus-connection-kit-upgrade-20261015\\qa\\ai-clean-q_sv9f34\\isolated install"
+      }
+    }
+  ],
+  "live_requests": 0,
+  "real_keys_read": false,
+  "limitations": [
+    "No actual host MCP import; child protocol evidence only",
+    "No auth/live action without fresh owner grant",
+    "No GUI/human usability claim"
+  ]
+}

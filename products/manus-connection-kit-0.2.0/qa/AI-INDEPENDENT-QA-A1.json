@@ -1,0 +1,57 @@
+{
+  "mission_id": "AGY-MCK-020-20261015",
+  "task_id": "INDEPENDENT-QA",
+  "attempt": 1,
+  "idempotency_key": "AGY-MCK-020-20261015:QA:1",
+  "QA_CONTRACT_VERSION": "1.1",
+  "worker": "independent_qa",
+  "route": "native collaboration Work scoped worker",
+  "reason": "Owner-required independent per-mode QA",
+  "classification": "OBSERVED",
+  "first_pass": false,
+  "cost": "UNKNOWN",
+  "quota": "NOT_OBSERVED_BY_QA",
+  "human_intervention": false,
+  "callback_status": "FINDINGS_DELIVERED_TO_ROOT_AND_PRODUCERS",
+  "timestamp": "2026-10-15T03:51:03.795911+00:00",
+  "mode": "AI",
+  "artifact_sha256": "40ccf0de9410af35645b2bd3a289423fe72aceb20c4546a2a846d5a84b273280",
+  "status": "REQUIRES_CORRECTION_AND_RETEST",
+  "evidence": [
+    "AI-TEST-EVIDENCE-A1.json",
+    "AI-PATH-PROBE-A1.json",
+    "AI-SUPPLEMENTAL-A1.json",
+    "AI-ALTERNATE-SEPARATOR-FINDING-A1.json"
+  ],
+  "findings": [
+    {
+      "id": "AI-F01",
+      "severity": "S2",
+      "acceptance": [
+        "AC02",
+        "AC03"
+      ],
+      "classification": "OBSERVED",
+      "observed": "Windows zipfile normalizes raw alternate separator in ZipInfo.filename before extraction validation; otherwise valid raw-backslash candidate accepted",
+      "expected": "Reject alternate separators before any file write",
+      "correction": "Validate ZipInfo.orig_filename and reject normalization mismatch",
+      "retest": "Raw-byte-patched valid ZIP must be rejected while destination stays empty",
+      "disposition": "Producer implemented correction; frozen retest pending"
+    }
+  ],
+  "pass_ladder": {
+    "PACKAGE_BUILT": "PASS_A1_BYTES",
+    "INSTALL_TEST_PASS": "PASS_WINDOWS_CURRENT_HOST_ISOLATED_STATE",
+    "LOCAL_FUNCTION_PASS": "PASS_WITH_PATH_GATE_CORRECTION_REQUIRED",
+    "AUTH_VERIFIED": "UNVERIFIED",
+    "LIVE_EXECUTION_PASS": "UNVERIFIED",
+    "INTEGRATED_PASS": "UNVERIFIED"
+  },
+  "limitations": [
+    "Actual host MCP registration/client invocation unverified; child protocol only",
+    "Original harness path fixture normalized backslashes; preserved and corrected by raw ZIP proof",
+    "No-key readiness initially inherited environment presence; explicit-empty-env supplemental test blocked correctly",
+    "No live provider call in QA",
+    "License/support unresolved; commercial-ready BLOCKED"
+  ]
+}

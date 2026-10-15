@@ -1,0 +1,12 @@
+{
+  "member": {
+    "filename": "kit/bin/manus-kit.py",
+    "orig_filename": "kit/bin\\manus-kit.py"
+  },
+  "result": {
+    "status": "ACCEPTED",
+    "package": "D:\\Codex\\manus-connection-kit-upgrade-20261015\\qa\\tmp2rm_s_d4\\extract\\kit"
+  },
+  "classification": "OBSERVED",
+  "expected": "Reject original raw alternate separator before extraction"
+}

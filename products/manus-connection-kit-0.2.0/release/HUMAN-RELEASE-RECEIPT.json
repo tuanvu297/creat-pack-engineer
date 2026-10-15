@@ -1,0 +1,58 @@
+{
+  "mission_id": "AGY-MCK-020-20261015",
+  "mode": "human",
+  "build_attempt": "HUMAN-A3",
+  "artifact": {
+    "file": "manus-connection-kit-0.2.0-human.1.zip",
+    "sha256": "5246f39546b064a55abed32d6b5efe5bdb6fe74b19a56156c393b1fce43fdd13",
+    "size": 13220060
+  },
+  "installer": {
+    "file": "Manus-Connection-Kit-Setup.exe",
+    "sha256": "f49812ecade1231b1003ac135532f68e90db61a9f85df0769110e150ed0815a6",
+    "size": 13494330
+  },
+  "PACKAGE_BUILT": "PASS",
+  "INSTALL_TEST_PASS": "UNVERIFIED",
+  "LOCAL_FUNCTION_PASS": "UNVERIFIED",
+  "AUTH_VERIFIED": "BLOCKED_LOCAL_CUSTOMER_KEY_BOUNDARY",
+  "LIVE_EXECUTION_PASS": "NOT_RUN_READONLY_TEST_CONNECTION_PRODUCT",
+  "INTEGRATED_PASS": "UNVERIFIED_DISTINCT_AGY_RECEIVING_SYSTEM_NOT_TESTED",
+  "visual_usability": "UNVERIFIED",
+  "commercial_ready": "BLOCKED_LICENSE_SUPPORT_UNRESOLVED",
+  "publisher_signature": "UNAVAILABLE_UNSIGNED",
+  "QA_CONTRACT_VERSION": "1.1",
+  "classification": "OBSERVED",
+  "QA_report": "qa/HUMAN-INDEPENDENT-QA-A3.json",
+  "QA_report_sha256": "e86c1d344e4af90c2c144a598bd0064ecc2b70cc0c9a7c1779b68ead4776c724",
+  "updated_at": "2026-10-15T03:57:53.115900+00:00",
+  "status": "PRIVATE_EVALUATION_CANDIDATE_SCOPED_TECHNICAL_QA",
+  "pass_ladder": {
+    "PACKAGE_BUILT": "PASS",
+    "INSTALL_TEST_PASS": "PASS_WINDOWS_CURRENT_WORKSTATION_ISOLATED_DIRECTORY",
+    "LOCAL_FUNCTION_PASS": "PASS",
+    "AUTH_VERIFIED": "UNVERIFIED",
+    "LIVE_EXECUTION_PASS": "UNVERIFIED",
+    "INTEGRATED_PASS": "UNVERIFIED"
+  },
+  "nontechnical_usability": "UNVERIFIED_REAL_PARTICIPANT_REQUIRED",
+  "source_core": "Byte-identical to canonical0.1.1-A2; see BASELINE-INSPECT.json",
+  "checkpoint": {
+    "github_source_commit": "d6ee0744ea01573bf7bb7bf4a7b59e20b7141be4",
+    "github_mission_readback": "EXACT_CONTENT_MATCH",
+    "drive_mission_id": "1fM70ejbpeHZDfYS_yZBkkt-kWZf7Z2fB",
+    "drive_mission_metadata_readback": "VERIFIED",
+    "final_artifact_readbacks": "See separate SYNC-RECEIPT.json"
+  },
+  "minimum_owner_action": [
+    "Enter your own key locally and click Test Connection; nontechnical participant confirms visible flow",
+    "Resolve license/support and signing before commercial release"
+  ],
+  "known_limits": [
+    "Current Windows workstation only; clean VM/other OS unverified",
+    "No ordinary web-chat bridge",
+    "No always-on/autonomous AGY dispatch claim",
+    "Unsigned publisher metadata",
+    "Finite secret-scan coverage"
+  ]
+}

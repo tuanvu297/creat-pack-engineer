@@ -1,0 +1,27 @@
+{
+  "mission_id": "AGY-MCK-020-20261015",
+  "task_id": "INDEPENDENT-LIVE-READBACK",
+  "attempt": 1,
+  "idempotency_key": "AGY-MCK-020-20261015:QA:LIVE:READ:1",
+  "QA_CONTRACT_VERSION": "1.1",
+  "status": "PASS",
+  "classification": "OBSERVED",
+  "archive_sha256": "9dfd29c46063be497ec099e39264ed6b27457f59f410c1e26c6c7284901060ad",
+  "provider_task_id": "XdLUJBqx82AzN3ZpbJw2Z7",
+  "parsed_result": {
+    "nonce": "MCK020-6ed26584bd1ad504",
+    "sum": 43
+  },
+  "closure": "STOPPED_WITH_REPLY",
+  "provider_status": "stopped",
+  "background_jobs": false,
+  "has_more": false,
+  "pages": 1,
+  "journal_intents_before": 1,
+  "journal_intents_after": 1,
+  "mutations_by_QA": 0,
+  "auth_scope": "Successful real provider read using current authorized binding; no separate auth call by QA",
+  "LIVE_EXECUTION_PASS": "PASS_INDEPENDENT_RESULT_READBACK",
+  "INTEGRATED_PASS": "UNVERIFIED_REQUIRES_DISTINCT_RECEIVING_SYSTEM",
+  "observed_at": "2026-10-15T03:55:18.170966+00:00"
+}

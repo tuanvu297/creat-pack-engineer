@@ -1,0 +1,59 @@
+{
+  "status": "PASS",
+  "classification": "OBSERVED",
+  "final_exe_sha256": "f49812ecade1231b1003ac135532f68e90db61a9f85df0769110e150ed0815a6",
+  "previous_dev_fixture_sha256": "f92751002719f36b56ecff23fce2eff98bb96e0156f2db3b3429c5896998ec49",
+  "prior_fixture_note": "A1 internal development candidate, not a published older version",
+  "observations": [
+    {
+      "test": "install-prior-dev-fixture",
+      "result": {
+        "status": "PASS",
+        "action": "INSTALLED",
+        "sha256": "f92751002719f36b56ecff23fce2eff98bb96e0156f2db3b3429c5896998ec49",
+        "path": "D:\\Codex\\manus-connection-kit-upgrade-20261015\\qa\\human-frozen-update-qszt486s\\install\\current\\ManusConnectionKit.exe"
+      }
+    },
+    {
+      "test": "bad-checksum-update",
+      "result": {
+        "status": "BLOCKED",
+        "reason": "INSTALL_CHECKSUM_MISMATCH"
+      }
+    },
+    {
+      "test": "actual-frozen-update",
+      "result": {
+        "status": "PASS",
+        "action": "INSTALLED",
+        "sha256": "f49812ecade1231b1003ac135532f68e90db61a9f85df0769110e150ed0815a6",
+        "path": "D:\\Codex\\manus-connection-kit-upgrade-20261015\\qa\\human-frozen-update-qszt486s\\install\\current\\ManusConnectionKit.exe"
+      }
+    },
+    {
+      "test": "tampered-backup-blocked",
+      "result": {
+        "status": "BLOCKED",
+        "reason": "BACKUP_CHECKSUM_MISMATCH"
+      }
+    },
+    {
+      "test": "actual-frozen-rollback",
+      "result": {
+        "status": "PASS",
+        "action": "ROLLED_BACK"
+      }
+    },
+    {
+      "test": "uninstall-after-rollback",
+      "result": {
+        "status": "PASS",
+        "action": "UNINSTALLED",
+        "private_state": "PRESERVED_FOR_RECONCILIATION"
+      }
+    }
+  ],
+  "live_network_requests": 0,
+  "private_data_used": false,
+  "GUI_click_route": "UNVERIFIED: maintenance worker invoked directly, no visible GUI claim"
+}

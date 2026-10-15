@@ -1,0 +1,92 @@
+{
+  "mission_id": "AGY-MCK-020-20261015",
+  "task_id": "INDEPENDENT-QA",
+  "attempt": 1,
+  "idempotency_key": "AGY-MCK-020-20261015:QA:1",
+  "QA_CONTRACT_VERSION": "1.1",
+  "worker": "independent_qa",
+  "route": "native collaboration Work scoped worker",
+  "reason": "Owner-required independent per-mode QA",
+  "classification": "OBSERVED",
+  "first_pass": false,
+  "cost": "UNKNOWN",
+  "quota": "NOT_OBSERVED_BY_QA",
+  "human_intervention": false,
+  "callback_status": "FINDINGS_DELIVERED_TO_ROOT_AND_PRODUCERS",
+  "timestamp": "2026-10-15T03:51:03.795911+00:00",
+  "mode": "HUMAN",
+  "artifact_sha256": null,
+  "status": "SOURCE_PREFLIGHT_REQUIRES_CORRECTION_AND_FROZEN_RETEST",
+  "evidence": [
+    "HUMAN-PREFLIGHT-A1.json"
+  ],
+  "findings": [
+    {
+      "id": "H-F01",
+      "severity": "S1",
+      "acceptance": [
+        "AC04"
+      ],
+      "classification": "OBSERVED",
+      "observed": "Windows installer deletes install.lock inside its open handle scope; PermissionError WinError32",
+      "expected": "Clean install exits PASS with lock removed",
+      "correction": "Close lock before final unlink",
+      "retest": "Frozen actual installation in isolated directory without Python PATH",
+      "disposition": "Producer source correction done; frozen independent retest pending"
+    },
+    {
+      "id": "H-F02",
+      "severity": "S1",
+      "acceptance": [
+        "AC02",
+        "AC05"
+      ],
+      "classification": "OBSERVED_SOURCE_REVIEW",
+      "observed": "Original root resolved before link check; descendant/reparse paths not consistently checked",
+      "expected": "Reject original path reparse points and managed child aliases",
+      "correction": "Ancestor lstat before resolve; reparse checks descendants and DPAPI path",
+      "retest": "Producer junction tests plus independent frozen/source tests",
+      "disposition": "Producer correction done; independent source review confirms new no_links use"
+    },
+    {
+      "id": "H-F03",
+      "severity": "S1",
+      "acceptance": [
+        "AC03"
+      ],
+      "classification": "OBSERVED_SOURCE_REVIEW",
+      "observed": "Original updates and rollback lacked mandatory differing-binary checksum/post-test/backup verification",
+      "expected": "Trusted explicit checksum, candidate and post-switch selftest, backup verification and restoration on failure",
+      "correction": "Add checksum gate, pre/post tests and verified rollback",
+      "retest": "Independent synthetic failure injection and frozen install selftest",
+      "disposition": "Producer correction done; independent retest pending"
+    },
+    {
+      "id": "H-F04",
+      "severity": "S1",
+      "acceptance": [
+        "AC02",
+        "AC04"
+      ],
+      "classification": "OBSERVED_SOURCE_REVIEW",
+      "observed": "Human default root occupied parent of AI install; AI-first setup made human destination unowned",
+      "expected": "Both modes use distinct mode directories",
+      "correction": "Human .../ManusConnectionKit/human",
+      "retest": "Read corrected default paths and independent coexistence fixture",
+      "disposition": "Producer source corrected"
+    }
+  ],
+  "pass_ladder": {
+    "PACKAGE_BUILT": "UNVERIFIED_AT_PREFLIGHT",
+    "INSTALL_TEST_PASS": "FAIL_AT_PREFLIGHT",
+    "LOCAL_FUNCTION_PASS": "DPAPI_SYNTHETIC_ONLY_PASS",
+    "AUTH_VERIFIED": "UNVERIFIED",
+    "LIVE_EXECUTION_PASS": "UNVERIFIED",
+    "INTEGRATED_PASS": "UNVERIFIED"
+  },
+  "limitations": [
+    "Source preflight findings precede frozen build; do not treat as final artifact verdict",
+    "No native visual or nontechnical participant usability evidence",
+    "License/support unresolved; commercial-ready BLOCKED"
+  ]
+}

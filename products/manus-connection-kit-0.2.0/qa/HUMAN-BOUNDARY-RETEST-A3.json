@@ -1,0 +1,21 @@
+{
+  "harness_note": "First attempted PowerShell junction creation failed before exercising product; corrected creation route mklink /J; no product failure inferred",
+  "tests": [
+    {
+      "test": "human-root-junction",
+      "status": "PASS",
+      "reason": "INSTALL_LINK_DENIED"
+    },
+    {
+      "test": "DPAPI-junction-state",
+      "status": "PASS",
+      "reason": "STATE_LINK_DENIED"
+    },
+    {
+      "test": "AI-first-Human-coexistence-defaults",
+      "status": "PASS",
+      "ai_suffix": "ai",
+      "human_suffix": "human"
+    }
+  ]
+}

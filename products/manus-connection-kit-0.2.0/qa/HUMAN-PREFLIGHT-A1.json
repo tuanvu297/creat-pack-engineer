@@ -1,0 +1,17 @@
+[
+  {
+    "test": "install-lock-lifecycle",
+    "exception": "PermissionError",
+    "message": "[WinError 32] The process cannot access the file because it is being used by another process: 'D:\\\\Codex\\\\manus-connection-kit-upgrade-20261015\\\\qa\\\\human-preflight-apw3gn25\\\\app\\\\install.lock'"
+  },
+  {
+    "test": "dpapi-roundtrip",
+    "encrypted": true,
+    "roundtrip": true
+  },
+  {
+    "test": "missing-key",
+    "status": "BLOCKED",
+    "reason": "API_KEY_REQUIRED"
+  }
+]

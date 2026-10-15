@@ -1,0 +1,54 @@
+{
+  "mission_id": "AGY-MCK-020-20261015",
+  "mode": "ai",
+  "build_attempt": "AI-A3",
+  "classification": "OBSERVED",
+  "artifact": {
+    "file": "manus-connection-kit-0.2.0-ai.1.zip",
+    "sha256": "9dfd29c46063be497ec099e39264ed6b27457f59f410c1e26c6c7284901060ad",
+    "size": 37981
+  },
+  "manifest_files": 19,
+  "PACKAGE_BUILT": "PASS",
+  "INSTALL_TEST_PASS": "UNVERIFIED",
+  "LOCAL_FUNCTION_PASS": "UNVERIFIED",
+  "AUTH_VERIFIED": "PASS",
+  "LIVE_EXECUTION_PASS": "PASS",
+  "INTEGRATED_PASS": "UNVERIFIED_DISTINCT_AGY_RECEIVING_SYSTEM_NOT_TESTED",
+  "commercial_ready": "BLOCKED_LICENSE_SUPPORT_UNRESOLVED",
+  "publisher_signature": "UNAVAILABLE",
+  "manifest_self_hash_excluded": true,
+  "QA_CONTRACT_VERSION": "1.1",
+  "QA_report": "qa/AI-INDEPENDENT-QA-A3-LIVE.json",
+  "QA_report_sha256": "9cc6f162b08fd1b29d3e9ba3c2a1e74d70d6e86598abf41424d3323083678499",
+  "updated_at": "2026-10-15T03:57:52.601737+00:00",
+  "status": "PRIVATE_EVALUATION_CANDIDATE_SCOPED_TECHNICAL_QA",
+  "pass_ladder": {
+    "PACKAGE_BUILT": "PASS",
+    "INSTALL_TEST_PASS": "PASS_WINDOWS_CURRENT_HOST_ISOLATED_STATE",
+    "LOCAL_FUNCTION_PASS": "PASS",
+    "AUTH_VERIFIED": "PASS",
+    "LIVE_EXECUTION_PASS": "PASS",
+    "INTEGRATED_PASS": "UNVERIFIED_DISTINCT_AGY_RECEIVING_SYSTEM_NOT_TESTED"
+  },
+  "nontechnical_usability": "NOT_APPLICABLE",
+  "source_core": "Byte-identical to canonical0.1.1-A2; see BASELINE-INSPECT.json",
+  "checkpoint": {
+    "github_source_commit": "d6ee0744ea01573bf7bb7bf4a7b59e20b7141be4",
+    "github_mission_readback": "EXACT_CONTENT_MATCH",
+    "drive_mission_id": "1fM70ejbpeHZDfYS_yZBkkt-kWZf7Z2fB",
+    "drive_mission_metadata_readback": "VERIFIED",
+    "final_artifact_readbacks": "See separate SYNC-RECEIPT.json"
+  },
+  "minimum_owner_action": [
+    "Import generated local MCP configuration into chosen client if desired; client-specific ingestion unverified"
+  ],
+  "known_limits": [
+    "Current Windows workstation only; clean VM/other OS unverified",
+    "No ordinary web-chat bridge",
+    "No always-on/autonomous AGY dispatch claim",
+    "Unsigned publisher metadata",
+    "Finite secret-scan coverage"
+  ],
+  "live_independent_readback": "qa/AI-LIVE-INDEPENDENT-READBACK-A3.json"
+}

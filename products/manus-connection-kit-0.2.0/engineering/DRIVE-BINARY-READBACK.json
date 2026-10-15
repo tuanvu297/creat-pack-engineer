@@ -1,0 +1,30 @@
+[
+  {
+    "artifact": "ai",
+    "sha256": "9dfd29c46063be497ec099e39264ed6b27457f59f410c1e26c6c7284901060ad",
+    "bytes": 37981,
+    "readback": "EXACT_SHA256_MATCH",
+    "classification": "OBSERVED"
+  },
+  {
+    "artifact": "human",
+    "sha256": "5246f39546b064a55abed32d6b5efe5bdb6fe74b19a56156c393b1fce43fdd13",
+    "bytes": 13220060,
+    "readback": "EXACT_SHA256_MATCH",
+    "classification": "OBSERVED"
+  },
+  {
+    "artifact": "aiEvidence",
+    "sha256": "5a12eec84f75e399fe2d89926ebf1ecb095df409357d56c259dc0eadf59b4941",
+    "bytes": 144136,
+    "readback": "EXACT_SHA256_MATCH",
+    "classification": "OBSERVED"
+  },
+  {
+    "artifact": "humanEvidence",
+    "sha256": "73fa715911d79fe3b37a3710e84687468f69bba5d0a3fd27e74e7f48a67e2e20",
+    "bytes": 155666,
+    "readback": "EXACT_SHA256_MATCH",
+    "classification": "OBSERVED"
+  }
+]

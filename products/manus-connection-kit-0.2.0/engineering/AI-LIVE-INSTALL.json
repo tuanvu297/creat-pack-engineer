@@ -1,0 +1,52 @@
+{
+  "mission_id": "AGY-MCK-020-20261015",
+  "task_id": "AI-LIVE-INSTALL",
+  "attempt": 1,
+  "idempotency_key": "AGY-MCK-020-20261015:AI-LIVE-INSTALL:1",
+  "classification": "OBSERVED",
+  "archive_sha256": "9dfd29c46063be497ec099e39264ed6b27457f59f410c1e26c6c7284901060ad",
+  "install": {
+    "status": "PASS",
+    "current": "D:\\Codex\\manus-connection-kit-upgrade-20261015\\live-ai-install\\current",
+    "python": "C:\\Users\\tuanv\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "state": "D:\\Codex\\manus-connection-kit-upgrade-20261015\\live-ai-install\\state",
+    "version": "0.2.0-ai.1",
+    "backup_id": null,
+    "precheck": {
+      "status": "PASS",
+      "scope": "packaged offline tests",
+      "summary": [
+        "Ran 47 tests in 5.865s",
+        "",
+        "OK (skipped=1)"
+      ]
+    },
+    "postcheck": {
+      "status": "PASS",
+      "scope": "packaged offline tests",
+      "summary": [
+        "Ran 47 tests in 5.906s",
+        "",
+        "OK (skipped=1)"
+      ]
+    }
+  },
+  "mcp_configuration_generated": true,
+  "configuration": {
+    "mcpServers": {
+      "manus-kit": {
+        "command": "C:\\Users\\tuanv\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "args": [
+          "-B",
+          "D:\\Codex\\manus-connection-kit-upgrade-20261015\\live-ai-install\\current\\bin\\manus-kit.py",
+          "--state",
+          "D:\\Codex\\manus-connection-kit-upgrade-20261015\\live-ai-install\\state",
+          "mcp"
+        ]
+      }
+    }
+  },
+  "actual_client_import": "UNVERIFIED",
+  "human_terminal_work": 0,
+  "human_intervention": []
+}

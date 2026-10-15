@@ -1,0 +1,84 @@
+{
+  "mission_id": "AGY-MCK-020-20261015",
+  "task_id": "AGY-MCK-020-20261015:LIVE:AI",
+  "attempt": 1,
+  "idempotency_key": "AGY-MCK-020-20261015:LIVE:ONCE",
+  "archive_sha256": "9dfd29c46063be497ec099e39264ed6b27457f59f410c1e26c6c7284901060ad",
+  "status": "LIVE_EXECUTION_PASS",
+  "AUTH_VERIFIED": "PASS",
+  "LIVE_EXECUTION_PASS": "PASS",
+  "monetary_cost": "UNKNOWN",
+  "created_tasks": 1,
+  "nonce": "MCK020-6ed26584bd1ad504",
+  "expected_sum": 43,
+  "authorization": "Current direct owner instruction authorizes one bounded Manus task acceptance. Fresh host-controller grant; no historical grant reuse.",
+  "grant_scope": [
+    "create",
+    "read",
+    "stop"
+  ],
+  "grant_max_creates": 1,
+  "grant_fresh": true,
+  "grant_issued_at": 1792036424.1991565,
+  "grant_expires_at": 1792037324.1991565,
+  "auth": {
+    "AUTH_VERIFIED": true,
+    "api_key_present": true,
+    "user_id_sha256": "100093bbe46ebf9b5e098349a488779673226a06989f5df7bffa409b5f0588ee",
+    "request_id": "968e9d8c-a040-4f00-b436-0bcdc98c4bde",
+    "observed_at": 1792036425.1795197
+  },
+  "credits_before": {
+    "credits": {
+      "free_credits": 989,
+      "next_refresh_time": "1792083600",
+      "total_credits": 1289
+    },
+    "observed_at": 1792036426.1034472
+  },
+  "ack": {
+    "provider_task_id": "XdLUJBqx82AzN3ZpbJw2Z7",
+    "request_id": "eefd12a1-5389-4999-9fc9-b57ab00f9257",
+    "profile": "lite",
+    "status": "ACKED",
+    "identity": {
+      "task_id": "AGY-MCK-020-20261015:LIVE:AI",
+      "worker_id": "WORK-AI-MASTER-MCK020",
+      "attempt": 1,
+      "idempotency_key": "AGY-MCK-020-20261015:LIVE:ONCE"
+    },
+    "grant_id": "GRANT-58b3e9cad36f2419d78a61c7ebd76884",
+    "credits_before": {
+      "free_credits": 989,
+      "next_refresh_time": "1792083600",
+      "total_credits": 1289
+    },
+    "observed_at": 1792036436.5106416
+  },
+  "provider_task_id": "XdLUJBqx82AzN3ZpbJw2Z7",
+  "readback": {
+    "provider_task_id": "XdLUJBqx82AzN3ZpbJw2Z7",
+    "observed_at": 1792036470.2584314,
+    "pages": 1,
+    "provider_status": "stopped",
+    "closure": "STOPPED_WITH_REPLY",
+    "background_jobs": false,
+    "has_more": false,
+    "result_json": {
+      "nonce": "MCK020-6ed26584bd1ad504",
+      "sum": 43
+    },
+    "result_sha256": "8003b8c44c2ef26abf81091f8069361a0366dca5820ba91794d81f4d1c27f380",
+    "expected_predicate_pass": true
+  },
+  "INTEGRATED_PASS": "UNVERIFIED_REQUIRES_DISTINCT_RECEIVING_SYSTEM",
+  "mutation_retries": 0,
+  "credits_after": {
+    "credits": {
+      "free_credits": 989,
+      "next_refresh_time": "1792083600",
+      "total_credits": 1288
+    },
+    "observed_at": 1792036471.0792198
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "harness_correction": "Original negative archive builder normalized backslash on Windows; raw ZIP member patch now tests actual alternate separator. Original no-key readiness inherited environment presence; explicit empty environment now tests missing key. Initial evidence retained.",
+  "tests": [
+    {
+      "kind": "backslash",
+      "result": "UNEXPECTED_ARCHIVE_ROOT",
+      "extracted": [
+        "kit",
+        "kit/a",
+        "kit/a/b"
+      ]
+    },
+    {
+      "kind": "case-collision",
+      "result": "ARCHIVE_CASE_COLLISION",
+      "extracted": []
+    },
+    {
+      "kind": "symlink",
+      "result": "ARCHIVE_LINK_OR_SPECIAL_FILE",
+      "extracted": []
+    },
+    {
+      "test": "explicitly-empty-env-auth-readiness",
+      "status": "BLOCKED",
+      "environment_key_present": false,
+      "AUTH_VERIFIED": "UNVERIFIED",
+      "next_action": "Use secure local Human launcher key entry or owner-managed client environment; never paste key into chat."
+    }
+  ]
+}
