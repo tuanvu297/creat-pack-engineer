@@ -17,7 +17,7 @@
   "permission_boundaries": [],
   "worker_role": "muse",
   "expected_output": {},
-  "acceptance_criteria": [],
+  "acceptance_criteria": ["REPLACE_ME_WITH_CRITERION_ID"],
   "deterministic_checks": [],
   "evidence_requirements": [],
   "QA_CONTRACT_VERSION": "replace_me",
