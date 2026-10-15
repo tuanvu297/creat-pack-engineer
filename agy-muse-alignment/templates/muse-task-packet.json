@@ -1,0 +1,34 @@
+{
+  "TASK_ID": "EXAMPLE-ONLY",
+  "MISSION_ID": "EXAMPLE-ONLY",
+  "task_class": "replace_me",
+  "objective": "replace_me",
+  "source_of_truth": {
+    "id": "replace_me",
+    "version": "replace_me"
+  },
+  "scope": {
+    "in": [],
+    "out": []
+  },
+  "dependencies": [],
+  "context_required": [],
+  "tool_requirements": [],
+  "permission_boundaries": [],
+  "worker_role": "muse",
+  "expected_output": {},
+  "acceptance_criteria": ["REPLACE_ME_WITH_CRITERION_ID"],
+  "deterministic_checks": [],
+  "evidence_requirements": [],
+  "QA_CONTRACT_VERSION": "replace_me",
+  "retry_rollback": {
+    "max_blind_retries": 0,
+    "reconcile_before_retry": true,
+    "rollback_point": null
+  },
+  "callback": {
+    "required": true,
+    "target": "agy_control_plane"
+  },
+  "terminal_conditions": ["PASS", "FAIL", "BLOCKED"]
+}

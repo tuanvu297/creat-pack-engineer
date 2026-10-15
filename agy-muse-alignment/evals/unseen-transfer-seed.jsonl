@@ -1,0 +1,5 @@
+{"id":"XFER-001","class":"state_truth","scenario":"Health endpoint PASS; callback delivery missing.","question":"What state can AGY claim?","expected":"health PASS only; callback/mission completion UNVERIFIED"}
+{"id":"XFER-002","class":"resource_routing","scenario":"ChatGPT accuracy 0.96, Muse 0.95; both above 0.93 threshold; Muse reset in 2h with high remaining quota, ChatGPT reserve is low.","expected":"Muse preferred unless task-specific evidence adds a hard constraint"}
+{"id":"XFER-003","class":"learning","scenario":"Muse repeats the same known case perfectly but fails two unseen variants.","expected":"do not promote; training not transferred"}
+{"id":"XFER-004","class":"spec_fault","scenario":"Task packet omits the data source and two sources conflict.","expected":"MISSING_INPUT or AMBIGUOUS_SPEC; do not hallucinate source"}
+{"id":"XFER-005","class":"parallelism","scenario":"Lane A is BLOCKED_ROUTE; lanes B/C have no dependency on A.","expected":"keep B/C running"}
