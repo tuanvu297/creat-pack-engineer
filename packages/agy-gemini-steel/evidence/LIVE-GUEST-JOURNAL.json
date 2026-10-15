@@ -1,0 +1,219 @@
+{
+  "task_id": "AGY-GEMINI-STEEL-20261015-GUEST-A2",
+  "session_id": "8ab49c1e-88d3-439b-bfb2-3a02de64b153",
+  "auth": "GUEST_NOT_AUTHENTICATED",
+  "intent_summary": [
+    {
+      "k": "CREATE",
+      "fp": "d27cfe9d707fa6f05066dd34238f60576cc568cf0efb26ff1a0fc6618bbde8da",
+      "state": "DONE",
+      "result": "{\"session_id\":\"8ab49c1e-88d3-439b-bfb2-3a02de64b153\",\"profile_persisted\":false}"
+    },
+    {
+      "k": "NAVIGATE",
+      "fp": "973b1b7a4f7a77234befed23aca1c31bbe7bd8ad11e3dbda258830007e4444dc",
+      "state": "DONE",
+      "result": "{\"url\":\"https://gemini.google.com/app\"}"
+    },
+    {
+      "k": "FILL",
+      "fp": "3a1ec35b987056301a9100da49ffd438587ede37f200bdecf5e2233e648baa3e",
+      "state": "DONE",
+      "result": "{\"filled\":true,\"mode\":\"GUEST_WEB_AUTH_UNVERIFIED\"}"
+    },
+    {
+      "k": "SEND",
+      "fp": "b99e39d859c470663afa854b38842358eb7beaf5f9c89614f60e6bec1f69eec2",
+      "state": "DONE",
+      "result": "{\"submitted\":true}"
+    }
+  ],
+  "events": [
+    {
+      "n": 1,
+      "at": "2026-10-15T13:58:15.140Z",
+      "kind": "ACK_BEFORE_PLAN",
+      "data": {
+        "lease": {
+          "id": "LEASE-87d28071-b86c-436a-9bdd-294c711d5c44",
+          "task_id": "AGY-GEMINI-STEEL-20261015-GUEST-A2",
+          "worker_id": "GEMINI-STEEL",
+          "operation": "connect",
+          "scope": "BOUNDED_CONNECTION",
+          "pid": 18344,
+          "issued_at": 1792072695139,
+          "expires_at": 1792072815139
+        }
+      }
+    },
+    {
+      "n": 2,
+      "at": "2026-10-15T13:58:15.140Z",
+      "kind": "PLAN",
+      "data": {
+        "operation": "connect"
+      }
+    },
+    {
+      "n": 3,
+      "at": "2026-10-15T13:58:15.144Z",
+      "kind": "INTENT_RESERVED",
+      "data": {
+        "key": "CREATE",
+        "payload_sha256": "d27cfe9d707fa6f05066dd34238f60576cc568cf0efb26ff1a0fc6618bbde8da"
+      }
+    },
+    {
+      "n": 4,
+      "at": "2026-10-15T13:58:18.370Z",
+      "kind": "CHECKPOINT",
+      "data": {
+        "key": "CREATE"
+      }
+    },
+    {
+      "n": 5,
+      "at": "2026-10-15T13:58:21.439Z",
+      "kind": "INTENT_RESERVED",
+      "data": {
+        "key": "NAVIGATE",
+        "payload_sha256": "973b1b7a4f7a77234befed23aca1c31bbe7bd8ad11e3dbda258830007e4444dc"
+      }
+    },
+    {
+      "n": 6,
+      "at": "2026-10-15T13:58:23.070Z",
+      "kind": "CHECKPOINT",
+      "data": {
+        "key": "NAVIGATE"
+      }
+    },
+    {
+      "n": 7,
+      "at": "2026-10-15T13:58:26.515Z",
+      "kind": "CHECKPOINT_RESULT",
+      "data": {
+        "operation": "connect",
+        "result": {
+          "session_id": "8ab49c1e-88d3-439b-bfb2-3a02de64b153",
+          "status": "HUMAN_LOGIN_REQUIRED",
+          "url": "https://gemini.google.com/app",
+          "title": "Google Gemini",
+          "editors": 1,
+          "sign_in_controls": 3
+        }
+      }
+    },
+    {
+      "n": 8,
+      "at": "2026-10-15T13:58:52.333Z",
+      "kind": "ACK_BEFORE_PLAN",
+      "data": {
+        "lease": {
+          "id": "LEASE-fd8037d3-3603-4688-8572-dacff5587500",
+          "task_id": "AGY-GEMINI-STEEL-20261015-GUEST-A2",
+          "worker_id": "GEMINI-STEEL",
+          "operation": "probe",
+          "scope": "BOUNDED_CONNECTION",
+          "pid": 27912,
+          "issued_at": 1792072732333,
+          "expires_at": 1792072852333
+        }
+      }
+    },
+    {
+      "n": 9,
+      "at": "2026-10-15T13:58:52.338Z",
+      "kind": "PLAN",
+      "data": {
+        "operation": "probe"
+      }
+    },
+    {
+      "n": 10,
+      "at": "2026-10-15T13:58:57.481Z",
+      "kind": "INTENT_RESERVED",
+      "data": {
+        "key": "FILL",
+        "payload_sha256": "3a1ec35b987056301a9100da49ffd438587ede37f200bdecf5e2233e648baa3e"
+      }
+    },
+    {
+      "n": 11,
+      "at": "2026-10-15T13:59:01.614Z",
+      "kind": "CHECKPOINT",
+      "data": {
+        "key": "FILL"
+      }
+    },
+    {
+      "n": 12,
+      "at": "2026-10-15T13:59:01.617Z",
+      "kind": "INTENT_RESERVED",
+      "data": {
+        "key": "SEND",
+        "payload_sha256": "b99e39d859c470663afa854b38842358eb7beaf5f9c89614f60e6bec1f69eec2"
+      }
+    },
+    {
+      "n": 13,
+      "at": "2026-10-15T13:59:06.244Z",
+      "kind": "CHECKPOINT",
+      "data": {
+        "key": "SEND"
+      }
+    },
+    {
+      "n": 14,
+      "at": "2026-10-15T13:59:06.245Z",
+      "kind": "CHECKPOINT_RESULT",
+      "data": {
+        "operation": "probe",
+        "result": {
+          "submitted": true
+        }
+      }
+    },
+    {
+      "n": 15,
+      "at": "2026-10-15T13:59:18.767Z",
+      "kind": "ACK_BEFORE_PLAN",
+      "data": {
+        "lease": {
+          "id": "LEASE-42bee071-a4ed-4a2c-8800-5f2f7f9b61aa",
+          "task_id": "AGY-GEMINI-STEEL-20261015-GUEST-A2",
+          "worker_id": "GEMINI-STEEL",
+          "operation": "collect",
+          "scope": "BOUNDED_CONNECTION",
+          "pid": 29652,
+          "issued_at": 1792072758767,
+          "expires_at": 1792072878767
+        }
+      }
+    },
+    {
+      "n": 16,
+      "at": "2026-10-15T13:59:18.771Z",
+      "kind": "PLAN",
+      "data": {
+        "operation": "collect"
+      }
+    },
+    {
+      "n": 17,
+      "at": "2026-10-15T13:59:27.489Z",
+      "kind": "CHECKPOINT_RESULT",
+      "data": {
+        "operation": "collect",
+        "result": {
+          "status": "OUTPUT_NOT_VERIFIED",
+          "nonce_found": false,
+          "answer_excerpt": "Gemini said\n\nACK:AGY-STEEL-A2-731\nSUM:42 (19+23)",
+          "url": "https://gemini.google.com/app/7f340cf9f4764113"
+        }
+      }
+    }
+  ],
+  "callback_target": "01a13499-9300-72a3-8944-87f9b3fd2362",
+  "secret_exclusions": "No DB, key, live config or access URLs exported"
+}

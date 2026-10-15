@@ -1,0 +1,233 @@
+{
+  "authentication_requirements": [
+    "Existing environment key, never bundled",
+    "Google remote login if required; human credentials/OTP/CAPTCHA entry direct",
+    "Persistent auth storage requires explicit owner approval and separate validated implementation"
+  ],
+  "created_at": "2026-10-15T14:07:06+00:00",
+  "created_at_policy": "SOURCE_DATE_EPOCH or Unix epoch; real handoff time in external receipt",
+  "declared_test_status": {
+    "AUTH_VERIFIED": "UNVERIFIED until remoteGoogle login",
+    "INTEGRATED_PASS": "UNVERIFIED; callbacks and acceptance require separate actual receipts",
+    "LIVE_EXECUTION_PASS": "UNVERIFIED until actual model result",
+    "LOCAL_FUNCTION_PASS": "See independent peer and current TEST-RESULT"
+  },
+  "dependencies": [
+    {
+      "name": "steel-sdk",
+      "version": "0.18.0"
+    },
+    {
+      "name": "playwright",
+      "version": "1.64.0"
+    }
+  ],
+  "entrypoints": [
+    "bin/connection.mjs"
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "3f1cece80e36a8863e8a9a844ded51350f90b62126f4efa544a3f5523266ba27",
+      "size": 4306
+    },
+    {
+      "path": "VERSION",
+      "sha256": "e9dd8507f4bf0c6f42458e41aea833ad0bd3f6127272335eee9bf4d58541ed67",
+      "size": 6
+    },
+    {
+      "path": "bin/connection.mjs",
+      "sha256": "75614eb134ab1998421f50bc8b55822ea39b264f920a10a8ffed824ae7e24464",
+      "size": 4165
+    },
+    {
+      "path": "config/package.json",
+      "sha256": "80e7f914a30670d2e92239cd4a02fae1dad3c0393db2788ad05a01a8a90e3b91",
+      "size": 2555
+    },
+    {
+      "path": "config/runtime.example.json",
+      "sha256": "958d3bdad23367079ca7ba20b2030717f60059dc9463fe3dffabf12938dde8ed",
+      "size": 439
+    },
+    {
+      "path": "docs/REPAIR-REPORT.md",
+      "sha256": "8c9aa71c47cd4fb40c3fc98e862e2a0f21648d677993569db9ccf9811e07ef48",
+      "size": 2965
+    },
+    {
+      "path": "evidence/BOOTSTRAP.json",
+      "sha256": "4c32a47499b3c5a4e9a5bc6d42294afe997ca31394bbbb51585294888d34c5de",
+      "size": 1533
+    },
+    {
+      "path": "evidence/GOOGLE-LOGIN-BLOCKED.jpg",
+      "sha256": "b4638b5a35b3d581d1ed0359fc10e52fdcfbd285aa43976c349c6c1db0af9ae1",
+      "size": 17089
+    },
+    {
+      "path": "evidence/GUEST-LIVE-PROOF.jpg",
+      "sha256": "0bb07b89cb48d0820c4acb21b87fc7e83873b699670bdaff27168221e7052d92",
+      "size": 21958
+    },
+    {
+      "path": "evidence/LEARNED-SKILLS.json",
+      "sha256": "8af48659dfb92faa92fb60645107d1d6e5404ce06e40995820f02befb02b84ba",
+      "size": 1506
+    },
+    {
+      "path": "evidence/LIVE-GUEST-JOURNAL.json",
+      "sha256": "d6ec799379a54bb1540f6aabbcfcda9e269c9e3d934b0f8f003848f87fe242ee",
+      "size": 5651
+    },
+    {
+      "path": "evidence/LIVE-GUEST-RAW.json",
+      "sha256": "b045c911c878485f90a248936f7fff787786ce3cc5db5a6c15cf2c9addaba830",
+      "size": 343
+    },
+    {
+      "path": "evidence/PEER-LIVE-GUEST.json",
+      "sha256": "0dbb3395a0638e88cbec1a6882034b03a4d0db8876e8e94c95ba5c4c23c6bd9a",
+      "size": 8541
+    },
+    {
+      "path": "evidence/PEER-QA-GUEST.json",
+      "sha256": "826efd2cc622c2642cecf064508849febf3b4a1ec631fa9fae62dcfb342b4611",
+      "size": 4812
+    },
+    {
+      "path": "evidence/PEER-QA-REFRESH.json",
+      "sha256": "320ed60a308965c7c217a06b9fb9c7a3f971243838529ee202733c58cf018e03",
+      "size": 5192
+    },
+    {
+      "path": "evidence/PEER-QA.json",
+      "sha256": "8be80a205d810253ad20640348a7b24293875ddd9663d674ce8b463f7350c1d7",
+      "size": 2624
+    },
+    {
+      "path": "evidence/PHASE-RECEIPT.json",
+      "sha256": "a81c0e04bf38f411002447f24b029a4cbea3369a414077783fc8c50c87c9eb97",
+      "size": 1650
+    },
+    {
+      "path": "evidence/ROOT-QA.json",
+      "sha256": "741602b745d84042263a52880ae7ba2007464187f52833d031531337ff52b93e",
+      "size": 741
+    },
+    {
+      "path": "evidence/SECRET-SCAN.json",
+      "sha256": "3cdb9dc2a2f74b18b817b046551ff1ea77328355c875680ca8914ebb618b036a",
+      "size": 303
+    },
+    {
+      "path": "evidence/SESSION-RELEASE-READBACK.json",
+      "sha256": "fae5b537599493b205b26714a6b7535f4bdf0597f7f25a8e6ad0dfe255d92892",
+      "size": 539
+    },
+    {
+      "path": "evidence/TEST-RESULT.json",
+      "sha256": "028e5d4ebdcdd2a88450b08ffe3d17740d0374e74b1abcc29bc6f92fece00277",
+      "size": 521
+    },
+    {
+      "path": "evidence/TESTS.txt",
+      "sha256": "e3390de62e053fe67703f9860c998aeb864cd1cb3b5bfbaa577e49ea5e89a1b4",
+      "size": 2799
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "52da8a0f234aa598d8d2f6f4903345673c2d65c9c676f598acb27826ece9121b",
+      "size": 17227
+    },
+    {
+      "path": "package.json",
+      "sha256": "501a5b0f39a1d4dc3fb8320cd00f734e3120c5b9245ac524d95e10b5c01185bf",
+      "size": 293
+    },
+    {
+      "path": "src/journal.mjs",
+      "sha256": "2a25b9016eddfcd32772b509bed8cb13b5db879a3eeb0bf14eca81cfb4a68206",
+      "size": 3382
+    },
+    {
+      "path": "src/policy.mjs",
+      "sha256": "95a852077de8c56ec0770526739b892f0639d4c3437d770072d7b8440377d11d",
+      "size": 2219
+    },
+    {
+      "path": "src/private_paths.mjs",
+      "sha256": "ef69844ccc359915e8e9da5b4998f92e12c259bad2ad2b1d6145fc009131db9e",
+      "size": 959
+    },
+    {
+      "path": "src/response.mjs",
+      "sha256": "ea571c1a750efc978eb00c767b07c2e053b62931f83feb62dc84ad2b909a92a4",
+      "size": 617
+    },
+    {
+      "path": "src/runtime.mjs",
+      "sha256": "355c1a891be03e5c68e247d37f704145ec496054c272e4b3ef4d96bb0fe4d873",
+      "size": 3910
+    },
+    {
+      "path": "tests/peer.test.mjs",
+      "sha256": "906b3fda696efc1a232ac6d0f08cd1003d03da74ef32f041d819d053a4170867",
+      "size": 9269
+    },
+    {
+      "path": "tests/policy.test.mjs",
+      "sha256": "67b4e962cddc7b02c08271ddcfd8622229aee70ce29b94c3101dd60f1a0b6c80",
+      "size": 4414
+    },
+    {
+      "path": "tests/response.test.mjs",
+      "sha256": "4d4a0c833b74ff19cceba75e151104bc3f2d36ab468343616ec655aa5ae674db",
+      "size": 2637
+    }
+  ],
+  "input_contract": {
+    "auth": "No localChrome cookie/profile transfer; persistProfile=false",
+    "commands": [
+      "connect",
+      "status",
+      "probe",
+      "collect",
+      "release"
+    ],
+    "lease": "Fresh per-invocation local adapter ACK before PLAN; not model ACK",
+    "policy": "external task/worker/owner/callback/expiry, fresh eligible resource; one session <=15min and one probe submission"
+  },
+  "known_limits": [
+    "Prototype scoped to synthetic connection test, no general externalaction rights",
+    "No profile persistence or Chrome cookie import",
+    "Google login/account/remote-browser restrictions remain external gates",
+    "New Gemini DOM selectors not LIVE PASS until actual result",
+    "Legacy shared gateway and Chrome remain unchanged",
+    "No unattended native chat wakeup or global promotion",
+    "Signature scan finite coverage"
+  ],
+  "output_contract": {
+    "idempotency": "SQLite WAL/FULL intent reservation before mutation; pending/unknown never automatically resubmitted",
+    "secrets": "Viewer/debug/CDP URLs only in private external state, never evidence/release",
+    "truth": "connection/auth/actual assistant response/callback/independent acceptance separate"
+  },
+  "package_name": "agy-gemini-steel",
+  "package_version": "0.1.0",
+  "purpose": "Additive owner-authorized Gemini-on-Steel connection adapter; exact-domain bounds, private auth boundary and durable no-blind-retry journal",
+  "runtime_requirements": [
+    "Node>=24; tested24.19.0 Windows",
+    "Existing Steel account/project and eligible credits",
+    "Existing STEEL_API_KEY environment only",
+    "Owner completes Google login on remote session if required"
+  ],
+  "test_status": {
+    "AUTH_VERIFIED": "UNVERIFIED",
+    "INSTALL_TEST_PASS": "UNVERIFIED",
+    "INTEGRATED_PASS": "UNVERIFIED",
+    "LIVE_EXECUTION_PASS": "UNVERIFIED",
+    "LOCAL_FUNCTION_PASS": "UNVERIFIED",
+    "PACKAGE_BUILT": "PASS"
+  }
+}

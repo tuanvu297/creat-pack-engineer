@@ -1,0 +1,19 @@
+import{allowed,publicPage,fail}from'./policy.mjs';
+import{normalizeResponse}from'./response.mjs';
+export class GeminiSteel{
+ constructor(client,chromium,key,policy){Object.assign(this,{client,chromium,key,policy});}
+ async create(sid){const s=await this.client.sessions.create({sessionId:sid,projectId:this.policy.project_id,timeout:this.policy.timeout_ms,useProxy:false,solveCaptcha:false,persistProfile:false});if(s.id!==sid){await this.client.sessions.release(s.id).catch(()=>{});fail('SESSION_ID_MISMATCH');}return{session_id:sid,profile_persisted:false};}
+ async connect(sid){const s=await this.client.sessions.retrieve(sid);if(s.status!=='live')fail('SESSION_NOT_LIVE');const u=new URL('wss://connect.steel.dev');u.searchParams.set('apiKey',this.key);u.searchParams.set('sessionId',sid);this.browser=await this.chromium.connectOverCDP(u.href,{timeout:30000});const c=this.browser.contexts()[0];if(!c)fail('CONTEXT_MISSING');
+  await c.route('**/*',route=>{try{const request=route.request();allowed(request.url(),{resource:!request.isNavigationRequest()});return route.continue();}catch{return route.abort();}});
+ this.page=c.pages()[0]??await c.newPage();this.page.setDefaultTimeout(10000);this.page.setDefaultNavigationTimeout(20000);this.page.on('popup',p=>{void p.close();});return s;}
+ async navigate(){await this.page.goto(allowed('https://gemini.google.com/app'),{waitUntil:'domcontentloaded'});return{url:publicPage(this.page.url())};}
+ async refresh(){const u=new URL(allowed(this.page.url()));if(u.hostname!=='gemini.google.com'||!['/app','/app/'].includes(u.pathname)||u.search||u.hash)fail('REFRESH_EXACT_GEMINI_APP_REQUIRED');return this.navigate();}
+ async status(){const p=this.page;const u=new URL(p.url());allowed(u.href);if(u.hostname==='accounts.google.com')return{status:'HUMAN_LOGIN_REQUIRED',url:publicPage(u.href),tools_or_prompts_sent:0};
+ const editors=await p.getByRole('textbox').count();const signin=await p.getByRole('link',{name:/^(Sign in|Đăng nhập)$/i}).count()+await p.getByRole('button',{name:/^(Sign in|Đăng nhập)$/i}).count();
+ return{status:signin?'HUMAN_LOGIN_REQUIRED':editors===1?'COMPOSER_PRESENT_AUTH_UNVERIFIED':'PAGE_NOT_READY',url:publicPage(p.url()),title:await p.title(),editors,sign_in_controls:signin};}
+ async composeEditor(){const s=await this.status(),u=new URL(allowed(this.page.url()));if(u.hostname!=='gemini.google.com')fail('AUTH_UI_AUTOMATION_DENIED');const guest=this.policy.allow_guest_probe===true;let editor;if(guest){if(!['/app','/app/'].includes(u.pathname)||u.search||u.hash)fail('GUEST_EXACT_APP_REQUIRED');editor=this.page.locator('[contenteditable="true"]:visible');}else{if(s.status!=='COMPOSER_PRESENT_AUTH_UNVERIFIED')fail('AUTH_OR_COMPOSER_NOT_READY');editor=this.page.getByRole('textbox');}if(await editor.count()!==1)fail('EDITOR_AMBIGUOUS');return{editor,mode:guest?'GUEST_WEB_AUTH_UNVERIFIED':'AUTH_UNVERIFIED'};}
+ async type(text){const{editor,mode}=await this.composeEditor();await editor.fill(text);return{filled:true,mode};}
+ async send(){await this.composeEditor();const b=this.page.getByRole('button',{name:/^(Send message|Send|Gửi tin nhắn|Gửi)$/i});if(await b.count()!==1)fail('SEND_AMBIGUOUS');await b.click();return{submitted:true};}
+ async collect(nonce){if(new URL(allowed(this.page.url())).hostname!=='gemini.google.com')fail('AUTH_UI_AUTOMATION_DENIED');const responses=this.page.locator('model-response');if(await responses.count()<1)fail('RESPONSE_SELECTOR_UNVERIFIED');const text=(await responses.last().innerText()).trim(),normalized=normalizeResponse(text,nonce),match=normalized!==null;return{status:match?'OUTPUT_CANDIDATE_REQUIRES_QA':'OUTPUT_NOT_VERIFIED',nonce_found:match,answer_excerpt:text.slice(0,5000),normalized_answer:normalized,normalization_version:'KNOWN_GEMINI_HEADING_TWO_LINES_V1',url:publicPage(this.page.url())};}
+ async detach(){await this.browser?.close().catch(()=>{});}
+}

@@ -1,0 +1,29 @@
+{
+  "at": "2026-10-15T14:07:07.540787+00:00",
+  "package_name": "agy-gemini-steel",
+  "package_version": "0.1.0",
+  "zip_sha256": "b76290963616b9c28aa17590bb568f48435ae91072c00c2021266fa670ad0434",
+  "PACKAGE_BUILT": "PASS",
+  "LOCAL_FUNCTION_PASS": "PASS_36",
+  "ZIP_EXTRACT_TEST": "PASS_36_AND_HELP_ENTRYPOINT",
+  "INSTALL_TEST_PASS": "UNVERIFIED_CLEAN_NPM_CI_NOT_RUN; actualpilot used pinnedexisting officialSDKdependencies",
+  "AUTH_VERIFIED": "EXTERNAL_LIMIT_GOOGLE_REJECTED_REMOTE_BROWSER",
+  "LIVE_EXECUTION_PASS": "VERIFIED_PASS_SCOPED_GUEST_BASIC_TEXT_ONE_SUBMIT",
+  "INTEGRATED_PASS": "UNVERIFIED_PENDING_SEPARATE_AGY_ACCEPTANCE",
+  "model_submissions": 1,
+  "session_creates": 2,
+  "mutation_retries": 0,
+  "new_Work": 0,
+  "sessions_released": "BothconfirmedbyproviderGET",
+  "reproducible_zip": true,
+  "manifest_verified": true,
+  "secret_scan": "PASS_SIGNATURE_SCAN_FINITE_COVERAGE",
+  "callback": "Durablefilesprepared; actualnativecallbackrecordedseparately",
+  "limits": [
+    "Google/Pro auth blocked; no securitybypass or cookie/profiletransfer",
+    "GuestFlashLite only; not Googleapps/model/quota parity",
+    "No generalworkerMCPnamespace orpermanentbinding installed; existingCLIhostroute only",
+    "No newnativewake/24hservice/globalpromotion",
+    "Futureownertaskrequiresfreshpolicy/credit/lease; oldscope not reusable"
+  ]
+}

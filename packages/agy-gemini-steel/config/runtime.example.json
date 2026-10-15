@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "worker_id": "GEMINI-STEEL",
+  "task_id": "AGY-GEMINI-STEEL-EXAMPLE",
+  "owner_request_ref": "REPLACE_WITH_ACTUAL_OWNER_REQUEST",
+  "callback_target": "EXISTING_ENGINEER_CHAT",
+  "expires_at": 1,
+  "max_sessions": 1,
+  "max_submissions": 1,
+  "timeout_ms": 900000,
+  "persist_profile": false,
+  "project_id": "00000000-0000-0000-0000-000000000000",
+  "resource": {"eligibility": "UNVERIFIED", "checked_at": 1}
+}
