@@ -1,0 +1,50 @@
+{
+  "checkpointId": "CP-AGY-RUNTIME-TESTED-2",
+  "supersedes": "CP-AGY-RUNTIME-TESTED-1",
+  "taskId": "AGY-RUNTIME-SELF-QA",
+  "version": 2,
+  "idempotencyKey": "AGY-RUNTIME-SELF-QA:TESTED-2",
+  "observedAt": "2026-10-09T16:39:26Z",
+  "state": "TESTED",
+  "progression": [
+    "DESIGNED",
+    "INSTRUCTED",
+    "IMPLEMENTING",
+    "TESTED"
+  ],
+  "PASS": false,
+  "INTEGRATED": false,
+  "tests": {
+    "pass": 95,
+    "fail": 0,
+    "skip": 0,
+    "typecheck": "PASS"
+  },
+  "fixes": [
+    "Reject NaN/Infinity/overflow timers and leases",
+    "Unpolled runtime lanes report BLOCKED/AWAITING_FIRST_POLL instead of fabricated healthy IDLE"
+  ],
+  "evidenceScope": "Real local PostgreSQL and child daemon with controlled HTTP provider; not hosted or native worker acceptance",
+  "hostedDispatcherAttached": false,
+  "nativeProviderDispatchVerified": false,
+  "driveMirrorConnectedToDaemon": false,
+  "liveRuntimeStatus": "UNAVAILABLE_NO_HOSTED_ATTACHMENT",
+  "driveWorkerRoot": "1K97FCMYjp3itlYStW4uc7t6hVyeY5v0Y",
+  "runtimeEvidence": "runtime-evidence/process-acceptance.json",
+  "report": "AGY-RUNTIME-SELF-QA-v2.md",
+  "liveGLState": "3 BRIEFED/gemini_execution, worker execution UNVERIFIED",
+  "railwayProjects": 0,
+  "monitor": {
+    "scheduledInvocationObserved": true,
+    "evidenceDriveId": "1VSSpC5phQTWSA9ANYDPPR_H5-ZsuR9mx",
+    "hostedExecution": false
+  },
+  "guardrails": {
+    "publish": false,
+    "hardDelete": false,
+    "newSpend": false,
+    "credentialOrSecurityChange": false,
+    "expertInvocation": false
+  },
+  "nextGate": "Existing approved hosted staging/DB/native executor/Drive writer attachment plus real chat-closed acceptance"
+}

@@ -1,0 +1,10 @@
+{
+  "tenantId": "shadow-tenant", "workspaceId": "shadow-workspace", "projectId": "SHADOW_ONLY",
+  "mission_id": "AGY-TEMPORAL-SHADOW-EXAMPLE", "task_id": "SYNTHETIC-001", "attempt": 1,
+  "idempotency_key": "AGY-TEMPORAL-SHADOW-EXAMPLE:SYNTHETIC-001",
+  "objective": "Return one supplied integer through a bounded synthetic executor",
+  "executor_worker_id": "AGY_TEMPORAL_SYNTHETIC", "source_ref": "repo:docs/TEMPORAL-ARCHITECTURE.md",
+  "qa_contract_version": "1.1", "mode": "TEMPORAL_SHADOW",
+  "payload": {"value": 42, "delay_ms": 100, "fixture": "normal"},
+  "ack_timeout_ms": 5000, "result_timeout_ms": 60000, "qa_timeout_ms": 60000, "max_corrections": 1
+}

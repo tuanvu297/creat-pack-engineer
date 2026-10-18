@@ -1,0 +1,529 @@
+{
+  "mission_id": "AGY-TEMPORAL-20261018",
+  "version": "0.1.0-shadow",
+  "source_baseline_sha256": "CECE24208982EDA501E006479C5E7C1829672B8A0B5B787C57DBA30A3533E843",
+  "files": [
+    {
+      "path": ".gitignore",
+      "size": 50,
+      "sha256": "13cf75bd74c1de94e311b7713707cccfe730736f148640857b0bc39917536c7f"
+    },
+    {
+      "path": "AGY-RUNTIME-CHECKPOINT-v2.json",
+      "size": 1660,
+      "sha256": "5206e3fa3fac95ab941d8fa28e44ed97ba09c2d0e1f717f255a899fe91e55db0"
+    },
+    {
+      "path": "AGY-RUNTIME-DEPLOYMENT.md",
+      "size": 7509,
+      "sha256": "7f82473b75615f6c1dabfa13f1a0d093ec6f7212cdd92aad82bee6d18e7c9c92"
+    },
+    {
+      "path": "AGY-RUNTIME-SELF-QA-v2.md",
+      "size": 2385,
+      "sha256": "5c4350532f08fe0a28e2ea7b5f779022340e2b117483d13233915731ad326d78"
+    },
+    {
+      "path": "config/temporal.env.example",
+      "size": 501,
+      "sha256": "4557b884c2865d78578c3b39589dc6ca31fcdfb090141b109dac584ee3de38e6"
+    },
+    {
+      "path": "docs/TEMPORAL-ARCHITECTURE.md",
+      "size": 5574,
+      "sha256": "f997c0ef2374074b67f603e0240bf3f851d17ef3c4f25aa53dbd16fb5154b047"
+    },
+    {
+      "path": "docs/TEMPORAL-LEARNING.md",
+      "size": 2239,
+      "sha256": "6a7d617e2d1ffe3f1c57711e78ee42b29d0e3dc2992fcb9cfdd0cfde6ee429fc"
+    },
+    {
+      "path": "docs/TEMPORAL-QA-REPORT.md",
+      "size": 8815,
+      "sha256": "75e96d48c25d06b9f1066c30f06a29bfd04504312b42aa6049b69c7bdd5c1dfa"
+    },
+    {
+      "path": "docs/TEMPORAL-RUNBOOK.md",
+      "size": 4880,
+      "sha256": "88367e0b4f416343cd714f10cf7e84b7a3c9ea9a777d9f5ac78c0dcf78075d10"
+    },
+    {
+      "path": "examples/temporal-shadow-mission.json",
+      "size": 662,
+      "sha256": "a72921948e0639fd392e88edbbb2b4014b9ee20b20bef5447420701ad0656f5d"
+    },
+    {
+      "path": "migrations/001_worker_engine_v1.sql",
+      "size": 5267,
+      "sha256": "a74d2ab2982110f4618d194c9aae11bb9bc099ee880238d7839cc5c9015773f3"
+    },
+    {
+      "path": "migrations/002_resource_optimization.sql",
+      "size": 4499,
+      "sha256": "c3275affbf04a0e6f502f629e24dea1149d2864f5653675a61334dc8f82f0208"
+    },
+    {
+      "path": "migrations/003_resource_learning_engine.sql",
+      "size": 3369,
+      "sha256": "94e7743ab8c7dfccd5765300ac24f5abdc4a43c3ef26af0518f783fb7398fd78"
+    },
+    {
+      "path": "migrations/004_platform_projects.sql",
+      "size": 13863,
+      "sha256": "ae449943093b1997b63f26248f2ad3741747ba0904b146eca63da9258d714023"
+    },
+    {
+      "path": "migrations/005_platform_dispatch.sql",
+      "size": 5212,
+      "sha256": "9f8faf47bdab5c4f9fbced147d8a8395a2bbd0ce97232c078e4f9b057adf92ed"
+    },
+    {
+      "path": "migrations/006_global_approval_audit.sql",
+      "size": 373,
+      "sha256": "6c6bfc9fee768284fd0cab1695522cd729641c67773eb861df7069d88af41d9d"
+    },
+    {
+      "path": "migrations/007_runtime_capability_projection.sql",
+      "size": 3641,
+      "sha256": "90b1ac71149ccce45d8fdfc661142ec9e7f091152145540430e765d0fd5c00fb"
+    },
+    {
+      "path": "migrations/008_durable_runtime.sql",
+      "size": 2495,
+      "sha256": "7a5021f41e2a3c70a1450fde56fc9b3c957198136400570857cdf2e5cd9d6efd"
+    },
+    {
+      "path": "migrations/009_temporal_shadow.sql",
+      "size": 2762,
+      "sha256": "5f24acec873d555a7d65bfce9e8c14100583923b7790d4854e3f05a4866ef9a0"
+    },
+    {
+      "path": "package.json",
+      "size": 976,
+      "sha256": "2d3bb56ea324678fc16f09e6cd9f952d544154aec8a1a4fc45250c2ba5c0fd40"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "size": 61987,
+      "sha256": "32a310ebf38dded8c761fdde9a3602e9d782c2aea6faec0d0fa784cbd08dcc7e"
+    },
+    {
+      "path": "pnpm-workspace.yaml",
+      "size": 48,
+      "sha256": "8a5d76ccb002526dc29ba23261a834f975efa445acee63bb69c537df44944154"
+    },
+    {
+      "path": "process-acceptance.json",
+      "size": 645,
+      "sha256": "20cdfb8893af92dcfa3ad140517242cd171c9ced1326a0dc3e93ae59d20effc0"
+    },
+    {
+      "path": "README.md",
+      "size": 1172,
+      "sha256": "55ada42ee1fa02a3d4fb27891744f0d60fd06c9c777dc3f47e0170e57520df6a"
+    },
+    {
+      "path": "rollback/007_runtime_capability_projection.sql",
+      "size": 3476,
+      "sha256": "79a04e27778215f82921f3e69b022b6e166e78f883089a913f75467a5f4631ff"
+    },
+    {
+      "path": "src/adapters.ts",
+      "size": 10649,
+      "sha256": "8fb4c7ef277ad69d6de7f51bffb2b91fd7f5718569b0830e68d50522a396b8fc"
+    },
+    {
+      "path": "src/competency.ts",
+      "size": 831,
+      "sha256": "9eabe9e6f2a0c2c828301eae3d00e5a7a679a401e06000efc3c9bfd0d417df8a"
+    },
+    {
+      "path": "src/engine.ts",
+      "size": 9033,
+      "sha256": "9c2bb8dd17b20c10488f39b664fc1e3e1ebe607eefaf57185d3fca19d611f9e2"
+    },
+    {
+      "path": "src/learning-engine.ts",
+      "size": 14372,
+      "sha256": "8d75496962d2bbef0f59b75f1f39ca84620ad9c559f238562464e361f18c5037"
+    },
+    {
+      "path": "src/learning-store.ts",
+      "size": 3461,
+      "sha256": "5d401ebeaf4dfbbbb25bfd53de6cb48b58259514c31fff08c3e1e7ef86d5ae15"
+    },
+    {
+      "path": "src/learning.ts",
+      "size": 1843,
+      "sha256": "04e900895a99ea7d97309b43c106dd89377d37089b55bb45633658dca00910f4"
+    },
+    {
+      "path": "src/operations-api.ts",
+      "size": 4174,
+      "sha256": "1eb237e96f1c6f450631b9e6df2dd7baf2732df965a754fa6e51453a2af4dc38"
+    },
+    {
+      "path": "src/platform/allocation.ts",
+      "size": 1733,
+      "sha256": "85fb44e04a40b8f39ceb8e01dc9f30135b896f92d38f083a19a9c7feccef9e2e"
+    },
+    {
+      "path": "src/platform/auth.ts",
+      "size": 2327,
+      "sha256": "1ca01f81efef42b77f643054f8e0f59864c379aef568f36c0756aa4d65aa16f9"
+    },
+    {
+      "path": "src/platform/connectors.ts",
+      "size": 1431,
+      "sha256": "e7060cee392e18a33e417dbd2e45d13691afa63769c39a08ddac82cd046122f0"
+    },
+    {
+      "path": "src/platform/daemon.ts",
+      "size": 4515,
+      "sha256": "b1a96b33b85ebf678a18e348f45489bbbc32a64bc800885e7aaa7a82e444ade0"
+    },
+    {
+      "path": "src/platform/dispatcher.ts",
+      "size": 3565,
+      "sha256": "05251ebb89c5772f9b07a82e57cffbbdede101aef7b65b6611b37e4a73e5e995"
+    },
+    {
+      "path": "src/platform/global-learning.ts",
+      "size": 2216,
+      "sha256": "599cf3c9da1d9d1dcfd77891e5621a4f4f4640399a12410656a50cd17f8a8ec0"
+    },
+    {
+      "path": "src/platform/global-store.ts",
+      "size": 2390,
+      "sha256": "006147d19bbf9d0fdff7f95d2322c5a64832801cc033c91f435bb729c3bd5a56"
+    },
+    {
+      "path": "src/platform/rollback.ts",
+      "size": 607,
+      "sha256": "35ddfd90d9b57fe0cf4f2adf6efbafafb664d1ccb228d18c92ddb188acc2799e"
+    },
+    {
+      "path": "src/platform/runtime-status.ts",
+      "size": 1505,
+      "sha256": "c3f3922f73e4f21bbce22a09b7328f6b383ed39aa7b8bf8caf8b93ff3fd845d2"
+    },
+    {
+      "path": "src/platform/scope.ts",
+      "size": 942,
+      "sha256": "27b09ab8c6be612ba7d19318d2ed8ab2b88f0043bb96739cb8b7a3ebd902255f"
+    },
+    {
+      "path": "src/platform/scoped-pool.ts",
+      "size": 1837,
+      "sha256": "7a4aa74e7d978fb7fc2d4c4fff2689c7408997c2a8aa005c90f6819ce493e51f"
+    },
+    {
+      "path": "src/platform/service.ts",
+      "size": 5297,
+      "sha256": "d0461463ca3f61dde4d938d5e93ea361811854ed9eac2541cdf9e988f18b5471"
+    },
+    {
+      "path": "src/platform/worker.ts",
+      "size": 1863,
+      "sha256": "c863c22565a5db71aace46acde155492526f69b9ff71ee8210766463f22c5670"
+    },
+    {
+      "path": "src/postgres-store.ts",
+      "size": 25068,
+      "sha256": "d52a5f587bdd3c24cbb74a72e4ab6b94899c0641131a16e1c3417016abccac82"
+    },
+    {
+      "path": "src/qa.ts",
+      "size": 1180,
+      "sha256": "c6073ce4bc1c883afad65bd4643b2b47a76f08eb5e04456966a030678428b5ad"
+    },
+    {
+      "path": "src/resource-store.ts",
+      "size": 4263,
+      "sha256": "3e34ce7bad4dbab92f6a0dbcf619e5b3bfca9eb8d1c8c61a950bc17945573b76"
+    },
+    {
+      "path": "src/resources/accounting.ts",
+      "size": 798,
+      "sha256": "dd8e5c1217ac50ec964679457a407538c14b807149c2a429faf6c83b36ef9103"
+    },
+    {
+      "path": "src/resources/allocation.ts",
+      "size": 3069,
+      "sha256": "739e7365cf0a2e88f91cbebd5bfaea348d5f2bf3977526a9f3549a343287021b"
+    },
+    {
+      "path": "src/resources/demand.ts",
+      "size": 904,
+      "sha256": "2b4e4d86d60e9a06bdf4d5d3d615f2782d49ac7892590bfbe0066b18193128a3"
+    },
+    {
+      "path": "src/resources/discovery.ts",
+      "size": 1936,
+      "sha256": "492f21fb8d2c33683c23237f42ae49ecd58834412abdd261b47593d7417ef115"
+    },
+    {
+      "path": "src/resources/manager.ts",
+      "size": 6073,
+      "sha256": "cb33de891c808a14ddba12d27446c56142e59a7eab3e50c3919b755ed3ca6680"
+    },
+    {
+      "path": "src/resources/offload.ts",
+      "size": 512,
+      "sha256": "f8e37f9eb090886aae730c03f58e42a36acd9e0a036a8a64827b1a0ae2e3cafc"
+    },
+    {
+      "path": "src/resources/optimization.ts",
+      "size": 389,
+      "sha256": "521dc7570f94cbf93681fb954f1fed893439f951ff198215daa30097e7230979"
+    },
+    {
+      "path": "src/resources/recovery.ts",
+      "size": 1293,
+      "sha256": "b3a400af1acfde26fb31bb300aff6eb5776bb2fd038980fa6745354d8d6e0a6a"
+    },
+    {
+      "path": "src/resources/types.ts",
+      "size": 1644,
+      "sha256": "b6d66da8ed67e1a596754f2fa73f3a5ac97ac149d15d00898ffd11ae0a2595c8"
+    },
+    {
+      "path": "src/scheduler.ts",
+      "size": 4652,
+      "sha256": "5c8fe1a94e131870d6a7d7cc6774cbcb9e1ce97798e78ee8d04bf92e8eb47edf"
+    },
+    {
+      "path": "src/server.ts",
+      "size": 3018,
+      "sha256": "51c97f9f3c8efb344213a6032bed5cf94c61a734520e0df307fdbcc660e93aa2"
+    },
+    {
+      "path": "src/temporal/bridge.ts",
+      "size": 19392,
+      "sha256": "c28f2fc7f8ad9d11c9872e17dded5df3e6965d03cec042c2ab5763a6376319a7"
+    },
+    {
+      "path": "src/temporal/config.ts",
+      "size": 669,
+      "sha256": "4945e3f09b856c057bcb0e4deb534a12e0a9710f2a9d6a44a8c8e50da0b6f86c"
+    },
+    {
+      "path": "src/temporal/contracts.ts",
+      "size": 1929,
+      "sha256": "232eaedccdf05d74942455818bfb54f70da95819b384c7e7a7dde6f70c1a1336"
+    },
+    {
+      "path": "src/temporal/gateway.ts",
+      "size": 4104,
+      "sha256": "b755cc11af082969fd481b42bdf28adb90cd0596d111476bc4800842ca0efe21"
+    },
+    {
+      "path": "src/temporal/server.ts",
+      "size": 2233,
+      "sha256": "475bf67c54109bccfe6bcc660b5e6384d023581c91ce28457553ce4c47b79f21"
+    },
+    {
+      "path": "src/temporal/worker.ts",
+      "size": 1195,
+      "sha256": "962c6e4fdaf8acad117f64ef70c87f79f385bb137a40d65e0281aeaac3fe3c2b"
+    },
+    {
+      "path": "src/temporal/workflow.ts",
+      "size": 3857,
+      "sha256": "ec628d448bef584bea66cefa1c09ad35d1d9eb67426deedca4c27c36008b46f4"
+    },
+    {
+      "path": "src/types.ts",
+      "size": 4914,
+      "sha256": "6cc515faf0e295ee503abfd2a79e87a7c03d069c727c6d708402f0bcd093b7bb"
+    },
+    {
+      "path": "src/v2.ts",
+      "size": 10996,
+      "sha256": "1f8cc5446cd85fe34bc981fcaa1f5bfff62f6f981be280bac11b1838b958cc0b"
+    },
+    {
+      "path": "test/approval-boundary.test.ts",
+      "size": 1665,
+      "sha256": "4e4c41dd31a44e48e4e852288c1db60527d0dd069d0b33bf880051278a12fd2b"
+    },
+    {
+      "path": "test/connector-contract.test.ts",
+      "size": 2573,
+      "sha256": "d50746e8123ced9a8eb4b469edf72a706cbbd01e4bedf9620ce2c47d03eb3cb8"
+    },
+    {
+      "path": "test/dispatcher.test.ts",
+      "size": 2668,
+      "sha256": "561c20e526940d93feafd65709ea8f392f81dfe8ff7c3e78ba392652efe02eb6"
+    },
+    {
+      "path": "test/engine.test.ts",
+      "size": 4293,
+      "sha256": "df4c792f91800c4b04a348dad9ba032309665591d991d8a0ae40055f4e37a221"
+    },
+    {
+      "path": "test/in-memory-store.ts",
+      "size": 2916,
+      "sha256": "f2033a3b055e5742f9f12ead193981aab03e91a254934699fd6b7235d19b9dff"
+    },
+    {
+      "path": "test/learning-engine.test.ts",
+      "size": 6826,
+      "sha256": "55d24bf69dd385a0c68f768022e2ae9cf8612849a71703e26458fe6d5620c238"
+    },
+    {
+      "path": "test/mission5-handoff.ts",
+      "size": 5493,
+      "sha256": "3be67e70ab1f70dfe3efb0636e4d7ec06acecdb150a86064607e483c18073758"
+    },
+    {
+      "path": "test/mission5-live-preflight.ts",
+      "size": 1138,
+      "sha256": "451c283e0b6c3ceec369f381933c6e373fcab8617953569186cc6ddf4a52ead1"
+    },
+    {
+      "path": "test/mission5-project-observations.ts",
+      "size": 2607,
+      "sha256": "6a37ca111fd733257e735c85172711122cca11f16c053da57f476649c4b1d266"
+    },
+    {
+      "path": "test/mission5-resume6-local-qa.ts",
+      "size": 2860,
+      "sha256": "6b24b4112f1a5ad040f056f3a76bb5a3a31ce8e38a3fd2505d3bc3951c076bd7"
+    },
+    {
+      "path": "test/mission5-resume6-native.ts",
+      "size": 14641,
+      "sha256": "9b4042efcfa29c9a21cf6454368055168239070e861bf305344e05f39eb1dc5a"
+    },
+    {
+      "path": "test/mission5-runtime.test.ts",
+      "size": 10322,
+      "sha256": "d90a9fc7843e3e11d18f1a498b5d5adf563f0b5928e3cc213ea7df1ff74d3aeb"
+    },
+    {
+      "path": "test/optimization.test.ts",
+      "size": 4378,
+      "sha256": "d8e15c254db7a26ef08dafa9f4c49aab8a5f831be14c91c4f55d245b78368e3d"
+    },
+    {
+      "path": "test/platform-postgres.integration.test.ts",
+      "size": 18912,
+      "sha256": "795dfbabe802e476c05a0d1e48a97edbdd584df5ccc47a6a4a51806069d80cce"
+    },
+    {
+      "path": "test/platform.test.ts",
+      "size": 11240,
+      "sha256": "503e45ffd73336445051775583ae9db5e372ccce51a6beeff93a5c1e89154c85"
+    },
+    {
+      "path": "test/postgres.integration.test.ts",
+      "size": 4399,
+      "sha256": "63af736594d80fbc9086a45af260669c48e9832f372e52f20ee489098206c83f"
+    },
+    {
+      "path": "test/recovery-engine.test.ts",
+      "size": 1964,
+      "sha256": "648c0be593ad13591896f2e9f32f285ffd8f0ad6699308b33d2f99b14ed10f7b"
+    },
+    {
+      "path": "test/resource-manager.test.ts",
+      "size": 7152,
+      "sha256": "7b0bd7fa5fef568e8c1d3f96153930033d8e9610f94fff3c8f3df5fa45acb037"
+    },
+    {
+      "path": "test/runtime-postgres.integration.test.ts",
+      "size": 11712,
+      "sha256": "b6f58386d2a17ba9dd533a9d15e7eaec2a0f3d0ecc70a4386c2e660309937352"
+    },
+    {
+      "path": "test/sprint4-claim-process.ts",
+      "size": 902,
+      "sha256": "d2da551f7cd4b1f1cb592cee5823d02286cf649aefba6985fc0709532d7dbd08"
+    },
+    {
+      "path": "test/sprint4-codex-connector.ts",
+      "size": 7189,
+      "sha256": "7254c062ac61022bbe47c8c677164f088a71a45de5881ea2843b4c516cf82a76"
+    },
+    {
+      "path": "test/sprint4-connector-worker.ts",
+      "size": 1416,
+      "sha256": "5e2e70abaee7d0f7b853a7afa255bf16ae0f1bb704e11889db5ab856d4493364"
+    },
+    {
+      "path": "test/sprint4-live-connector.ts",
+      "size": 12722,
+      "sha256": "eb53623a1a3747a3a8b59051f8e7ddf9c86d112e6126fb2d38f77c4d7d70f3f7"
+    },
+    {
+      "path": "test/sprint4-verification.ts",
+      "size": 22370,
+      "sha256": "30f1fbac95235be012676483e26eef1f207d5f18244c1b93538947dad0622685"
+    },
+    {
+      "path": "test/temporal-server-restart.ts",
+      "size": 5196,
+      "sha256": "04861d25aba395a3e02eb1bd47a6364963f30222003151565c87a48e0d56f220"
+    },
+    {
+      "path": "test/temporal-shadow.integration.test.ts",
+      "size": 15025,
+      "sha256": "abbbc112b41513fc48cb9e354e8b51649a26c32ebc49f2ddeb70e6311158ea64"
+    },
+    {
+      "path": "test/v2.test.ts",
+      "size": 4908,
+      "sha256": "998e57ecb3c46ace91d2284daa6e5bb53297263d35532d7c9cff4b46ab26e59c"
+    },
+    {
+      "path": "tsconfig.json",
+      "size": 243,
+      "sha256": "ddc82360213321dc532fa88565ef44cc78ab8adf3f29d9fa7ab0b044f4eb5ae4"
+    },
+    {
+      "path": "VERSION",
+      "size": 13,
+      "sha256": "08ce6b1d05821575b440841dcf11cce181bff53b0e8537b9869ee7045d5d178c"
+    }
+  ],
+  "manifest_self_hash": "excluded; ZIP SHA-256 covers manifest",
+  "secret_scan": {
+    "status": "PASS_WITH_REVIEWED_FALSE_POSITIVE",
+    "files_scanned": 97,
+    "raw_findings": [
+      {
+        "file": "test/mission5-resume6-native.ts",
+        "line": 18,
+        "rule": "assigned_secret"
+      }
+    ],
+    "reviewed": [
+      {
+        "file": "test/mission5-resume6-native.ts",
+        "line": 18,
+        "rule": "assigned_secret",
+        "disposition": "FALSE_POSITIVE_ENV_REFERENCE",
+        "line_sha256": "a4698375ecf9a37f93e7ab5d8b37ffb17de483ea65eca5c28cd58f62b852937a"
+      }
+    ],
+    "limits": "Filename and text signatures only; no guarantee of every possible secret format. No auth/state files included."
+  },
+  "tests": {
+    "baseline": {
+      "pass": 95,
+      "fail": 0,
+      "skip": 0
+    },
+    "final": {
+      "pass": 104,
+      "fail": 0,
+      "skip": 0
+    },
+    "temporal_service_restart": "PASS"
+  },
+  "integrated_staging": "UNVERIFIED",
+  "production": false
+}
