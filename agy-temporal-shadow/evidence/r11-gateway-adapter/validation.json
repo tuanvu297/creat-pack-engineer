@@ -1,0 +1,144 @@
+{
+  "date": "2026-10-18",
+  "timezone": "Asia/Saigon",
+  "scope": "CONTROLLED_HTTP_ADAPTER_TEST_PASS",
+  "repository": "tuanvu297/creat-pack-engineer",
+  "base_pr": 9,
+  "parent_sha": "eb1fa7c0c862f67c043bf5c0c6339e44545a8db7",
+  "branch": "codex/agy-r11-gateway-adapter-20261018",
+  "canonical_authority": "EXISTING_POSTGRES_D049",
+  "shadow_mode": "SHADOW_STAGING",
+  "default_transport": "LEGACY",
+  "checks": {
+    "typecheck": "PASS",
+    "build": "PASS",
+    "baseline": {
+      "pass": 95,
+      "fail": 0,
+      "skip": 4
+    },
+    "gateway_adapter": {
+      "pass": 32,
+      "fail": 0,
+      "skip": 0
+    },
+    "full_suite": {
+      "tests": 131,
+      "pass": 127,
+      "fail": 0,
+      "skip": 4
+    },
+    "test_output_sha256": "f71303d2bfe97ffe7822e0d8025a6f5b48f6de8be978b908efac5baef504f9f1",
+    "changed_files_secret_scan": {
+      "status": "PASS_SIGNATURE_SCAN",
+      "findings": []
+    },
+    "full_repository_secret_scan": {
+      "status": "PREEXISTING_FINDING",
+      "path": "agy-temporal-shadow/test/mission5-resume6-native.ts",
+      "line": 18,
+      "rule": "assigned_secret",
+      "unchanged_from_parent": true
+    },
+    "legacy_runtime_blob_hashes_unchanged": {
+      "daemon": "edcf1dea34991192b483518820f8a2ff2e1b8746",
+      "worker": "f0d3e9757f46fc3abf8cf21593a7a9814da0ea93"
+    }
+  },
+  "observed_railway": {
+    "service_id": "27be7aa3-3794-4f51-87b8-def294570762",
+    "project_id": "45e66534-44ed-484e-bbf4-d63c311d6f27",
+    "environment_id": "792d1b9e-73f5-434b-936f-f3b96d405253",
+    "deployment_id": "bbd63784-5f8a-4cfb-889f-458678cd5bb4",
+    "status": "SUCCESS",
+    "region": "asia-southeast1-eqsg3a",
+    "public_domains": 0,
+    "staged_changes": 0,
+    "deployed_router_sha256_lf": "9c03efca158e7576911720a0d12022526c8050a8b902afe0f4ef2395932c8a52"
+  },
+  "read_only_rpc_definition_md5": {
+    "agy_gateway_rpc": "203f8471da318eba46068a388c3c8898",
+    "agy_gateway_claim_rpc": "c0839ef7bc8f0e8b028669f246868ffc",
+    "agy_gateway_callback_rpc": "5ad180a689b497d15b90d2de38489db4"
+  },
+  "hosted_e2e": "UNVERIFIED",
+  "blockers": [
+    "Actual private R11 connector readiness and capabilities unverified",
+    "Private network DNS/listener reachability unverified",
+    "Existing approved persistent journal mount unverified",
+    "No server reconcile/read-checkpoint endpoint; pending intents, expired leases and new attempts >1 require operator reconciliation",
+    "Four existing PostgreSQL/Temporal integration tests skipped because local test fixtures were not configured"
+  ],
+  "performed": {
+    "production_deploy": false,
+    "staging_deploy": false,
+    "merge": false,
+    "public_publish": false,
+    "paid_inference": false,
+    "db_writes": false,
+    "credential_changes": false
+  },
+  "inventory_note": "SHA-256 of staged LF Git blobs; this receipt excludes itself to avoid a circular self hash. Parent SOURCE-MANIFEST.json remains historical, unchanged.",
+  "files": [
+    {
+      "path": "agy-temporal-shadow/README.md",
+      "sha256": "16615cc23d30b7f52d95075fdf125454613bf79bb8bd04ad0a10781d6f66e2e4"
+    },
+    {
+      "path": "agy-temporal-shadow/config/r11-gateway.env.example",
+      "sha256": "04c1e7cb1cc6f8432bcce64e4070d38c293f0115e8e95561e342bf229f4a9f95"
+    },
+    {
+      "path": "agy-temporal-shadow/docs/R11-GATEWAY-ADAPTER.md",
+      "sha256": "7979b286f1406f10a1a709bf2f1a503deb7300060038e7790c31a06f8d142a81"
+    },
+    {
+      "path": "agy-temporal-shadow/src/gateway-shadow/config.ts",
+      "sha256": "626fb5c34240bb5a7039f986733fbf857c087e99cfe407b2336afe6c1cde7124"
+    },
+    {
+      "path": "agy-temporal-shadow/src/gateway-shadow/journal.ts",
+      "sha256": "b5607d8d6a73e0e481703cffaa815f59087cd94dd50f7750a8086628d0aea3e3"
+    },
+    {
+      "path": "agy-temporal-shadow/src/gateway-shadow/runtime.ts",
+      "sha256": "92f0736ed49b49e9a968374ad4f0b73ab57e2857ed4e911af3b5ce3fd211762e"
+    },
+    {
+      "path": "agy-temporal-shadow/src/gateway-shadow/transport.ts",
+      "sha256": "7b640faf91c726f94436979954219d3a5d92ae8b99d1585e936174a7f05a1285"
+    },
+    {
+      "path": "agy-temporal-shadow/src/gateway-shadow/worker.ts",
+      "sha256": "958096089c25367e3942e7629b4215a5df80f4903ec35d0dab6fc7ffc14a1ba4"
+    },
+    {
+      "path": "agy-temporal-shadow/src/platform/daemon.ts",
+      "sha256": "283b25e7b6697f3621ecf1b1a66691d37695f9935477c9d4503b1039e3a601a9"
+    },
+    {
+      "path": "agy-temporal-shadow/src/platform/legacy-daemon.ts",
+      "sha256": "b1a96b33b85ebf678a18e348f45489bbbc32a64bc800885e7aaa7a82e444ade0"
+    },
+    {
+      "path": "agy-temporal-shadow/src/platform/legacy-worker.ts",
+      "sha256": "c863c22565a5db71aace46acde155492526f69b9ff71ee8210766463f22c5670"
+    },
+    {
+      "path": "agy-temporal-shadow/src/platform/worker.ts",
+      "sha256": "35a85830d056e679c901c5b068d78e58733e71bb2c6a917e43944f60ccef16b6"
+    },
+    {
+      "path": "agy-temporal-shadow/test/fake-shadow-gateway.ts",
+      "sha256": "3017096c64708502b3bad57978603387ea7147dba52df2fe3bb51bf934267e1b"
+    },
+    {
+      "path": "agy-temporal-shadow/test/fixtures/railway-gateway-20261018.txt",
+      "sha256": "9c03efca158e7576911720a0d12022526c8050a8b902afe0f4ef2395932c8a52"
+    },
+    {
+      "path": "agy-temporal-shadow/test/gateway-shadow.test.ts",
+      "sha256": "01b3795ae5a22215f506ff0c0458a4551240ffac1005165feac3ee7458f2a77b"
+    }
+  ]
+}

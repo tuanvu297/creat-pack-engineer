@@ -9,3 +9,8 @@ Read [QA report](docs/TEMPORAL-QA-REPORT.md), [architecture and diagram](docs/TE
 Baseline: 95/95 tests after recovery of the original missing rollback file. Final full suite: 104/104, no skips, plus separate real Temporal service persistent-restart PASS. Evidence is delivered separately with the same release receipt and source manifest. The inherited `package.json` version 1.0.0 is preserved; snapshot `VERSION` is 0.1.0-shadow.
 
 Use Node 20+ and the official SDK dependencies in the lockfile. Start the existing AGY entrypoint normally for LEGACY routing. The separate Temporal worker/gateway require explicit local SHADOW config and an isolated staging project. No credentials are included. This is not a native provider or production certification.
+## Additive R11 hosted-shadow transport
+
+Worker/daemon default to `LEGACY`. For the explicitly selected, stage-only HTTP
+transport, see [R11 Gateway Adapter](docs/R11-GATEWAY-ADAPTER.md) and
+`config/r11-gateway.env.example`. D-049 remains canonical; hosted E2E is unverified.
