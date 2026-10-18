@@ -1,0 +1,112 @@
+{
+  "checkpoint_id": "CP-AGY-TEMPORAL-STAGING-20261018-02",
+  "supersedes": "CP-AGY-TEMPORAL-SHADOW-20261018-01",
+  "mission_id": "AGY-TEMPORAL-20261018",
+  "state": "LOCAL_NATIVE_COMMAND_SLICE_TESTED_INTEGRATED_STAGING_BLOCKED",
+  "observed_at": "2026-10-18T09:45:57.510Z",
+  "executor_worker_id": "CODEX_ENGINEERING_COMMAND",
+  "engineering_executor": "CODEX",
+  "originating_conversation_id": "6acdf9e5-0718-83ec-a843-0646519e307b",
+  "controller_role": "Originating Chat/Work controller + independent QA only",
+  "native_chat_ingestion": "UNVERIFIED",
+  "default_routing": "LEGACY",
+  "production_pass": false,
+  "production_cutover": false,
+  "qa_state": "PENDING_INDEPENDENT_CONTROLLER",
+  "source_commit": "87d2667f1319f454e8b7a7e0d1338ce011b378dd",
+  "source_parent_commit": "42ed424fd0ab77e541a808cb1a1c9c1381ac01a1",
+  "branch": "codex/agy-temporal-shadow-20261018",
+  "pull_request": "https://github.com/tuanvu297/creat-pack-engineer/pull/9",
+  "pass_ladder": {
+    "EVENT_DRIVEN_PASS": "PASS_LOCAL",
+    "NATIVE_EXECUTOR_ACK_PASS": "PASS_NATIVE_CODEX_COMMAND_NO_MODEL",
+    "CALLBACK_RECEIPT_PASS": "PASS_LOCAL_POSTGRES_CANONICAL_STAGING_SCOPE",
+    "HOSTED_RUNTIME_PASS": "BLOCKED",
+    "UNIVERSAL_GATEWAY_PASS": "BLOCKED_NATIVE_CHAT_BINDING_MISSING",
+    "CROSS_ENTRYPOINT_CONTINUATION_PASS": "BLOCKED",
+    "INTEGRATED_STAGING_PASS": "BLOCKED"
+  },
+  "tests": {
+    "related_regression_pass": 12,
+    "fail": 0,
+    "skip": 0,
+    "typecheck": "PASS",
+    "native_command": "PASS_BOUNDED_SOURCE_AND_GATEWAY_VERIFICATION_NO_INFERENCE",
+    "local_process_restart": "PASS_SAME_RUN_ONE_ACCEPTED_NATIVE_GATEWAY_OPERATION",
+    "http_callback_readback": "PASS_LOOPBACK_ONLY",
+    "full_baseline": "NOT_RERUN_INHERITED_104_PASS"
+  },
+  "workflow_id": "agy-shadow-968fc96b91ab9c3cdb7495303a7f7d9a148e9428c0cff417b90c83bbbc32acba",
+  "run_id": "01a14e5a-a0ba-7745-992d-4fff8adbcccb",
+  "task_id": "AGY-TEMPORAL-NATIVE-GATEWAY-CONTRACT-SLICE2-R2",
+  "attempt": 1,
+  "idempotency_key": "AGY|TEMPORAL|NATIVE-GATEWAY-CONTRACT|20261018|SLICE2|R2|A1",
+  "operation_id": "41be194b-228c-4b28-9472-9e9203f69728",
+  "callback_state": "PERSISTED_RESULT_READY_QA_PENDING",
+  "artifact_sha256": "56a914b4b52cae6d9b608381a6f54071f6d27fa475486bfb62174f1731e23eb7",
+  "source": {
+    "accepted_input": "file_uri",
+    "success": true,
+    "id": "1otuvd53GtpY6BzuIiFqBrnbIM2CvQAab",
+    "title": "AGY-TEMPORAL-SHADOW-0.1.1-source.zip",
+    "file_name": "AGY-TEMPORAL-SHADOW-0.1.1-source.zip",
+    "mime_type": "application/zip",
+    "url": "https://drive.google.com/file/d/1otuvd53GtpY6BzuIiFqBrnbIM2CvQAab/view?usp=drivesdk",
+    "parent_id": "1K97FCMYjp3itlYStW4uc7t6hVyeY5v0Y",
+    "sha256": "27ffa75f3f25172a1c225afae8361859411e2a74fbf88cf0425ab5556f58c847",
+    "readback_hash_verified": true
+  },
+  "evidence": {
+    "accepted_input": "file_uri",
+    "success": true,
+    "id": "1T7HBfWCJcJsl5c3AZouFCeIPMeKgAaGv",
+    "title": "AGY-TEMPORAL-SHADOW-0.1.1-evidence.zip",
+    "file_name": "AGY-TEMPORAL-SHADOW-0.1.1-evidence.zip",
+    "mime_type": "application/zip",
+    "url": "https://drive.google.com/file/d/1T7HBfWCJcJsl5c3AZouFCeIPMeKgAaGv/view?usp=drivesdk",
+    "parent_id": "1HDfMOlwgXf5mgmjhyPE06e1eSD6sG9yP",
+    "sha256": "6fde343e0304749e10276be62c1efd6592fb5005324ea4e19f21ebbf7439b890",
+    "readback_hash_verified": true
+  },
+  "source_manifest_sha256": "6848b2f8bf18e08072c9a43eb54cbd437a394b781850da9d1e16ed6e61ef314e",
+  "callback_receipt": "https://drive.google.com/file/d/18WBxRIBZXwlPURbGF153LCktfyBONAfN/view?usp=drivesdk",
+  "qa_report": "https://drive.google.com/file/d/1EWU8vhtFC5oSFqPk2gI-JqVqTOohq21O/view?usp=drivesdk",
+  "remote_readback_proof": "https://drive.google.com/file/d/1wssRXQjITbArV7Z5oi5CmG8C5rGTRYl-/view?usp=drivesdk",
+  "blockers": [
+    "No existing approved hosted attachment discovered: Railway projects empty; confirmed Render workspace returned no services/Postgres",
+    "Originating Chat/Work does not expose the universal gateway action transport; loopback success is not native surface evidence",
+    "Actual two-supported-entrypoint continuation cannot be tested without that transport",
+    "Independent controller/peer QA pending; no executor self-approval"
+  ],
+  "uncertain_operation": {
+    "operation_id": "1197b204-16ba-4660-9dff-233b1eefe821",
+    "state": "UNCERTAIN_NO_RETRY",
+    "original_rpc_response": "NOT_PRESERVED; later probe is not retrospective original-outcome proof"
+  },
+  "rejected_operation": {
+    "operation_id": "9009531b-1daf-4d41-bbb0-4018c44ac0c0",
+    "state": "BLOCKED_ROUTE",
+    "rpc_code": -32600,
+    "reason": "custom outputBytesCap is not supported with windows sandbox"
+  },
+  "next_safe_action": "Attach an existing approved zero-new-spend host and authenticated native Chat/Work gateway transport; bootstrap/read the same mission and callback, obtain independent QA. Never resubmit accepted or uncertain operations. Local QA deadline can expire on resume.",
+  "local_test_services": "STOPPED_AFTER_CAPTURE_DATA_RETAINED; PostgreSQL closure recorded separately",
+  "guardrails": {
+    "new_spend": false,
+    "paid_inference": false,
+    "public_publish": false,
+    "secrets_exposed": false,
+    "production_change": false,
+    "historical_deletion": false
+  },
+  "final_callback": {
+    "MISSION": "AGY-TEMPORAL-20261018",
+    "PREVIOUS_CHECKPOINT": "CP-AGY-TEMPORAL-SHADOW-20261018-01",
+    "NEW_CHECKPOINT": "CP-AGY-TEMPORAL-STAGING-20261018-02",
+    "CALLBACK_RECEIPT": "PASS",
+    "NATIVE_EXECUTOR": "PASS",
+    "UNIVERSAL_GATEWAY": "BLOCKED",
+    "CROSS_ENTRYPOINT": "BLOCKED",
+    "INTEGRATED_STAGING": "BLOCKED"
+  }
+}
