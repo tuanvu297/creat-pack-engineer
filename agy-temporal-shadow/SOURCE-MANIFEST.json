@@ -1,7 +1,8 @@
 {
   "mission_id": "AGY-TEMPORAL-20261018",
-  "version": "0.1.0-shadow",
-  "source_baseline_sha256": "CECE24208982EDA501E006479C5E7C1829672B8A0B5B787C57DBA30A3533E843",
+  "version": "0.1.1-shadow",
+  "previous_checkpoint": "CP-AGY-TEMPORAL-SHADOW-20261018-01",
+  "source_parent_commit": "42ed424fd0ab77e541a808cb1a1c9c1381ac01a1",
   "files": [
     {
       "path": ".gitignore",
@@ -40,13 +41,73 @@
     },
     {
       "path": "docs/TEMPORAL-QA-REPORT.md",
-      "size": 8815,
-      "sha256": "75e96d48c25d06b9f1066c30f06a29bfd04504312b42aa6049b69c7bdd5c1dfa"
+      "size": 9025,
+      "sha256": "7ad1b12d4dca7c7c47e244ea78c67c0eab6c7383a980e01bd5d9c08a0faafa2f"
     },
     {
       "path": "docs/TEMPORAL-RUNBOOK.md",
-      "size": 4880,
-      "sha256": "88367e0b4f416343cd714f10cf7e84b7a3c9ea9a777d9f5ac78c0dcf78075d10"
+      "size": 5638,
+      "sha256": "fac86be51af6ab8a856485d28ea295abd65861776acb18a8b91efda74c76bda3"
+    },
+    {
+      "path": "docs/TEMPORAL-STAGING-SLICE2.md",
+      "size": 9329,
+      "sha256": "7dc5863f9c064eba55f7a8096299ad1ffba40d5ae78be777ef8195c3be40a44d"
+    },
+    {
+      "path": "evidence/slice2/acceptance.json",
+      "size": 754,
+      "sha256": "d6adb838752671995a09a0aae366910af78387a0a172b6f5eb4b023d1d54a309"
+    },
+    {
+      "path": "evidence/slice2/BASE-CONTINUITY-VERIFIED.json",
+      "size": 246,
+      "sha256": "9e35b6a9602e176c10d05f7f4347912d93787c5aba58b39daa8e801f24e4b2fa"
+    },
+    {
+      "path": "evidence/slice2/BLOCKER-EVIDENCE.json",
+      "size": 1309,
+      "sha256": "9c3d85a2427318814be311cce48de73e1d4aa8c7101572d67f521bcd71eef277"
+    },
+    {
+      "path": "evidence/slice2/BOOTSTRAP-FRESHNESS.json",
+      "size": 687,
+      "sha256": "574fca9b7d7b0ab6878137a3e825ee5b881d1b6cf2c558464a603fa237575c60"
+    },
+    {
+      "path": "evidence/slice2/CALLBACK-RECEIPT.json",
+      "size": 3419,
+      "sha256": "731c2beb3a84a4bfc96d7e815d98157cca206d595c37d808336ecb056c417296"
+    },
+    {
+      "path": "evidence/slice2/CODEX-ROUTE-PROBE.json",
+      "size": 620,
+      "sha256": "1c229904bda6d50fd6699a1691a20b4a77bbdd7ec980396a3eb79bfa2702eb07"
+    },
+    {
+      "path": "evidence/slice2/CODEX-STREAMING-ROUTE-REJECTION.json",
+      "size": 668,
+      "sha256": "f228b2df8d0e63f6109ede292054c884746769ec924f63a06fd4204db2d4aa80"
+    },
+    {
+      "path": "evidence/slice2/HTTP-GATEWAY-READBACK.json",
+      "size": 9661,
+      "sha256": "807a2d5d995ce3bc2ddc59b3e92bc188f49224f87934e258ec05ef1e56685591"
+    },
+    {
+      "path": "evidence/slice2/NATIVE-COMMAND-ARTIFACT.json",
+      "size": 1266,
+      "sha256": "56a914b4b52cae6d9b608381a6f54071f6d27fa475486bfb62174f1731e23eb7"
+    },
+    {
+      "path": "evidence/slice2/NATIVE-OPERATIONS-RECONCILIATION.json",
+      "size": 6031,
+      "sha256": "67a91396a9be3bc9185cf17e2cb2f50f8471080f91eea35fb2bdb21a5fdfecaa"
+    },
+    {
+      "path": "evidence/slice2/SHARED-STATE-READBACK.json",
+      "size": 15899,
+      "sha256": "d409eebf02509e5714472a838c55498c4179d5588bd7104cf9025c8702d5cc09"
     },
     {
       "path": "examples/temporal-shadow-mission.json",
@@ -99,6 +160,11 @@
       "sha256": "5f24acec873d555a7d65bfce9e8c14100583923b7790d4854e3f05a4866ef9a0"
     },
     {
+      "path": "migrations/010_temporal_native_command.sql",
+      "size": 1085,
+      "sha256": "51696cea2c0745ea868f713257618ce6a1870175504d0183fb001b11ae1b51c4"
+    },
+    {
       "path": "package.json",
       "size": 976,
       "sha256": "2d3bb56ea324678fc16f09e6cd9f952d544154aec8a1a4fc45250c2ba5c0fd40"
@@ -120,8 +186,8 @@
     },
     {
       "path": "README.md",
-      "size": 1172,
-      "sha256": "55ada42ee1fa02a3d4fb27891744f0d60fd06c9c777dc3f47e0170e57520df6a"
+      "size": 1626,
+      "sha256": "3a784f5d05fc22dd056ccdf520540662c85951adfa00c4fe0a7c764e3a8dc0b6"
     },
     {
       "path": "rollback/007_runtime_capability_projection.sql",
@@ -300,8 +366,8 @@
     },
     {
       "path": "src/temporal/bridge.ts",
-      "size": 19392,
-      "sha256": "c28f2fc7f8ad9d11c9872e17dded5df3e6965d03cec042c2ab5763a6376319a7"
+      "size": 22516,
+      "sha256": "1c3473d1ba4f76c047bb43a230e7fadeb42cdacb9a0b0278412e7215e9785d18"
     },
     {
       "path": "src/temporal/config.ts",
@@ -310,18 +376,33 @@
     },
     {
       "path": "src/temporal/contracts.ts",
-      "size": 1929,
-      "sha256": "232eaedccdf05d74942455818bfb54f70da95819b384c7e7a7dde6f70c1a1336"
+      "size": 2068,
+      "sha256": "c8e02c88e5d99e06216a10b781ecb5c2ad5d124866a5a2ade258c4fddea7154e"
     },
     {
       "path": "src/temporal/gateway.ts",
-      "size": 4104,
-      "sha256": "b755cc11af082969fd481b42bdf28adb90cd0596d111476bc4800842ca0efe21"
+      "size": 4621,
+      "sha256": "f791f0c096956114fa48c95c940335c7dd3cc6b7ae9753fd4d041c5db3e0aecd"
+    },
+    {
+      "path": "src/temporal/native-check.ts",
+      "size": 2666,
+      "sha256": "790d095f6ea98f08bc1de814e25bba7034f81207123a0d73b27dd56575ceeae8"
+    },
+    {
+      "path": "src/temporal/native-command.ts",
+      "size": 6110,
+      "sha256": "b7bce56b6fb3c6047d72bbfdeb78892693228abaf49670554d346289e62fc2ea"
+    },
+    {
+      "path": "src/temporal/result-events.ts",
+      "size": 2002,
+      "sha256": "2236b55536aa6b499074bc332b8d78b85c02846715cb38a29b192ee985ebb847"
     },
     {
       "path": "src/temporal/server.ts",
-      "size": 2233,
-      "sha256": "475bf67c54109bccfe6bcc660b5e6384d023581c91ce28457553ce4c47b79f21"
+      "size": 2249,
+      "sha256": "ff025395af11daf8ceff06f5735f12541af9253c71bd421179957aa2c7016465"
     },
     {
       "path": "src/temporal/worker.ts",
@@ -330,8 +411,8 @@
     },
     {
       "path": "src/temporal/workflow.ts",
-      "size": 3857,
-      "sha256": "ec628d448bef584bea66cefa1c09ad35d1d9eb67426deedca4c27c36008b46f4"
+      "size": 7803,
+      "sha256": "8298f0c7bf1cce324489d77633e4b308e2ed6e8de5011f979040b7a3c23ba432"
     },
     {
       "path": "src/types.ts",
@@ -464,14 +545,34 @@
       "sha256": "30f1fbac95235be012676483e26eef1f207d5f18244c1b93538947dad0622685"
     },
     {
+      "path": "test/temporal-event-contract.test.ts",
+      "size": 1679,
+      "sha256": "5a1a85cc1cf4ea6b690140bbd87b7be46ff6484212ed440452b8d627f0a353fb"
+    },
+    {
       "path": "test/temporal-server-restart.ts",
       "size": 5196,
       "sha256": "04861d25aba395a3e02eb1bd47a6364963f30222003151565c87a48e0d56f220"
     },
     {
       "path": "test/temporal-shadow.integration.test.ts",
-      "size": 15025,
-      "sha256": "abbbc112b41513fc48cb9e354e8b51649a26c32ebc49f2ddeb70e6311158ea64"
+      "size": 15058,
+      "sha256": "61819f157e09c5f0420b11938c0bbc406a7b94501895aa52b1bd29bb61dbebfc"
+    },
+    {
+      "path": "test/temporal-slice2-http-readback.ts",
+      "size": 3280,
+      "sha256": "7be1e68addbbd4eae9f99e80003648cf4567d94c6ddbd8a5d43a09002e3b10da"
+    },
+    {
+      "path": "test/temporal-slice2-reconcile.ts",
+      "size": 1719,
+      "sha256": "497ab5a5837c549b562a33928bc32d7c27a9a39e1e61c911bdba0eb90ea17295"
+    },
+    {
+      "path": "test/temporal-staging-slice2.ts",
+      "size": 11963,
+      "sha256": "6f3311a62c387d0f95bb7e5f1683be67c9c9fcd4cbce6e8b3070d1fccbd911bb"
     },
     {
       "path": "test/v2.test.ts",
@@ -486,13 +587,14 @@
     {
       "path": "VERSION",
       "size": 13,
-      "sha256": "08ce6b1d05821575b440841dcf11cce181bff53b0e8537b9869ee7045d5d178c"
+      "sha256": "aa2c554e7f6d3ed731c48ee35d9ddb882c2b9400d5c66aaa79413a248d5eed46"
     }
   ],
-  "manifest_self_hash": "excluded; ZIP SHA-256 covers manifest",
+  "manifest_self_hash": "excluded; source ZIP hash covers manifest",
+  "native_verified_source_files_match": true,
   "secret_scan": {
+    "files_scanned": 117,
     "status": "PASS_WITH_REVIEWED_FALSE_POSITIVE",
-    "files_scanned": 97,
     "raw_findings": [
       {
         "file": "test/mission5-resume6-native.ts",
@@ -505,25 +607,17 @@
         "file": "test/mission5-resume6-native.ts",
         "line": 18,
         "rule": "assigned_secret",
-        "disposition": "FALSE_POSITIVE_ENV_REFERENCE",
-        "line_sha256": "a4698375ecf9a37f93e7ab5d8b37ffb17de483ea65eca5c28cd58f62b852937a"
+        "disposition": "FALSE_POSITIVE_ENV_LOOKUP_NO_CREDENTIAL_LITERAL"
       }
     ],
-    "limits": "Filename and text signatures only; no guarantee of every possible secret format. No auth/state files included."
+    "limits": "Filename and text signature scan only; no universal secret guarantee. No auth, database, private runtime state, CLI or SDK binaries packaged."
   },
-  "tests": {
-    "baseline": {
-      "pass": 95,
-      "fail": 0,
-      "skip": 0
-    },
-    "final": {
-      "pass": 104,
-      "fail": 0,
-      "skip": 0
-    },
-    "temporal_service_restart": "PASS"
+  "regression": {
+    "pass": 12,
+    "fail": 0,
+    "skip": 0
   },
-  "integrated_staging": "UNVERIFIED",
+  "typecheck": "PASS",
+  "integrated_staging": "BLOCKED",
   "production": false
 }

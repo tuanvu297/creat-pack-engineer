@@ -16,7 +16,7 @@ const server=createServer(async(req,res)=>{
  res.setHeader('content-type','application/json');
  try{
   if(req.method!=='POST')throw new Error('POST_REQUIRED');
-  const action=/^\/v1\/agy\/(bootstrap|current_state|dispatch|task_status|get_run|active_missions|reconcile|submit_qa|stop)$/.exec(req.url??'')?.[1];
+  const action=/^\/v1\/agy\/(bootstrap|current_state|dispatch|task_status|get_run|active_missions|reconcile|submit_qa|callback_status|stop)$/.exec(req.url??'')?.[1];
   if(!action)throw new Error('UNKNOWN_GATEWAY_ACTION');
   const p=authenticate(req.headers.authorization,identities),chunks:Buffer[]=[];let size=0;
   for await(const chunk of req){size+=chunk.length;if(size>65536)throw new Error('REQUEST_TOO_LARGE');chunks.push(chunk);}

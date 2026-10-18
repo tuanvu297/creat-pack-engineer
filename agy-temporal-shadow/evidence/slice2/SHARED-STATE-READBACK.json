@@ -1,0 +1,362 @@
+{
+  "transport": "DIRECT_LOCAL_GATEWAY_CLASS_AFTER_NEW_CONNECTION_AND_PROCESS_RESTART",
+  "store": "POSTGRESQL_SCOPED_STAGING",
+  "schema": "agy_temporal_slice2_4bc29da4f1c8449ebe58c9437cb25a61",
+  "role": "agy_temporal_slice2_4bc29da4f1c8449ebe58c9437cb25a61",
+  "dispatch": {
+    "workflow_id": "agy-shadow-968fc96b91ab9c3cdb7495303a7f7d9a148e9428c0cff417b90c83bbbc32acba",
+    "run_id": "01a14e5a-a0ba-7745-992d-4fff8adbcccb",
+    "duplicate": false,
+    "evidence_class": "CONTROLLED_SYNTHETIC"
+  },
+  "bootstrap": {
+    "project": {
+      "tenant_id": "gl",
+      "workspace_id": "legacy-workspace",
+      "project_id": "GL_AUTOMATION",
+      "name": "Imported project",
+      "status": "ACTIVE",
+      "source_of_truth_ref": "legacy-backup:pre-004",
+      "policy_ref": "migration-review-required",
+      "default_skill_pack": "",
+      "resource_policy": {
+        "quotaCap": 0,
+        "spendCap": 0,
+        "reservation": 0,
+        "maxConcurrentTasks": 4
+      },
+      "priority": 0,
+      "permissions": [],
+      "policies": {
+        "temporalShadowOnly": true
+      },
+      "created_at": "2026-10-18T09:26:37.705Z",
+      "updated_at": "2026-10-18T09:26:37.705Z"
+    },
+    "missions": [
+      {
+        "mission_id": "AGY-TEMPORAL-20261018",
+        "task_key": "AGY-TEMPORAL-NATIVE-COMMAND-SLICE2",
+        "state": "BLOCKED",
+        "qa_state": "QA_NOT_STARTED",
+        "workflow_id": "agy-shadow-57ab930d4ffe6afe0087372c9b35a4ab63508aa77b978ad130467cbde7cb321f",
+        "run_id": "01a14e56-55b3-71bc-b625-42a13c2c8d81",
+        "updated_at": "2026-10-18T09:27:23.702Z"
+      },
+      {
+        "mission_id": "AGY-TEMPORAL-20261018",
+        "task_key": "AGY-TEMPORAL-NATIVE-GATEWAY-CONTRACT-SLICE2",
+        "state": "BLOCKED_ROUTE",
+        "qa_state": "QA_NOT_STARTED",
+        "workflow_id": "agy-shadow-1a6217d9b5528ce9b5cf80ac8057b83fb63641ed7fb833b86fd68ab20e761010",
+        "run_id": "01a14e59-1fed-7971-b850-bd0c23b2b093",
+        "updated_at": "2026-10-18T09:30:26.494Z"
+      },
+      {
+        "mission_id": "AGY-TEMPORAL-20261018",
+        "task_key": "AGY-TEMPORAL-NATIVE-GATEWAY-CONTRACT-SLICE2-R2",
+        "state": "WAIT_QA",
+        "qa_state": "PENDING",
+        "workflow_id": "agy-shadow-968fc96b91ab9c3cdb7495303a7f7d9a148e9428c0cff417b90c83bbbc32acba",
+        "run_id": "01a14e5a-a0ba-7745-992d-4fff8adbcccb",
+        "updated_at": "2026-10-18T09:32:10.967Z"
+      }
+    ],
+    "authority": {
+      "temporal": "workflow progression/history",
+      "postgres": "AGY operational/domain ledger and evidence references"
+    },
+    "chat_surface": "UNVERIFIED",
+    "production": false
+  },
+  "readback": {
+    "workflow_id": "agy-shadow-968fc96b91ab9c3cdb7495303a7f7d9a148e9428c0cff417b90c83bbbc32acba",
+    "run_id": "01a14e5a-a0ba-7745-992d-4fff8adbcccb",
+    "receipts": [
+      {
+        "payload": {
+          "state": "RESULT_READY",
+          "run_id": "01a14e5a-a0ba-7745-992d-4fff8adbcccb",
+          "attempt": 1,
+          "task_id": "AGY-TEMPORAL-NATIVE-GATEWAY-CONTRACT-SLICE2-R2",
+          "qa_state": "PENDING",
+          "timestamp": "2026-10-18T09:32:10.973Z",
+          "mission_id": "AGY-TEMPORAL-20261018",
+          "result_ref": {
+            "output": {
+              "files": [
+                {
+                  "path": "src/temporal/workflow.ts",
+                  "sha256": "8298f0c7bf1cce324489d77633e4b308e2ed6e8de5011f979040b7a3c23ba432"
+                },
+                {
+                  "path": "src/temporal/bridge.ts",
+                  "sha256": "1c3473d1ba4f76c047bb43a230e7fadeb42cdacb9a0b0278412e7215e9785d18"
+                },
+                {
+                  "path": "src/temporal/gateway.ts",
+                  "sha256": "f791f0c096956114fa48c95c940335c7dd3cc6b7ae9753fd4d041c5db3e0aecd"
+                },
+                {
+                  "path": "src/temporal/result-events.ts",
+                  "sha256": "2236b55536aa6b499074bc332b8d78b85c02846715cb38a29b192ee985ebb847"
+                },
+                {
+                  "path": "src/temporal/native-command.ts",
+                  "sha256": "b7bce56b6fb3c6047d72bbfdeb78892693228abaf49670554d346289e62fc2ea"
+                }
+              ],
+              "route": "codex-app-server/command/exec",
+              "command": "verify_gateway_contract",
+              "exit_code": 0,
+              "timestamp": "2026-10-18T09:32:10.789Z",
+              "typecheck": "PASS",
+              "diagnostics": "",
+              "artifact_ref": "C:\\Users\\tuanv\\.codex\\.chatgpt-projects\\g-p-6acdfb8cd0ac8191bef589d1681f88bc\\work\\temporal-integration\\runtime\\runtime-evidence\\native\\41be194b-228c-4b28-9472-9e9203f69728\\result.json",
+              "operation_id": "41be194b-228c-4b28-9472-9e9203f69728",
+              "evidence_class": "NATIVE_CODEX_COMMAND_NO_MODEL",
+              "artifact_sha256": "56a914b4b52cae6d9b608381a6f54071f6d27fa475486bfb62174f1731e23eb7",
+              "gateway_actions": [
+                "bootstrap",
+                "current_state",
+                "dispatch",
+                "task_status",
+                "get_run",
+                "active_missions",
+                "reconcile",
+                "submit_qa",
+                "callback_status"
+              ],
+              "executor_worker_id": "CODEX_ENGINEERING_COMMAND"
+            },
+            "attempt": 1,
+            "operation_id": "41be194b-228c-4b28-9472-9e9203f69728",
+            "evidence_refs": [
+              "postgres-native://agy-shadow-968fc96b91ab9c3cdb7495303a7f7d9a148e9428c0cff417b90c83bbbc32acba/1/41be194b-228c-4b28-9472-9e9203f69728",
+              "C:\\Users\\tuanv\\.codex\\.chatgpt-projects\\g-p-6acdfb8cd0ac8191bef589d1681f88bc\\work\\temporal-integration\\runtime\\runtime-evidence\\native\\41be194b-228c-4b28-9472-9e9203f69728\\result.json#sha256=56a914b4b52cae6d9b608381a6f54071f6d27fa475486bfb62174f1731e23eb7"
+            ]
+          },
+          "workflow_id": "agy-shadow-968fc96b91ab9c3cdb7495303a7f7d9a148e9428c0cff417b90c83bbbc32acba",
+          "evidence_refs": [
+            "postgres-native://agy-shadow-968fc96b91ab9c3cdb7495303a7f7d9a148e9428c0cff417b90c83bbbc32acba/1/41be194b-228c-4b28-9472-9e9203f69728",
+            "C:\\Users\\tuanv\\.codex\\.chatgpt-projects\\g-p-6acdfb8cd0ac8191bef589d1681f88bc\\work\\temporal-integration\\runtime\\runtime-evidence\\native\\41be194b-228c-4b28-9472-9e9203f69728\\result.json#sha256=56a914b4b52cae6d9b608381a6f54071f6d27fa475486bfb62174f1731e23eb7"
+          ],
+          "state_version": 1,
+          "callback_state": "PERSISTED_RESULT_READY",
+          "evidence_class": "NATIVE_CODEX_COMMAND_NO_MODEL",
+          "idempotency_key": "AGY|TEMPORAL|NATIVE-GATEWAY-CONTRACT|20261018|SLICE2|R2|A1",
+          "executor_worker_id": "CODEX_ENGINEERING_COMMAND",
+          "native_chat_ingestion": "UNVERIFIED"
+        },
+        "created_at": "2026-10-18T09:32:10.967Z"
+      }
+    ],
+    "native_chat_ingestion": "UNVERIFIED",
+    "authority": "POSTGRES_CANONICAL_STORE"
+  },
+  "status": {
+    "postgres": {
+      "tenant_id": "gl",
+      "workspace_id": "legacy-workspace",
+      "project_id": "GL_AUTOMATION",
+      "mission_id": "AGY-TEMPORAL-20261018",
+      "task_key": "AGY-TEMPORAL-NATIVE-GATEWAY-CONTRACT-SLICE2-R2",
+      "idempotency_key": "AGY|TEMPORAL|NATIVE-GATEWAY-CONTRACT|20261018|SLICE2|R2|A1",
+      "payload_hash": "8a5a4acaded012bdbdbf04c10089a6f562f096364203e60cc33423bb3a402ded",
+      "workflow_id": "agy-shadow-968fc96b91ab9c3cdb7495303a7f7d9a148e9428c0cff417b90c83bbbc32acba",
+      "run_id": "01a14e5a-a0ba-7745-992d-4fff8adbcccb",
+      "job_id": "139cb129-f678-49ad-a1a6-61627d79413f",
+      "task_id": "53c6856b-a8ce-43bc-bf74-f5b94fc0da2b",
+      "contract": {
+        "mode": "TEMPORAL_SHADOW",
+        "attempt": 1,
+        "payload": {
+          "command": "verify_gateway_contract"
+        },
+        "task_id": "AGY-TEMPORAL-NATIVE-GATEWAY-CONTRACT-SLICE2-R2",
+        "tenantId": "gl",
+        "objective": "Verify gateway action coverage and compiler diagnostics through buffered native Codex command; producer QA1 only",
+        "projectId": "GL_AUTOMATION",
+        "mission_id": "AGY-TEMPORAL-20261018",
+        "source_ref": "42ed424fd0ab77e541a808cb1a1c9c1381ac01a1+slice2-working-source",
+        "workspaceId": "legacy-workspace",
+        "qa_timeout_ms": 3600000,
+        "ack_timeout_ms": 60000,
+        "idempotency_key": "AGY|TEMPORAL|NATIVE-GATEWAY-CONTRACT|20261018|SLICE2|R2|A1",
+        "max_corrections": 0,
+        "result_timeout_ms": 60000,
+        "executor_worker_id": "CODEX_ENGINEERING_COMMAND",
+        "qa_contract_version": "1.1"
+      },
+      "state": "WAIT_QA",
+      "qa_state": "PENDING",
+      "attempt": 1,
+      "lease_attempt": 1,
+      "executor_worker_id": "CODEX_ENGINEERING_COMMAND",
+      "reviewer_id": null,
+      "lease_token": "[REDACTED_FENCE_TOKEN]",
+      "operation_id": "41be194b-228c-4b28-9472-9e9203f69728",
+      "ack": {
+        "attempt": 1,
+        "task_id": "AGY-TEMPORAL-NATIVE-GATEWAY-CONTRACT-SLICE2-R2",
+        "operation_id": "41be194b-228c-4b28-9472-9e9203f69728",
+        "idempotency_key": "AGY|TEMPORAL|NATIVE-GATEWAY-CONTRACT|20261018|SLICE2|R2|A1",
+        "executor_worker_id": "CODEX_ENGINEERING_COMMAND"
+      },
+      "result": {
+        "output": {
+          "files": [
+            {
+              "path": "src/temporal/workflow.ts",
+              "sha256": "8298f0c7bf1cce324489d77633e4b308e2ed6e8de5011f979040b7a3c23ba432"
+            },
+            {
+              "path": "src/temporal/bridge.ts",
+              "sha256": "1c3473d1ba4f76c047bb43a230e7fadeb42cdacb9a0b0278412e7215e9785d18"
+            },
+            {
+              "path": "src/temporal/gateway.ts",
+              "sha256": "f791f0c096956114fa48c95c940335c7dd3cc6b7ae9753fd4d041c5db3e0aecd"
+            },
+            {
+              "path": "src/temporal/result-events.ts",
+              "sha256": "2236b55536aa6b499074bc332b8d78b85c02846715cb38a29b192ee985ebb847"
+            },
+            {
+              "path": "src/temporal/native-command.ts",
+              "sha256": "b7bce56b6fb3c6047d72bbfdeb78892693228abaf49670554d346289e62fc2ea"
+            }
+          ],
+          "route": "codex-app-server/command/exec",
+          "command": "verify_gateway_contract",
+          "exit_code": 0,
+          "timestamp": "2026-10-18T09:32:10.789Z",
+          "typecheck": "PASS",
+          "diagnostics": "",
+          "artifact_ref": "C:\\Users\\tuanv\\.codex\\.chatgpt-projects\\g-p-6acdfb8cd0ac8191bef589d1681f88bc\\work\\temporal-integration\\runtime\\runtime-evidence\\native\\41be194b-228c-4b28-9472-9e9203f69728\\result.json",
+          "operation_id": "41be194b-228c-4b28-9472-9e9203f69728",
+          "evidence_class": "NATIVE_CODEX_COMMAND_NO_MODEL",
+          "artifact_sha256": "56a914b4b52cae6d9b608381a6f54071f6d27fa475486bfb62174f1731e23eb7",
+          "gateway_actions": [
+            "bootstrap",
+            "current_state",
+            "dispatch",
+            "task_status",
+            "get_run",
+            "active_missions",
+            "reconcile",
+            "submit_qa",
+            "callback_status"
+          ],
+          "executor_worker_id": "CODEX_ENGINEERING_COMMAND"
+        },
+        "attempt": 1,
+        "operation_id": "41be194b-228c-4b28-9472-9e9203f69728",
+        "evidence_refs": [
+          "postgres-native://agy-shadow-968fc96b91ab9c3cdb7495303a7f7d9a148e9428c0cff417b90c83bbbc32acba/1/41be194b-228c-4b28-9472-9e9203f69728",
+          "C:\\Users\\tuanv\\.codex\\.chatgpt-projects\\g-p-6acdfb8cd0ac8191bef589d1681f88bc\\work\\temporal-integration\\runtime\\runtime-evidence\\native\\41be194b-228c-4b28-9472-9e9203f69728\\result.json#sha256=56a914b4b52cae6d9b608381a6f54071f6d27fa475486bfb62174f1731e23eb7"
+        ]
+      },
+      "qa": null,
+      "created_at": "2026-10-18T09:32:04.661Z",
+      "updated_at": "2026-10-18T09:32:10.967Z"
+    },
+    "temporal": {
+      "workflow_id": "agy-shadow-968fc96b91ab9c3cdb7495303a7f7d9a148e9428c0cff417b90c83bbbc32acba",
+      "run_id": "01a14e5a-a0ba-7745-992d-4fff8adbcccb",
+      "status": "RUNNING",
+      "progress": {
+        "state": "WAIT_QA",
+        "qa_state": "PENDING",
+        "attempt": 1,
+        "operation_id": "41be194b-228c-4b28-9472-9e9203f69728",
+        "evidence_refs": [
+          "postgres-native://agy-shadow-968fc96b91ab9c3cdb7495303a7f7d9a148e9428c0cff417b90c83bbbc32acba/1/41be194b-228c-4b28-9472-9e9203f69728",
+          "C:\\Users\\tuanv\\.codex\\.chatgpt-projects\\g-p-6acdfb8cd0ac8191bef589d1681f88bc\\work\\temporal-integration\\runtime\\runtime-evidence\\native\\41be194b-228c-4b28-9472-9e9203f69728\\result.json#sha256=56a914b4b52cae6d9b608381a6f54071f6d27fa475486bfb62174f1731e23eb7"
+        ]
+      }
+    },
+    "authority": "postgres=domain; temporal=progression",
+    "native_chat_ingestion": "UNVERIFIED"
+  },
+  "native_operation": {
+    "tenant_id": "gl",
+    "workspace_id": "legacy-workspace",
+    "project_id": "GL_AUTOMATION",
+    "workflow_id": "agy-shadow-968fc96b91ab9c3cdb7495303a7f7d9a148e9428c0cff417b90c83bbbc32acba",
+    "attempt": 1,
+    "operation_id": "41be194b-228c-4b28-9472-9e9203f69728",
+    "request_id": "command-41be194b-228c-4b28-9472-9e9203f69728",
+    "state": "COMPLETE",
+    "ack": {
+      "pid": 21672,
+      "kind": "ACK",
+      "route": "codex-app-server/command/exec",
+      "attempt": 1,
+      "task_id": "AGY-TEMPORAL-NATIVE-GATEWAY-CONTRACT-SLICE2-R2",
+      "timestamp": "2026-10-18T09:32:06.999Z",
+      "operation_id": "41be194b-228c-4b28-9472-9e9203f69728",
+      "idempotency_key": "AGY|TEMPORAL|NATIVE-GATEWAY-CONTRACT|20261018|SLICE2|R2|A1",
+      "executor_worker_id": "CODEX_ENGINEERING_COMMAND"
+    },
+    "checkpoint": {
+      "pid": 21672,
+      "kind": "CHECKPOINT",
+      "phase": "TYPECHECK_AND_SOURCE_MANIFEST",
+      "timestamp": "2026-10-18T09:32:07.000Z",
+      "operation_id": "41be194b-228c-4b28-9472-9e9203f69728"
+    },
+    "result": {
+      "files": [
+        {
+          "path": "src/temporal/workflow.ts",
+          "sha256": "8298f0c7bf1cce324489d77633e4b308e2ed6e8de5011f979040b7a3c23ba432"
+        },
+        {
+          "path": "src/temporal/bridge.ts",
+          "sha256": "1c3473d1ba4f76c047bb43a230e7fadeb42cdacb9a0b0278412e7215e9785d18"
+        },
+        {
+          "path": "src/temporal/gateway.ts",
+          "sha256": "f791f0c096956114fa48c95c940335c7dd3cc6b7ae9753fd4d041c5db3e0aecd"
+        },
+        {
+          "path": "src/temporal/result-events.ts",
+          "sha256": "2236b55536aa6b499074bc332b8d78b85c02846715cb38a29b192ee985ebb847"
+        },
+        {
+          "path": "src/temporal/native-command.ts",
+          "sha256": "b7bce56b6fb3c6047d72bbfdeb78892693228abaf49670554d346289e62fc2ea"
+        }
+      ],
+      "route": "codex-app-server/command/exec",
+      "command": "verify_gateway_contract",
+      "exit_code": 0,
+      "timestamp": "2026-10-18T09:32:10.789Z",
+      "typecheck": "PASS",
+      "diagnostics": "",
+      "artifact_ref": "C:\\Users\\tuanv\\.codex\\.chatgpt-projects\\g-p-6acdfb8cd0ac8191bef589d1681f88bc\\work\\temporal-integration\\runtime\\runtime-evidence\\native\\41be194b-228c-4b28-9472-9e9203f69728\\result.json",
+      "operation_id": "41be194b-228c-4b28-9472-9e9203f69728",
+      "evidence_class": "NATIVE_CODEX_COMMAND_NO_MODEL",
+      "artifact_sha256": "56a914b4b52cae6d9b608381a6f54071f6d27fa475486bfb62174f1731e23eb7",
+      "gateway_actions": [
+        "bootstrap",
+        "current_state",
+        "dispatch",
+        "task_status",
+        "get_run",
+        "active_missions",
+        "reconcile",
+        "submit_qa",
+        "callback_status"
+      ],
+      "executor_worker_id": "CODEX_ENGINEERING_COMMAND"
+    },
+    "error": null,
+    "created_at": "2026-10-18T09:32:04.751Z",
+    "updated_at": "2026-10-18T09:32:10.891Z"
+  },
+  "actual_chat_surface": false,
+  "native_chat_ingestion": "UNVERIFIED",
+  "production": false
+}

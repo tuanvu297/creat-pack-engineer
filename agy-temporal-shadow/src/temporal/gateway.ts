@@ -8,7 +8,7 @@ export class TemporalGateway {
   authorize(p,m,['submit_qa'].includes(action)?'qa':['dispatch','reconcile','stop'].includes(action)?'write':'read');
   if(this.mode==='LEGACY')return {routing:'LEGACY',temporal_enabled:false,next:'existing ProjectService /jobs API'};
   validateMission(m);
-  if(['bootstrap','current_state'].includes(action))return {project:await this.bridge.project(m),authority:{temporal:'workflow progression/history',postgres:'AGY operational/domain ledger and evidence references'},chat_surface:'UNVERIFIED',production:false};
+  if(['bootstrap','current_state'].includes(action))return {project:await this.bridge.project(m),missions:(await this.bridge.pool(m,p.subject).query('SELECT mission_id,task_key,state,qa_state,workflow_id,run_id,updated_at FROM agy_temporal_missions WHERE mission_id=$1 ORDER BY created_at',[m.mission_id])).rows,authority:{temporal:'workflow progression/history',postgres:'AGY operational/domain ledger and evidence references'},chat_surface:'UNVERIFIED',production:false};
   if(action==='dispatch'){
    const r=await this.bridge.reserve(m);
    try{
@@ -23,6 +23,7 @@ export class TemporalGateway {
   if(!row)throw new Error('MISSION_NOT_FOUND');
   // A status request cannot substitute a different contract under an existing key.
   if(stable(m)!==stable(row.contract))throw new Error('IDEMPOTENCY_CONFLICT');
+  if(action==='callback_status')return {workflow_id:id,run_id:row.run_id,receipts:(await pool.query("SELECT payload,created_at FROM agy_temporal_receipts WHERE workflow_id=$1 AND kind='CALLBACK' ORDER BY created_at",[id])).rows,native_chat_ingestion:'UNVERIFIED',authority:'POSTGRES_CANONICAL_STORE'};
   const handle=this.client.workflow.getHandle(id);
   if(['task_status','get_run'].includes(action)){
    const d=await handle.describe();let progress:Snapshot|undefined;

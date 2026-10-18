@@ -17,6 +17,7 @@ export interface Activities {
   record_executor_ack(m:Mission,b:Binding,r:WorkerReceipt):Promise<void>;
   heartbeat_checkpoint(m:Mission,b:Binding):Promise<Binding>;
   submit_result_evidence(m:Mission,b:Binding):Promise<{state:'RUNNING'|'RESULT'|'UNCERTAIN';evidence_refs?:string[]}>;
+  wait_result_event(m:Mission,b:Binding):Promise<{binding:Binding;result:{state:'RUNNING'|'RESULT'|'UNCERTAIN';evidence_refs?:string[]}}>;
   reconcile_uncertain_operation(m:Mission,b:Binding):Promise<{state:'ACKED'|'BLOCKED';receipt?:WorkerReceipt}>;
   submit_qa_verdict(m:Mission,b:Binding,q:QaVerdict):Promise<{state:'COMPLETE'|'CORRECT'|'BLOCKED'}>;
   write_callback_receipt(m:Mission,b:Binding,state:string,reason?:string):Promise<void>;

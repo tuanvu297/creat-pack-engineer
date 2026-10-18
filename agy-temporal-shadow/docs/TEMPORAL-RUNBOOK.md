@@ -1,5 +1,7 @@
 # Local/staging run and rollback
 
+For slice 2, read [TEMPORAL-STAGING-SLICE2.md](TEMPORAL-STAGING-SLICE2.md) first. Apply additive migration 010 once after 009 in approved local staging, grant scoped runtime SELECT/INSERT/UPDATE for `agy_temporal_native_operations`, and retain all old tables/history. No remote host is enabled by this version. `callback_status` is now a scoped read action; bootstrap/current_state include matching mission rows. Native Codex command payloads are restricted to this mission and fixed source/gateway verification commands, with no automatic corrections. Windows uses buffered `command/exec` without custom output caps or streaming. No thread/turn/inference request is sent. Existing uncertain operations must be reconciled without launching a command again.
+
 Use the dedicated staging database, never a production URL. Runtime role must be NOSUPERUSER/NOBYPASSRLS. Keep auth out of source/Drive. No automated migration application to an existing environment is included.
 
 1. Install dependencies from `pnpm-lock.yaml` (`pnpm install --frozen-lockfile`), then `pnpm build`. Only esbuild and protobufjs install scripts are allowlisted by pnpm workspace configuration.

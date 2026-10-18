@@ -71,7 +71,7 @@ test('Temporal shadow: actual SDK/server/PostgreSQL durability and gateway contr
    const after=await row(m);assert.equal(after.run_id,before.run_id);assert.equal(after.operation_id,before.operation_id);assert.equal(after.task_id,before.task_id);assert.equal(await count(m),1);
    assert.notEqual(after.lease_token,before.lease_token);assert.equal(after.lease_attempt,before.lease_attempt+1);assert.equal(after.attempt,before.attempt);
    assert.equal((await project.query('SELECT status FROM agy_tasks WHERE task_id=$1',[after.task_id])).rows[0].status,'PASS');
-   const callback=(await project.query("SELECT payload FROM agy_temporal_receipts WHERE workflow_id=$1 AND kind='CALLBACK'",[workflowId(m)])).rows[0].payload;
+   const callback=(await project.query("SELECT payload FROM agy_temporal_receipts WHERE workflow_id=$1 AND kind='CALLBACK' AND payload->>'state'='COMPLETE'",[workflowId(m)])).rows[0].payload;
    assert.equal(callback.state,'COMPLETE');assert.equal(callback.native_chat_ingestion,'UNVERIFIED');checks.A='PASS';checks.D='PASS';checks.H='PASS';
   });
   await t.test('E executor unavailable never falls back to Work; ACK/evidence missing blocks QA',async()=>{

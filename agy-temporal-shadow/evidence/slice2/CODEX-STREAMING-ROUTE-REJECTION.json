@@ -1,0 +1,28 @@
+{
+  "result": {
+    "state": "BLOCKED_ROUTE",
+    "response": {
+      "code": -32600,
+      "message": "streaming command/exec is not supported with windows sandbox"
+    }
+  },
+  "events": [
+    {
+      "id": 1,
+      "result": {
+        "userAgent": "Codex Desktop/0.163.0-alpha.10.2 (Windows 10.0.19045; x86_64) dumb (agy_temporal_route_probe; 0.2.0)",
+        "codexHome": "C:\\Users\\tuanv\\.codex",
+        "platformFamily": "windows",
+        "platformOs": "windows"
+      }
+    },
+    {
+      "error": {
+        "code": -32600,
+        "message": "streaming command/exec is not supported with windows sandbox"
+      },
+      "id": 2
+    }
+  ],
+  "stderr": ""
+}

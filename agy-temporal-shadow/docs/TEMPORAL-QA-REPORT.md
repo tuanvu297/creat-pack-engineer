@@ -1,5 +1,7 @@
 # AGY Temporal integration — Codex QA1 report
 
+Superseded for current mission status by [staging slice 2 report](TEMPORAL-STAGING-SLICE2.md), checkpoint CP-AGY-TEMPORAL-STAGING-20261018-02. Historical findings and counts below retain their original scope.
+
 Mission: AGY-TEMPORAL-20261018. Date: 2026-10-18, Asia/Saigon. Executor/author: CODEX-ENGINEERING. Status: **LOCAL_SHADOW_IMPLEMENTED; INTEGRATED_STAGING_UNVERIFIED**. Originating controller/QA: conversation `6acdf9e5-0718-83ec-a843-0646519e307b` (“Thiết lập quy trình đóng gói”). No production PASS or cutover is claimed.
 
 ## Outcome and pass ladder

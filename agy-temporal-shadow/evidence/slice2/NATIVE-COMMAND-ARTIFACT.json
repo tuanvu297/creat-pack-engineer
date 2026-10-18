@@ -1,0 +1,44 @@
+{
+  "operation_id": "41be194b-228c-4b28-9472-9e9203f69728",
+  "command": "verify_gateway_contract",
+  "executor_worker_id": "CODEX_ENGINEERING_COMMAND",
+  "route": "codex-app-server/command/exec",
+  "evidence_class": "NATIVE_CODEX_COMMAND_NO_MODEL",
+  "exit_code": 0,
+  "typecheck": "PASS",
+  "diagnostics": "",
+  "files": [
+    {
+      "path": "src/temporal/workflow.ts",
+      "sha256": "8298f0c7bf1cce324489d77633e4b308e2ed6e8de5011f979040b7a3c23ba432"
+    },
+    {
+      "path": "src/temporal/bridge.ts",
+      "sha256": "1c3473d1ba4f76c047bb43a230e7fadeb42cdacb9a0b0278412e7215e9785d18"
+    },
+    {
+      "path": "src/temporal/gateway.ts",
+      "sha256": "f791f0c096956114fa48c95c940335c7dd3cc6b7ae9753fd4d041c5db3e0aecd"
+    },
+    {
+      "path": "src/temporal/result-events.ts",
+      "sha256": "2236b55536aa6b499074bc332b8d78b85c02846715cb38a29b192ee985ebb847"
+    },
+    {
+      "path": "src/temporal/native-command.ts",
+      "sha256": "b7bce56b6fb3c6047d72bbfdeb78892693228abaf49670554d346289e62fc2ea"
+    }
+  ],
+  "gateway_actions": [
+    "bootstrap",
+    "current_state",
+    "dispatch",
+    "task_status",
+    "get_run",
+    "active_missions",
+    "reconcile",
+    "submit_qa",
+    "callback_status"
+  ],
+  "timestamp": "2026-10-18T09:32:10.789Z"
+}

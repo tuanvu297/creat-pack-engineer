@@ -1,0 +1,30 @@
+{
+  "checks": {
+    "EVENT_DRIVEN_PASS": {
+      "status": "PASS_LOCAL",
+      "activity_schedule": [
+        "load_project_state",
+        "dispatch_worker",
+        "record_executor_ack",
+        "wait_result_event"
+      ],
+      "timers": [
+        {
+          "seconds": "60"
+        },
+        {
+          "seconds": "10"
+        }
+      ],
+      "worker_restart": true,
+      "same_operation_count": 1
+    },
+    "NATIVE_EXECUTOR_ACK_PASS": "PASS_NATIVE_CODEX_COMMAND_NO_MODEL",
+    "CALLBACK_RECEIPT_PASS": "PASS_LOCAL_POSTGRES_SHARED_STORE",
+    "LOCAL_PROCESS_RESTART_PASS": "PASS_SAME_RUN_ONE_NATIVE_OPERATION",
+    "SELF_QA_REJECTION": "PASS"
+  },
+  "production": false,
+  "qa": "PRODUCER_QA1_ONLY",
+  "native_chat_ingestion": "UNVERIFIED"
+}
