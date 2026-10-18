@@ -1,0 +1,13 @@
+{
+  "callback_id": "MCK-FINAL-20261014-A2",
+  "task_id": "AGY-MCK-PILOT-20261014",
+  "target": "6acb1ce3-e37c-83ec-9eb7-f795fd5243c1",
+  "target_title": "Thảo luận worker extension",
+  "delivery_status": "DELIVERED_READBACK_VERIFIED",
+  "native_message_turn_id": "61adef74-0872-4295-a5d0-92590630195e",
+  "payload_exact_match": true,
+  "observed_at": "2026-10-14 08:15:16 UTC",
+  "separate_AGY_acceptance": "UNVERIFIED_AWAITING_REVIEW",
+  "global_INTEGRATED_PASS": "UNVERIFIED",
+  "scope": "Actual received callback only; no self-issued reviewer acceptance"
+}

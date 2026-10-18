@@ -1,0 +1,16 @@
+{
+  "items": [
+    "TESTS.txt",
+    "TEST-RESULT.json",
+    "SECRET-SCAN.json",
+    "QA-REPORT.md"
+  ],
+  "external_pilot_root": "D:/Codex/manus-connection-kit-pilot; private state/grants deliberately excluded",
+  "source_derived_from": "Owner-authorized existing AGY Manus API contracts; no live credentials copied",
+  "observed_provider_docs": [
+    "https://open.manus.im/docs/v2/authentication",
+    "https://open.manus.im/docs/v2/task-lifecycle"
+  ],
+  "callback_target": "6acb1ce3-e37c-83ec-9eb7-f795fd5243c1",
+  "callback_delivery": "UNVERIFIED"
+}

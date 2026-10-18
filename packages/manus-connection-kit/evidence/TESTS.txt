@@ -1,0 +1,40 @@
+test_acceptance_missing_reviewer_denied (test_kit.KitTests.test_acceptance_missing_reviewer_denied) ... ok
+test_ack_has_required_binding (test_kit.KitTests.test_ack_has_required_binding) ... ok
+test_ack_needs_actual_receipt (test_kit.KitTests.test_ack_needs_actual_receipt) ... ok
+test_background_jobs_not_terminal (test_kit.KitTests.test_background_jobs_not_terminal) ... ok
+test_before_ack_plan_denied (test_kit.KitTests.test_before_ack_plan_denied) ... ok
+test_blocked_closure_without_full_pipeline (test_kit.KitTests.test_blocked_closure_without_full_pipeline) ... ok
+test_callback_outbox_is_not_delivery (test_kit.KitTests.test_callback_outbox_is_not_delivery) ... ok
+test_checkpoint_order (test_kit.KitTests.test_checkpoint_order) ... ok
+test_create_once (test_kit.KitTests.test_create_once) ... ok
+test_create_payload_conflict (test_kit.KitTests.test_create_payload_conflict) ... ok
+test_create_persistence_across_restart (test_kit.KitTests.test_create_persistence_across_restart) ... ok
+test_credit_bool_denied (test_kit.KitTests.test_credit_bool_denied) ... ok
+test_duplicate_json (test_kit.KitTests.test_duplicate_json) ... ok
+test_expired_read_reconciliation (test_kit.KitTests.test_expired_read_reconciliation) ... ok
+test_expiry_before_side_effect (test_kit.KitTests.test_expiry_before_side_effect) ... ok
+test_foreign_signature_denied (test_kit.KitTests.test_foreign_signature_denied) ... ok
+test_fresh_heartbeat_restores_progress (test_kit.KitTests.test_fresh_heartbeat_restores_progress) ... ok
+test_heartbeat_stale (test_kit.KitTests.test_heartbeat_stale) ... ok
+test_key_redaction (test_kit.KitTests.test_key_redaction) ... ok
+test_malformed_pagination_denied (test_kit.KitTests.test_malformed_pagination_denied) ... ok
+test_mcp_no_authority_tool (test_kit.KitTests.test_mcp_no_authority_tool) ... ok
+test_missing_auth (test_kit.KitTests.test_missing_auth) ... ok
+test_missing_pagination_denied (test_kit.KitTests.test_missing_pagination_denied) ... ok
+test_no_final_pass_without_delivery_and_acceptance (test_kit.KitTests.test_no_final_pass_without_delivery_and_acceptance) ... ok
+test_nonfinite_json (test_kit.KitTests.test_nonfinite_json) ... ok
+test_old_reply_not_terminal (test_kit.KitTests.test_old_reply_not_terminal) ... ok
+test_pagination_incomplete_not_terminal (test_kit.KitTests.test_pagination_incomplete_not_terminal) ... ok
+test_read_does_not_create (test_kit.KitTests.test_read_does_not_create) ... ok
+test_resume_busy_denied (test_kit.KitTests.test_resume_busy_denied) ... ok
+test_resume_same_task (test_kit.KitTests.test_resume_same_task) ... ok
+test_serialize_nonfinite (test_kit.KitTests.test_serialize_nonfinite) ... ok
+test_stdio_fresh_process_no_key (test_kit.KitTests.test_stdio_fresh_process_no_key) ... ok
+test_stop_once (test_kit.KitTests.test_stop_once) ... ok
+test_terminal_requires_explicit_pagination_false (test_kit.KitTests.test_terminal_requires_explicit_pagination_false) ... ok
+test_unknown_create_not_retried (test_kit.KitTests.test_unknown_create_not_retried) ... ok
+
+----------------------------------------------------------------------
+Ran 35 tests in 0.869s
+
+OK

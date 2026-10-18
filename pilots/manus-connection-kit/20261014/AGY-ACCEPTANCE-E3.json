@@ -1,0 +1,21 @@
+{
+  "task_id": "AGY-MCK-PILOT-20261014",
+  "callback_id": "MCK-FINAL-20261014-A2",
+  "reviewer": "AGY control plane in Thảo luận worker extension",
+  "reviewer_target_id": "6acb1ce3-e37c-83ec-9eb7-f795fd5243c1",
+  "reviewer_message_id": "c2b8441d-3ed5-417b-b903-a4e773e1b067",
+  "turn_id": "61adef74-0872-4295-a5d0-92590630195e",
+  "artifact_version": "0.1.1-A2",
+  "archive_sha256": "98d2149ce00714319d4f770afe09ca411c8c8ca58f959467cef705f503334879",
+  "status": "PASS_SCOPED",
+  "observed_at": "2026-10-14 08:18:23 UTC",
+  "scope": "Owner-triggered Windows pilot; API/MCP one real Manus task, independent A2 QA, callback delivery and distinct receiving-system AGY acceptance",
+  "not_accepted": [
+    "Autonomous AGY→Work activation",
+    "Production/commercial qualification",
+    "Linux/macOS"
+  ],
+  "issue1_reported_disposition": "closed_completed; verify directly",
+  "issue2": "OPEN_PARTIAL",
+  "evidence_basis": "Readback of distinct AGY agentMessage, not producer self-acceptance; extracted structured disposition only, no raw transcript export"
+}
