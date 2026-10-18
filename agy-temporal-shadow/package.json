@@ -1,0 +1,32 @@
+{
+  "name": "agy-worker-engine-v1",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts",
+    "worker:tick": "tsx src/platform/worker.ts",
+    "worker:daemon": "tsx src/platform/daemon.ts",
+    "test": "tsx --test test/*.test.ts",
+    "test:postgres": "tsx --test test/*postgres.integration.test.ts",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc",
+    "temporal:worker": "node dist/src/temporal/worker.js",
+    "temporal:gateway": "node dist/src/temporal/server.js",
+    "test:temporal": "tsx --test test/temporal-shadow.integration.test.ts"
+  },
+  "dependencies": {
+    "@temporalio/activity": "1.24.0",
+    "@temporalio/client": "1.24.0",
+    "@temporalio/worker": "1.24.0",
+    "@temporalio/workflow": "1.24.0",
+    "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.7.2",
+    "@types/pg": "^8.15.5",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}

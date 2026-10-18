@@ -1,0 +1,152 @@
+{
+  "observed_at": "2026-10-18T09:38:44.464Z",
+  "action": "READ_ONLY_NO_RESUBMISSION",
+  "operations": [
+    {
+      "workflow_id": "agy-shadow-57ab930d4ffe6afe0087372c9b35a4ab63508aa77b978ad130467cbde7cb321f",
+      "attempt": 1,
+      "operation_id": "1197b204-16ba-4660-9dff-233b1eefe821",
+      "request_id": "command-1197b204-16ba-4660-9dff-233b1eefe821",
+      "state": "UNCERTAIN",
+      "ack": null,
+      "checkpoint": null,
+      "result": null,
+      "error": {
+        "stage": "COMMAND_OUTCOME_UNCERTAIN",
+        "stderr": ""
+      },
+      "created_at": "2026-10-18T09:27:23.402Z",
+      "updated_at": "2026-10-18T09:27:23.637Z"
+    },
+    {
+      "workflow_id": "agy-shadow-1a6217d9b5528ce9b5cf80ac8057b83fb63641ed7fb833b86fd68ab20e761010",
+      "attempt": 1,
+      "operation_id": "9009531b-1daf-4d41-bbb0-4018c44ac0c0",
+      "request_id": "command-9009531b-1daf-4d41-bbb0-4018c44ac0c0",
+      "state": "BLOCKED_ROUTE",
+      "ack": null,
+      "checkpoint": null,
+      "result": null,
+      "error": {
+        "stage": "COMMAND_OUTCOME_UNCERTAIN",
+        "stderr": "",
+        "rpc_error": {
+          "code": -32600,
+          "message": "custom outputBytesCap is not supported with windows sandbox"
+        }
+      },
+      "created_at": "2026-10-18T09:30:26.243Z",
+      "updated_at": "2026-10-18T09:30:26.459Z"
+    },
+    {
+      "workflow_id": "agy-shadow-968fc96b91ab9c3cdb7495303a7f7d9a148e9428c0cff417b90c83bbbc32acba",
+      "attempt": 1,
+      "operation_id": "41be194b-228c-4b28-9472-9e9203f69728",
+      "request_id": "command-41be194b-228c-4b28-9472-9e9203f69728",
+      "state": "COMPLETE",
+      "ack": {
+        "pid": 21672,
+        "kind": "ACK",
+        "route": "codex-app-server/command/exec",
+        "attempt": 1,
+        "task_id": "AGY-TEMPORAL-NATIVE-GATEWAY-CONTRACT-SLICE2-R2",
+        "timestamp": "2026-10-18T09:32:06.999Z",
+        "operation_id": "41be194b-228c-4b28-9472-9e9203f69728",
+        "idempotency_key": "AGY|TEMPORAL|NATIVE-GATEWAY-CONTRACT|20261018|SLICE2|R2|A1",
+        "executor_worker_id": "CODEX_ENGINEERING_COMMAND"
+      },
+      "checkpoint": {
+        "pid": 21672,
+        "kind": "CHECKPOINT",
+        "phase": "TYPECHECK_AND_SOURCE_MANIFEST",
+        "timestamp": "2026-10-18T09:32:07.000Z",
+        "operation_id": "41be194b-228c-4b28-9472-9e9203f69728"
+      },
+      "result": {
+        "files": [
+          {
+            "path": "src/temporal/workflow.ts",
+            "sha256": "8298f0c7bf1cce324489d77633e4b308e2ed6e8de5011f979040b7a3c23ba432"
+          },
+          {
+            "path": "src/temporal/bridge.ts",
+            "sha256": "1c3473d1ba4f76c047bb43a230e7fadeb42cdacb9a0b0278412e7215e9785d18"
+          },
+          {
+            "path": "src/temporal/gateway.ts",
+            "sha256": "f791f0c096956114fa48c95c940335c7dd3cc6b7ae9753fd4d041c5db3e0aecd"
+          },
+          {
+            "path": "src/temporal/result-events.ts",
+            "sha256": "2236b55536aa6b499074bc332b8d78b85c02846715cb38a29b192ee985ebb847"
+          },
+          {
+            "path": "src/temporal/native-command.ts",
+            "sha256": "b7bce56b6fb3c6047d72bbfdeb78892693228abaf49670554d346289e62fc2ea"
+          }
+        ],
+        "route": "codex-app-server/command/exec",
+        "command": "verify_gateway_contract",
+        "exit_code": 0,
+        "timestamp": "2026-10-18T09:32:10.789Z",
+        "typecheck": "PASS",
+        "diagnostics": "",
+        "artifact_ref": "C:\\Users\\tuanv\\.codex\\.chatgpt-projects\\g-p-6acdfb8cd0ac8191bef589d1681f88bc\\work\\temporal-integration\\runtime\\runtime-evidence\\native\\41be194b-228c-4b28-9472-9e9203f69728\\result.json",
+        "operation_id": "41be194b-228c-4b28-9472-9e9203f69728",
+        "evidence_class": "NATIVE_CODEX_COMMAND_NO_MODEL",
+        "artifact_sha256": "56a914b4b52cae6d9b608381a6f54071f6d27fa475486bfb62174f1731e23eb7",
+        "gateway_actions": [
+          "bootstrap",
+          "current_state",
+          "dispatch",
+          "task_status",
+          "get_run",
+          "active_missions",
+          "reconcile",
+          "submit_qa",
+          "callback_status"
+        ],
+        "executor_worker_id": "CODEX_ENGINEERING_COMMAND"
+      },
+      "error": null,
+      "created_at": "2026-10-18T09:32:04.751Z",
+      "updated_at": "2026-10-18T09:32:10.891Z"
+    }
+  ],
+  "missions": [
+    {
+      "mission_id": "AGY-TEMPORAL-20261018",
+      "task_key": "AGY-TEMPORAL-NATIVE-COMMAND-SLICE2",
+      "idempotency_key": "AGY|TEMPORAL|NATIVE-COMMAND|20261018|SLICE2|A1",
+      "workflow_id": "agy-shadow-57ab930d4ffe6afe0087372c9b35a4ab63508aa77b978ad130467cbde7cb321f",
+      "run_id": "01a14e56-55b3-71bc-b625-42a13c2c8d81",
+      "state": "BLOCKED",
+      "qa_state": "QA_NOT_STARTED",
+      "operation_id": null
+    },
+    {
+      "mission_id": "AGY-TEMPORAL-20261018",
+      "task_key": "AGY-TEMPORAL-NATIVE-GATEWAY-CONTRACT-SLICE2",
+      "idempotency_key": "AGY|TEMPORAL|NATIVE-GATEWAY-CONTRACT|20261018|SLICE2|A1",
+      "workflow_id": "agy-shadow-1a6217d9b5528ce9b5cf80ac8057b83fb63641ed7fb833b86fd68ab20e761010",
+      "run_id": "01a14e59-1fed-7971-b850-bd0c23b2b093",
+      "state": "BLOCKED_ROUTE",
+      "qa_state": "QA_NOT_STARTED",
+      "operation_id": null
+    },
+    {
+      "mission_id": "AGY-TEMPORAL-20261018",
+      "task_key": "AGY-TEMPORAL-NATIVE-GATEWAY-CONTRACT-SLICE2-R2",
+      "idempotency_key": "AGY|TEMPORAL|NATIVE-GATEWAY-CONTRACT|20261018|SLICE2|R2|A1",
+      "workflow_id": "agy-shadow-968fc96b91ab9c3cdb7495303a7f7d9a148e9428c0cff417b90c83bbbc32acba",
+      "run_id": "01a14e5a-a0ba-7745-992d-4fff8adbcccb",
+      "state": "WAIT_QA",
+      "qa_state": "PENDING",
+      "operation_id": "41be194b-228c-4b28-9472-9e9203f69728"
+    }
+  ],
+  "old_streaming_rpc_response": "NOT_PRESERVED_BY_FIRST_ADAPTER_VERSION; do not infer accepted or rejected",
+  "old_uncertain_disposition": "RETAIN_UNCERTAIN_NO_RETRY",
+  "gateway_r1": "RPC_INVALID_REQUEST_BEFORE_COMMAND; corrected request has distinct task R2",
+  "native_chat_ingestion": "UNVERIFIED"
+}

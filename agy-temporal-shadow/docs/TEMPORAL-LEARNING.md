@@ -1,0 +1,11 @@
+# Local engineering lessons — candidate, not global promotion
+
+Mission AGY-TEMPORAL-20261018, 2026-10-18.
+
+1. **Canonical source freshness.** START HERE referenced TESTED-1, while its runtime folder held TESTED-2. Improvement: enumerate the referenced checkpoint folder and compare newer source evidence before importing. Basis: both immutable Drive package IDs/hashes and runtime status report recorded in architecture docs. Status OBSERVED; future instructions require freshness receipts, not a stale test count.
+2. **Release completeness is distinct from test claims.** Canonical TESTED-2 omitted a rollback script needed by its own regression. Improvement: run archived source baseline before coding, retain initial failure, recover original bytes and hash, then rerun. Evidence: 94/1 to 95/0 baseline logs. Status TESTED; packaging QA must include executable test dependencies.
+3. **Two durable systems need explicit fence recovery.** Temporal Activity redelivery can occur after PostgreSQL lease expiry even if a new worker is running. Improvement: reconcile the exact persisted ACK/operation/checkpoint under row locks, rotate the lease token and claim attempt, preserve submission attempt, never resubmit. Evidence: first crash failure, forced-expiry pass, same run/operation/one effect assertions. Status TESTED in synthetic local scope; native provider policy remains UNVERIFIED.
+4. **Signals are transport, not authorization.** Improvement: derive reviewer from existing auth principal, persist a QA request receipt and bind the Activity verdict to it. Evidence: self-QA and evidence checks; forged signal cannot satisfy the required receipt. Status controlled contract PASS; independent peer code review still pending.
+5. **Persisted service history needs its own test.** Worker replay alone does not prove service storage durability. Improvement: SIGKILL a separate Temporal server, restart its SQLite file, then complete the same run and compare the domain ledger. Evidence: temporal-server-restart.json. Status TESTED local only.
+
+These lessons change future test/instruction packets in this module. They do not update global AGY skills, routing eligibility, provider competency or canon without existing promotion gates.

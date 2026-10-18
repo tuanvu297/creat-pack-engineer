@@ -1,0 +1,30 @@
+{
+  "result": {
+    "state": "COMMAND_ROUTE_OBSERVED",
+    "response": {
+      "exitCode": 0,
+      "stdout": "v24.19.0\r\n",
+      "stderr": ""
+    }
+  },
+  "events": [
+    {
+      "id": 1,
+      "result": {
+        "userAgent": "Codex Desktop/0.163.0-alpha.10.2 (Windows 10.0.19045; x86_64) dumb (agy_temporal_route_probe; 0.2.0)",
+        "codexHome": "C:\\Users\\tuanv\\.codex",
+        "platformFamily": "windows",
+        "platformOs": "windows"
+      }
+    },
+    {
+      "id": 2,
+      "result": {
+        "exitCode": 0,
+        "stdout": "v24.19.0\r\n",
+        "stderr": ""
+      }
+    }
+  ],
+  "stderr": ""
+}

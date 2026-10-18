@@ -1,0 +1,24 @@
+{
+  "mission_id": "AGY-TEMPORAL-20261018",
+  "previous_checkpoint": "CP-AGY-TEMPORAL-SHADOW-20261018-01",
+  "observed_at": "2026-10-18T09:19:02.549Z",
+  "source_commit": "42ed424fd0ab77e541a808cb1a1c9c1381ac01a1",
+  "sources": [
+    {
+      "id": "10Ph_XvsgytAHsdECGDNkPY94l4EIuTat-4VWtbXrTsY",
+      "modified_time": "2026-10-18T08:54:22.165Z",
+      "read": true
+    },
+    {
+      "id": "1TFSkLh7ZfAxHq-mYSN-HG2Dp1XJaG_JWcItASe_4tME",
+      "modified_time": "2026-10-18T08:54:23.137Z",
+      "read": true
+    },
+    {
+      "id": "1B2Ihi0EfdC4GPQOxchYVYlVM6s04NQD0",
+      "modified_time": "2026-10-18T08:53:29.985Z",
+      "read": true
+    }
+  ],
+  "no_old_operation_replay": true
+}

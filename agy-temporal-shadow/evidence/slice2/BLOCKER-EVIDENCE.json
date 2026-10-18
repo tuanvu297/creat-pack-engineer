@@ -1,0 +1,46 @@
+{
+  "mission_id": "AGY-TEMPORAL-20261018",
+  "observed_at": "2026-10-18T09:39:14.755Z",
+  "hosted": {
+    "railway": {
+      "projects": []
+    },
+    "render_workspace": "tea-db4he93ncjis73d0m4lg",
+    "owner_confirmed": true,
+    "services": [
+      {
+        "type": "text",
+        "text": "null"
+      }
+    ],
+    "postgres": [
+      {
+        "type": "text",
+        "text": "No Postgres instances found"
+      }
+    ],
+    "status": "BLOCKED_NO_EXISTING_HOSTED_ATTACHMENT"
+  },
+  "gateway": {
+    "available_tools": [
+      "mcp__agy_browser__click",
+      "mcp__agy_browser__create_session",
+      "mcp__agy_browser__extract_text",
+      "mcp__agy_browser__health",
+      "mcp__agy_browser__navigate",
+      "mcp__agy_browser__observe",
+      "mcp__agy_browser__release_session",
+      "mcp__agy_browser__type",
+      "mcp__agy_manus__manus_available_credits",
+      "mcp__agy_manus__manus_task_create",
+      "mcp__agy_manus__manus_task_readback",
+      "mcp__agy_manus__manus_user_me"
+    ],
+    "universal_actions_exposed_in_originating_chat": "UNVERIFIED_NO_CALLABLE_BINDING_DISCOVERED",
+    "loopback_not_native_chat": true
+  },
+  "cross_entrypoint": "BLOCKED_NO_SUPPORTED_NATIVE_ENTRYPOINT_PAIR",
+  "independent_controller_qa": "PENDING",
+  "default_routing": "LEGACY",
+  "production": false
+}

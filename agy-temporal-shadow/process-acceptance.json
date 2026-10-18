@@ -1,0 +1,19 @@
+{
+  "observedAt": "2026-10-09T16:38:56.874Z",
+  "layer": "REAL_POSTGRESQL_AND_CHILD_DAEMON_CONTROLLED_HTTP_PROVIDER",
+  "clientDisconnectedContinuation": true,
+  "independentConcurrentExecution": true,
+  "blockedDependencyIsolation": true,
+  "transientRetryAndDifferentWorker": true,
+  "queryableStatus": true,
+  "staleHeartbeatTruthful": true,
+  "killedProcessRecovery": true,
+  "providerResubmissionsAfterRestart": 0,
+  "jobIdempotency": true,
+  "forcedRls": true,
+  "actualChatClosedTest": false,
+  "hostedDeploymentVerified": false,
+  "nativeProviderDispatchVerified": false,
+  "cooldownAcceleratedInTest": true,
+  "productionReady": false
+}
