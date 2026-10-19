@@ -1,0 +1,28 @@
+{
+  "MISSION": "AGY-TEMPORAL-20261018",
+  "PREVIOUS_CHECKPOINT": "CP-AGY-TEMPORAL-STAGING-20261018-02",
+  "NEW_CHECKPOINT": "CP-AGY-TEMPORAL-STAGING-20261019-03",
+  "R11_HARDENING_SOURCE": "PASS",
+  "SOURCE_ATTACHMENT": "PASS",
+  "PERSISTENT_STORAGE": "PASS",
+  "SINGLE_WRITER": "PASS",
+  "RAILWAY_CONFIG": "PASS",
+  "BACKEND": "PASS",
+  "HOSTED_RUNTIME": "PASS",
+  "AUTH_INGRESS": "PASS",
+  "CALLBACK_READBACK": "PASS",
+  "RESTART_REDEPLOY_RECOVERY": "PASS",
+  "HOSTED_R11_E2E": "PASS",
+  "CROSS_ENTRYPOINT": "PASS",
+  "INTEGRATED_STAGING": "PASS",
+  "NATIVE_CHAT_INGESTION": "UNVERIFIED",
+  "PRODUCTION_PASS": false,
+  "OWNER_ACTION_REQUIRED": "NONE",
+  "ARTIFACT_EVIDENCE_IDS": [
+    "https://drive.google.com/file/d/1V3powlEdGNZWF57ztTUWoJ0lc1H_79tt/view?usp=drivesdk",
+    "https://drive.google.com/file/d/1qyxae2xQnGkUgN0Idl0CmYWaRZ-pyoPC/view?usp=drivesdk",
+    "https://drive.google.com/file/d/1-NViZJELu_6XUouFWD5aAaRFij9X1rY5/view?usp=drivesdk",
+    "https://github.com/tuanvu297/creat-pack-engineer/commit/4352614d423b2455c4ff9a696abd6fc5f3ccde9d",
+    "https://github.com/tuanvu297/creat-pack-engineer/pull/12"
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "mission": "AGY-TEMPORAL-20261018",
+  "checkpoint_id": "CP-AGY-TEMPORAL-STAGING-20261019-03",
+  "previous_checkpoint": "CP-AGY-TEMPORAL-STAGING-20261018-02",
+  "supersedes_for_this_mission_only": true,
+  "created_at": "2026-10-19T19:55:40.448531+07:00",
+  "phase": "INTEGRATED_STAGING_PASS",
+  "gates": {
+    "R11_HARDENING_SOURCE": "PASS",
+    "SOURCE_ATTACHMENT": "PASS",
+    "PERSISTENT_STORAGE": "PASS",
+    "SINGLE_WRITER": "PASS",
+    "RAILWAY_CONFIG": "PASS",
+    "BACKEND": "PASS",
+    "HOSTED_RUNTIME": "PASS",
+    "AUTH_INGRESS": "PASS",
+    "CALLBACK_READBACK": "PASS",
+    "RESTART_REDEPLOY_RECOVERY": "PASS",
+    "HOSTED_R11_E2E": "PASS",
+    "CROSS_ENTRYPOINT": "PASS",
+    "INTEGRATED_STAGING": "PASS",
+    "NATIVE_CHAT_INGESTION": "UNVERIFIED"
+  },
+  "production_pass": false,
+  "owner_action_required": "NONE",
+  "scope": "Bounded hosted R11 fixed source-verification command, without model/provider inference, reaching RESULT_READY with QA PENDING and durable callback. Independent authenticated HTTP clients; native Chat/Work ingestion separate.",
+  "runtime_source_commit": "36516473f4e41578bb5ee11e33273ce66f9d173d",
+  "executed_source_commit": "32b17922b42b3356b8ba2f46c8e61356626a7244",
+  "evidence_commit": "4352614d423b2455c4ff9a696abd6fc5f3ccde9d",
+  "railway_deployment_id": "103317e9-f4d1-4180-b5d2-cf6050626db5",
+  "operation": {
+    "workflow_id": "agy-shadow-fb311b30859d1ec23f98a7eb4eb0a113c565f0c1ca531eae57d208b0b248b515",
+    "run_id": "01a1542f-16d6-7494-a9b4-3e3163836d75",
+    "operation_id": "70eea1b6-6e56-4c79-827f-c9e28a1054c3",
+    "task_key": "HOSTED-R11-20261019-11d1a7dfea0b4933aae183856aa6190b",
+    "task_id": "1d607870-f703-4135-8361-8395425b9dd5",
+    "job_id": "b42bcc8e-dd86-42a9-beee-79683b6fd726",
+    "state": "WAIT_QA",
+    "qa_state": "PENDING"
+  },
+  "journal_sha256": "1dcd0364115f10041703f78a24d3e6a6371cb27021a25708f03f700915a25e54",
+  "artifact_sha256": "6fc1794c98965af545d5696ffa809ec6f630a7451bc68f56296ece99a7c8865c",
+  "runtime_callback_sha256": "63f99e0be4c24db04bcee1f18f06f3c04d5a0bed8316f3c54a94d0b3df1ee92e",
+  "cloud_readback": {
+    "archive_sha256": "806068b4af56da6c282fdf3e4bf1fdb21516ed164c008d5135770f84c40e62a2",
+    "archive_files_verified": 48,
+    "report_sha256": "e2aa0dd5b5d1e5e3688c2a5885da162b844c07e311f86787db3f38bd01e1bb91",
+    "archive_id": "1qyxae2xQnGkUgN0Idl0CmYWaRZ-pyoPC",
+    "report_id": "1-NViZJELu_6XUouFWD5aAaRFij9X1rY5",
+    "readback": "EXACT_BYTES_AND_MANIFEST_VERIFIED",
+    "no_secrets_in_proof": true
+  },
+  "artifact_evidence_ids": [
+    "https://drive.google.com/file/d/1qyxae2xQnGkUgN0Idl0CmYWaRZ-pyoPC/view?usp=drivesdk",
+    "https://drive.google.com/file/d/1-NViZJELu_6XUouFWD5aAaRFij9X1rY5/view?usp=drivesdk",
+    "https://github.com/tuanvu297/creat-pack-engineer/commit/4352614d423b2455c4ff9a696abd6fc5f3ccde9d",
+    "https://github.com/tuanvu297/creat-pack-engineer/pull/12"
+  ],
+  "closure_preconditions": {
+    "github_evidence_pushed_and_tree_read_back": true,
+    "drive_archive_exact_hash_and_48_entries_verified": true,
+    "drive_report_exact_bytes_verified": true,
+    "canonical_postgres_result_and_callback_read_back": true,
+    "start_here_evidence_append_readback_verified": true,
+    "independent_peer_technical_acceptance": "PASS"
+  },
+  "validation": {
+    "focused_local_checks": {
+      "pass": 49,
+      "fail": 0,
+      "skip": 0,
+      "real_disposable_postgres": true
+    },
+    "hosted_deterministic_checks": 23,
+    "hosted_negative_probes": 15,
+    "full153": "Inherited prior PASS, not repeated"
+  },
+  "boundaries": {
+    "existing_gateway_deployment": "bbd63784-5f8a-4cfb-889f-458678cd5bb4",
+    "global_orchestration_default": "LEGACY",
+    "canonical_authority": "EXISTING_POSTGRES_D049",
+    "supabase": "SHADOW_STAGING_ONLY",
+    "production_cutover": false,
+    "work_executor_fallback_used": false,
+    "historical_accepted_or_uncertain_operations_replayed": false
+  },
+  "recovery_limits": "Actual container restart and source redeploy retain completed journal/result and same run/operation/callback. Real SIGKILL probe proves accepted uncertain effects and stale locks block until verified operator reconciliation; no automatic re-execution certified.",
+  "budget": {
+    "source": "Authenticated Railway dashboard workspace/usage, read-only UI observation in this thread",
+    "plan": "TRIAL",
+    "remaining_credit_display_usd": 4.99,
+    "credits_available_display_usd": 5.0,
+    "current_usage_rounded_usd": 0.02,
+    "project_current_cost_usd": 0.0162,
+    "current_bill_usd": 0.0,
+    "memory_usage_cost_usd": 0.0151,
+    "cpu_usage_cost_usd": 0.001,
+    "volume_usage_cost_usd": 0.0001,
+    "purchases_upgrades_topups": 0,
+    "limitations": "Provider displayed rounded/delayed usage, not a future cost guarantee. Existing authorized Trial credit only; no cash charge authorized."
+  }
+}
