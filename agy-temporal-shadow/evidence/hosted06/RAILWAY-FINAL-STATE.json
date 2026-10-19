@@ -1,0 +1,85 @@
+{
+  "project": {
+    "id": "45e66534-44ed-484e-bbf4-d63c311d6f27",
+    "name": "AGY Core Staging",
+    "workspaceName": "tuanvu297's Projects"
+  },
+  "environment": {
+    "id": "792d1b9e-73f5-434b-936f-f3b96d405253",
+    "name": "staging",
+    "unmergedChangesCount": null,
+    "stagedChanges": null
+  },
+  "services": [
+    {
+      "id": "27be7aa3-3794-4f51-87b8-def294570762",
+      "name": "agy-gateway",
+      "numReplicas": null,
+      "cronSchedule": null,
+      "volumes": [],
+      "latestDeployment": {
+        "id": "bbd63784-5f8a-4cfb-889f-458678cd5bb4",
+        "status": "SUCCESS",
+        "createdAt": "2026-10-18T12:39:03.607Z",
+        "url": null
+      }
+    },
+    {
+      "id": "9c9f2634-3a2c-4577-9db9-d472e397adbd",
+      "name": "agy-temporal-staging",
+      "numReplicas": null,
+      "cronSchedule": null,
+      "volumes": [
+        {
+          "id": "04e3f67a-7ca2-4150-8223-902b36af49e6",
+          "name": "agy-staging-journal",
+          "mountPath": "/data",
+          "sizeMB": 100,
+          "region": "us-west2"
+        }
+      ],
+      "latestDeployment": {
+        "id": "103317e9-f4d1-4180-b5d2-cf6050626db5",
+        "status": "SUCCESS",
+        "createdAt": "2026-10-19T12:47:16.461Z",
+        "url": null
+      }
+    },
+    {
+      "id": "28aa1ed2-f572-4580-97fd-404595501655",
+      "name": "agy-temporal-backend",
+      "numReplicas": null,
+      "cronSchedule": null,
+      "volumes": [],
+      "latestDeployment": {
+        "id": "008aac2f-6149-4f37-b411-796be5374b66",
+        "status": "SUCCESS",
+        "createdAt": "2026-10-19T11:13:55.206Z",
+        "url": null
+      }
+    },
+    {
+      "id": "f84bdcee-2a83-41df-953f-ed3eb72082d7",
+      "name": "Postgres",
+      "numReplicas": 1,
+      "cronSchedule": null,
+      "volumes": [
+        {
+          "id": "9aed104e-82aa-4c5f-aa41-36c5c1118781",
+          "name": "postgres-volume",
+          "mountPath": "/var/lib/postgresql/data",
+          "sizeMB": 500,
+          "region": "asia-southeast1-eqsg3a"
+        }
+      ],
+      "latestDeployment": {
+        "id": "71d29e17-5a0d-437f-90bf-ebb59a19e0b1",
+        "status": "SUCCESS",
+        "createdAt": "2026-10-19T06:51:54.157Z",
+        "url": null
+      }
+    }
+  ],
+  "buckets": [],
+  "pendingWork": []
+}
