@@ -29,6 +29,7 @@ async function fixture(t: any, options: Partial<WorkerAdapter> = {}) {
     check_status:async () => ({state:'SUCCEEDED'}),collect_result:async () => ({state:'SUCCEEDED',output:{controlled:true}}),
     cancel:async () => {throw new Error('MUST_NOT_CANCEL');},...options};
   const transport = new GatewayTransport(gateway.url,config.workerId,500);
+  await GatewayJournal.initialize(dir,{gateway:gateway.url,worker:config.workerId});
   let journal = await GatewayJournal.acquire(dir,{gateway:gateway.url,worker:config.workerId});
   let worker = new GatewayShadowWorker(transport,journal,adapter,config);
   t.after(async () => {await journal.close();await gateway.close();await rm(dir,{recursive:true,force:true});});
@@ -44,6 +45,7 @@ test('worker routing stays LEGACY by default; gateway requires explicit staging 
   assert.equal(workerTransport({}),'LEGACY'); assert.equal(gatewayConfig(env).leaseSeconds,120);
   for (const patch of [{AGY_WORKER_TRANSPORT:'TYPO'},{AGY_STAGE_ONLY:'false'},{AGY_STATE_MODE:'PRODUCTION'},
     {AGY_CANONICAL_AUTHORITY:'SUPABASE'},{DATABASE_URL:'controlled'},{SUPABASE_SERVICE_ROLE_KEY:'controlled'},
+    {DATABASE_URL:''},{SUPABASE_URL:''},{database_url:'controlled'},{supabase_url:''},
     {AGY_ORCHESTRATION_MODE:'TEMPORAL_SHADOW'},{AGY_RUNTIME_HEARTBEAT_MS:'NaN'},{AGY_GATEWAY_TIMEOUT_MS:'Infinity'},
     {AGY_GATEWAY_LEASE_SECONDS:'29'},{AGY_WORKER_ID:''},{AGY_GATEWAY_STATE_DIR:''}])
     assert.throws(() => gatewayConfig({...env,...patch}));
@@ -239,6 +241,8 @@ test('real worker entrypoint completes controlled HTTP flow with DATABASE_URL ab
   const childDir = await mkdtemp(join(tmpdir(),'agy-gateway-child-'));
   t.after(() => rm(childDir,{recursive:true,force:true}));
   const childEnv = Object.fromEntries(Object.entries(process.env).filter(([k]) => k !== 'DATABASE_URL' && !k.startsWith('SUPABASE_')));
+  await GatewayJournal.initialize(childDir,{gateway:f.gateway.url,worker:env.AGY_WORKER_ID,
+    endpoint:'http://127.0.0.1:' + (connector.address() as any).port,capabilities:['text']});
   const child = spawn(process.execPath,['--import','tsx','src/platform/worker.ts'],{cwd:process.cwd(),
     env:{...childEnv,...env,AGY_GATEWAY_URL:f.gateway.url,AGY_GATEWAY_STATE_DIR:childDir,
       AGY_R11_CONNECTOR_URL:'http://127.0.0.1:' + (connector.address() as any).port,AGY_R11_CAPABILITIES_JSON:'["text"]'},

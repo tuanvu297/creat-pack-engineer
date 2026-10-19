@@ -23,7 +23,7 @@ export function gatewayConfig(env = process.env) {
   if (workerTransport(env) !== 'GATEWAY_SHADOW' || env.AGY_STAGE_ONLY !== 'true' ||
       env.AGY_STATE_MODE !== 'SHADOW_STAGING' || env.AGY_CANONICAL_AUTHORITY !== 'EXISTING_POSTGRES_D049' ||
       (env.AGY_ORCHESTRATION_MODE ?? 'LEGACY') !== 'LEGACY') throw new Error('GATEWAY_STAGING_ONLY');
-  if (Object.entries(env).some(([k,v]) => v && (k === 'DATABASE_URL' || k.startsWith('SUPABASE_'))))
+  if (Object.keys(env).some(k => k.toUpperCase() === 'DATABASE_URL' || k.toUpperCase().startsWith('SUPABASE_')))
     throw new Error('WORKER_DATABASE_CREDENTIALS_DENIED');
   if (!/^[A-Za-z0-9_.:-]{1,128}$/.test(env.AGY_WORKER_ID ?? '')) throw new Error('WORKER_ID_REQUIRED');
   if (!env.AGY_GATEWAY_STATE_DIR) throw new Error('DURABLE_STATE_DIR_REQUIRED');

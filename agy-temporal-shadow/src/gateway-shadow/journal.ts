@@ -1,4 +1,4 @@
-import {mkdir, open, readFile, rename, unlink} from 'node:fs/promises';
+import {mkdir, open, readFile, readdir, rename, unlink} from 'node:fs/promises';
 import {isAbsolute, join} from 'node:path';
 import {createHash} from 'node:crypto';
 import {GatewayError} from './transport.js';
@@ -12,23 +12,44 @@ export function stable(value: any): string {
 export const digest = (value: any) => createHash('sha256').update(stable(value)).digest('hex');
 interface RecordEntry {hash: string; confirmed: boolean; response?: any}
 interface State {context: string; cycle: number; done: boolean; ops: Record<string,RecordEntry>}
+const object = (value: any): value is Record<string, any> => !!value && typeof value === 'object' && !Array.isArray(value);
+const hashString = (value: any) => typeof value === 'string' && /^[a-f0-9]{64}$/.test(value);
+function validState(value: any): value is State {
+  return object(value) && hashString(value.context) && Number.isSafeInteger(value.cycle) && value.cycle >= 1 &&
+    typeof value.done === 'boolean' && object(value.ops) && Object.values(value.ops).every(op =>
+      object(op) && hashString(op.hash) && typeof op.confirmed === 'boolean' &&
+      (!op.confirmed || Object.hasOwn(op, 'response')));
+}
 
 // One writer per durable directory. A stale crash lock requires operator verification/removal.
 export class GatewayJournal {
   private constructor(readonly dir: string, private state: State) {}
-  static async acquire(dir: string, context: any) {
+  // First-use provisioning is explicit and offline. A running worker must never mistake
+  // lost storage for a new worker, or erase old receipts by initializing over any files.
+  static async initialize(dir: string, context: any) {
     if (!isAbsolute(dir)) throw new GatewayError('DURABLE_STATE_DIR_ABSOLUTE_REQUIRED');
     await mkdir(dir, {recursive:true, mode:0o700});
     const lock = await open(join(dir,'worker.lock'), 'wx', 0o600).catch(() => {throw new GatewayError('JOURNAL_LOCKED');});
+    try {
+      await lock.writeFile(String(process.pid)); await lock.sync();
+      if ((await readdir(dir)).some(name => name !== 'worker.lock')) throw new GatewayError('JOURNAL_NOT_EMPTY');
+      await new GatewayJournal(dir,{context:digest(context),cycle:1,done:false,ops:{}}).save();
+    } finally { await lock.close(); await unlink(join(dir,'worker.lock')); }
+  }
+  static async acquire(dir: string, context: any) {
+    if (!isAbsolute(dir)) throw new GatewayError('DURABLE_STATE_DIR_ABSOLUTE_REQUIRED');
+    const lock = await open(join(dir,'worker.lock'), 'wx', 0o600).catch((e: any) => {
+      throw new GatewayError(e.code === 'ENOENT' ? 'JOURNAL_MISSING' : 'JOURNAL_LOCKED');
+    });
     await lock.writeFile(String(process.pid)); await lock.sync(); await lock.close();
     try {
       let state: State;
       try { state = JSON.parse(await readFile(join(dir,'current.json'),'utf8')); }
-      catch (e: any) { if (e.code !== 'ENOENT') throw new GatewayError('JOURNAL_INVALID');
-        state = {context:digest(context),cycle:1,done:false,ops:{}}; }
+      catch (e: any) { throw new GatewayError(e.code === 'ENOENT' ? 'JOURNAL_MISSING' : 'JOURNAL_INVALID'); }
+      if (!validState(state)) throw new GatewayError('JOURNAL_INVALID');
       if (state.context !== digest(context)) throw new GatewayError('JOURNAL_CONTEXT_MISMATCH');
-      if (!state.ops || !Number.isSafeInteger(state.cycle) || typeof state.done !== 'boolean') throw new GatewayError('JOURNAL_INVALID');
-      const journal = new GatewayJournal(dir,state); await journal.save(); return journal;
+      // Reading a valid journal does not rewrite it: preserve bytes before reconciliation.
+      return new GatewayJournal(dir,state);
     } catch (e) { await unlink(join(dir,'worker.lock')); throw e; }
   }
   private async save() {

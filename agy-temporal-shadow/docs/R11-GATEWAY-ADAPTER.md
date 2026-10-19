@@ -22,6 +22,20 @@ Install with `pnpm install --frozen-lockfile --ignore-scripts`, build with
 node dist/src/platform/daemon.js
 ```
 
+Before the **first** start on a newly provisioned empty journal directory, use the
+same staging env to initialize it offline:
+
+```text
+node dist/src/gateway-shadow/init-journal.js
+```
+
+Initialization makes no network requests and refuses any nonempty directory or
+existing writer lock. It is a provisioning command, not a restart/startup hook.
+The runtime never initializes missing storage: `JOURNAL_MISSING` blocks before
+health/register/claim, including when the entire directory is missing. Restore
+the original journal or reconcile the old operation; never initialize a fresh
+directory to bypass uncertain effects. Existing valid journals need no migration.
+
 For a single tick use `node dist/src/platform/worker.js`. The existing
 `pnpm worker:daemon` / `pnpm worker:tick` development scripts also select the same
 transport. Do not use `pnpm start` (that starts the legacy API server).
@@ -109,6 +123,10 @@ Lease loss or stop aborts connector work and prevents result/callback submission
 
 Any pending intent after an error/crash stops with `RECONCILIATION_REQUIRED` before
 further network activity. Do not delete that intent or retry by changing IDs.
+Malformed JSON and invalid journal structure/receipt entries fail with
+`JOURNAL_INVALID`, retaining the original bytes. Acquisition reads existing state
+without rewriting it. DB/Supabase environment names are rejected even when empty
+or differently cased; those variables must be absent.
 After a forced kill, `worker.lock` remains. An operator must first verify the old
 writer is stopped, retain receipts and reconcile uncertain effects; remove only
 that stale lock to resume a confirmed operation. There is no automatic stale-lock

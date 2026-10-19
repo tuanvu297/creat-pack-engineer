@@ -25,7 +25,7 @@ export class R11GatewayConnector extends HttpJsonAdapter {
   }
 }
 
-export async function runGatewayWorker(oneTick: boolean, env = process.env) {
+export function gatewayWorkerSettings(env = process.env) {
   const config = gatewayConfig(env);
   const endpoint = privateUrl(env.AGY_R11_CONNECTOR_URL);
   let capabilities: unknown;
@@ -33,14 +33,21 @@ export async function runGatewayWorker(oneTick: boolean, env = process.env) {
   catch {throw new GatewayError('R11_CAPABILITIES_REQUIRED');}
   if (!Array.isArray(capabilities) || !capabilities.length || capabilities.some(c => typeof c !== 'string' || !c.trim()))
     throw new GatewayError('R11_CAPABILITIES_REQUIRED');
+  return {config,endpoint,capabilities:capabilities as string[],
+    context:{gateway:config.url,worker:config.workerId,endpoint,capabilities}};
+}
+
+export async function runGatewayWorker(oneTick: boolean, env = process.env) {
+  const {config,endpoint,capabilities,context} = gatewayWorkerSettings(env);
   // Existing private R11 connector contract; no provider discovery or paid adapter construction.
   // No runtime profile asserting safe submission replay is supplied: ambiguous POSTs cannot retry.
   const adapter = new R11GatewayConnector(endpoint,capabilities,env.AGY_R11_CONNECTOR_TOKEN);
-  const journal = await GatewayJournal.acquire(config.stateDir,{gateway:config.url,worker:config.workerId,endpoint,capabilities});
+  let journal: GatewayJournal|undefined;
   const stop = new AbortController();
   const onStop = () => stop.abort();
   process.on('SIGTERM',onStop); process.on('SIGINT',onStop);
   try {
+    journal = await GatewayJournal.acquire(config.stateDir,context);
     const worker = new GatewayShadowWorker(new GatewayTransport(config.url,config.workerId,config.timeoutMs),journal,adapter,config);
     do {
       const outcome = await worker.tick(stop.signal);
@@ -54,6 +61,6 @@ export async function runGatewayWorker(oneTick: boolean, env = process.env) {
       code:e instanceof GatewayError ? e.code : 'GATEWAY_RUNTIME_FAILED',reconciliation_required:true}));
     process.exitCode = 1;
   } finally {
-    stop.abort(); process.off('SIGTERM',onStop); process.off('SIGINT',onStop); await journal.close();
+    stop.abort(); process.off('SIGTERM',onStop); process.off('SIGINT',onStop); await journal?.close();
   }
 }
