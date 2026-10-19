@@ -1,0 +1,268 @@
+{
+  "evidence_id": "EVID-AGY-HOSTED-20261019-03",
+  "mission_id": "AGY-TEMPORAL-20261018",
+  "observed_date": "2026-10-19",
+  "timezone": "Asia/Saigon",
+  "active_role": "AGY / Codex engineering executor",
+  "previous_checkpoint": "CP-AGY-TEMPORAL-STAGING-20261018-02",
+  "new_checkpoint": "BLOCKED",
+  "supersedes_checkpoint": false,
+  "state": "OWNER_REQUIRED_GITHUB_APP_AUTHORIZATION",
+  "production_pass": false,
+  "bootstrap": {
+    "start_here": {
+      "id": "10Ph_XvsgytAHsdECGDNkPY94l4EIuTat-4VWtbXrTsY",
+      "modified_at": "2026-10-18T09:48:01.398Z"
+    },
+    "decision_log": {
+      "id": "1TFSkLh7ZfAxHq-mYSN-HG2Dp1XJaG_JWcItASe_4tME",
+      "modified_at": "2026-10-18T09:48:05.571Z",
+      "authority": "D-049"
+    },
+    "checkpoint_id": "1GUAQ0TvGndoTyFlsXH3LPgG84Cqs_QAt",
+    "newer_checkpoint_found": false,
+    "origin_chat": "6acdf9e5-0718-83ec-a843-0646519e307b"
+  },
+  "source": {
+    "commit": "a8072d8aeb128f3f5e51672c860a5c4ff8c1c8dd",
+    "parent": "5f38a7ee0b7e0f9d358f368efbaa9f2d014006a0",
+    "tree": "cb3d4b81e0f033ce5e638add4bf570cbe1564cf1",
+    "branch": "codex/r11-recovery-hardening-20261019",
+    "pull_request": "https://github.com/tuanvu297/creat-pack-engineer/pull/11",
+    "exact_tree_reconstructed_locally": true,
+    "github_created_tree_matches": true,
+    "github_commit_and_pr_readback": true,
+    "changed_files": 8,
+    "pr9_head": "eb1fa7c0c862f67c043bf5c0c6339e44545a8db7",
+    "pr10_head": "5f38a7ee0b7e0f9d358f368efbaa9f2d014006a0",
+    "legacy_blobs_unchanged": {
+      "daemon": "edcf1dea34991192b483518820f8a2ff2e1b8746",
+      "worker": "f0d3e9757f46fc3abf8cf21593a7a9814da0ea93"
+    }
+  },
+  "local_acceptance": {
+    "provenance": "INHERITED_RETAINED_PACKET_FROM_PRIOR_LOCAL_EXECUTION; NOT_RERUN_THIS_TURN",
+    "full": {
+      "pass": 153,
+      "fail": 0,
+      "skip": 0
+    },
+    "focused": {
+      "pass": 46,
+      "fail": 0,
+      "skip": 0
+    },
+    "daemon_scenarios": 12,
+    "packet_sha256": "cc049c663af078516698e1782cfe5ed904531413471344205640f1b5f6bedf9f",
+    "drive": "https://drive.google.com/file/d/1IEH_GnHKp9x8sBgtT8pmgZpI7ghVRFN9/view?usp=drivesdk"
+  },
+  "railway": {
+    "project_id": "45e66534-44ed-484e-bbf4-d63c311d6f27",
+    "environment_id": "792d1b9e-73f5-434b-936f-f3b96d405253",
+    "service_id": "9c9f2634-3a2c-4577-9db9-d472e397adbd",
+    "staged_patch_id": "53b2dd5b-ecef-4a3a-aad8-42a2ef3cbea8",
+    "source_attachment": {
+      "attempted_exact_commit": true,
+      "staged": true,
+      "result": "REJECTED",
+      "error": "Repository \"tuanvu297/creat-pack-engineer\" not found or is not accessible",
+      "mutated": false
+    },
+    "staged_state": {
+      "project": {
+        "id": "45e66534-44ed-484e-bbf4-d63c311d6f27",
+        "name": "AGY Core Staging"
+      },
+      "environment": {
+        "id": "792d1b9e-73f5-434b-936f-f3b96d405253",
+        "name": "staging"
+      },
+      "staged": {
+        "patchId": "53b2dd5b-ecef-4a3a-aad8-42a2ef3cbea8",
+        "status": "STAGED",
+        "changeCount": 12,
+        "message": null,
+        "createdAt": "2026-10-19T05:40:50.556Z",
+        "updatedAt": "2026-10-19T05:41:42.092Z"
+      },
+      "destructive": false,
+      "resources": [
+        {
+          "kind": "service",
+          "id": "9c9f2634-3a2c-4577-9db9-d472e397adbd",
+          "name": "agy-temporal-staging",
+          "action": "create",
+          "changes": [
+            {
+              "path": "services.9c9f2634-3a2c-4577-9db9-d472e397adbd.isCreated",
+              "displayName": "Is Created",
+              "type": "added",
+              "from": "",
+              "to": "CREATED",
+              "destructive": false
+            },
+            {
+              "path": "services.9c9f2634-3a2c-4577-9db9-d472e397adbd.source.rootDirectory",
+              "displayName": "Root Directory",
+              "type": "added",
+              "from": "",
+              "to": "/agy-temporal-shadow",
+              "destructive": false
+            },
+            {
+              "path": "services.9c9f2634-3a2c-4577-9db9-d472e397adbd.build.buildCommand",
+              "displayName": "Build Command",
+              "type": "added",
+              "from": "",
+              "to": "pnpm install --frozen-lockfile --prod=false && pnpm build",
+              "destructive": false
+            },
+            {
+              "path": "services.9c9f2634-3a2c-4577-9db9-d472e397adbd.build.builder",
+              "displayName": "Builder",
+              "type": "added",
+              "from": "",
+              "to": "RAILPACK",
+              "destructive": false
+            },
+            {
+              "path": "services.9c9f2634-3a2c-4577-9db9-d472e397adbd.deploy.restartPolicyType",
+              "displayName": "Restart Policy Type",
+              "type": "added",
+              "from": "",
+              "to": "NEVER",
+              "destructive": false
+            },
+            {
+              "path": "services.9c9f2634-3a2c-4577-9db9-d472e397adbd.deploy.startCommand",
+              "displayName": "Start Command",
+              "type": "added",
+              "from": "",
+              "to": "bash -c 'node dist/src/temporal/worker.js & w=$!; node dist/src/temporal/server.js & g=$!; trap \"kill -TERM $w $g 2>/dev/null; wait\" TERM INT EXIT; wait -n $w $g; rc=$?; exit $rc'",
+              "destructive": false
+            },
+            {
+              "path": "services.9c9f2634-3a2c-4577-9db9-d472e397adbd.variables.AGY_ORCHESTRATION_MODE.encryptedValue",
+              "displayName": "AGY_ORCHESTRATION_MODE",
+              "type": "added",
+              "from": "",
+              "to": "<redacted>",
+              "destructive": false
+            },
+            {
+              "path": "services.9c9f2634-3a2c-4577-9db9-d472e397adbd.variables.AGY_STAGE_ONLY.encryptedValue",
+              "displayName": "AGY_STAGE_ONLY",
+              "type": "added",
+              "from": "",
+              "to": "<redacted>",
+              "destructive": false
+            },
+            {
+              "path": "services.9c9f2634-3a2c-4577-9db9-d472e397adbd.variables.AGY_TEMPORAL_GATEWAY_PORT.encryptedValue",
+              "displayName": "AGY_TEMPORAL_GATEWAY_PORT",
+              "type": "added",
+              "from": "",
+              "to": "<redacted>",
+              "destructive": false
+            },
+            {
+              "path": "services.9c9f2634-3a2c-4577-9db9-d472e397adbd.variables.TEMPORAL_ADDRESS.encryptedValue",
+              "displayName": "TEMPORAL_ADDRESS",
+              "type": "added",
+              "from": "",
+              "to": "<redacted>",
+              "destructive": false
+            },
+            {
+              "path": "services.9c9f2634-3a2c-4577-9db9-d472e397adbd.variables.TEMPORAL_NAMESPACE.encryptedValue",
+              "displayName": "TEMPORAL_NAMESPACE",
+              "type": "added",
+              "from": "",
+              "to": "<redacted>",
+              "destructive": false
+            },
+            {
+              "path": "services.9c9f2634-3a2c-4577-9db9-d472e397adbd.variables.TEMPORAL_TASK_QUEUE.encryptedValue",
+              "displayName": "TEMPORAL_TASK_QUEUE",
+              "type": "added",
+              "from": "",
+              "to": "<redacted>",
+              "destructive": false
+            }
+          ]
+        }
+      ],
+      "sharedVariables": [],
+      "privateNetworkDisabled": null
+    },
+    "existing_gateway": {
+      "id": "27be7aa3-3794-4f51-87b8-def294570762",
+      "deployment": "bbd63784-5f8a-4cfb-889f-458678cd5bb4",
+      "status": "SUCCESS",
+      "mutated": false,
+      "staged_changes": 0
+    },
+    "accept_deploy_called": false,
+    "volumes_created": 0,
+    "domains_created": 0,
+    "services_created": 0
+  },
+  "supabase": {
+    "project": "stvgharnsoylprzyzzoz",
+    "observed_status": "ACTIVE_HEALTHY",
+    "role": "SHADOW_STAGING_ONLY",
+    "mutated": false,
+    "promoted": false
+  },
+  "owner_blocker": {
+    "type": "GITHUB_RAILWAY_APP_AUTHORIZATION",
+    "observed_github_account": "tuanvu297",
+    "github_connector_repo_permissions": {
+      "admin": true,
+      "pull": true,
+      "push": true
+    },
+    "installed_apps_observed": [
+      "ChatGPT Codex Connector"
+    ],
+    "railway_app_installed": false,
+    "connected_tools_can_manage_github_app_installation": false,
+    "ui_prepared": true,
+    "only_selected_repository": "tuanvu297/creat-pack-engineer",
+    "final_button": "Install & Authorize",
+    "exact_action": "Click Install & Authorize in the prepared Railway App GitHub permission form; Only select repositories = tuanvu297/creat-pack-engineer.",
+    "ui_url": "https://github.com/apps/railway-app/installations/new/permissions?target_id=340233529",
+    "permission_effect": "Read metadata; read/write actions, administration, checks, code, commit statuses, deployments, pull requests and workflows on the selected repo; read email addresses on the account.",
+    "final_authorization_submitted": false,
+    "evidence": "https://drive.google.com/file/d/1pL4UYlZRWnFobKgDO3NNOPKxWZpZ1dPB/view?usp=drivesdk",
+    "policy_reason": "Browser confirmation policy requires action-time confirmation for new security-sensitive persistent access."
+  },
+  "hosted_acceptance": {
+    "executed": false,
+    "fresh_test_ids_dispatched": [],
+    "old_operations_replayed": [],
+    "historical_accept_or_uncertain_replayed": false,
+    "automatic_recovery_claimed": false,
+    "uncertainty_boundary": "OPERATOR_RECONCILIATION_REQUIRED retained"
+  },
+  "remaining_engineering_after_source_gate": [
+    "Adapt Temporal config for private hosted backend; current source permits loopback only.",
+    "Gateway must bind 0.0.0.0:$PORT, add truthful dependency health, and verify authentication/scope.",
+    "Supervise worker/gateway and replace staged NEVER restart policy.",
+    "Attach verified zero-new-spend persistent journal with one writer; offline initialization only once after empty mount verification.",
+    "Discover/attach approved PostgreSQL and Temporal backends and secret references; current service inventory includes no hosted backend.",
+    "Ensure R11 process receives no DATABASE_URL/SUPABASE_* even if control-plane uses DB credentials; preserve R11 transport/orchestration-mode contract.",
+    "Run fresh hosted E2E, crash/restart/redeploy/auth/callback and independent-client continuation; then hosted checkpoint."
+  ],
+  "guardrails": {
+    "global_route": "LEGACY",
+    "dedicated_staging_target": "TEMPORAL_SHADOW",
+    "canonical_authority": "EXISTING_POSTGRES_D049",
+    "temporal": "PROGRESSION_HISTORY",
+    "new_spend": 0,
+    "paid_inference": 0,
+    "credentials_rotated": false,
+    "hard_deleted": false,
+    "work_executor_fallback": false
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "MISSION": "AGY-TEMPORAL-20261018",
+  "PREVIOUS_CHECKPOINT": "CP-AGY-TEMPORAL-STAGING-20261018-02",
+  "NEW_CHECKPOINT": "BLOCKED",
+  "R11_HARDENING_SOURCE": "PASS",
+  "SOURCE_ATTACHMENT": "BLOCKED",
+  "PERSISTENT_STORAGE": "BLOCKED",
+  "SINGLE_WRITER": "BLOCKED",
+  "RAILWAY_CONFIG": "BLOCKED",
+  "BACKEND": "BLOCKED",
+  "HOSTED_RUNTIME": "BLOCKED",
+  "AUTH_INGRESS": "BLOCKED",
+  "CALLBACK_READBACK": "BLOCKED",
+  "RESTART_REDEPLOY_RECOVERY": "BLOCKED",
+  "HOSTED_R11_E2E": "BLOCKED",
+  "CROSS_ENTRYPOINT": "BLOCKED",
+  "NATIVE_CHAT_INGESTION": "UNVERIFIED",
+  "INTEGRATED_STAGING": "BLOCKED",
+  "PRODUCTION_PASS": false,
+  "OWNER_ACTION_REQUIRED": "Click Install & Authorize in the prepared Railway App GitHub form, restricted to tuanvu297/creat-pack-engineer.",
+  "ARTIFACT_EVIDENCE_IDS": [
+    "https://github.com/tuanvu297/creat-pack-engineer/commit/a8072d8aeb128f3f5e51672c860a5c4ff8c1c8dd",
+    "https://github.com/tuanvu297/creat-pack-engineer/pull/11",
+    "https://drive.google.com/file/d/1MCgYJ7fr4PR_JO3353jsXz3C_xGd0N_1/view?usp=drivesdk",
+    "https://drive.google.com/file/d/1IEH_GnHKp9x8sBgtT8pmgZpI7ghVRFN9/view?usp=drivesdk",
+    "https://drive.google.com/file/d/1pL4UYlZRWnFobKgDO3NNOPKxWZpZ1dPB/view?usp=drivesdk"
+  ]
+}
