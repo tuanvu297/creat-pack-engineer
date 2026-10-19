@@ -13,7 +13,7 @@ export class TemporalGateway {
    const r=await this.bridge.reserve(m);
    try{
     const handle=await this.client.workflow.start('agyMission',{workflowId:r.workflow_id,taskQueue:this.taskQueue,args:[m],workflowIdReusePolicy:WorkflowIdReusePolicy.REJECT_DUPLICATE});
-    return {workflow_id:handle.workflowId,run_id:handle.firstExecutionRunId,duplicate:false,evidence_class:'CONTROLLED_SYNTHETIC'};
+    return {workflow_id:handle.workflowId,run_id:handle.firstExecutionRunId,duplicate:false,evidence_class:m.executor_worker_id==='R11_HOSTED_ENGINEERING'?'HOSTED_R11_FIXED_SOURCE_CHECK_NO_MODEL':m.executor_worker_id==='CODEX_ENGINEERING_COMMAND'?'NATIVE_CODEX_COMMAND_NO_MODEL':'CONTROLLED_SYNTHETIC'};
    }catch(e){if(!(e instanceof WorkflowExecutionAlreadyStartedError))throw e;
     const d=await this.client.workflow.getHandle(r.workflow_id).describe();return {workflow_id:r.workflow_id,run_id:d.runId,duplicate:true};}
   }

@@ -1,0 +1,123 @@
+{
+  "mission": "AGY-TEMPORAL-20261018",
+  "previous_checkpoint": "CP-AGY-TEMPORAL-STAGING-20261018-02",
+  "phase": "TECHNICAL_ACCEPTANCE_PASS_DURABILITY_PENDING",
+  "new_acceptance_checkpoint_created": false,
+  "recorded_at": "2026-10-19T12:51:40.096885+00:00",
+  "role": "AGY / Codex unified engineering executor; separate read-only peer reviewer",
+  "source_commit": "36516473f4e41578bb5ee11e33273ce66f9d173d",
+  "executed_source_commit": "32b17922b42b3356b8ba2f46c8e61356626a7244",
+  "final_deployment": "103317e9-f4d1-4180-b5d2-cf6050626db5",
+  "checks": {
+    "all_services_success": true,
+    "existing_gateway_unchanged": true,
+    "new_deployment_live": true,
+    "no_staged_changes": true,
+    "pinned_source": true,
+    "mounted_journal": true,
+    "ingress_200_401_403": true,
+    "truthful_dependencies": true,
+    "hosted_15_probes": true,
+    "three_independent_client_sessions": true,
+    "same_workflow_run_operation": true,
+    "same_callback_payload": true,
+    "result_ready_qa_pending": true,
+    "r11_provenance": true,
+    "no_db_credentials_in_r11": true,
+    "real_typecheck": true,
+    "negative_identity_fence_worker": true,
+    "full_r11_flow": true,
+    "same_journal_after_restart_redeploy": true,
+    "no_duplicate_submission": true,
+    "journal_receipts_complete": true,
+    "full_source_semantic_readback": true,
+    "executed_source_hashes_match": true
+  },
+  "operation": {
+    "workflow_id": "agy-shadow-fb311b30859d1ec23f98a7eb4eb0a113c565f0c1ca531eae57d208b0b248b515",
+    "run_id": "01a1542f-16d6-7494-a9b4-3e3163836d75",
+    "operation_id": "70eea1b6-6e56-4c79-827f-c9e28a1054c3",
+    "task_key": "HOSTED-R11-20261019-11d1a7dfea0b4933aae183856aa6190b",
+    "task_id": "1d607870-f703-4135-8361-8395425b9dd5",
+    "job_id": "b42bcc8e-dd86-42a9-beee-79683b6fd726",
+    "state": "WAIT_QA",
+    "qa_state": "PENDING"
+  },
+  "journal_sha256": "1dcd0364115f10041703f78a24d3e6a6371cb27021a25708f03f700915a25e54",
+  "canonical_result_digest": "54091f9cba18ee85479dd2abdc5d9041bfdb59c2fb2c0effd7866cdb49e31127",
+  "artifact_sha256": "6fc1794c98965af545d5696ffa809ec6f630a7451bc68f56296ece99a7c8865c",
+  "callback_sha256": "63f99e0be4c24db04bcee1f18f06f3c04d5a0bed8316f3c54a94d0b3df1ee92e",
+  "local_focused_checks": {
+    "pass": 49,
+    "fail": 0,
+    "skip": 0,
+    "real_disposable_postgres": true
+  },
+  "hosted_negative_probes": {
+    "crashed_writer_lock_blocks": true,
+    "killed_effect_retained_once": true,
+    "reinit_blocks": true,
+    "identity_context_blocks": true,
+    "cross_process_single_writer": true,
+    "changed_request_blocks": true,
+    "no_blind_resubmit": true,
+    "uncertain_no_retry": true,
+    "corrupt_bytes_preserved": true,
+    "accepted_resume_no_duplicate": true,
+    "corruption_blocks": true,
+    "missing_blocks": true,
+    "single_writer": true,
+    "crashed_accepted_effect_not_retried": true,
+    "real_kill_after_accept": true
+  },
+  "executed_source_hashes": [
+    {
+      "path": "src/gateway-shadow/journal.ts",
+      "match": true
+    },
+    {
+      "path": "src/gateway-shadow/worker.ts",
+      "match": true
+    },
+    {
+      "path": "src/gateway-shadow/runtime.ts",
+      "match": true
+    },
+    {
+      "path": "src/temporal/bridge.ts",
+      "match": true
+    },
+    {
+      "path": "src/hosted/r11-executor.ts",
+      "match": true
+    }
+  ],
+  "remote_source_files": 147,
+  "line_ending_normalized_files": 129,
+  "source_mismatches": [],
+  "native_chat_ingestion": "UNVERIFIED",
+  "production_pass": false,
+  "budget": {
+    "source": "Authenticated Railway dashboard workspace/usage, read-only UI observation in this thread",
+    "plan": "TRIAL",
+    "remaining_credit_display_usd": 4.99,
+    "credits_available_display_usd": 5.0,
+    "current_usage_rounded_usd": 0.02,
+    "project_current_cost_usd": 0.0162,
+    "current_bill_usd": 0.0,
+    "memory_usage_cost_usd": 0.0151,
+    "cpu_usage_cost_usd": 0.001,
+    "volume_usage_cost_usd": 0.0001,
+    "purchases_upgrades_topups": 0,
+    "limitations": "Provider displayed rounded/delayed usage, not a future cost guarantee. Existing authorized Trial credit only; no cash charge authorized."
+  },
+  "limitations": [
+    "Bounded fixed source-verification command; no model/provider inference or general-purpose R11 capability certification.",
+    "Runtime QA is intentionally PENDING at the requested RESULT_READY callback stage.",
+    "Crash acceptance is fail-closed operator reconciliation; uncertain accepted effects are not automatically re-executed.",
+    "Cross-entrypoint means independent authenticated HTTP clients/sessions, not native Chat/Work ingestion.",
+    "Earlier dispatch evidence label was conservative but inaccurate; corrected by final label-only commit without replay.",
+    "Inherited full153 was not repeated.",
+    "Canonical authority remains PostgreSQL under D-049, LEGACY default unchanged, Supabase shadow only."
+  ]
+}

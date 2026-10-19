@@ -18,11 +18,11 @@ function object(value: any): value is Json { return !!value && typeof value === 
 // No DB client, auth key, redirect following or transport retry belongs on this side of the boundary.
 export class GatewayTransport {
   readonly url: string;
-  constructor(url: string, readonly workerId: string, readonly timeoutMs = 5000) { this.url = privateUrl(url); }
+  constructor(url: string, readonly workerId: string, readonly timeoutMs = 5000, private readonly token?:string) { this.url = privateUrl(url); }
   async health() {
     let r: any;
     try {
-      const res = await fetch(this.url + '/health',{redirect:'error',signal:AbortSignal.timeout(this.timeoutMs)});
+      const res = await fetch(this.url + '/health',{redirect:'error',signal:AbortSignal.timeout(this.timeoutMs),headers:this.token?{authorization:'Bearer '+this.token}:{}});
       if (!res.ok) throw new Error();
       r = await res.json();
     } catch { throw new GatewayError('GATEWAY_HEALTH_UNVERIFIED'); }
@@ -34,7 +34,7 @@ export class GatewayTransport {
     let response: Response;
     try {
       response = await fetch(this.url + path, {method:'POST', redirect:'error', signal:AbortSignal.timeout(this.timeoutMs),
-        headers:{'content-type':'application/json', ...headers}, body:JSON.stringify(body)});
+        headers:{'content-type':'application/json',...(this.token?{authorization:'Bearer '+this.token}:{}), ...headers}, body:JSON.stringify(body)});
     } catch { throw new GatewayError('GATEWAY_OUTCOME_UNCERTAIN'); }
     if (!response.ok) throw new GatewayError(response.status >= 500 ? 'GATEWAY_OUTCOME_UNCERTAIN' : 'GATEWAY_REJECTED');
     let data: unknown;

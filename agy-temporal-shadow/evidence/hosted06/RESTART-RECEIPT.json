@@ -1,0 +1,11 @@
+{
+  "provenance": "Observed direct Railway restart_service tool response in this execution thread; not inferred from readback",
+  "observed_at": null,
+  "project_id": "45e66534-44ed-484e-bbf4-d63c311d6f27",
+  "environment_id": "792d1b9e-73f5-434b-936f-f3b96d405253",
+  "service_id": "9c9f2634-3a2c-4577-9db9-d472e397adbd",
+  "deployment_id": "4c63a6e5-5dd9-4036-b2aa-24eda6d0525f",
+  "response": "Restarted agy-temporal-staging in environment staging; deployment was SUCCESS and containers are restarting",
+  "post_restart_evidence": ["resume-20261019T124515624.json", "CROSS-CLIENT-20261019T124520.json"],
+  "limitations": "Completed operation recovery plus isolated crash fail-closed probes; no automatic re-execution of uncertain effects"
+}

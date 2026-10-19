@@ -3,6 +3,7 @@ import {fileURLToPath} from 'node:url';
 import {NativeConnection,Worker} from '@temporalio/worker';
 import {TemporalBridge} from './bridge.js';
 import {temporalConfig} from './config.js';
+async function main(){
 const config=temporalConfig();
 if(config.mode!=='TEMPORAL_SHADOW'||!process.env.DATABASE_URL)throw new Error('SHADOW_DATABASE_CONFIG_REQUIRED');
 const pool=new Pool({connectionString:process.env.DATABASE_URL,connectionTimeoutMillis:5000,query_timeout:10000});
@@ -14,5 +15,9 @@ try{
  const worker=await Worker.create({connection,namespace:config.namespace,taskQueue:config.taskQueue,
   workflowsPath:fileURLToPath(new URL('./workflow.js',import.meta.url)),activities:new TemporalBridge(pool).activities(),
   shutdownGraceTime:'5 seconds',maxConcurrentActivityTaskExecutions:4,maxConcurrentWorkflowTaskExecutions:4});
- await worker.run();
+ const running=worker.run();
+ if(worker.getState()==='RUNNING')process.send?.({type:'worker-ready'});
+ await running;
 }finally{await connection?.close();await pool.end();}
+}
+main().catch(()=>{console.error(JSON.stringify({event:'TEMPORAL_WORKER_BLOCKED',code:'DEPENDENCY_OR_CONFIG_FAILED',production:false}));process.exitCode=1;});

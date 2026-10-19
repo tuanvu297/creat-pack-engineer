@@ -1,0 +1,9 @@
+{
+  "archive_sha256": "806068b4af56da6c282fdf3e4bf1fdb21516ed164c008d5135770f84c40e62a2",
+  "archive_files_verified": 48,
+  "report_sha256": "e2aa0dd5b5d1e5e3688c2a5885da162b844c07e311f86787db3f38bd01e1bb91",
+  "archive_id": "1qyxae2xQnGkUgN0Idl0CmYWaRZ-pyoPC",
+  "report_id": "1-NViZJELu_6XUouFWD5aAaRFij9X1rY5",
+  "readback": "EXACT_BYTES_AND_MANIFEST_VERIFIED",
+  "no_secrets_in_proof": true
+}
