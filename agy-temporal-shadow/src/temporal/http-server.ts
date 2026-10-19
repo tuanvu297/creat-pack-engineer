@@ -21,7 +21,7 @@ export function createGatewayHttpServer(deps:GatewayHttpDependencies){
    // Authenticate every action before disclosing routing or reading request bodies.
    const principal=authenticate(req.headers.authorization,deps.identities);
    if(req.method!=='POST')throw new Error('POST_REQUIRED');
-   const action=/^\/v1\/agy\/(bootstrap|current_state|dispatch|task_status|get_run|active_missions|reconcile|submit_qa|callback_status|stop)$/.exec(req.url??'')?.[1];
+   const action=/^\/v1\/agy\/(bootstrap|current_state|dispatch|task_status|get_run|active_missions|reconcile|submit_qa|callback_status|stop|r11_control)$/.exec(req.url??'')?.[1];
    if(!action)throw new Error('UNKNOWN_GATEWAY_ACTION');
    const chunks:Buffer[]=[];let size=0;
    for await(const chunk of req){

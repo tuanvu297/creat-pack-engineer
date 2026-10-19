@@ -7,6 +7,7 @@ import {validateScope} from '../platform/scope.js';
 import type {Activities,Binding,Mission,QaVerdict,WorkerReceipt} from './contracts.js';
 import {waitResult} from './result-events.js';
 import {nativeCommand} from './native-command.js';
+import {runHostedR11,isNative} from '../hosted/r11-host.js';
 import {readFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
 export function stable(value:unknown):string {
@@ -25,8 +26,9 @@ export function validateMission(m:Mission){
   ![m.ack_timeout_ms,m.result_timeout_ms,m.qa_timeout_ms].every(n=>Number.isInteger(n)&&n>=1000&&n<=3600000)||
   !Number.isInteger(m.max_corrections)||m.max_corrections<0||m.max_corrections>2||!m.payload||Array.isArray(m.payload))deny('INVALID_MISSION');
  // Strict allowlist: shadow input cannot smuggle a real connector, endpoint or instructions.
- if(m.executor_worker_id==='CODEX_ENGINEERING_COMMAND'){
+ if(isNative(m)){
   if(m.mission_id!=='AGY-TEMPORAL-20261018'||!['verify_temporal_source','verify_gateway_contract'].includes(String(m.payload.command))||Object.keys(m.payload).length!==1||m.max_corrections!==0)deny('NATIVE_COMMAND_SCOPE_DENIED');
+  if(m.executor_worker_id==='R11_HOSTED_ENGINEERING'&&m.payload.command!=='verify_gateway_contract')deny('R11_COMMAND_SCOPE_DENIED');
   return;
  }
  if(Object.keys(m.payload).some(k=>!['value','delay_ms','fixture'].includes(k))||
@@ -98,6 +100,7 @@ export class TemporalBridge {
    await this.transition(m,b,['CLAIMED'],'RUNNING');return b;
   },
   dispatch_worker:async(m,b)=>{
+   if(m.executor_worker_id==='R11_HOSTED_ENGINEERING')return runHostedR11(this,m,b);
    if(m.executor_worker_id==='CODEX_ENGINEERING_COMMAND')return nativeCommand(this,m,b);
    if(m.executor_worker_id!=='AGY_TEMPORAL_SYNTHETIC')return {state:'BLOCKED_ROUTE'};
    const task=await this.task(m,b),store=new PostgresStore(this.pool(m),m);
@@ -125,7 +128,7 @@ export class TemporalBridge {
     if(op?.operation_id!==r.operation_id)deny('ACK_EVIDENCE_DENIED');return false;
    });
    if(already)return;
-   const task=await this.task(m,b);await new PostgresStore(this.pool(m),m).saveCheckpoint(task,r.operation_id,m.executor_worker_id==='CODEX_ENGINEERING_COMMAND'?'codex-command':'agy-temporal-synthetic');
+   const task=await this.task(m,b);await new PostgresStore(this.pool(m),m).saveCheckpoint(task,r.operation_id,isNative(m)?'codex-command':'agy-temporal-synthetic');
    await this.locked(m,b,async(c,row)=>{
     const op=await this.operation(m,b,c);
     if(op?.operation_id!==r.operation_id)deny('ACK_EVIDENCE_DENIED');
@@ -163,18 +166,18 @@ export class TemporalBridge {
   submit_result_evidence:async(m,b)=>{
    const result=await this.locked(m,b,async(c,row)=>{
     if(!row.ack)return {state:'UNCERTAIN' as const};
-    const native=m.executor_worker_id==='CODEX_ENGINEERING_COMMAND';
+    const native=isNative(m);
     const op=native?(await c.query("SELECT *,state='COMPLETE' AS ready,result AS output FROM agy_temporal_native_operations WHERE workflow_id=$1 AND attempt=$2",[b.workflow_id,b.attempt])).rows[0]:(await c.query('SELECT *,ready_at<=now() AS ready FROM agy_temporal_synthetic_operations WHERE workflow_id=$1 AND attempt=$2',[b.workflow_id,b.attempt])).rows[0];
     if(!op)return {state:'UNCERTAIN' as const};if(!op.ready)return {state:'RUNNING' as const};
     const evidence_refs=native?[`postgres-native://${b.workflow_id}/${b.attempt}/${op.operation_id}`,op.output.artifact_ref+'#sha256='+op.output.artifact_sha256]:[`synthetic://${b.workflow_id}/${b.attempt}/${op.operation_id}`];
     const result={output:op.output,evidence_refs,operation_id:op.operation_id,attempt:b.attempt};
     if(await this.receipt(c,row,`result:${b.attempt}`,'RESULT_EVIDENCE',result)){
      await c.query("UPDATE agy_temporal_missions SET result=$2,state='WAIT_QA',qa_state='PENDING',updated_at=now() WHERE workflow_id=$1",[b.workflow_id,result]);
-     await this.receipt(c,row,`result-callback:${b.attempt}`,'CALLBACK',{mission_id:m.mission_id,task_id:m.task_id,attempt:b.attempt,idempotency_key:m.idempotency_key,executor_worker_id:m.executor_worker_id,workflow_id:b.workflow_id,run_id:b.run_id,result_ref:result,evidence_refs,qa_state:'PENDING',callback_state:'PERSISTED_RESULT_READY',state:'RESULT_READY',state_version:b.attempt,timestamp:new Date().toISOString(),native_chat_ingestion:'UNVERIFIED',evidence_class:native?'NATIVE_CODEX_COMMAND_NO_MODEL':'CONTROLLED_SYNTHETIC'});
+     await this.receipt(c,row,`result-callback:${b.attempt}`,'CALLBACK',{mission_id:m.mission_id,task_id:m.task_id,attempt:b.attempt,idempotency_key:m.idempotency_key,executor_worker_id:m.executor_worker_id,workflow_id:b.workflow_id,run_id:b.run_id,result_ref:result,evidence_refs,qa_state:'PENDING',callback_state:'PERSISTED_RESULT_READY',state:'RESULT_READY',state_version:b.attempt,timestamp:new Date().toISOString(),native_chat_ingestion:'UNVERIFIED',evidence_class:m.executor_worker_id==='R11_HOSTED_ENGINEERING'?'HOSTED_R11_FIXED_SOURCE_CHECK_NO_MODEL':native?'NATIVE_CODEX_COMMAND_NO_MODEL':'CONTROLLED_SYNTHETIC'});
     }
     return {state:'RESULT' as const,evidence_refs};
    });
-   if(result.state==='RESULT')await this.transition(m,b,['RUNNING'],'QA',{qaVerdict:'PENDING',qaEvidence:{scope:m.executor_worker_id==='CODEX_ENGINEERING_COMMAND'?'NATIVE_CODEX_COMMAND_NO_MODEL':'SYNTHETIC_ONLY',evidence_refs:result.evidence_refs}});
+   if(result.state==='RESULT')await this.transition(m,b,['RUNNING'],'QA',{qaVerdict:'PENDING',qaEvidence:{scope:isNative(m)?'NATIVE_ENGINEERING_COMMAND_NO_MODEL':'SYNTHETIC_ONLY',evidence_refs:result.evidence_refs}});
    return result;
   },
   reconcile_uncertain_operation:async(m,b)=>this.locked(m,b,async(c,row)=>{
@@ -189,7 +192,7 @@ export class TemporalBridge {
     !Array.isArray(q.evidence_refs)||!row.result.evidence_refs.every((r:string)=>q.evidence_refs.includes(r))||(q.verdict==='FAIL'&&!q.corrective_instruction))deny('QA_CONTRACT_DENIED');
    const state=q.verdict==='PASS'?'COMPLETE':b.attempt<=m.max_corrections?'CORRECT':'BLOCKED';
    if(await this.receipt(c,row,`qa:${b.attempt}`,'QA_VERDICT',q)){
-    await c.query('INSERT INTO agy_qa_results(task_id,job_id,verdict,evidence,reviewed_by) VALUES($1,$2,$3,$4,$5)',[b.db_task_id,b.job_id,q.verdict,{scope:m.executor_worker_id==='CODEX_ENGINEERING_COMMAND'?'NATIVE_CODEX_COMMAND_NO_MODEL':'SYNTHETIC_ONLY',...q},q.reviewer_id]);
+    await c.query('INSERT INTO agy_qa_results(task_id,job_id,verdict,evidence,reviewed_by) VALUES($1,$2,$3,$4,$5)',[b.db_task_id,b.job_id,q.verdict,{scope:isNative(m)?'NATIVE_ENGINEERING_COMMAND_NO_MODEL':'SYNTHETIC_ONLY',...q},q.reviewer_id]);
     await c.query('UPDATE agy_temporal_missions SET qa=$2,qa_state=$3,reviewer_id=$4,updated_at=now() WHERE workflow_id=$1',[b.workflow_id,q,q.verdict,q.reviewer_id]);
    }
    return {state};
@@ -216,7 +219,7 @@ export class TemporalBridge {
     if(old){if(old.payload.state!==state||old.payload.reason!==(reason??null))deny('CALLBACK_CONFLICT');return;}
     if(state==='COMPLETE'&&(!row.ack||!row.result||row.qa_state!=='PASS'))deny('MISSING_COMPLETION_EVIDENCE');
     const payload={mission_id:m.mission_id,task_id:m.task_id,attempt:b.attempt,idempotency_key:m.idempotency_key,workflow_id:b.workflow_id,run_id:b.run_id,state,reason:reason??null,
-     evidence_refs:row.result?.evidence_refs??[],result_ref:row.result??null,qa_state:row.qa_state,callback_state:'PERSISTED',state_version:b.attempt,timestamp:new Date().toISOString(),executor_worker_id:m.executor_worker_id,qa_reviewer_id:row.reviewer_id??null,qa_contract_version:'1.1',native_chat_ingestion:'UNVERIFIED',evidence_class:m.executor_worker_id==='CODEX_ENGINEERING_COMMAND'?'NATIVE_CODEX_COMMAND_NO_MODEL':'CONTROLLED_SYNTHETIC'};
+     evidence_refs:row.result?.evidence_refs??[],result_ref:row.result??null,qa_state:row.qa_state,callback_state:'PERSISTED',state_version:b.attempt,timestamp:new Date().toISOString(),executor_worker_id:m.executor_worker_id,qa_reviewer_id:row.reviewer_id??null,qa_contract_version:'1.1',native_chat_ingestion:'UNVERIFIED',evidence_class:isNative(m)?'NATIVE_ENGINEERING_COMMAND_NO_MODEL':'CONTROLLED_SYNTHETIC'};
     if(await this.receipt(c,row,`callback:${b.attempt}`,'CALLBACK',payload)){
      await c.query('UPDATE agy_temporal_missions SET state=$2,updated_at=now() WHERE workflow_id=$1',[b.workflow_id,state]);
      // Same canonical task/job ledger, same IDs; no prior events are rewritten.
@@ -228,9 +231,10 @@ export class TemporalBridge {
   wait_result_event:async(m,b)=>waitResult(this,m,b)
  };}
  async operation(m:Mission,b:Binding,c:PoolClient){
-  if(m.executor_worker_id==='CODEX_ENGINEERING_COMMAND'){
+  if(isNative(m)){
    const row=(await c.query('SELECT * FROM agy_temporal_native_operations WHERE workflow_id=$1 AND attempt=$2',[b.workflow_id,b.attempt])).rows[0];
    if(!row?.ack)return undefined;
+   if(m.executor_worker_id==='R11_HOSTED_ENGINEERING')return {operation_id:row.operation_id};
    // Reconcile a lost command response from immutable artifact bytes; no command resubmission.
    if(row.state!=='COMPLETE'&&/^[a-f0-9-]{36}$/.test(row.operation_id)){
     try{

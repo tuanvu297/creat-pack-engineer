@@ -1,6 +1,8 @@
 import {Pool} from 'pg';
 import {Client,Connection} from '@temporalio/client';
-import {identitiesFromEnv} from '../platform/auth.js';
+import {identitiesFromEnv,authorize} from '../platform/auth.js';
+import {hostedR11Control} from '../hosted/r11-host.js';
+import {validateMission} from './bridge.js';
 import {temporalConfig} from './config.js';
 import {TemporalBridge} from './bridge.js';
 import {TemporalGateway} from './gateway.js';
@@ -23,7 +25,10 @@ async function main(){
   // Request the current state after installing the listener; an earlier ready event
   // may have arrived while dependency connections were still being established.
   process.send?.({type:'gateway-listening'});
-  const server=createGatewayHttpServer({identities,execute:(...args)=>gateway.execute(...args),
+  const server=createGatewayHttpServer({identities,execute:async(m,p,action,body)=>{
+   if(action==='r11_control'){authorize(p,m,'write');validateMission(m);return hostedR11Control(body?.command);}
+   return gateway.execute(m,p,action,body);
+  },
    health:async()=>{
     const results=await Promise.allSettled([
      pool.query('SELECT 1'),

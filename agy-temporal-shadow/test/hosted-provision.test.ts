@@ -18,10 +18,10 @@ test('real PostgreSQL provisioning is idempotent, scoped and rejects changed mig
  const env={AGY_STAGE_ONLY:'true',AGY_HOSTED_STAGING:'true',AGY_PROVISION_STAGING:'true',
   AGY_BOOTSTRAP_DATABASE_URL:process.env.AGY_PROVISION_TEST_DATABASE_URL,AGY_DB_RUNTIME_PASSWORD:randomBytes(32).toString('hex'),AGY_HOSTED_SCHEMA:schema,AGY_HOSTED_RUNTIME_ROLE:role};
  try{
-  const first=await provisionStaging(env);assert.equal(first.migrations,10);assert.equal(first.production,false);
+  const first=await provisionStaging(env);assert.equal(first.migrations,11);assert.equal(first.production,false);
   await admin.query(`SET search_path TO ${schema},public`);
   await admin.query("SELECT set_config('agy.tenant_id','gl',false),set_config('agy.workspace_id','legacy-workspace',false),set_config('agy.project_id','GL_AUTOMATION',false)");
-  assert.equal((await admin.query('SELECT count(*)::int n FROM agy_hosted_migrations')).rows[0].n,11);
+  assert.equal((await admin.query('SELECT count(*)::int n FROM agy_hosted_migrations')).rows[0].n,12);
   await admin.query("UPDATE agy_projects SET status='PAUSED' WHERE project_id='GL_AUTOMATION'");
   await provisionStaging(env);
   assert.equal((await admin.query("SELECT status FROM agy_projects WHERE project_id='GL_AUTOMATION'")).rows[0].status,'PAUSED');
