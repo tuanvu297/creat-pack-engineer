@@ -25,7 +25,9 @@ export function startSupervised(specs:ChildSpec[],graceMs=10000){
  try{
   for(const spec of specs){
    if(stopping)break;
-   const child=fork(spec.file,[],{env:process.env,windowsHide:true,stdio:['ignore','inherit','inherit','ipc'],execArgv:[]});
+   const childEnv=Object.fromEntries(Object.entries(process.env).filter(([key])=>
+    !/^SUPABASE_/i.test(key)&&!['AGY_BOOTSTRAP_DATABASE_URL','AGY_DB_RUNTIME_PASSWORD','AGY_PROVISION_STAGING'].includes(key.toUpperCase())));
+   const child=fork(spec.file,[],{env:childEnv,windowsHide:true,stdio:['ignore','inherit','inherit','ipc'],execArgv:[]});
    children.push(child);
    child.on('message',(message:any)=>{
     if(!stopping&&spec.name==='worker'&&message?.type==='worker-ready'){ready.add('worker');broadcast();}

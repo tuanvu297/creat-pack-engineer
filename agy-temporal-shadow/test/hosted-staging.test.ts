@@ -13,6 +13,18 @@ import {authorize} from '../src/platform/auth.js';
 import {startSupervised} from '../src/temporal/supervision.js';
 const hosted={AGY_ORCHESTRATION_MODE:'TEMPORAL_SHADOW',AGY_STAGE_ONLY:'true',AGY_HOSTED_STAGING:'true',TEMPORAL_ADDRESS:'temporal.railway.internal:7233',TEMPORAL_NAMESPACE:'agy-staging',PORT:'8080'};
 const scope={tenantId:'gl',workspaceId:'staging',projectId:'AGY_ACCEPTANCE'};
+test('supervised control-plane children cannot inherit bootstrap or Supabase credentials',async t=>{
+ const keys=['AGY_BOOTSTRAP_DATABASE_URL','AGY_DB_RUNTIME_PASSWORD','AGY_PROVISION_STAGING','supabase_example'];
+ const previous=keys.map(k=>process.env[k]);keys.forEach(k=>process.env[k]='controlled-test-only');
+ t.after(()=>keys.forEach((k,i)=>{if(previous[i]===undefined)delete process.env[k];else process.env[k]=previous[i];}));
+ const dir=await mkdtemp(join(tmpdir(),'agy-child-env-'));t.after(()=>rm(dir,{recursive:true,force:true}));
+ const file=join(dir,'child.cjs');
+ await writeFile(file,"process.send({clean:!Object.keys(process.env).some(k=>/^SUPABASE_/i.test(k)||['AGY_BOOTSTRAP_DATABASE_URL','AGY_DB_RUNTIME_PASSWORD','AGY_PROVISION_STAGING'].includes(k.toUpperCase()))});setInterval(()=>{},1000);");
+ const runtime=startSupervised([{name:'worker',file},{name:'gateway',file}],500);t.after(()=>runtime.stop(1));
+ const messages=runtime.children.map(c=>once(c,'message'));
+ assert.ok((await Promise.all(messages)).every(([m])=>(m as any).clean===true));
+ runtime.stop(0);assert.equal(await runtime.done,0);
+});
 test('Temporal worker startup sanitizes invalid database connection values',async()=>{
  const base=Object.fromEntries(Object.entries(process.env).filter(([k])=>['SYSTEMROOT','WINDIR','PATH','PATHEXT','TEMP','TMP','COMSPEC'].includes(k.toUpperCase())));
  const child=spawn(process.execPath,[fileURLToPath(new URL('../src/temporal/worker.js',import.meta.url))],{windowsHide:true,
