@@ -1,0 +1,114 @@
+{
+  "audit_id": "AGY-FULL-AUDIT-20261019-01",
+  "mission": "AGY-TEMPORAL-20261018",
+  "at": "2026-10-20T13:31:35.642350+00:00",
+  "base_checkpoint": "CP-AGY-TEMPORAL-STAGING-20261019-03",
+  "runtime_scope": "HOSTED_R11_FIXED_SOURCE_CHECK_NO_MODEL",
+  "checks": {
+    "live_healthy_four_services": true,
+    "no_pending_environment_changes": true,
+    "current_redeploy_success": true,
+    "existing_gateway_unchanged": true,
+    "source_pin_unchanged": true,
+    "base_checkpoint_exact_cloud_readback": true,
+    "full_source_matches": true,
+    "health_backend_worker_ready": true,
+    "auth_200_401_403": true,
+    "persistent_mount_100MB": true,
+    "one_replica_writer": true,
+    "fresh_dispatch_once": true,
+    "fresh_identity_not_historical": true,
+    "durable_executor_ack_identity": true,
+    "independent_client_after_dispatch_exit": true,
+    "same_run_operation_across_recovery": true,
+    "result_ready_qa_pending": true,
+    "same_callback_after_restart_redeploy": true,
+    "same_journal_after_restart_redeploy": true,
+    "one_effect_no_recovery_submission": true,
+    "real_fixed_source_typecheck": true,
+    "executor_db_bootstrap_identities_supabase_absent": true,
+    "worker_identity_fence_409": true,
+    "all_15_isolated_negative_probes": true,
+    "historical_journal_retained_before_new_cycle": true,
+    "native_binding_exact_blocker": true,
+    "native_not_dispatched_or_fallback": true,
+    "historical_timeout_explained": true,
+    "idempotency_conflict_read_only": true,
+    "fresh_mission_native_scope_blocker": true,
+    "production_false_postgres_authority": true,
+    "register_claim_ack_checkpoint_result_callback": true,
+    "executed_source_hashes_match": true
+  },
+  "checks_pass": 33,
+  "checks_fail": 0,
+  "operation": {
+    "workflow_id": "agy-shadow-5fe09be1cc701cc3136bcc9c688668f05f83ecf5843d8f3f241f3054059b4327",
+    "run_id": "01a1550c-7894-7444-a5c4-855a5ab8ca8a",
+    "operation_id": "eb45a3bc-eaed-459d-a3d0-7b7407d15637",
+    "task_key": "AUDIT-R11-20261019-ba98a7356c124b94887345087166d867",
+    "task_id": "c5627e0a-674c-4895-8a6c-3ba0037ad5f8",
+    "job_id": "e7f93953-32cd-446e-b55b-08feec43ec81",
+    "state": "WAIT_QA",
+    "qa_state": "PENDING"
+  },
+  "journal_sha256": "2e6432749f5cec32e467b5752c528dccef2348452fbc0ff37dc53f2cbf4f54f3",
+  "artifact_sha256": "466d6d3217954528a46dde6048b12a7bee5e78b076d724c21bf0af77bca8c23e",
+  "callback_sha256": "d1ea7180099a09e25adf24a8fdb05b3cae8a877485f0cc58ee7c0b5b98dbd2ac",
+  "negative_probes": {
+    "accepted_resume_no_duplicate": true,
+    "corruption_blocks": true,
+    "missing_blocks": true,
+    "corrupt_bytes_preserved": true,
+    "uncertain_no_retry": true,
+    "single_writer": true,
+    "identity_context_blocks": true,
+    "reinit_blocks": true,
+    "cross_process_single_writer": true,
+    "crashed_accepted_effect_not_retried": true,
+    "changed_request_blocks": true,
+    "no_blind_resubmit": true,
+    "real_kill_after_accept": true,
+    "crashed_writer_lock_blocks": true,
+    "killed_effect_retained_once": true
+  },
+  "native_chat_ingestion": "BLOCKED_PRODUCT_BINDING",
+  "native_origin_reply": "24eb2f54-5fc3-43bb-a8f9-5fc5047134e3",
+  "no_work_executor_fallback": true,
+  "no_historical_replay": true,
+  "budget": {
+    "fresh_metrics": {
+      "service": {
+        "id": "9c9f2634-3a2c-4577-9db9-d472e397adbd",
+        "name": "agy-temporal-staging"
+      },
+      "environment": {
+        "id": "792d1b9e-73f5-434b-936f-f3b96d405253",
+        "name": "staging"
+      },
+      "metrics": [
+        {
+          "measurement": "CPU_USAGE",
+          "current": 0.00089075,
+          "average": 0.00011162677595628414,
+          "min": 0,
+          "max": 0.00089075,
+          "sampleCount": 61
+        },
+        {
+          "measurement": "MEMORY_USAGE_GB",
+          "current": 0.204607488,
+          "average": 0.20060666963934423,
+          "min": 0,
+          "max": 0.204607488,
+          "sampleCount": 61
+        }
+      ]
+    },
+    "live_credit_bill": "UNVERIFIED: no current billing endpoint in connected surface; prior CP03 USD4.99 display is historical, not current",
+    "new_resources_purchases_topups": 0,
+    "execution": "Existing approved staging resources; no model/provider inference"
+  },
+  "fresh_tests_scope": "One new R11 task/attempt/idempotency identity. Existing native lane forces the historical mission_id; a fresh mission_id bootstrap negative probe confirms that hardcoded portability boundary. No historical task redispatch.",
+  "inherited_tests": "CP03 local49/hosted23 and prior full153 are historical; not rerun or counted as new tests. Fresh audit uses 15 isolated hosted negative probes plus independent assertions.",
+  "acceptance_boundary": "RESULT_READY / QA PENDING, not QA PASS or general provider inference. After qa_timeout_ms expires, a separate QA_TIMEOUT callback is expected."
+}

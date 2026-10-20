@@ -1,0 +1,13 @@
+{
+  "status": "BLOCKED_PRODUCT_BINDING",
+  "origin_chat": "6acdf9e5-0718-83ec-a843-0646519e307b",
+  "request_message_id": "bef8a145-a1c4-4922-99e8-6aa27ac1d8be",
+  "reply_message_id": "24eb2f54-5fc3-43bb-a8f9-5fc5047134e3",
+  "reply": "Kết quả probe native-chat:\n\n```text\nCALLBACK_ID=AGY-AUDIT-20261019-01-NATIVE-PROBE\n\nNATIVE_CHAT_INGESTION=BLOCKED_PRODUCT_BINDING\nDISPATCH_ATTEMPTED=false\nHISTORICAL_OPERATION_REPLAY=false\nWORK_CODEX_FALLBACK=false\nRUNTIME_HEALTH=SEPARATE / NOT DOWNGRADED\n```\n\nTôi đã kiểm **tool surface thực sự của chat này**:\n\n- `GL_Agency_Control` có các thao tác Agency GL như tạo job, đọc job, ghi kết quả QA/lesson; **không có AGY Temporal `dispatch/status/callback/bootstrap/reconcile`**.\n- Plugin discovery với `AGY Temporal gateway MCP dispatch status callback` không trả về AGY connector; chỉ trả các plugin không liên quan.\n- Search plugin chính xác `AGY` trả **0 kết quả**.\n- Trong tool catalog hiện tại cũng không có binding kiểu `agy_dispatch`, `agy_task_status`, `agy_get_result`, `agy_callback_status` hoặc Universal Gateway tương đương.\n\nVì vậy tôi **không dispatch** task `NATIVE-CHAT-AUDIT-20261019-01-74d39d56`, đúng theo yêu cầu “không fallback”. Không có ACK/workflow/run/operation mới để báo cáo.\n\n### Kết luận kỹ sư\n\n**AGY hosted runtime đang PASS không đồng nghĩa native Chat binding đã tồn tại.**\n\nHiện trạng chính xác là:\n\n```text\nChatGPT ordinary chat\n        X\n   native AGY binding\n        ↓\nAGY Gateway → Temporal → Worker\n```\n\nPhần còn thiếu là **một connector/plugin/MCP được expose trực tiếp cho ChatGPT chat**, tối thiểu có:\n\n`bootstrap → dispatch → status/result → callback_status → reconcile`\n\nvới authentication + project/workspace scoping.\n\nVì binding đó chưa có trong tool surface hiện tại, kết luận đúng là:\n\n**`BLOCKED_PRODUCT_BINDING`**, không phải `AGY_RUNTIME_FAIL`.\n\nVà đây chính là hạng mục phải giải quyết trước khi đóng gói AGY thành thứ có thể dùng tự nhiên từ ChatGPT, Gemini hoặc thiết bị khác.",
+  "native_dispatch_attempted": false,
+  "test_task_id": "NATIVE-CHAT-AUDIT-20261019-01-74d39d56",
+  "runtime_failure": false,
+  "scope": "Current originating ordinary ChatGPT chat; not a claim that all accounts lack MCP support",
+  "minimum_adapter": "Authenticated Streamable HTTP MCP wrapper with bootstrap, dispatch, status/result, callback readback and reconcile; bind scoped user identity rather than shared credential",
+  "architecture_boundary": "Existing staging serves REST only; remote MCP hosting plus identity/discovery and ChatGPT workspace connection is a new external trust surface. Preserve existing gateway and prepare design; do not silently provision/enable a new auth service."
+}
