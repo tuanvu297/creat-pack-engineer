@@ -1,0 +1,10 @@
+{
+  "entries": [
+    {
+      "identity_key": "05009985e05119696eebad4bbe5b5c53842f5af6c3655873344b3a8669d69d34",
+      "payload_sha256": "6fbcc794e3f1373772ac4764fad3a11df7069fa83f0fd09b13cc4ed1d8ed34f8",
+      "state": "ACCEPTED",
+      "operation_id": "DEMO-OPERATION-001"
+    }
+  ]
+}

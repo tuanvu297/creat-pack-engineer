@@ -1,0 +1,33 @@
+{
+  "standard_id": "AGY-CONNECTION-STANDARD",
+  "standard_version": "1.0.0",
+  "lock_status": "OWNER_LOCKED_VERSIONED_STANDARD",
+  "owner_instruction": "Đóng gói các kết nối thành bộ quy trình chuẩn AGY, khóa cứng. Xuất bản thành file",
+  "scope": "Connection operating standard and offline guard only; not runtime installation or production promotion",
+  "canonical_authority": "EXISTING_POSTGRES_D049",
+  "supabase_mode": "SHADOW_STAGING_ONLY",
+  "global_routing": "LEGACY",
+  "production": false,
+  "work_executor_fallback": false,
+  "uncertain_action": "RECONCILE_ONLY",
+  "change_authority": "OWNER_NEW_VERSION_ONLY",
+  "unknown_state": "RETAIN_UNKNOWN",
+  "required_identity": [
+    "mission_id",
+    "task_id",
+    "attempt",
+    "idempotency_key"
+  ],
+  "required_provenance": [
+    "worker",
+    "executor_runtime",
+    "source_ref",
+    "checkpoint_id"
+  ],
+  "qa_contract_version": "1.1",
+  "secret_values_in_package": false,
+  "credentials": "EXTERNAL_SECRET_STORE_OR_ENVIRONMENT_REFERENCE_ONLY",
+  "native_chat_ingestion": "BLOCKED_PRODUCT_BINDING_AT_BASELINE",
+  "offline_guard_network_requests": 0,
+  "observed_at": "2026-10-20T20:47:19.643762+07:00"
+}

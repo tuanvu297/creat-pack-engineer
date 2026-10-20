@@ -1,0 +1,231 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AGY connection standard envelope (not the runtime wire format)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "standard_version",
+    "scope",
+    "identity",
+    "worker",
+    "executor_runtime",
+    "objective",
+    "connection_id",
+    "action",
+    "source",
+    "authorization",
+    "budget",
+    "qa",
+    "forecast",
+    "execution"
+  ],
+  "properties": {
+    "standard_version": {
+      "const": "1.0.0"
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tenant_id",
+        "workspace_id",
+        "project_id"
+      ],
+      "properties": {
+        "tenant_id": {
+          "type": "string"
+        },
+        "workspace_id": {
+          "type": "string"
+        },
+        "project_id": {
+          "type": "string"
+        }
+      }
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mission_id",
+        "task_id",
+        "attempt",
+        "idempotency_key"
+      ],
+      "properties": {
+        "mission_id": {
+          "type": "string"
+        },
+        "task_id": {
+          "type": "string"
+        },
+        "attempt": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "idempotency_key": {
+          "type": "string"
+        }
+      }
+    },
+    "worker": {
+      "type": "string"
+    },
+    "executor_runtime": {
+      "type": "string"
+    },
+    "objective": {
+      "type": "string"
+    },
+    "connection_id": {
+      "type": "string"
+    },
+    "action": {
+      "enum": [
+        "DISPATCH",
+        "STATUS",
+        "RESULT",
+        "CALLBACK",
+        "RECONCILE",
+        "STOP"
+      ]
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "checkpoint_id",
+        "source_ref"
+      ],
+      "properties": {
+        "checkpoint_id": {
+          "type": "string"
+        },
+        "source_ref": {
+          "type": "string"
+        }
+      }
+    },
+    "authorization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "grant_ref",
+        "scope_confirmed"
+      ],
+      "properties": {
+        "grant_ref": {
+          "type": "string"
+        },
+        "scope_confirmed": {
+          "type": "boolean"
+        }
+      }
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "decision",
+        "currency",
+        "maximum_new_spend"
+      ],
+      "properties": {
+        "decision": {
+          "type": "string"
+        },
+        "currency": {
+          "type": "string"
+        },
+        "maximum_new_spend": {
+          "type": "integer"
+        }
+      }
+    },
+    "qa": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract_version",
+        "result_timeout_ms",
+        "qa_timeout_ms"
+      ],
+      "properties": {
+        "contract_version": {
+          "type": "string"
+        },
+        "result_timeout_ms": {
+          "type": "integer"
+        },
+        "qa_timeout_ms": {
+          "type": "integer"
+        }
+      }
+    },
+    "forecast": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "success_path",
+        "most_likely",
+        "failure_step",
+        "unknowns",
+        "cost_exposure",
+        "rollback"
+      ],
+      "properties": {
+        "success_path": {
+          "type": "string"
+        },
+        "most_likely": {
+          "type": "string"
+        },
+        "failure_step": {
+          "type": "string"
+        },
+        "unknowns": {
+          "type": "string"
+        },
+        "cost_exposure": {
+          "type": "string"
+        },
+        "rollback": {
+          "type": "string"
+        }
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "environment",
+        "canonical_authority",
+        "supabase_mode",
+        "global_routing",
+        "production",
+        "work_executor_fallback"
+      ],
+      "properties": {
+        "environment": {
+          "type": "string"
+        },
+        "canonical_authority": {
+          "type": "string"
+        },
+        "supabase_mode": {
+          "type": "string"
+        },
+        "global_routing": {
+          "type": "string"
+        },
+        "production": {
+          "type": "boolean"
+        },
+        "work_executor_fallback": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "description": "Structural interchange schema. bin/agy_standard.py is the stricter offline policy guard; it cannot prove external auth or dispatch."
+}

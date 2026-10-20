@@ -1,0 +1,13 @@
+{
+  "baseline_checkpoint": "CP-AGY-TEMPORAL-STAGING-20261020-04",
+  "runtime_source_commit": "36516473f4e41578bb5ee11e33273ce66f9d173d",
+  "audit_commit": "aa9ff744a96c542f33032b96a516dca64581c37c",
+  "audit_pr": "https://github.com/tuanvu297/creat-pack-engineer/pull/13",
+  "audit_report": "https://drive.google.com/file/d/1mjThxCT_xJbtps4GRIhoFQQ6QS0c94zO/view",
+  "checkpoint": "https://drive.google.com/file/d/1UCqSGhADXmSaWrk5Ulby0KbKXR4hBnom/view",
+  "evidence": "https://drive.google.com/file/d/18otbfiw4iQ52fET0HUAkr_aRbPNs-WDr/view",
+  "start_here": "https://docs.google.com/document/d/10Ph_XvsgytAHsdECGDNkPY94l4EIuTat-4VWtbXrTsY/edit",
+  "decision_log": "https://docs.google.com/document/d/1TFSkLh7ZfAxHq-mYSN-HG2Dp1XJaG_JWcItASe_4tME/edit",
+  "native_design": "https://drive.google.com/file/d/1yYvuz1DDZSk6txI8-99p93MACGf3mW4J/view",
+  "observation_rule": "Historical evidence snapshot, not live connection health or a new provider acceptance claim."
+}

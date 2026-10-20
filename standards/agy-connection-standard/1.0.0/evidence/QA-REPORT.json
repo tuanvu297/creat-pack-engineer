@@ -1,0 +1,28 @@
+{
+  "at": "2026-10-20T13:52:44.613462+00:00",
+  "scope": "Offline operating standard/guard, not live AGY integration",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "os": "Windows-10-10.0.19045-SP0",
+  "unit_tests": 33,
+  "fail": 0,
+  "skip": 0,
+  "clean_source_copy_doctor": {
+    "returncode": 0,
+    "stdout": "{\"status\": \"PASS\", \"scope\": \"OFFLINE_PACKAGE_INTEGRITY_AND_POLICY\", \"files\": 21, \"version\": \"1.0.0\", \"live_auth_tested\": false}\n",
+    "stderr": ""
+  },
+  "pdf_visual_qa": "PASS: eight latest rendered pages inspected; no overlap, clipping or missing Vietnamese glyphs",
+  "peer_review": "PASS_READ_ONLY_INDEPENDENT_REVIEW",
+  "PACKAGE_BUILT": "PASS_WITH_EXTERNAL_RECEIPT_FINAL_ARCHIVE_HASH",
+  "LOCAL_FUNCTION_PASS": "PASS_OFFLINE_GUARD",
+  "INSTALL_TEST_PASS": "PASS_CLEAN_COPY_WINDOWS_OFFLINE_ONLY",
+  "AUTH_VERIFIED": "NOT_REQUIRED_OFFLINE; LIVE_NOT_TESTED_THIS_RELEASE",
+  "LIVE_EXECUTION_PASS": "NOT_TESTED_THIS_RELEASE",
+  "INTEGRATED_PASS": "NOT_TESTED_THIS_RELEASE",
+  "new_runtime_dispatches": 0,
+  "network_requests_by_guard": 0,
+  "limits": [
+    "No fresh runtime suite was replayed to publish the procedure file",
+    "No native MCP adapter, credential, database or production change"
+  ]
+}

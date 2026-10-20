@@ -1,0 +1,86 @@
+{
+  "standard_version": "1.0.0",
+  "kind": "HISTORICAL_EVIDENCE_SNAPSHOT_NOT_LIVE_HEALTH",
+  "baseline": "CP-AGY-TEMPORAL-STAGING-20261020-04",
+  "last_live_health_observed_at": "2026-10-20T13:31:29Z",
+  "connections": [
+    {
+      "id": "AGY_STAGING_REST",
+      "name": "Gateway HTTPS staging",
+      "status": "OBSERVED_BOUNDED",
+      "actions": [
+        "DISPATCH",
+        "STATUS",
+        "RESULT",
+        "CALLBACK",
+        "RECONCILE",
+        "STOP"
+      ],
+      "scope": "Fixed R11 source verification in accepted project; no model inference",
+      "adapter": "existing authenticated REST gateway"
+    },
+    {
+      "id": "TEMPORAL",
+      "name": "Temporal progression/history",
+      "status": "OBSERVED_BOUNDED",
+      "actions": [],
+      "scope": "Existing staging private backend; client does not call this directly"
+    },
+    {
+      "id": "POSTGRES",
+      "name": "Canonical operational state",
+      "status": "OBSERVED_BOUNDED",
+      "actions": [],
+      "scope": "Existing D-049 PostgreSQL authority; scoped runtime identity"
+    },
+    {
+      "id": "JOURNAL",
+      "name": "Persistent single-writer journal",
+      "status": "OBSERVED_BOUNDED",
+      "actions": [],
+      "scope": "Existing /data journal; missing/corrupt/uncertain fails closed"
+    },
+    {
+      "id": "GITHUB",
+      "name": "Source/version/checkpoint",
+      "status": "OBSERVED_BOUNDED",
+      "actions": [],
+      "scope": "Private repository and exact-object readback; not worker execution"
+    },
+    {
+      "id": "DRIVE",
+      "name": "Shared reports/evidence",
+      "status": "OBSERVED_BOUNDED",
+      "actions": [],
+      "scope": "Private Drive checkpoints and exact-byte/archive readback"
+    },
+    {
+      "id": "CHATGPT_NATIVE",
+      "name": "Ordinary ChatGPT native AGY binding",
+      "status": "BLOCKED_PRODUCT_BINDING",
+      "actions": [],
+      "scope": "No exposed Temporal AGY MCP tools in originating chat at audit"
+    },
+    {
+      "id": "CODEX_WORK_NATIVE",
+      "name": "Codex/Work native tool binding",
+      "status": "UNVERIFIED",
+      "actions": [],
+      "scope": "Independent local HTTP clients observed; native install not proved"
+    },
+    {
+      "id": "GEMINI_OTHER_AI",
+      "name": "Gemini / other AI adapters",
+      "status": "UNVERIFIED",
+      "actions": [],
+      "scope": "HTTP/MCP portability inferred only"
+    },
+    {
+      "id": "DEVICE_CLIENT",
+      "name": "Desktop/mobile/edge client",
+      "status": "UNVERIFIED",
+      "actions": [],
+      "scope": "Individual devices, ARM/OS installs not accepted"
+    }
+  ]
+}

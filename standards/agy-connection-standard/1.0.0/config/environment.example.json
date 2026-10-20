@@ -1,0 +1,11 @@
+{
+  "profile_kind": "EXAMPLE_NOT_CONNECTED",
+  "gateway_origin": "https://gateway.example.invalid",
+  "credential_reference": "EXTERNAL_SECRET_STORE_REFERENCE",
+  "tenant_id": "YOUR_TENANT_ID",
+  "workspace_id": "YOUR_WORKSPACE_ID",
+  "project_id": "YOUR_PROJECT_ID",
+  "mode": "TEMPORAL_SHADOW",
+  "production": false,
+  "note": "Do not put tokens/passwords here. This example does not provision or connect any service."
+}

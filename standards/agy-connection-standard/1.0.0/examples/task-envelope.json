@@ -1,0 +1,53 @@
+{
+  "standard_version": "1.0.0",
+  "scope": {
+    "tenant_id": "demo-tenant",
+    "workspace_id": "demo-workspace",
+    "project_id": "demo-project"
+  },
+  "identity": {
+    "mission_id": "DEMO-MISSION-001",
+    "task_id": "DEMO-TASK-001",
+    "attempt": 1,
+    "idempotency_key": "DEMO-ONCE-001"
+  },
+  "worker": "DEMO_WORKER",
+  "executor_runtime": "EXPLICIT_HOSTED_RUNTIME",
+  "objective": "Offline contract example only; do not dispatch this fixture",
+  "connection_id": "AGY_STAGING_REST",
+  "action": "DISPATCH",
+  "source": {
+    "checkpoint_id": "CP-AGY-TEMPORAL-STAGING-20261020-04",
+    "source_ref": "36516473f4e41578bb5ee11e33273ce66f9d173d"
+  },
+  "authorization": {
+    "grant_ref": "DEMO-NON-LIVE-GRANT",
+    "scope_confirmed": true
+  },
+  "budget": {
+    "decision": "APPROVED_EXISTING_RESOURCES_ONLY",
+    "currency": "USD",
+    "maximum_new_spend": 0
+  },
+  "qa": {
+    "contract_version": "1.1",
+    "result_timeout_ms": 120000,
+    "qa_timeout_ms": 3600000
+  },
+  "forecast": {
+    "success_path": "Read-only offline validation",
+    "most_likely": "Eligible for actual live preflight, not permission to dispatch",
+    "failure_step": "Missing binding/auth/scope blocks before effect",
+    "unknowns": "Actual target capabilities remain unverified",
+    "cost_exposure": "No network and no provider inference in this example",
+    "rollback": "Retain ledger/evidence; do not replay"
+  },
+  "execution": {
+    "environment": "staging",
+    "canonical_authority": "EXISTING_POSTGRES_D049",
+    "supabase_mode": "SHADOW_STAGING_ONLY",
+    "global_routing": "LEGACY",
+    "production": false,
+    "work_executor_fallback": false
+  }
+}

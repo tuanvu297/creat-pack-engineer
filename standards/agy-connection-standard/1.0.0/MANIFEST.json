@@ -1,0 +1,156 @@
+{
+  "package_name": "AGY-CONNECTION-STANDARD",
+  "package_version": "1.0.0",
+  "artifact_kind": "OWNER_LOCKED_OPERATING_STANDARD_WITH_OFFLINE_GUARD",
+  "purpose": "Standardize AGY connections, task identity, auth/scope, durable ACK, QA/callback and no-replay recovery; export PDF/ZIP without installing runtime connectors",
+  "created_at": "2026-10-20T20:53:41.927287+07:00",
+  "runtime_requirements": {
+    "offline_utility": "Python >=3.10, standard library only",
+    "document": "PDF reader",
+    "live_core": "Not bundled; unchanged accepted staging scope only"
+  },
+  "dependencies": [],
+  "entrypoints": [
+    "AGY-CONNECTION-STANDARD-1.0.0.pdf",
+    "README.md",
+    "bin/agy_standard.py doctor",
+    "bin/agy_standard.py decide --request PATH --ledger PATH"
+  ],
+  "input_contract": "contracts/task-envelope.schema.json plus stricter policy guard; standard envelope is not runtime wire format",
+  "output_contract": "Offline JSON decision only; dispatch_permitted=false; no network/provider actions",
+  "authentication_requirements": "No auth required for offline utilities. Live connections require external scoped identities and current server-side authorization; no credential values included.",
+  "test_status": {
+    "PACKAGE_BUILT": "PASS_WITH_EXTERNAL_RECEIPT",
+    "LOCAL_FUNCTION_PASS": "PASS_OFFLINE_GUARD",
+    "INSTALL_TEST_PASS": "PASS_WINDOWS_OFFLINE_CLEAN_COPY",
+    "AUTH_VERIFIED": "NOT_REQUIRED_OFFLINE",
+    "LIVE_EXECUTION_PASS": "UNVERIFIED_THIS_RELEASE",
+    "INTEGRATED_PASS": "UNVERIFIED_THIS_RELEASE"
+  },
+  "known_limits": [
+    "Native Chat remains BLOCKED_PRODUCT_BINDING at baseline",
+    "Reusable Core installation remains NOT_READY",
+    "No cross-platform/device live compatibility claim",
+    "No public redistribution/customer license granted",
+    "Version/hash checks are not a digital signature or an absolute anti-tamper lock"
+  ],
+  "manifest_self_hash_excluded": true,
+  "external_zip_sha256_covers_manifest": true,
+  "files": [
+    {
+      "path": "AGY-CONNECTION-STANDARD-1.0.0.md",
+      "bytes": 14369,
+      "sha256": "146520b57ebd7c4bc8ba35ba84afa08c8cceeb8530c470fc605bc42866b7d371"
+    },
+    {
+      "path": "AGY-CONNECTION-STANDARD-1.0.0.pdf",
+      "bytes": 104733,
+      "sha256": "6e3757ed47de6359ef6d15abadd956627aab1d8f2cd294ea80eca56ab70acfa9"
+    },
+    {
+      "path": "bin/agy_standard.py",
+      "bytes": 9596,
+      "sha256": "7946ca00f7384ca88277e2d49c56a441809526ab33dd05f9e864cafa7b6f63cb"
+    },
+    {
+      "path": "config/connections.snapshot.json",
+      "bytes": 2670,
+      "sha256": "07151db9326454c9a7214699e3254db90892c17fc53fe5ac1f121558bfdc6fc1"
+    },
+    {
+      "path": "config/environment.example.json",
+      "bytes": 435,
+      "sha256": "145416d99a1b31591d9af98c1f08789b9ff05100a9c7711ef55bcd80494a6ab8"
+    },
+    {
+      "path": "config/policy.lock.json",
+      "bytes": 1223,
+      "sha256": "64c837ee7655d4952b13ea0deaf5839a00457c6d46b89b60c25b91a6e0c12950"
+    },
+    {
+      "path": "contracts/API-MAPPING.md",
+      "bytes": 1923,
+      "sha256": "d827e054ea629cee9b1492baa614a680199ae28ed3fd12f3f88ab8375b600aa4"
+    },
+    {
+      "path": "contracts/task-envelope.schema.json",
+      "bytes": 4995,
+      "sha256": "e5db9fc873fe9a2313c05b91eebbe0877838f279c8b77dcc23e8df9e069b4b3d"
+    },
+    {
+      "path": "docs/ADOPTION.md",
+      "bytes": 2493,
+      "sha256": "22fa1556e222472db081ae3d38ee31e1ac3a21766862586fe9b28479dc77b37f"
+    },
+    {
+      "path": "docs/CHANGE-AND-ROLLBACK.md",
+      "bytes": 1538,
+      "sha256": "e3faeeb408eb96d1583e8912beb8b6a11d1330382f4dc98c5d2fa5b1f023847d"
+    },
+    {
+      "path": "evidence/BASELINE-CHECKPOINT.json",
+      "bytes": 3302,
+      "sha256": "5315e602dd5bacc37b5fe908c1a71e9c4e17eaed65b282dd44bc6a902672447d"
+    },
+    {
+      "path": "evidence/PEER-REVIEW.json",
+      "bytes": 967,
+      "sha256": "382bc9c628033e35683beed38b32db12a91cc7dc2a686ee8134ce3e8784d0dc7"
+    },
+    {
+      "path": "evidence/QA-REPORT.json",
+      "bytes": 1300,
+      "sha256": "533f5ba8ec20830c094ce308333f11e391276dc5828b91206d1fa7de6832391f"
+    },
+    {
+      "path": "evidence/SECRET-SCAN.json",
+      "bytes": 330,
+      "sha256": "12ce6f92e6fc1d0d41201acda1cad032fb865f43b925e74441e4194ce55b9867"
+    },
+    {
+      "path": "evidence/SOURCE-REFERENCES.json",
+      "bytes": 978,
+      "sha256": "32af41f22c286dd2f4b73ff48cf19c20318270ebe51bf6e559f946984840a2a3"
+    },
+    {
+      "path": "examples/ledger-accepted.json",
+      "bytes": 297,
+      "sha256": "74637d6abe011657d5214dacea8f0858159c114c1bd9aeeb2eb2a8e6d2557163"
+    },
+    {
+      "path": "examples/ledger-empty.json",
+      "bytes": 23,
+      "sha256": "949085781997ff11b62aaa9827717f6b74d9df1bf1927ad5c9be509edd2930b0"
+    },
+    {
+      "path": "examples/ledger-uncertain.json",
+      "bytes": 280,
+      "sha256": "319fe7dae2bdf306bc857ee2efbe60d02776a4a861c75c1e7705b174d93c55d4"
+    },
+    {
+      "path": "examples/task-envelope.json",
+      "bytes": 1704,
+      "sha256": "9ad06e996e7d80114fb600188c8411b80687a213d3a45971407c9e9debc27802"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3195,
+      "sha256": "495d2206bf43a4c3fff058d60084debf29bb4c0a389e99b3c67fe579bcb68243"
+    },
+    {
+      "path": "RIGHTS.md",
+      "bytes": 227,
+      "sha256": "11dc863354c8c8805e5c9c720337c3af53388cc65abc8e87fff2eb5e3979d7eb"
+    },
+    {
+      "path": "tests/test_standard.py",
+      "bytes": 8877,
+      "sha256": "b4ef94c5e228373a4cce4938dfd90e72c77fae7f44923145b7b90539ce87715b"
+    },
+    {
+      "path": "VERSION",
+      "bytes": 7,
+      "sha256": "4ca8bbd3c595ee306226c6996b32b8d47a900217c55a7ed0cfc868ee444f34f1"
+    }
+  ]
+}

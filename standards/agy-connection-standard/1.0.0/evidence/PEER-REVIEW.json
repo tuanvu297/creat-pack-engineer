@@ -1,0 +1,28 @@
+{
+  "verdict": "PASS",
+  "reviewer": "standard_peer_qa independent read-only sub-agent",
+  "worker": "Codex unified systems/release engineer owns delivery",
+  "scope": [
+    "bin/agy_standard.py",
+    "config",
+    "contracts/API-MAPPING.md",
+    "docs/ADOPTION.md",
+    "docs/CHANGE-AND-ROLLBACK.md",
+    "AGY-CONNECTION-STANDARD-1.0.0.md",
+    "README.md",
+    "tests/test_standard.py fixture helper"
+  ],
+  "findings": [
+    {
+      "severity": "P3",
+      "finding": "Markdown command table inserted literal slash separators into command",
+      "disposition": "FIXED_AND_REVIEWED"
+    }
+  ],
+  "blocking_findings": 0,
+  "review_limits": [
+    "Archive integrity, clean extraction, PDF rendering and executed tests are parent verification responsibilities",
+    "No network or provider execution by reviewer"
+  ],
+  "observed_result": "No false native/runtime PASS; guard never permits dispatch; authority/uncertainty/version-lock limitations correctly scoped"
+}
