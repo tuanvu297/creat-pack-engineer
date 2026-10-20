@@ -1,0 +1,891 @@
+{
+  "commit": "36516473f4e41578bb5ee11e33273ce66f9d173d",
+  "tree_complete": true,
+  "files_checked": 147,
+  "missing": [],
+  "mismatches": [],
+  "files": [
+    {
+      "path": "agy-temporal-shadow/.gitignore",
+      "sha": "0eb8a9c15f072d32d9e216e0d99f90387c719665",
+      "exact": true,
+      "lf_equivalent": false
+    },
+    {
+      "path": "agy-temporal-shadow/AGY-RUNTIME-CHECKPOINT-v2.json",
+      "sha": "1a947bcb3c444ddc8f3ba050102364f5204e06c8",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/AGY-RUNTIME-DEPLOYMENT.md",
+      "sha": "d1025655958e1a6ee9e7ca6c4adde681d09d46f7",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/AGY-RUNTIME-SELF-QA-v2.md",
+      "sha": "6917c8df10904fef7013c7e202c84ba23ad2a574",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/README.md",
+      "sha": "b4ee885b9c8605360a868260fa960f42839e2137",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/SOURCE-MANIFEST.json",
+      "sha": "08dd116c64a5bf951f0f47c65e6294ee93f6b109",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/VERSION",
+      "sha": "7601a35e0bcda31fef7ebc6b1b89e1cab6c6fdcc",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/checkpoints/CP-AGY-TEMPORAL-STAGING-20261018-02.json",
+      "sha": "06bb77553984aa16f5950464d9375b875f664a59",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/config/r11-gateway.env.example",
+      "sha": "f5ea71bc97f384b8922a5040fba52a032c63bed0",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/config/temporal.env.example",
+      "sha": "8da0baa9311215c3fd802a03c618bfb0507e8ebf",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/docs/HOSTED-STAGING.md",
+      "sha": "4defea075026ae2d87ec149067d1a2cb9a84498f",
+      "exact": true,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/docs/R11-GATEWAY-ADAPTER.md",
+      "sha": "3818fcf21818a908694197aa70b371ca6b8ae077",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/docs/TEMPORAL-ARCHITECTURE.md",
+      "sha": "dd48bf72a921ec69d8daadfc6b6da21d20687284",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/docs/TEMPORAL-LEARNING.md",
+      "sha": "131ce210191fc7914a5d4844879c021ffa536583",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/docs/TEMPORAL-QA-REPORT.md",
+      "sha": "9b44340796c33a7e97278ab67c5da4a529d49163",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/docs/TEMPORAL-RUNBOOK.md",
+      "sha": "2251c457b5e4c9391e7efdecb57fe6ad45e7f2d4",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/docs/TEMPORAL-STAGING-SLICE2.md",
+      "sha": "ad8d16b6db79ae7f6e2412cbf92b0008b8afcf27",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/evidence/r11-gateway-adapter/validation.json",
+      "sha": "c89ac7cf2bb6879c44188b8f510327e1876a1e13",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/evidence/slice2/BASE-CONTINUITY-VERIFIED.json",
+      "sha": "c34f9b56d80494ccf5aea98fc6558b9bea97043f",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/evidence/slice2/BLOCKER-EVIDENCE.json",
+      "sha": "6fab58e77979ceae72d800f2b27f8239b4ee8f07",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/evidence/slice2/BOOTSTRAP-FRESHNESS.json",
+      "sha": "b650aa3426540913a975197a3cd7f4c0e578f3f8",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/evidence/slice2/CALLBACK-RECEIPT.json",
+      "sha": "d524751ffe21981ea9def7b72d0ace34cf911fdc",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/evidence/slice2/CODEX-ROUTE-PROBE.json",
+      "sha": "029ced6dfea705e4944e402ef302211fec044324",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/evidence/slice2/CODEX-STREAMING-ROUTE-REJECTION.json",
+      "sha": "f43b791640976be022af416d17bc9917092ce4f9",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/evidence/slice2/HTTP-GATEWAY-READBACK.json",
+      "sha": "7820d311fb5e9b19bc3b5445e0cc28cb1395292f",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/evidence/slice2/NATIVE-COMMAND-ARTIFACT.json",
+      "sha": "1c502d166db6a12475f5aa13d6c00dbf3104e4f1",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/evidence/slice2/NATIVE-OPERATIONS-RECONCILIATION.json",
+      "sha": "84c8c2fffde4115f31ecc44c6e04d3c8311e914d",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/evidence/slice2/SHARED-STATE-READBACK.json",
+      "sha": "cc365a394976905f418ce6e18412929134d92e50",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/evidence/slice2/acceptance.json",
+      "sha": "379f7fb032008e282566f15e0b05b17fee892656",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/examples/temporal-shadow-mission.json",
+      "sha": "e2aaa68c825874c5fdf4ed9a877ab04475ccd13c",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/migrations/001_worker_engine_v1.sql",
+      "sha": "7f843362009e88dc2591e6595e7f6147bbb72a3d",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/migrations/002_resource_optimization.sql",
+      "sha": "c54fbb5dc0a85411d0901ef457b209999c99db61",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/migrations/003_resource_learning_engine.sql",
+      "sha": "d497cda524bbbf491f1bb37ae5316d68cbe09187",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/migrations/004_platform_projects.sql",
+      "sha": "532c10ae16e8c69aa7c5166529d03148a50407f6",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/migrations/005_platform_dispatch.sql",
+      "sha": "a19f614212295c29f9b916df202efba2bdbb3632",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/migrations/006_global_approval_audit.sql",
+      "sha": "bf34f649fec6cc729a1f92d65457089394a0e904",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/migrations/007_runtime_capability_projection.sql",
+      "sha": "0a48010e683dd521144846a74c3f413f03555f3f",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/migrations/008_durable_runtime.sql",
+      "sha": "7bcc3b69aea01e0661963cfca9999b9d1698408a",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/migrations/009_temporal_shadow.sql",
+      "sha": "d5f5ded1ccf68ac23c9d6fb68c9140bc05874874",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/migrations/010_temporal_native_command.sql",
+      "sha": "917178ba26b87a2784ed6f090829a1d1dcb16702",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/migrations/011_hosted_r11.sql",
+      "sha": "9420f73934b4d7c5fe65644ab16956959ca15df3",
+      "exact": true,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/package.json",
+      "sha": "4f129cbd177d4aeeb47bce2680cd805538634eda",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/pnpm-lock.yaml",
+      "sha": "81c7182a36fa266431306a8b87bf7c2525cad2c8",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/pnpm-workspace.yaml",
+      "sha": "44120827e1b339e2b7dff1a986d95a72e2a774ff",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/process-acceptance.json",
+      "sha": "63e741d04c9ad21055acd90e726022de012816e8",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/rollback/007_runtime_capability_projection.sql",
+      "sha": "fb4006246062401c6a85af825b7c76d28f6a64af",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/adapters.ts",
+      "sha": "4ee3641dc5045f4b49d11c1ecf212c7f48e92e6a",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/competency.ts",
+      "sha": "abe7d2b9ebbedc2b8f488ee969f09a2a125a639a",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/engine.ts",
+      "sha": "8f750004e367e741e51027469dbb914bc6d03bc5",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/gateway-shadow/config.ts",
+      "sha": "c0cbe31cee6e3e08448cb703fe8dd0cf99c3ebfe",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/gateway-shadow/init-journal.ts",
+      "sha": "16a07022a0f5b527ffa15dc5648caa3731bf980c",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/gateway-shadow/journal.ts",
+      "sha": "e376e53f95346e4a42d2044f0c789e8f14bb6eaa",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/gateway-shadow/runtime.ts",
+      "sha": "3500a8b0d09e5a72a3d9420ec463a9d650d70b23",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/gateway-shadow/transport.ts",
+      "sha": "57ad14b8390f5d28ad16386d2c3a5868a72aad40",
+      "exact": true,
+      "lf_equivalent": false
+    },
+    {
+      "path": "agy-temporal-shadow/src/gateway-shadow/worker.ts",
+      "sha": "df99a49220d4836ff1123f26c0d5a4206e62b062",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/hosted/provision-cli.ts",
+      "sha": "b1dbe260a43529f4fd4d3de5006752c3a3ee39e2",
+      "exact": true,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/hosted/provision.ts",
+      "sha": "12e803c86a0cb43fbda51546f8c61ee337f4e0a8",
+      "exact": true,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/hosted/r11-executor.ts",
+      "sha": "4c47e7b44bec14f716c662a181e1bc14ced96107",
+      "exact": true,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/hosted/r11-host.ts",
+      "sha": "41c5046d8a527fc01ee878819a7512ec0686b5c1",
+      "exact": true,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/learning-engine.ts",
+      "sha": "bdaf209b9f2166146cef674232256b18012b0f47",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/learning-store.ts",
+      "sha": "7bc805c8bf5727de9d0acb12d18965589c96265e",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/learning.ts",
+      "sha": "8d78ea4951e771a386fd135500082ffbe5d354ff",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/operations-api.ts",
+      "sha": "231bb7967e7b653a9bac300d5ce46c74699952b1",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/platform/allocation.ts",
+      "sha": "66bf0d32c0f7bfc64ddc9797a1749c19de58f04c",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/platform/auth.ts",
+      "sha": "56da0e8d03c783f8cb417ac65a89e4825d8434d1",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/platform/connectors.ts",
+      "sha": "f33b452347a105f1bae664d4c7afe5b621858a01",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/platform/daemon.ts",
+      "sha": "25431048b177edc9cf87addef2b1e65826bcaad0",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/platform/dispatcher.ts",
+      "sha": "4b08c6582c26dd71d4b337867f1300d576c92ccd",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/platform/global-learning.ts",
+      "sha": "11f0111ee9c34873d5b6192ec661a28f2be911ba",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/platform/global-store.ts",
+      "sha": "fc362dec0d567ba35b0bc0381352e32a41d21bb0",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/platform/legacy-daemon.ts",
+      "sha": "edcf1dea34991192b483518820f8a2ff2e1b8746",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/platform/legacy-worker.ts",
+      "sha": "f0d3e9757f46fc3abf8cf21593a7a9814da0ea93",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/platform/rollback.ts",
+      "sha": "439d9aeec3484068bde1b2507cd252441f8b38a3",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/platform/runtime-status.ts",
+      "sha": "be45c53e778b43032c39f4ed6f8742f37b15ff1e",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/platform/scope.ts",
+      "sha": "12cd698ccd679c33ad21bf7738b9c37a04e2e2d7",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/platform/scoped-pool.ts",
+      "sha": "6e50201ee5aef2db83d59cc69862f1073bb31e01",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/platform/service.ts",
+      "sha": "bb19126c1e5bf7f47b13a9df58ea26121b64d21a",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/platform/worker.ts",
+      "sha": "eb3324647648bd9b4810428161cf303114dd71ab",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/postgres-store.ts",
+      "sha": "ae1132283ac883bfcc0b42300efa1b749b39fb77",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/qa.ts",
+      "sha": "16b1ebfd8e7ef27c7a9f30c62044c7725d0a1a82",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/resource-store.ts",
+      "sha": "2c10e88da84b476c61743bfec0d7109805292d6a",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/resources/accounting.ts",
+      "sha": "c5dae558af42f58a52641347e2a2b74d0a0eead5",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/resources/allocation.ts",
+      "sha": "50cdb10dd4d48c925314a767ace28e3f741390f3",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/resources/demand.ts",
+      "sha": "d93b26d5367e4242115a6f93f8814b13ac49a0e8",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/resources/discovery.ts",
+      "sha": "01f0e9243dbb7ea770823f4c1cfe71f3bf73fd9e",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/resources/manager.ts",
+      "sha": "50dea2f5df261d4d76f553a9ff73533dc5c21d98",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/resources/offload.ts",
+      "sha": "28fb1782f1337161c977360d3a5a2ef53b08b1a9",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/resources/optimization.ts",
+      "sha": "6b55f6033005e30f0d5f08bd324121646be13ada",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/resources/recovery.ts",
+      "sha": "c3bb18ba0784753f457deaf22be1dad87e1b23c7",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/resources/types.ts",
+      "sha": "8cde52435f8b56904b0aad52064d8ddd3520898f",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/scheduler.ts",
+      "sha": "25af5053e1005e907c7458d7a906c2c531196fc1",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/server.ts",
+      "sha": "82631025dd60322fe9ba1571ef148eb773529367",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/temporal/bridge.ts",
+      "sha": "225032eedd6caebee39fcc710fb68d766c6ecb60",
+      "exact": true,
+      "lf_equivalent": false
+    },
+    {
+      "path": "agy-temporal-shadow/src/temporal/config.ts",
+      "sha": "c97d2eeec4e002fd91558c217590c9db7b94f45b",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/temporal/contracts.ts",
+      "sha": "a584d604a4fc3b31e45b77b5ff90eeaeee8dc265",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/temporal/gateway.ts",
+      "sha": "1ff66d55fbc1641f5f34decd97edd768deb09105",
+      "exact": true,
+      "lf_equivalent": false
+    },
+    {
+      "path": "agy-temporal-shadow/src/temporal/hosting.ts",
+      "sha": "6cc637cf944096077281adbc0ea19512e3b333d1",
+      "exact": true,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/temporal/http-server.ts",
+      "sha": "d74c6d9c81b3026d087b4e85363cf7920280567a",
+      "exact": true,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/temporal/native-check.ts",
+      "sha": "de57bbfbddabe697ce04c6e8848c0e57953a172d",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/temporal/native-command.ts",
+      "sha": "35892fc083b45b857a070d0b05d1cf4e2e579f87",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/temporal/result-events.ts",
+      "sha": "ed87b61e11a5c9f9e38cfd88ef4e60d586e53c6e",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/temporal/server.ts",
+      "sha": "8bd9d9c58de7d16852815fb324df06aabadec2da",
+      "exact": true,
+      "lf_equivalent": false
+    },
+    {
+      "path": "agy-temporal-shadow/src/temporal/supervision.ts",
+      "sha": "41d74c3eaac5ce0e0bc3ac8e96c13132ab714af8",
+      "exact": true,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/temporal/supervisor.ts",
+      "sha": "0fea38855b16030a99bc30cc169aae784cadd72d",
+      "exact": true,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/temporal/worker.ts",
+      "sha": "8de410faa1a3dfe18b9c790cfd44a426df59a67e",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/temporal/workflow.ts",
+      "sha": "6c500ef664628106f385d27261292a074f878d79",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/types.ts",
+      "sha": "d2b6b691bdd978b22b445a27701f05a7712f5808",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/src/v2.ts",
+      "sha": "7de59cc1c462ad393f8a3078f06ab6c0df8bda91",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/approval-boundary.test.ts",
+      "sha": "4dc6a6909b25a2e6723fd9d73b85be44d7db4c98",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/connector-contract.test.ts",
+      "sha": "2ac8aef90fa9a4b352bbed82629504bd3d7044a8",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/dispatcher.test.ts",
+      "sha": "b64674f76db6afea1c5107f9a6fdd791a91405e1",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/engine.test.ts",
+      "sha": "e9db82383326835c0008f29928eb85e6c73caa6d",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/fake-shadow-gateway.ts",
+      "sha": "3f6b5ccd45f037d4d2257483df5963e217eba4e4",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/fixtures/railway-gateway-20261018.txt",
+      "sha": "908b8696cfb8d9f631ed2dc80dc3c6ecf74a6a93",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/gateway-journal-recovery.test.ts",
+      "sha": "7a5e774f03ca61925bdfe35f6451fc0495e5c71a",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/gateway-shadow.test.ts",
+      "sha": "285c24da3286bffd6536c0b8a3dcccd1a1518968",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/hosted-provision.test.ts",
+      "sha": "36c5982ee3964258df7a5ec0b1a06e287771bdd0",
+      "exact": true,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/hosted-r11.test.ts",
+      "sha": "95c9f6cb8315ac6dd4efd75d553ebb07adbdf1fa",
+      "exact": true,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/hosted-staging.test.ts",
+      "sha": "9b3838e4fd8269d17244fc25f340f59c4b5c8433",
+      "exact": true,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/in-memory-store.ts",
+      "sha": "842e108bdd819208e852b9cffea556d4d50a04a2",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/learning-engine.test.ts",
+      "sha": "5df5692b4e45b6ecd25758f0fa61bab3a5ddeb36",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/mission5-handoff.ts",
+      "sha": "7a961f318f0fee27a8c67951c88d2a2795d76d0a",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/mission5-live-preflight.ts",
+      "sha": "12f008502244cbd7bee431abc1b61d20017f82d9",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/mission5-project-observations.ts",
+      "sha": "43badd17b4b59688d8cb5320b6542f99878de0cd",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/mission5-resume6-local-qa.ts",
+      "sha": "4d43801a1b23d10cf218b34df25801c0ee0d61b0",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/mission5-resume6-native.ts",
+      "sha": "d5f5206b826198a4aa52be71dc8666e4077499ee",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/mission5-runtime.test.ts",
+      "sha": "1e4e6c9193afe3db50db73cbdfcf62cf96b2a697",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/optimization.test.ts",
+      "sha": "9143083ef09a784ae58616a972faa6673de0449e",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/platform-postgres.integration.test.ts",
+      "sha": "5b9acc3f17376dd27f43d83147fb82ae78fd1fd7",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/platform.test.ts",
+      "sha": "0238beecf8f4a4f5e691bfd41e699f5e0fa9a12b",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/postgres.integration.test.ts",
+      "sha": "714368813970d0c1e606c50533b7c54e5103cfbe",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/recovery-engine.test.ts",
+      "sha": "da194a02844c51013370da6c79a002c4befe4901",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/resource-manager.test.ts",
+      "sha": "90ac81e9d63624b59a4d34b4d9f1df14d4b45ef9",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/runtime-postgres.integration.test.ts",
+      "sha": "7eb8b8b75a67684aa1e5c8b0c42d7f6d1e92b43c",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/sprint4-claim-process.ts",
+      "sha": "159f295d3b3dc58ecdc3a0690e84f217074a510a",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/sprint4-codex-connector.ts",
+      "sha": "863ae92d171d77b2280a79b32863bb074e473006",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/sprint4-connector-worker.ts",
+      "sha": "34a33d06198269b29224c588eece50d53570dac5",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/sprint4-live-connector.ts",
+      "sha": "ecb0c007aef7b8a11893a9bc2edb5a69af633389",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/sprint4-verification.ts",
+      "sha": "bb4a6f5c865795e3cc5245a35dedfb599aaa5625",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/temporal-event-contract.test.ts",
+      "sha": "a77c7bdf9fedf7a24c28031d50fdc5ea979c222b",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/temporal-server-restart.ts",
+      "sha": "4c8d06d785fc1a20c939677ea49d72b1c0daf326",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/temporal-shadow.integration.test.ts",
+      "sha": "04bc46e15c13a47e6721bd59aa92ed4fce506e69",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/temporal-slice2-http-readback.ts",
+      "sha": "ed67fda7fad672d56475e0dc73d9b6635159da35",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/temporal-slice2-reconcile.ts",
+      "sha": "fa869d15c0fde937550372dad7e4c486f8268405",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/temporal-staging-slice2.ts",
+      "sha": "a01095cc48c580b309d682a3809b0125c2722acb",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/test/v2.test.ts",
+      "sha": "a415b01efa2c440371ca4af461934afb1477531d",
+      "exact": false,
+      "lf_equivalent": true
+    },
+    {
+      "path": "agy-temporal-shadow/tsconfig.json",
+      "sha": "dab536debce22651e35926dd9501a803569e4310",
+      "exact": false,
+      "lf_equivalent": true
+    }
+  ]
+}
