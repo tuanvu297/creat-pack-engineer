@@ -1,0 +1,79 @@
+{
+  "version": "0.1.0",
+  "state": "DESIGN_NOT_DEPLOYED",
+  "direction": "Muse calls the existing AGY controller; no personal-agent push API asserted",
+  "endpoint": null,
+  "transport": "provider_supported_authenticated_API_or_MCP_to_be_verified",
+  "canonical_store": "existing_AGY_PostgreSQL_not_a_second_queue",
+  "auth": "server_verified_delegated_subject_project_scopes",
+  "tools": [
+    {
+      "name": "read_assigned_job",
+      "scope": "project.job.read",
+      "effect": "read",
+      "requirements": [
+        "authenticated_worker",
+        "assigned_project"
+      ]
+    },
+    {
+      "name": "ack_assigned_job",
+      "scope": "project.job.ack",
+      "effect": "write",
+      "requirements": [
+        "fresh_lease",
+        "exact_task_attempt_idempotency",
+        "actual_worker_identity"
+      ]
+    },
+    {
+      "name": "heartbeat_job",
+      "scope": "project.job.heartbeat",
+      "effect": "write",
+      "requirements": [
+        "same_fence",
+        "same_operation"
+      ]
+    },
+    {
+      "name": "read_approved_asset",
+      "scope": "project.asset.read",
+      "effect": "read",
+      "requirements": [
+        "allowlisted_asset_id"
+      ]
+    },
+    {
+      "name": "submit_job_result",
+      "scope": "project.result.write",
+      "effect": "write",
+      "requirements": [
+        "same_worker_lease_operation",
+        "artifact_hash",
+        "evidence_receipt",
+        "no_secret_payload"
+      ]
+    },
+    {
+      "name": "read_callback_status",
+      "scope": "project.callback.read",
+      "effect": "read",
+      "requirements": [
+        "same_project_task"
+      ]
+    }
+  ],
+  "denied_tools": [
+    "arbitrary_shell",
+    "raw_sql",
+    "arbitrary_http",
+    "change_account_access",
+    "publish",
+    "purchase",
+    "delete",
+    "write_canon"
+  ],
+  "wakeup": "NOT_IMPLEMENTED_NOT_PROVEN_by_connector_support",
+  "consumer_session_api": "NOT_CONFIRMED",
+  "model_api": "separate_surface_not_activated"
+}
