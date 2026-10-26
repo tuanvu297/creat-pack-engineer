@@ -1,0 +1,104 @@
+[
+  {
+    "type": "owner",
+    "id": "current_direct_instruction_20261026",
+    "scope": "Muse execution/skills/plugin preparation and approved Drive checkpoint write"
+  },
+  {
+    "type": "repo",
+    "url": "https://github.com/tuanvu297/creat-pack-engineer",
+    "commit": "090553d4f204a3eb808351972cc966d84c4e57dd",
+    "paths": [
+      "agy-muse-alignment/README.md",
+      "agy-muse-alignment/training/TEACH-PACK-001.md",
+      "agy-muse-alignment/evals/EVAL-PROTOCOL.md"
+    ]
+  },
+  {
+    "type": "drive",
+    "id": "10Ph_XvsgytAHsdECGDNkPY94l4EIuTat-4VWtbXrTsY",
+    "title": "AGY START HERE",
+    "url": "https://drive.google.com/open?id=10Ph_XvsgytAHsdECGDNkPY94l4EIuTat-4VWtbXrTsY",
+    "read_on": "2026-10-26_or_retained_verified_session_read",
+    "must_refresh": true
+  },
+  {
+    "type": "drive",
+    "id": "1TFSkLh7ZfAxHq-mYSN-HG2Dp1XJaG_JWcItASe_4tME",
+    "title": "AGY Decision Log",
+    "url": "https://drive.google.com/open?id=1TFSkLh7ZfAxHq-mYSN-HG2Dp1XJaG_JWcItASe_4tME",
+    "read_on": "2026-10-26_or_retained_verified_session_read",
+    "must_refresh": true
+  },
+  {
+    "type": "drive",
+    "id": "1mFB9ugcXq9v0K9geDvO8K2-zgn3rWHvSLCAMmct7760",
+    "title": "AGY Worker Checkpoint",
+    "url": "https://drive.google.com/open?id=1mFB9ugcXq9v0K9geDvO8K2-zgn3rWHvSLCAMmct7760",
+    "read_on": "2026-10-26_or_retained_verified_session_read",
+    "must_refresh": true
+  },
+  {
+    "type": "drive",
+    "id": "15DpZ8wmT19O7MyNt5dI9y0TT3PIe8XkwNqnp5hI-Xks",
+    "title": "Agency Work Content Intelligence Education Pack v0.1",
+    "url": "https://drive.google.com/open?id=15DpZ8wmT19O7MyNt5dI9y0TT3PIe8XkwNqnp5hI-Xks",
+    "read_on": "2026-10-26_or_retained_verified_session_read",
+    "must_refresh": true
+  },
+  {
+    "type": "drive",
+    "id": "1vSvGs_zt-xY6KmvpKuSSSYqgTQqPfK03rGSCRn5UeOI",
+    "title": "Agency Skill Library Index v1.0",
+    "url": "https://drive.google.com/open?id=1vSvGs_zt-xY6KmvpKuSSSYqgTQqPfK03rGSCRn5UeOI",
+    "read_on": "2026-10-26_or_retained_verified_session_read",
+    "must_refresh": true
+  },
+  {
+    "type": "drive",
+    "id": "1RAWU4BGwuEkTbQl5Zi5I5EOr8lJJMxek",
+    "title": "GL Podcast Voice v1",
+    "url": "https://drive.google.com/open?id=1RAWU4BGwuEkTbQl5Zi5I5EOr8lJJMxek",
+    "read_on": "2026-10-26_or_retained_verified_session_read",
+    "must_refresh": true
+  },
+  {
+    "type": "drive",
+    "id": "1b3Z3nrGODP7gTR5v7ipui6i-iHkQUdgHak7sgQTKPEc",
+    "title": "Reference Reel Pattern Mining v0.1",
+    "url": "https://drive.google.com/open?id=1b3Z3nrGODP7gTR5v7ipui6i-iHkQUdgHak7sgQTKPEc",
+    "read_on": "2026-10-26_or_retained_verified_session_read",
+    "must_refresh": true
+  },
+  {
+    "type": "drive",
+    "id": "1S98IZWRhF5rDdthPO-y5ETb1shHRS9bz0f_J22yzcqc",
+    "title": "AGY Three-AI Shared Workflow",
+    "url": "https://drive.google.com/open?id=1S98IZWRhF5rDdthPO-y5ETb1shHRS9bz0f_J22yzcqc",
+    "read_on": "2026-10-26_or_retained_verified_session_read",
+    "must_refresh": true
+  },
+  {
+    "type": "drive",
+    "id": "1YjefhTsmOWqdobGMcBiRy3urjUNxHmA6rv8sVPA8dr0",
+    "title": "ANA Producer Cut routing packet",
+    "url": "https://drive.google.com/open?id=1YjefhTsmOWqdobGMcBiRy3urjUNxHmA6rv8sVPA8dr0",
+    "read_on": "2026-10-26_or_retained_verified_session_read",
+    "must_refresh": true
+  },
+  {
+    "type": "official",
+    "url": "https://www.meta.com/help/superintelligence/1687253048996149/",
+    "scope": "Custom Connectors and account authorization"
+  },
+  {
+    "type": "official",
+    "url": "https://platform.muse.ai/docs",
+    "scope": "Connector API/MCP permissions"
+  },
+  {
+    "type": "official",
+    "url": "https://dev.meta.ai/docs/overview",
+    "scope": "Separate model inference route; pay-as-you-go, not activated"
+  }
+]

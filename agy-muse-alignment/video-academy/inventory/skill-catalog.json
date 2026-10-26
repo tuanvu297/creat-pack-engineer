@@ -1,0 +1,599 @@
+{
+  "scope": "Readable installed skill metadata, not all user/account skills or Muse grants",
+  "collected_on": "2026-10-26",
+  "skills": [
+    {
+      "name": "imagegen",
+      "description": "Generate or edit raster images when the task benefits from AI-created bitmap visuals such as photos, illustrations, textures, sprites, mockups, or transparent-background cutouts. Use when Codex should create a brand-new image, transform an existing image, or derive visual variants from references, and the output should be a bitmap asset rather than repo-native code or vector. Do not use when the task is better handled by editing existing SVG/vector/code-native assets, extending an established icon or logo system, or building the visual directly in HTML/CSS/canvas.",
+      "source_package": ".system",
+      "source_relative_path": "imagegen/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "openai-docs",
+      "description": "Use for Codex models/pricing, scheduled tasks, skills, settings, setup, troubleshooting, customization, automations, and self-knowledge—including 'you,' 'your,' 'this app,' or 'this coding agent' when they refer to Codex—and for OpenAI APIs/products and ChatGPT Work. Also use for model choice/migration, prompting, SDKs, Responses, Realtime, agents, evals, and Chat/Work/Codex comparisons. Do not use for generic app/software tasks that merely mention Codex.",
+      "source_package": ".system",
+      "source_relative_path": "openai-docs/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "review-agent",
+      "description": "Perform a read-only, defect-first review of a specified code change and return every actionable finding. Use when another agent delegates review of uncommitted changes, a base-branch diff, a commit, or custom review instructions.",
+      "source_package": ".system",
+      "source_relative_path": "review-agent/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "skill-creator",
+      "description": "Create or update a Codex skill with appropriately scoped instructions and any needed supporting resources.",
+      "source_package": ".system",
+      "source_relative_path": "skill-creator/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "skill-installer",
+      "description": "Install Codex skills into $CODEX_HOME/skills from a curated list or a GitHub repo path. Use when a user asks to list installable skills, install a curated skill, or install a skill from another repo (including private repos).",
+      "source_package": ".system",
+      "source_relative_path": "skill-installer/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "ana-producer-runtime",
+      "description": "Use for the sole active ANA Producer Cut mission when browser execution through the existing AGY Steel runtime is required.",
+      "source_package": "created-by-me-remote",
+      "source_relative_path": "agy-ana-video-runtime/0.1.1/skills/ana-producer-runtime/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "computer-use",
+      "description": "Control Windows apps from ChatGPT",
+      "source_package": "openai-bundled",
+      "source_relative_path": "computer-use/26.930.41038/skills/computer-use/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "visualize",
+      "description": "Create visualizations and interactive tools directly in conversation. Proactively use to show how something works; explore 'what happens when', 'what changes', or 'help me understand'; compare or inspect; create simulations, maps, charts, graphs, and mockups. Use standard tools for static scientific figures.",
+      "source_package": "openai-bundled",
+      "source_relative_path": "visualize/1.0.46/skills/visualize/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "render-background-workers",
+      "description": ">-",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "app-6a624c56bfe081918f7544f7d58f6faf/1.0.2/skills/render-background-workers/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "render-blueprints",
+      "description": ">-",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "app-6a624c56bfe081918f7544f7d58f6faf/1.0.2/skills/render-blueprints/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "render-cli",
+      "description": ">-",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "app-6a624c56bfe081918f7544f7d58f6faf/1.0.2/skills/render-cli/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "render-cron-jobs",
+      "description": ">-",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "app-6a624c56bfe081918f7544f7d58f6faf/1.0.2/skills/render-cron-jobs/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "render-debug",
+      "description": "Debug failed Render deployments by analyzing logs, metrics, and database state. Identifies errors (missing env vars, port binding, OOM, etc.) and suggests fixes. Use when deployments fail, services won't start, or users mention errors, logs, or debugging.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "app-6a624c56bfe081918f7544f7d58f6faf/1.0.2/skills/render-debug/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "render-deploy",
+      "description": "Deploy applications to Render by analyzing codebases, generating render.yaml Blueprints, and providing Dashboard deeplinks. Use when the user wants to deploy, host, publish, or set up their application on Render's cloud platform.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "app-6a624c56bfe081918f7544f7d58f6faf/1.0.2/skills/render-deploy/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "render-disks",
+      "description": ">-",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "app-6a624c56bfe081918f7544f7d58f6faf/1.0.2/skills/render-disks/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "render-docker",
+      "description": ">-",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "app-6a624c56bfe081918f7544f7d58f6faf/1.0.2/skills/render-docker/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "render-domains",
+      "description": ">-",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "app-6a624c56bfe081918f7544f7d58f6faf/1.0.2/skills/render-domains/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "render-env-vars",
+      "description": ">-",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "app-6a624c56bfe081918f7544f7d58f6faf/1.0.2/skills/render-env-vars/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "render-keyvalue",
+      "description": ">-",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "app-6a624c56bfe081918f7544f7d58f6faf/1.0.2/skills/render-keyvalue/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "render-mcp",
+      "description": ">-",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "app-6a624c56bfe081918f7544f7d58f6faf/1.0.2/skills/render-mcp/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "render-migrate-from-heroku",
+      "description": "Migrate from Heroku to Render by reading local project files and generating equivalent Render services. Triggers: any mention of migrating from Heroku, moving off Heroku, Heroku to Render migration, or switching from Heroku. Reads Procfile, dependency files, and app config from the local repo. Optionally uses Heroku MCP to enrich with live config vars, add-on details, and dyno sizes. Uses Render MCP or Blueprint YAML to create services.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "app-6a624c56bfe081918f7544f7d58f6faf/1.0.2/skills/render-migrate-from-heroku/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "render-monitor",
+      "description": "Monitor Render services in real-time. Check health, performance metrics, logs, and resource usage. Use when users want to check service status, view metrics, monitor performance, or verify deployments are healthy.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "app-6a624c56bfe081918f7544f7d58f6faf/1.0.2/skills/render-monitor/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "render-networking",
+      "description": ">-",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "app-6a624c56bfe081918f7544f7d58f6faf/1.0.2/skills/render-networking/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "render-postgres",
+      "description": ">-",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "app-6a624c56bfe081918f7544f7d58f6faf/1.0.2/skills/render-postgres/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "render-private-services",
+      "description": ">-",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "app-6a624c56bfe081918f7544f7d58f6faf/1.0.2/skills/render-private-services/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "render-scaling",
+      "description": ">-",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "app-6a624c56bfe081918f7544f7d58f6faf/1.0.2/skills/render-scaling/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "render-static-sites",
+      "description": ">-",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "app-6a624c56bfe081918f7544f7d58f6faf/1.0.2/skills/render-static-sites/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "render-web-services",
+      "description": ">-",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "app-6a624c56bfe081918f7544f7d58f6faf/1.0.2/skills/render-web-services/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "render-workflows",
+      "description": ">-",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "app-6a624c56bfe081918f7544f7d58f6faf/1.0.2/skills/render-workflows/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "cloud-environment-runtime",
+      "description": "Read at the start of work in a managed cloud environment. Inspect network policy and configured credentials; build and run Docker containers with the session proxy and CA trust; use Tailscale VPN access, configure TCP forwarding, and diagnose access failures.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "cloud-environment/0.1.2/skills/runtime/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "google-docs",
+      "description": "Create and edit native Google Docs through connected tools.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "google-drive/0.1.22/skills/google-docs/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "google-drive",
+      "description": "Use connected Google Drive as the single entrypoint for Drive, Docs, Sheets, and Slides work. Use when the user wants to find, fetch, organize, share, export, copy, or delete Drive files, or summarize and edit Google Docs, Google Sheets, and Google Slides through one unified Google Drive plugin.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "google-drive/0.1.22/skills/google-drive/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "google-drive-comments",
+      "description": "Write, reply to, and resolve Google Drive comments on Docs, Sheets, Slides, and Drive files with evidence-backed location context. Use when the user asks to leave comments, review a file with comments, respond to comment threads, or resolve Drive comments.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "google-drive/0.1.22/skills/google-drive-comments/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "google-sheets",
+      "description": "Analyze and edit connected Google Sheets with range precision. Use when the user wants to create Google Sheets, find a spreadsheet, inspect tabs or ranges, search rows, plan formulas, create or repair charts, clean or restructure tables, write concise summaries, or make explicit cell-range updates.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "google-drive/0.1.22/skills/google-sheets/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "google-slides",
+      "description": "Route Google Slides authoring requests and derive a design system from a native template or reference deck. Use this skill when the user provides an existing native Google Slides deck as a template, reference, or prior-period source, or asks to edit, update, repair, restyle, or clean up an existing native Google Slides deck. Use the Presentations skill instead for net-new presentation creation when no existing native Google Slides deck must be followed.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "google-drive/0.1.22/skills/google-slides/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "artifact-template-analytics-dashboard",
+      "description": "Create a spreadsheet using the Analytics Dashboard template and its retained reference file. Use when the user selects or names Analytics Dashboard. Monitor acquisition, engagement, retention, revenue, and conversion funnel KPIs with charts.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "openai-templates/0.1.1/skills/artifact-template-analytics-dashboard/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "artifact-template-business-review",
+      "description": "Create a presentation using the Business Review template and its retained reference file. Use when the user selects or names Business Review. Review business performance, KPIs, segment results, strategic priorities, decisions, and outlook.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "openai-templates/0.1.1/skills/artifact-template-business-review/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "artifact-template-design-report",
+      "description": "Create a document using the Design Report template and its retained reference file. Use when the user selects or names Design Report. Produce design reports with an executive summary, key findings, implications, recommendations, and appendix.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "openai-templates/0.1.1/skills/artifact-template-design-report/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "artifact-template-experiment-analysis",
+      "description": "Create a document using the Experiment Analysis template and its retained reference file. Use when the user selects or names Experiment Analysis. Analyze experiments with hypotheses, methodology, results, interpretation, limitations, and next steps.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "openai-templates/0.1.1/skills/artifact-template-experiment-analysis/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "artifact-template-financial-budget",
+      "description": "Create a spreadsheet using the Financial Budget template and its retained reference file. Use when the user selects or names Financial Budget. Model actuals, budget and scenario forecasts, variances, cash runway, and departmental plans.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "openai-templates/0.1.1/skills/artifact-template-financial-budget/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "artifact-template-investment-committee-memo",
+      "description": "Create a document using the Investment Committee Memo template and its retained reference file. Use when the user selects or names Investment Committee Memo. Prepare investment committee memos with the thesis, transaction details, financial analysis, risks, and recommendation.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "openai-templates/0.1.1/skills/artifact-template-investment-committee-memo/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "artifact-template-legal-memorandum",
+      "description": "Create a document using the Legal Memorandum template and its retained reference file. Use when the user selects or names Legal Memorandum. Draft legal memoranda with the issue, brief answer, relevant facts, analysis, and conclusion.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "openai-templates/0.1.1/skills/artifact-template-legal-memorandum/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "artifact-template-market-trends-report",
+      "description": "Create a presentation using the Market Trends Report template and its retained reference file. Use when the user selects or names Market Trends Report. Communicate market or industry trends, supporting evidence, implications, and recommended responses.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "openai-templates/0.1.1/skills/artifact-template-market-trends-report/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "artifact-template-minimal-letterhead",
+      "description": "Create a document using the Minimal Letterhead template and its retained reference file. Use when the user selects or names Minimal Letterhead. Write professional business letters with sender, recipient, message, and signature fields in a minimal letterhead layout.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "openai-templates/0.1.1/skills/artifact-template-minimal-letterhead/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "artifact-template-operating-calendar",
+      "description": "Create a spreadsheet using the Operating Calendar template and its retained reference file. Use when the user selects or names Operating Calendar. Plan annual and monthly operating milestones, campaigns, launches, deadlines, and recurring events.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "openai-templates/0.1.1/skills/artifact-template-operating-calendar/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "artifact-template-operating-review",
+      "description": "Create a presentation using the Operating Review template and its retained reference file. Use when the user selects or names Operating Review. Run weekly operating reviews with scorecards, functional updates, risks, decisions, and action items.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "openai-templates/0.1.1/skills/artifact-template-operating-review/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "artifact-template-project-kickoff",
+      "description": "Create a presentation using the Project Kickoff template and its retained reference file. Use when the user selects or names Project Kickoff. Align teams on project goals, scope, roles, milestones, risks, and the working model.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "openai-templates/0.1.1/skills/artifact-template-project-kickoff/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "artifact-template-project-tracker",
+      "description": "Create a spreadsheet using the Project Tracker template and its retained reference file. Use when the user selects or names Project Tracker. Manage workstreams, tasks, owners, status, priority, dates, launch pulse, and a Gantt schedule.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "openai-templates/0.1.1/skills/artifact-template-project-tracker/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "artifact-template-sales-pipeline",
+      "description": "Create a spreadsheet using the Sales Pipeline template and its retained reference file. Use when the user selects or names Sales Pipeline. Track opportunities, stages, owners, deal sizes, probabilities, forecasts, next steps, and risks.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "openai-templates/0.1.1/skills/artifact-template-sales-pipeline/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "artifact-template-simple-dark-mode",
+      "description": "Create a presentation using the Simple Dark Mode template and its retained reference file. Use when the user selects or names Simple Dark Mode. Create clean dark-mode presentations with bold typography, simple sections, charts, and imagery.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "openai-templates/0.1.1/skills/artifact-template-simple-dark-mode/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "artifact-template-simple-light-mode",
+      "description": "Create a presentation using the Simple Light Mode template and its retained reference file. Use when the user selects or names Simple Light Mode. Create clean light-mode presentations with spacious typography, simple sections, charts, and imagery.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "openai-templates/0.1.1/skills/artifact-template-simple-light-mode/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "artifact-template-strategy-memorandum",
+      "description": "Create a document using the Strategy Memorandum template and its retained reference file. Use when the user selects or names Strategy Memorandum. Present strategic context, choices, rationale, risks, milestones, and a clear recommendation.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "openai-templates/0.1.1/skills/artifact-template-strategy-memorandum/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "artifact-template-system-design",
+      "description": "Create a document using the System Design template and its retained reference file. Use when the user selects or names System Design. Document system architecture, requirements, components, data flows, APIs, tradeoffs, and operational considerations.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "openai-templates/0.1.1/skills/artifact-template-system-design/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "artifact-template-team-alignment",
+      "description": "Create a presentation using the Team Alignment template and its retained reference file. Use when the user selects or names Team Alignment. Facilitate team offsites and planning with context, goals, priorities, decisions, and action items.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "openai-templates/0.1.1/skills/artifact-template-team-alignment/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "artifact-template-three-statement-forecast",
+      "description": "Create a spreadsheet using the Three-Statement Forecast template and its retained reference file. Use when the user selects or names Three-Statement Forecast. Build an integrated income statement, balance sheet, and cash flow forecast with assumptions, checks, and an executive summary.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "openai-templates/0.1.1/skills/artifact-template-three-statement-forecast/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "starter-workflow",
+      "description": "A starter skill to replace with the plugin owner's specific workflow before publishing.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "plugin-creator/0.1.28/skills/create-plugin/assets/starter-plugin/skills/starter-workflow/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "create-plugin",
+      "description": "Create local or cloud plugins. Use when the user asks to build an app, tool, integration, or plugin within ChatGPT or Codex, not a standalone skill. Covers custom MCP apps, skills bundled in plugins, tools that connect agents to websites and services, and extensions for custom app views, file handling, and referencing app data in chat.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "plugin-creator/0.1.28/skills/create-plugin/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "prepare-plugin-submission",
+      "description": "Guide a user through preparing an existing plugin for public submission, including review and publication metadata, listing, examples, demo, and reviewer access. Use when the user wants to get ready to submit, create a submission-ready ZIP, submit, or publicly release a plugin.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "plugin-creator/0.1.28/skills/prepare-plugin-submission/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "update-plugin",
+      "description": "Inspect, edit, or extend custom plugins the user owns or has permission to edit. Use when the user asks to change a plugin's instructions, skills, tools, app UI, Extensions, metadata, assets, or configuration, delete packaged files, or inspect a previous version.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "plugin-creator/0.1.28/skills/update-plugin/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "plugin-management",
+      "description": "Discover and suggest relevant plugins, inspect app permissions and dependencies, and manage plugin connections or removal. Use when the user asks about plugins or when a task would materially benefit from an external app, account, service, or data source that available tools cannot access.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "plugin-management/0.1.0/skills/plugin-management/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "sites",
+      "description": "Use Sites when the user wants a website built for them (including a landing page, portfolio, dashboard, portal, tracker, hub, game, event registration, or tool), requests changes to a website already built with Sites, wants to publish a website with Sites, or wants to manage Sites hosting.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "sites/1.1.2/skills/sites/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "sites-remix",
+      "description": "Remix a Site built with the Sites plugin into a new Site. Use when the user has identified the source Site and asks to remix it.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "sites/1.1.2/skills/sites-remix/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "supabase",
+      "description": "Use when doing ANY task involving Supabase. Triggers: Supabase products (Database, Auth, Edge Functions, Realtime, Storage, Vectors, Cron, Queues); client libraries and SSR integrations (supabase-js, @supabase/ssr) in Next.js, React, SvelteKit, Astro, Remix; auth issues (login, logout, sessions, JWT, cookies, getSession, getUser, getClaims, RLS); Supabase CLI or MCP server; schema changes, migrations, security audits, Postgres extensions (pg_graphql, pg_cron, pg_vector).",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "supabase/1.0.0/skills/supabase/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "supabase-postgres-best-practices",
+      "description": "Postgres performance optimization and best practices from Supabase. Use this skill when writing, reviewing, or optimizing Postgres queries, schema designs, or database configurations.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "supabase/1.0.0/skills/supabase-postgres-best-practices/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "windsor",
+      "description": "Analyze marketing and business data and run supported write actions across 350+ sources through Windsor.ai. Use when the user asks about performance, metrics, or spend from any connected platform (ads, analytics, SEO, CRM, e-commerce, payments, warehouses), wants to compare channels, connect a source, run a supported action such as pausing a campaign or setting a budget, or schedule a recurring data export. Do not use for writing marketing copy or for general advice unrelated to the user's connected accounts.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "windsor-ai/4.0.0/skills/windsor/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "create-pet",
+      "description": "Create, repair, validate, preview, upload, or activate an animated v2 pet in ChatGPT Work mode from a character idea, brand cue, or reference image. Use for new ChatGPT Pets, custom mascots, non-pixel styles, and unattached sprite sheets requiring nine animation states plus sixteen look directions. Preserve Library artifacts and Pets MCP lifecycle behavior. Exclude real pets, standalone images, and other-app pets; clarify before invoking.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "work-pets/0.1.6/skills/create-pet/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "pets",
+      "description": "List, inspect, select, download, or delete animated pets in ChatGPT Work mode. Use for an explicit pet in ChatGPT or established ChatGPT Pets context. Exclude real-world and other-app pets; clarify before invoking.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "work-pets/0.1.6/skills/pets/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "update-pet",
+      "description": "Inspect, validate, preview, repair, or update a custom pet in ChatGPT Work mode, including its name, description, or sprite sheet. Use for a pet in ChatGPT or established ChatGPT Pets context. Exclude real-world and other-app pets; clarify before invoking.",
+      "source_package": "openai-curated-remote",
+      "source_relative_path": "work-pets/0.1.6/skills/update-pet/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "documents",
+      "description": "Create, edit, redline, and comment on `.docx`, Word, and Google Docs-targeted document artifacts inside the container, with a strict render-and-verify workflow. Use `render_docx.py` to generate page PNGs (and optional PDF) for visual QA, then iterate until layout is flawless before delivering the final document.",
+      "source_package": "openai-primary-runtime",
+      "source_relative_path": "documents/26.1022.11436/skills/documents/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "pdf",
+      "description": "Read, create, inspect, render, and verify PDF files where visual layout matters, including fillable AcroForms. Use Poppler rendering plus Python tools such as reportlab, pdfplumber, and pypdf for generation and extraction.",
+      "source_package": "openai-primary-runtime",
+      "source_relative_path": "pdf/26.1022.11436/skills/pdf/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "Presentations",
+      "description": "Read, create or edit PowerPoint or Google Slides decks. Use for presentation, slide deck, PowerPoint, PPT, PPTX, or Google Slides requests.",
+      "source_package": "openai-primary-runtime",
+      "source_relative_path": "presentations/26.1022.11436/skills/presentations/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "excel-live-control",
+      "description": "Control an open or active Microsoft Excel workbook through the ChatGPT add-in or connected session. Use when the user tags the Microsoft Excel app in Codex or follows up on an established live Excel task. Do not use for standalone spreadsheet files or Google Sheets.",
+      "source_package": "openai-primary-runtime",
+      "source_relative_path": "spreadsheets/26.1022.11436/skills/excel-live-control/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "Spreadsheets",
+      "description": "Use skill when user requests to create, modify, analyze, visualize, or work with spreadsheet files (`.xlsx`, `.xls`, `.csv`, `.tsv`) or Google Sheets with formulas, formatting, charts, tables, and recalculation. Do not use for live controlling Microsoft Excel app or a live Excel session.",
+      "source_package": "openai-primary-runtime",
+      "source_relative_path": "spreadsheets/26.1022.11436/skills/spreadsheets/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    },
+    {
+      "name": "template-creator",
+      "description": "Create or update a reusable personal Codex artifact-template skill. Use when the user invokes $template-creator or asks in natural language to create a reusable template from a reference document, presentation, spreadsheet, Google Docs, Slides, or Sheets link, ImageGen or Product Design image, email, Slack message, or Site project, or explicitly asks to edit or update a passed artifact-template skill. Do not use for one-off creation from an existing template.",
+      "source_package": "openai-primary-runtime",
+      "source_relative_path": "template-creator/26.1022.11436/skills/template-creator/SKILL.md",
+      "transfer": "METADATA_ONLY",
+      "muse_installation": "NOT_ASSERTED"
+    }
+  ],
+  "limitations": []
+}

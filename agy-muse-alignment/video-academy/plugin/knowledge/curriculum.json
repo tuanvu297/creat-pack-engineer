@@ -1,0 +1,131 @@
+{
+  "version": "0.1.0",
+  "delivery": "NOT_SENT",
+  "mastery": "NOT_EVALUATED",
+  "modules": [
+    {
+      "id": "M01",
+      "lesson": "00-operating-contract.md",
+      "artifact": "normalize_task_and_state_gates",
+      "check": [
+        "source_precedence",
+        "no_claimed_connector_transfer",
+        "scope_safe_blocker"
+      ]
+    },
+    {
+      "id": "M02",
+      "lesson": "01-story-and-reference.md",
+      "artifact": "original_story_and_reference_pattern_card",
+      "check": [
+        "actual_source_access",
+        "observed_vs_inferred",
+        "no_copying_or_fake_metrics"
+      ]
+    },
+    {
+      "id": "M03",
+      "lesson": "02-shots-and-generation.md",
+      "artifact": "shot_packet_and_reference_continuity_map",
+      "check": [
+        "one_action_per_shot",
+        "identity_gate",
+        "current_settings_required"
+      ]
+    },
+    {
+      "id": "M04",
+      "lesson": "03-audio-edit-delivery.md",
+      "artifact": "voice_audition_and_edit_sound_plan",
+      "check": [
+        "distinct_voice_ids",
+        "Vietnamese_perceptual_QA",
+        "no_cut_words"
+      ]
+    },
+    {
+      "id": "M05",
+      "lesson": "04-artifact-qa.md",
+      "artifact": "timecoded_qa_report_and_bounded_repair",
+      "check": [
+        "full_motion_audio",
+        "metadata_scope",
+        "critical_false_pass_zero"
+      ]
+    },
+    {
+      "id": "M06",
+      "lesson": "05-runtime-and-permissions.md",
+      "artifact": "task_scope_ack_reconcile_callback_packet",
+      "check": [
+        "same_operation_no_duplicate",
+        "server_auth",
+        "no_raw_secrets"
+      ]
+    },
+    {
+      "id": "M07",
+      "lesson": "06-engineering-and-learning.md",
+      "artifact": "small_adapter_or_verifier_change_on_assigned_repo",
+      "check": [
+        "reproduce_then_fix",
+        "meaningful_tests",
+        "private_package_provenance"
+      ]
+    },
+    {
+      "id": "M08",
+      "lesson": "04-artifact-qa.md",
+      "artifact": "independent_visible_calibration",
+      "check": [
+        "visible_gold_not_blind",
+        "evidence_complete",
+        "critical_misses_zero"
+      ]
+    },
+    {
+      "id": "M09",
+      "lesson": "05-runtime-and-permissions.md",
+      "artifact": "one_actual_bounded_media_task_and_worker_trace",
+      "check": [
+        "approved_cost",
+        "real_worker_owned_tools",
+        "retrievable_artifact",
+        "independent_QA"
+      ]
+    },
+    {
+      "id": "M10",
+      "lesson": "05-runtime-and-permissions.md",
+      "artifact": "unattended_disconnect_restart_callback_test",
+      "check": [
+        "same_run_operation",
+        "one_effect",
+        "independent_readback"
+      ]
+    },
+    {
+      "id": "M11",
+      "lesson": "06-engineering-and-learning.md",
+      "artifact": "separately_assigned_unseen_transfer_task",
+      "check": [
+        "no_answer_key",
+        "no_material_regression",
+        "handoff_without_ChatGPT_routine_work"
+      ]
+    }
+  ],
+  "promotion": {
+    "critical_false_pass": 0,
+    "critical_missed": 0,
+    "visible_tests_do_not_establish_blind_mastery": true,
+    "required_live_gates": [
+      "access",
+      "auth",
+      "dispatch",
+      "artifact_QA",
+      "callback",
+      "recovery"
+    ]
+  }
+}

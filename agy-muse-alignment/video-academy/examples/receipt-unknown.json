@@ -1,0 +1,15 @@
+{
+  "tenant_id": "EXAMPLE_TENANT",
+  "workspace_id": "EXAMPLE_WORKSPACE",
+  "project_id": "EXAMPLE_PROJECT",
+  "controller_job_id": "EXAMPLE_JOB",
+  "task_id": "EXAMPLE_VIDEO_DRY_RUN",
+  "attempt": 1,
+  "idempotency_key": "EXAMPLE:VIDEO:DRY-RUN:A1",
+  "worker": "Muse",
+  "executor_runtime": "EXAMPLE_NOT_A_LIVE_RUNTIME",
+  "status": "UNKNOWN",
+  "operation_id": null,
+  "blocker": "EXAMPLE_NO_LIVE_ROUTE",
+  "next_safe_action": "Read/reconcile the same retained identity, never submit a duplicate"
+}

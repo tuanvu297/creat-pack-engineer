@@ -1,0 +1,45 @@
+{
+  "version": "0.1.0",
+  "project": "Sản xuất video AI",
+  "transfer_state": "PREPARED_NOT_ACCEPTED",
+  "current_execution_enabled": false,
+  "target": {
+    "primary_executor": "Muse",
+    "planner": "Gemini",
+    "secondary_executor": "Gemini",
+    "independent_qa": "Gemini_and_deterministic_checks",
+    "chatgpt_routine_execution": false,
+    "owner": "strategic_approver_and_recipient"
+  },
+  "forbidden": [
+    "publish",
+    "purchase",
+    "new_paid_usage",
+    "delete_data",
+    "change_canon",
+    "raw_secret_export"
+  ],
+  "max_retries": 2,
+  "unknown_submission": "RECONCILE_SAME_OPERATION",
+  "allowed_task_classes": [
+    "VIDEO_PRODUCTION",
+    "VIDEO_QA",
+    "ENGINEERING",
+    "REFERENCE_ANALYSIS",
+    "TRAINING"
+  ],
+  "evidence_policy": {
+    "schema_validation_is_media_acceptance": false,
+    "blind_mastery_requires_unseen_evaluation": true
+  },
+  "activation_requires": [
+    "legitimate_muse_access",
+    "project_scoped_provider_auth",
+    "real_worker_ack",
+    "verified_executor",
+    "cost_authority",
+    "independent_artifact_qa",
+    "callback_readback",
+    "client_disconnect_recovery"
+  ]
+}
