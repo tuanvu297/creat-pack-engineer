@@ -1,0 +1,100 @@
+{
+  "package": "AGY-GLSEO-ROUTE-QUALIFY-20261027 canonical v7 supplement (offline, A1-A2 + activation plan candidate v3)",
+  "task": "AGY-GLSEO-ROUTE-QUALIFY-20261027",
+  "attempt": "A1",
+  "base_pin": "36516473f4e41578bb5ee11e33273ce66f9d173d",
+  "deployment_base_owner_relayed": "f40c15b9e7d41a9259d73767ca9b7cfc173575f7 (deployed branch tip; ahead 2, 8 checkpoint/evidence files only)",
+  "stacks_on": "PR #15 canonical patch (head 65527f30e2b21b46a15943fea26428272e5c348f)",
+  "files": [
+    {
+      "path": "ACTIVATION_PLAN_CANDIDATE.md",
+      "bytes": 10556,
+      "sha256": "47e7a49ed765ac0988c3234925cc037c901aa2a56cc38d2a47721f01952000a5"
+    },
+    {
+      "path": "SUPPLEMENT_REPORT_V7.md",
+      "bytes": 5888,
+      "sha256": "1573991dfe513e6856ceca2bf450ab89d795d3eaee529952d638fc9caf47ebf4"
+    },
+    {
+      "path": "migrations/012_worker_callbacks.sql",
+      "bytes": 3928,
+      "sha256": "f88b34bead7f44201b437a740c8e5495ceaafbee77eefae58fdd4795ce3d24b7"
+    },
+    {
+      "path": "patches/01-postgres-store-v4.patch",
+      "bytes": 18843,
+      "sha256": "15018f9e819592ace650083c01e44d055d1f6945e82cdb5e53c0014eb771016b"
+    },
+    {
+      "path": "patches/02-worker-surface-v5.patch",
+      "bytes": 15098,
+      "sha256": "37e01ad6663a4bd7f488bdeef1d86ac62e71576d12a8733d337bba1f08e1b615"
+    },
+    {
+      "path": "patches/03-worker-ui-v4.patch",
+      "bytes": 22401,
+      "sha256": "3c91ae62c8c4d48a68a09f96d0ce80829ccce4f614f6dc15093e1f6f8f1f7e16"
+    },
+    {
+      "path": "patches/04-new-modules.patch",
+      "bytes": 40863,
+      "sha256": "60d410932e88201a2b1abefbb18471f649d0b97c0f12f4b19469f11b68e68324"
+    },
+    {
+      "path": "registry/qualification-registry.candidate.sql",
+      "bytes": 5054,
+      "sha256": "b4c7d423d3e40d5c0cc76bb633980d72d39cfb65e725c02c3d444886b19c9436"
+    },
+    {
+      "path": "registry/worker-registry.candidate-v3.sql",
+      "bytes": 5553,
+      "sha256": "6acc706e2e57e1fa77d91e65a112722332aa62e21265dd7c12dc210676380aea"
+    },
+    {
+      "path": "src/digest.ts",
+      "bytes": 845,
+      "sha256": "f9c2f7ceffa0e98c6ffae609e85e5b82bcaf5808508f053ba5853e4322d06111"
+    },
+    {
+      "path": "src/worker-callback-driver.ts",
+      "bytes": 7052,
+      "sha256": "58fd023726e516797fc49bfb5c94ac0bdeb393f82fa7e90eba00c1c221808154"
+    },
+    {
+      "path": "src/worker-callback-receiver.ts",
+      "bytes": 7079,
+      "sha256": "9811292a00340065b3b4302bf257146a0ba1ce7524b33d9a51ac37ac97924a16"
+    },
+    {
+      "path": "src/worker-callbacks.ts",
+      "bytes": 21966,
+      "sha256": "f0884ca09857c150ad55ce753ab1cbe1c053ff4352555aa613011715f1483db8"
+    },
+    {
+      "path": "src/worker-gate.ts",
+      "bytes": 2603,
+      "sha256": "cb6bf6ea6d33d73356d5159620f44ff3276885e7ce38847d19963a5abf1cd587"
+    },
+    {
+      "path": "src/worker-surface.ts",
+      "bytes": 11367,
+      "sha256": "c6adab932f3085e114fa481a17edfa4f6e3581f65c568b472dcd8ede0971cee4"
+    },
+    {
+      "path": "src/worker-ui.ts",
+      "bytes": 16245,
+      "sha256": "3a294c813288a855bfaa7f605df61dc47e459582762ace77dd2fd8f230a34c17"
+    },
+    {
+      "path": "test/worker-surface-v3.integration.test.ts",
+      "bytes": 50235,
+      "sha256": "d27843a5d5de697a73dabad150765ec7189f10f7524d98c9449a4684d73f5738"
+    },
+    {
+      "path": "test/worker-ui.integration.test.ts",
+      "bytes": 15833,
+      "sha256": "2c58d5883a76083fac34c07c6886846df7df6f84c37e74aa4049a878eedb84fa"
+    }
+  ]
+}
