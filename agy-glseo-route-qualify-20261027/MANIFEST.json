@@ -1,0 +1,158 @@
+{
+  "package": "AGY-GLSEO-ROUTE-QUALIFY-20261027 / A1 — candidate v2 (Q1-Q5 fix round)",
+  "created": "2026-10-28 (Asia/Saigon)",
+  "status": "CANDIDATE ONLY — nothing deployed, connected, granted or provisioned",
+  "task": {
+    "task_id": "AGY-GLSEO-ROUTE-QUALIFY-20261027",
+    "attempt": "A1",
+    "key": "AGY|GLSEO|ROUTE-QUALIFY|20261027|A1"
+  },
+  "live_check": "GET https://agy-temporal-staging-staging.up.railway.app/health -> READY (2026-10-28, read-only, no auth)",
+  "files": [
+    {
+      "path": "QA_FIX_REPORT_V2.md",
+      "bytes": 12217,
+      "sha256": "f2319d30127b0f43d8e163b3e5c989d9669e896d0da5d72ba69c2c8f396caa92"
+    },
+    {
+      "path": "canonical/CANONICAL_PORT_CANDIDATE.md",
+      "bytes": 7073,
+      "sha256": "6331814271ef9ff8f0915d98f3b711246dc5d1b875c03696c637b65f082af16c"
+    },
+    {
+      "path": "canonical/canonical-worker-surface.candidate.patch",
+      "bytes": 14094,
+      "sha256": "4c609a192b6339934e182d62f107a2112543bf1dd9c66aae0eec76182e4de5a0"
+    },
+    {
+      "path": "canonical/identities.candidate.json",
+      "bytes": 1665,
+      "sha256": "cd47ac527a355a9c5f435962b592d77cf9a2d0eba2e6b3507d50c6f1f07f671c"
+    },
+    {
+      "path": "canonical/src/platform/worker-surface.ts",
+      "bytes": 5435,
+      "sha256": "fea0deef1e38d716b47bff8cf5857565d05aab57d5d7955a17fc7a20f46c67be"
+    },
+    {
+      "path": "canonical/test/worker-surface.integration.test.ts",
+      "bytes": 10882,
+      "sha256": "588870708e5955784cf0c9e1c1757e469326b4463ea23f23dce23c8a73b6c6ea"
+    },
+    {
+      "path": "canonical/worker-registry.candidate.sql",
+      "bytes": 3086,
+      "sha256": "eed5b7ca2f577cd04e5d56d5606a8773c68bd162e60d993edc1e617b5097cad6"
+    },
+    {
+      "path": "connector-canonical/bin/agy_worker.py",
+      "bytes": 4435,
+      "sha256": "e387082975314e3173282b5329656d71618e28c7072126c227cb694e8c7e3c63"
+    },
+    {
+      "path": "connector-canonical/connector.yaml",
+      "bytes": 406,
+      "sha256": "afc5290d76c3af3362637247ee93123794082cb16186ac06cc246c92eaa8b9b8"
+    },
+    {
+      "path": "connector-shadow/CONNECTOR.md",
+      "bytes": 6048,
+      "sha256": "adb67006f83b09ec456f00266be038f362bef22f4f514ae6e9e9db1ed9fbf8c5"
+    },
+    {
+      "path": "connector-shadow/bin/agy_runtime.py",
+      "bytes": 9599,
+      "sha256": "cb0d765329eb82cef93f649c67e38ae753b214dbcd22cbf562964f66171b0025"
+    },
+    {
+      "path": "connector-shadow/connector.yaml",
+      "bytes": 362,
+      "sha256": "250f70f904a9355997df3b737b8ec08b733a5e0caaa5d587263f8aa02e9eb170"
+    },
+    {
+      "path": "evidence/fetch-receipt.json",
+      "bytes": 65101,
+      "sha256": "75a007fce0be058509d8d70dc7e6c03e52cdbc8844838590a6f2059fd51a65dc"
+    },
+    {
+      "path": "evidence/tree-summary.txt",
+      "bytes": 24730,
+      "sha256": "0aa0e8f435699a61f226fa99f4d0e92a944471ccc8605f9fb098f4a808fca84e"
+    },
+    {
+      "path": "gateway-v1/GATEWAY_FIX_REPORT.md",
+      "bytes": 15120,
+      "sha256": "2a158ed12903269080e28a775484c6f5969ee7d3ab0951dd7e2d1f314c1c91ad"
+    },
+    {
+      "path": "gateway-v1/agy-gateway-rpc.candidate.sql",
+      "bytes": 25804,
+      "sha256": "3aabd04876b201a521d999579dadd8f12a50e57a29fb9700cd12c66667c493e1"
+    },
+    {
+      "path": "gateway-v1/agy-gateway.candidate.ts",
+      "bytes": 10317,
+      "sha256": "aa2da07abdea0d1bc7fea63ddf0365f4cce585e1ac49167aca07cc94c4b341c3"
+    },
+    {
+      "path": "gateway-v2/GATEWAY_CANDIDATE_RUNBOOK_V2.md",
+      "bytes": 4488,
+      "sha256": "4734275803f1e356ced51678b5f5b0adddd0296ca4c4a25d58725b5f46cc00d1"
+    },
+    {
+      "path": "gateway-v2/agy-gateway-rpc.candidate-v2.sql",
+      "bytes": 37245,
+      "sha256": "a2d5e08e88984a2f5ab52022ed3f90456aa940de152535f03945406dd51162d3"
+    },
+    {
+      "path": "gateway-v2/agy-gateway.candidate-v2.ts",
+      "bytes": 11888,
+      "sha256": "4c7e36a8ca39200f9571ad554d36d8e5caf689d4a2e54f812060bcfdcd3611d7"
+    },
+    {
+      "path": "gateway-v2/test/agy-gateway-auth-v2.test.ts",
+      "bytes": 3700,
+      "sha256": "0f3e70e40cb28471b9992dbf33abcccb2203046859c5d449c5d84244b843cd2d"
+    },
+    {
+      "path": "gateway-v2/test/agy-gateway-auth.test.ts",
+      "bytes": 6512,
+      "sha256": "a85a4e475726929dd9cb5ac19542978cb4fce378b2785cfc814773711068b36a"
+    },
+    {
+      "path": "gateway-v2/test/sql/run-rpc-tests-v2.mjs",
+      "bytes": 17139,
+      "sha256": "b72b8d645ddcf5798a8fb6d4c54506919f30fcba73be7e71f1b74ae032277b8b"
+    },
+    {
+      "path": "gateway-v2/test/sql/run-rpc-tests.mjs",
+      "bytes": 12289,
+      "sha256": "7ef63c731db545a8f5fe8787c0200054f3a4de58adeaabf06744eb2a311c55c8"
+    },
+    {
+      "path": "gateway-v2/test/sql/run-sql-tests.sh",
+      "bytes": 1124,
+      "sha256": "696f146d2a4329b8125ee39a0f4584bec50f36b8681178c38d7f25284809a89e"
+    },
+    {
+      "path": "gateway-v2/test/sql/setup-shadow-schema.sql",
+      "bytes": 4925,
+      "sha256": "87aad655fb561b36418aa1e9d7c8eced16ece214a29b3de92e0e067d15069091"
+    },
+    {
+      "path": "source-deployed/GATEWAY-SUPPLEMENT-RECEIPT.json",
+      "bytes": 1427,
+      "sha256": "3975450f452345cd38ffb72fc85c0186f81302b08f178a59a39565f75a6c072e"
+    },
+    {
+      "path": "source-deployed/agy-gateway-rpc.deployed-20261027.sql",
+      "bytes": 21868,
+      "sha256": "f09e6e1107b8c01f43375728bd412cc112611e8ce7aead169d6680dc7cc1dba6"
+    },
+    {
+      "path": "source-deployed/agy-gateway.deployed-20261027.ts",
+      "bytes": 4793,
+      "sha256": "9c03efca158e7576911720a0d12022526c8050a8b902afe0f4ef2395932c8a52"
+    }
+  ]
+}

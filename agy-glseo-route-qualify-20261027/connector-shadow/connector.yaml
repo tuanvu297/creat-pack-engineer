@@ -1,0 +1,6 @@
+id: "custom.agy-runtime"
+title: "AGY Runtime (gateway-shadow worker)"
+description: "Use the AGY Runtime gateway as Muse, a bounded worker that registers, claims, acknowledges, heartbeats, checkpoints, submits results and reads callbacks on the existing Postgres ledger."
+include_in_prompt: false
+require_auth: true
+aliases: ["AGY gateway", "AGY worker runtime"]
