@@ -3,6 +3,7 @@ name: Claude Drive Bundle
 on:
   pull_request:
     branches: [main]
+    types: [opened, reopened, synchronize]
 
 permissions:
   contents: read
