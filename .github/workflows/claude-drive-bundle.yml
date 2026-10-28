@@ -1,0 +1,33 @@
+name: Claude Drive Bundle
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build-bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build sanitized Claude bundle
+        run: python tools/build_claude_bundle.py
+      - name: Show package receipt
+        run: cat dist/claude-bundle/PACKAGE-RECEIPT.json
+      - name: Upload Claude bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: claude-drive-bundle
+          path: |
+            dist/claude-bundle/Creat-Pack-Claude-Repo-20261028.zip
+            dist/claude-bundle/Creat-Pack-Claude-Repo-20261028.sha256
+            dist/claude-bundle/PACKAGE-RECEIPT.json
+          if-no-files-found: error
+          retention-days: 7
