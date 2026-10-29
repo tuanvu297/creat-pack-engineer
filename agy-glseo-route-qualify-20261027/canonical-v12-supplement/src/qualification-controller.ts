@@ -1,0 +1,401 @@
+import type { Pool, PoolClient } from "pg";
+import { ProjectPool } from "./scoped-pool.js";
+import { type ProjectScope } from "./scope.js";
+import { ProjectService } from "./service.js";
+import { PostgresStore } from "../postgres-store.js";
+import type { Principal } from "./auth.js";
+
+// Qualification provisioning controller (candidate) — the missing
+// executable lifecycle for the G2 window, reduced to one-shot
+// prepare + monitor + guarded cleanup. Feasibility finding it is
+// built on (verified by reading the pin): the DEPLOYED service
+// (src/temporal/server.ts) exposes mission actions, worker routes
+// and callback routes only — it constructs no ProjectService and
+// has no /jobs route, and nothing anywhere in the service applies
+// the qualification registry SQL or rolls the window back. The
+// only existing executable provisioning entrypoint is the
+// predeploy src/hosted/provision-cli.ts → provisionStaging(): it
+// re-reads migrations/ sorted, SHA-tracks them, applies new ones
+// (012 included, once the file is in migrations/) and grants the
+// runtime role — under the BOOTSTRAP connection, which never
+// leaves the predeploy environment. This controller covers the
+// DATA lifecycle from inside the canonical service, under the
+// service's existing runtime DATABASE_URL role (provision grants
+// that role SELECT/INSERT/UPDATE on all tables; scoped tables are
+// RLS-bound to the fixed scope below). No new service, queue,
+// credential, or operator token.
+//
+// Lifecycle (D1–D3 as accepted; E1–E3 revisions on top):
+//   ONE-SHOT GRANT, TRANSACTIONAL (E1). All controllers for this
+//   scope — any run id — serialize on ONE advisory transaction
+//   lock keyed by the fixed scope (not by run id: two different
+//   run ids racing from an empty scope now produce exactly one
+//   owner, and the loser reads the winner's marker and blocks).
+//   The grant marker {run_id, expires_at, granted_at, phase} is
+//   written with the registry + transition in a SINGLE
+//   transaction (phase 'PREPARING'); the job is created next
+//   (conflict-idempotent); a second short transaction then flips
+//   the marker to 'GRANTED' after revalidating marker + job +
+//   task count under the same lock. A crash therefore leaves
+//   either nothing, or a durable PREPARING grant that the next
+//   controller for the SAME run completes (registry re-application
+//   is insert-if-absent; the quota transition fills only from
+//   NULL, so completion can never refill a consumed cap), or a
+//   GRANTED window. A GRANTED marker whose job is missing fails
+//   closed (BLOCKED) instead of being silently repaired, and a
+//   monitor NEVER rewrites project/worker state — an owner pause
+//   after the grant stands (D1).
+//   ABSOLUTE CUTOFF (E2). The deadline is re-checked INSIDE the
+//   prepare transaction after the lock is acquired, again before
+//   job creation, and again inside the flip transaction; a
+//   prepare that crosses the cutoff while waiting grants nothing
+//   and falls through to cleanup. Worker leases are fenced the
+//   same way at the store level (see worker-surface /
+//   postgres-store deadline handling).
+//   RUN OWNERSHIP, FAIL-CLOSED (D2). Before granting, any
+//   persisted history this run does not own — a previous run's
+//   marker, any job whose idempotency key is not this run's, a
+//   run job without exactly one task, or a worker already holding
+//   quota without this run's grant — BLOCKS the controller
+//   (needs_owner_repair). (A worker that is merely READY from an
+//   early arrival holds no cap and is presence, not a grant.)
+//   GUARDED CLEANUP, CANONICAL ACCOUNTING (E3). Past the
+//   deadline, cleanup runs under the same scope lock: it fences
+//   on the grant marker (a foreign-owned scope is never touched),
+//   forces the run's active leases into the past in one
+//   transaction together with connector-disable + worker OFFLINE
+//   + project PAUSED, then hands the leases to the engine's own
+//   reclaimExpired() — the canonical expiry path that locks task
+//   rows, settles HELD reservations to EXPIRED under their state
+//   guard, transitions tasks (BLOCKED for this run's
+//   maxRetry-0 task, so nothing stays runnable), and releases
+//   capacity through the canonical trigger. A concurrent result
+//   and cleanup therefore serialize on the task row: whichever
+//   settles first wins, and the other observes the terminal
+//   state. The QUALIFICATION_LEASE_NEUTRALIZED event is written
+//   under a durable NOT EXISTS guard, so repeated or resumed
+//   cleanups emit it exactly once.
+//   CAPS ARE THE OWNER'S NUMBERS, EXACTLY (D3): project
+//   resource_policy quotaCap = 1, worker quota_remaining = 1,
+//   quota_reserve = 0 — the one task's estimate.
+//
+// Hard bounds, unchanged: DEFAULT DISABLED (all of
+// AGY_QUALIFICATION_ENABLED=true, AGY_STAGE_ONLY=true, an
+// owner-issued run id, an ABSOLUTE owner deadline, and
+// AGY_QUALIFICATION_CAP_ONLY_APPROVED=true must hold); scope,
+// project, mission, worker, adapter, connector and reply target
+// are FIXED CONSTANTS; every statement is scope-WHERE'd or keyed
+// to the one qualification worker_id, so business rows are
+// unreachable. Any failure stops the controller BLOCKED with
+// needs_owner_repair instead of looping.
+
+export const QUALIFICATION_SCOPE: ProjectScope = { tenantId: 'gl', workspaceId: 'legacy-workspace', projectId: 'GL_QUALIFICATION' };
+export const QUALIFICATION_MISSION = 'GL_QUALIFICATION';
+export const QUALIFICATION_WORKER_ID = 'MUSE-QUAL-WORKER';
+const QUAL_CONNECTOR_ID = 'muse-qual-x';
+const QUAL_ADAPTER = 'muse-qual';
+const QUAL_REPLY_TARGET = 'CHATGPT_ASSISTANT_CONTROL_PLANE';
+const QUAL_PERMISSIONS = ['read', 'analyze', 'planning', 'qa'];
+const QUAL_RESOURCE_POLICY = { maxConcurrentTasks: 1, quotaCap: 1, spendCap: 0, reservation: 0 };
+const QUAL_WORKER_METADATA = {
+  bindings: { missions: [QUALIFICATION_MISSION], task_types: ['planning'], reply_targets: [QUAL_REPLY_TARGET] },
+  qualification: 'UNVERIFIED', evidence: 'none', external_namespace_only: true,
+};
+// ONE coordination key for the whole scope, independent of run id.
+const SCOPE_LOCK_KEY = 'agy:qualification:scope:gl/legacy-workspace/GL_QUALIFICATION';
+
+export interface QualificationConfig {
+  enabled: boolean;
+  runId?: string;
+  expiresAtMs?: number;
+  intervalMs?: number;
+}
+
+export type QualificationState = 'DISABLED' | 'RUNNING' | 'ACTIVE' | 'STOPPED' | 'ROLLED_BACK' | 'BLOCKED';
+
+interface RunMarker { run_id: string; expires_at: string; granted_at: string; phase: 'PREPARING' | 'GRANTED' }
+
+type Querier = { query: (sql: string, params?: unknown[]) => Promise<any> };
+
+export function parseQualificationConfig(env: Record<string, string | undefined>): { config: QualificationConfig; reason?: string } {
+  if (env.AGY_QUALIFICATION_ENABLED !== 'true') return { config: { enabled: false }, reason: 'NOT_ENABLED' };
+  if (env.AGY_STAGE_ONLY !== 'true') return { config: { enabled: false }, reason: 'STAGE_ONLY_REQUIRED' };
+  const runId = (env.AGY_QUALIFICATION_RUN_ID ?? '').trim();
+  if (!runId) return { config: { enabled: false }, reason: 'RUN_ID_REQUIRED' };
+  const expiresRaw = (env.AGY_QUALIFICATION_EXPIRES_AT ?? '').trim();
+  if (!expiresRaw) return { config: { enabled: false }, reason: 'EXPIRES_AT_REQUIRED' };
+  const expiresAtMs = Date.parse(expiresRaw);
+  if (!Number.isFinite(expiresAtMs)) return { config: { enabled: false }, reason: 'EXPIRES_AT_INVALID' };
+  if (env.AGY_QUALIFICATION_CAP_ONLY_APPROVED !== 'true') return { config: { enabled: false }, reason: 'CAP_ONLY_APPROVAL_REQUIRED' };
+  const num = (v: string | undefined, dflt: number) => { const n = Number(v); return Number.isFinite(n) && n > 0 ? n : dflt; };
+  return { config: { enabled: true, runId, expiresAtMs, intervalMs: num(env.AGY_QUALIFICATION_INTERVAL_MS, 30_000) } };
+}
+
+export function createQualificationController(raw: Pool, opts: {
+  config: QualificationConfig;
+  log?: (event: string, detail?: Record<string, unknown>) => void;
+}) {
+  const cfg = opts.config;
+  const log = opts.log ?? ((event: string, detail?: Record<string, unknown>) =>
+    console.log(JSON.stringify({ event, ...(detail ?? {}) })));
+  let state: QualificationState = 'DISABLED';
+  let timer: NodeJS.Timeout | undefined;
+  let ticking = false;
+  let blockReason: string | undefined;
+  // In-process server-side identity for ProjectService scope checks.
+  // It is a scope object, not a credential: no token exists or moves.
+  const principal: Principal = { subject: 'qualification-controller', role: 'operator', scopes: [QUALIFICATION_SCOPE] };
+  const scopedPool = () => new ProjectPool(raw, QUALIFICATION_SCOPE, 'qualification-controller').asPool();
+  const expiresIso = () => new Date(cfg.expiresAtMs ?? 0).toISOString();
+  const pastDeadline = () => Date.now() > (cfg.expiresAtMs ?? 0);
+
+  // One scoped transaction under the fixed scope advisory lock.
+  // Every controller for this scope — any run id, prepare or
+  // cleanup — serializes here; the lock is transaction-scoped, so
+  // a crash releases it with the transaction.
+  async function withScopeTx<T>(fn: (client: PoolClient) => Promise<T>): Promise<T> {
+    const client = await new ProjectPool(raw, QUALIFICATION_SCOPE, 'qualification-controller').connect();
+    try {
+      await client.query('BEGIN');
+      await client.query(`SELECT pg_advisory_xact_lock(hashtext($1))`, [SCOPE_LOCK_KEY]);
+      const r = await fn(client as unknown as PoolClient);
+      await client.query('COMMIT');
+      return r;
+    } catch (e) {
+      await client.query('ROLLBACK').catch(() => {});
+      throw e;
+    } finally { client.release(); }
+  }
+
+  async function readProject(q: Querier) {
+    // The scoped pool's RLS makes only the qualification row visible.
+    return (await q.query(`SELECT policies, status FROM agy_projects`)).rows[0];
+  }
+  const markerOf = (proj: any): RunMarker | null =>
+    (proj?.policies && typeof proj.policies === 'object' && proj.policies.qualificationRun) || null;
+  async function findRunJob(q: Querier) {
+    return (await q.query(`SELECT job_id FROM agy_jobs WHERE idempotency_key=$1`, [cfg.runId])).rows[0];
+  }
+  async function countTasks(q: Querier, jobId: string): Promise<number> {
+    return (await q.query(`SELECT count(*)::int AS n FROM agy_tasks WHERE job_id=$1`, [jobId])).rows[0].n;
+  }
+
+  async function insertWorker(q: Querier): Promise<void> {
+    await q.query(`INSERT INTO agy_workers(worker_id,adapter,capabilities,status,max_concurrency,resource_profile,quota_remaining,quota_reserve,central_brain,metadata)
+      VALUES($1,$2,ARRAY['planning'],'OFFLINE',1,'{"spendCap":0,"quotaCap":null}',null,0,false,$3) ON CONFLICT (worker_id) DO NOTHING`,
+      [QUALIFICATION_WORKER_ID, QUAL_ADAPTER, JSON.stringify(QUAL_WORKER_METADATA)]);
+  }
+  async function insertConnector(q: Querier): Promise<void> {
+    await q.query(`INSERT INTO agy_connectors(tenant_id,workspace_id,project_id,connector_id,kind,capabilities,endpoint,secret_ref,enabled,permissions)
+      VALUES($1,$2,$3,$4,$5,ARRAY['planning'],'local','vault:custom.agy-worker',true,$6) ON CONFLICT DO NOTHING`,
+      [QUALIFICATION_SCOPE.tenantId, QUALIFICATION_SCOPE.workspaceId, QUALIFICATION_SCOPE.projectId,
+       QUAL_CONNECTOR_ID, QUAL_ADAPTER, QUAL_PERMISSIONS]);
+  }
+  async function transition(q: Querier): Promise<void> {
+    // Cap-only window transition, CAS-shaped: quota is filled ONLY
+    // from NULL (the dormant/rolled-back state). A consumed cap (0)
+    // or an existing cap (1) is never rewritten by this statement,
+    // so no path here can refill the owner's cap after a claim.
+    await q.query(`UPDATE agy_workers SET status='READY', quota_remaining=1, quota_reserve=0
+      WHERE worker_id=$1 AND quota_remaining IS NULL`, [QUALIFICATION_WORKER_ID]);
+  }
+
+  async function ensureJob(): Promise<void> {
+    const service = new ProjectService(raw, QUALIFICATION_SCOPE, principal);
+    await service.execute('/jobs', 'POST', {
+      idempotency_key: cfg.runId, objective: `GL qualification run ${cfg.runId}`, pass_threshold: 0,
+      tasks: [{ name: 'qualification', idempotencyKey: `${cfg.runId}-task`,
+        taskType: 'planning', requiredCapabilities: ['planning'], requiredPermissions: ['planning'],
+        permissionGranted: true, safetyApproved: true, estimatedQuota: 1, estimatedCost: 0, maxRetry: 0, priority: 10,
+        payload: { mission_id: QUALIFICATION_MISSION, target_worker_id: QUALIFICATION_WORKER_ID, callback_target: QUAL_REPLY_TARGET } }],
+    });
+  }
+
+  // Returns 'GRANTED' | 'ALREADY' | 'BLOCKED' | 'EXPIRED'.
+  async function prepareOnce(): Promise<string> {
+    // Phase A — registry + marker(PREPARING) + transition, ONE
+    // transaction under the scope lock, deadline re-checked after
+    // the lock is held (E2: the lock wait itself may cross it).
+    const phaseA = await withScopeTx(async (client) => {
+      if (pastDeadline()) return 'EXPIRED';
+      const proj = await readProject(client);
+      const marker = markerOf(proj);
+      if (marker && marker.run_id !== cfg.runId) { blockReason = 'PREVIOUS_RUN_GRANT_PRESENT'; return 'BLOCKED'; }
+      if (marker && marker.expires_at !== expiresIso()) { blockReason = 'RUN_ID_REUSED_WITH_DIFFERENT_DEADLINE'; return 'BLOCKED'; }
+      if (marker?.phase === 'GRANTED') {
+        // Monitor path — with revalidation (E1): a GRANTED grant
+        // whose job vanished is an inconsistency, not a repair job.
+        const job = await findRunJob(client);
+        if (!job) { blockReason = 'GRANT_JOB_MISSING'; return 'BLOCKED'; }
+        if ((await countTasks(client, job.job_id)) !== 1) { blockReason = 'RUN_JOB_TASK_COUNT_INVALID'; return 'BLOCKED'; }
+        return 'ALREADY';
+      }
+      // No marker yet, or this run's own PREPARING marker (a crash
+      // boundary): (complete) the grant. Fail closed on history
+      // this run does not own (D2).
+      const jobs = (await client.query(`SELECT job_id, idempotency_key FROM agy_jobs ORDER BY created_at`)).rows;
+      if (jobs.some((j: any) => j.idempotency_key !== cfg.runId)) { blockReason = 'FOREIGN_JOB_IN_SCOPE'; return 'BLOCKED'; }
+      if (jobs.length > 1) { blockReason = 'MULTIPLE_JOBS_FOR_RUN'; return 'BLOCKED'; }
+      if (jobs.length === 1 && (await countTasks(client, jobs[0].job_id)) !== 1) { blockReason = 'RUN_JOB_TASK_COUNT_INVALID'; return 'BLOCKED'; }
+      if (!marker) {
+        const worker = (await client.query(`SELECT quota_remaining FROM agy_workers WHERE worker_id=$1`, [QUALIFICATION_WORKER_ID])).rows[0];
+        if (worker && worker.quota_remaining !== null) { blockReason = 'WORKER_CAP_WITHOUT_GRANT'; return 'BLOCKED'; }
+      }
+      const grant: RunMarker = { run_id: cfg.runId!, expires_at: expiresIso(),
+        granted_at: marker?.granted_at ?? new Date().toISOString(), phase: 'PREPARING' };
+      await client.query(`INSERT INTO agy_projects(tenant_id,workspace_id,project_id,name,source_of_truth_ref,policy_ref)
+        VALUES($1,$2,$3,'GL Qualification','owner-registry','owner-registry') ON CONFLICT DO NOTHING`,
+        [QUALIFICATION_SCOPE.tenantId, QUALIFICATION_SCOPE.workspaceId, QUALIFICATION_SCOPE.projectId]);
+      await client.query(`UPDATE agy_projects SET status='ACTIVE', priority=10, permissions=$4, resource_policy=$5,
+          policies = COALESCE(policies,'{}'::jsonb) || $6::jsonb
+        WHERE tenant_id=$1 AND workspace_id=$2 AND project_id=$3`,
+        [QUALIFICATION_SCOPE.tenantId, QUALIFICATION_SCOPE.workspaceId, QUALIFICATION_SCOPE.projectId,
+         QUAL_PERMISSIONS, JSON.stringify(QUAL_RESOURCE_POLICY), JSON.stringify({ qualificationRun: grant })]);
+      await insertConnector(client);
+      await insertWorker(client);
+      await transition(client);
+      return 'PREPARED';
+    });
+    if (phaseA !== 'PREPARED') return phaseA;
+    // Phase B — the run's one job (conflict-idempotent). A second
+    // deadline check: phase A + the lock wait may have crossed it;
+    // creating a job after the cutoff is exactly what E2 forbids.
+    // (The PREPARING marker stays durable; cleanup owns the scope
+    // from here and the job simply never exists.)
+    if (pastDeadline()) return 'EXPIRED';
+    await ensureJob();
+    // Phase C — flip PREPARING → GRANTED in a second locked
+    // transaction, revalidating marker + job + deadline (E1/E2).
+    return withScopeTx(async (client) => {
+      if (pastDeadline()) return 'EXPIRED';
+      const marker = markerOf(await readProject(client));
+      if (!marker || marker.run_id !== cfg.runId) { blockReason = 'GRANT_MARKER_LOST'; return 'BLOCKED'; }
+      if (marker.phase === 'GRANTED') return 'ALREADY';
+      const job = await findRunJob(client);
+      if (!job) { blockReason = 'GRANT_JOB_MISSING'; return 'BLOCKED'; }
+      if ((await countTasks(client, job.job_id)) !== 1) { blockReason = 'RUN_JOB_TASK_COUNT_INVALID'; return 'BLOCKED'; }
+      const granted: RunMarker = { ...marker, phase: 'GRANTED' };
+      await client.query(`UPDATE agy_projects SET policies = COALESCE(policies,'{}'::jsonb) || $4::jsonb
+        WHERE tenant_id=$1 AND workspace_id=$2 AND project_id=$3`,
+        [QUALIFICATION_SCOPE.tenantId, QUALIFICATION_SCOPE.workspaceId, QUALIFICATION_SCOPE.projectId,
+         JSON.stringify({ qualificationRun: granted })]);
+      log('QUALIFICATION_GRANTED', { runId: cfg.runId, expiresAt: expiresIso(), scope: 'gl/legacy-workspace/GL_QUALIFICATION', workerId: QUALIFICATION_WORKER_ID });
+      return 'GRANTED';
+    });
+  }
+
+  // Guarded cleanup past the deadline. Returns 'DONE' | 'FOREIGN'.
+  async function cleanup(): Promise<string> {
+    // Phase 1 — one locked transaction: ownership fence, lease
+    // force-expiry, dormant state. Forcing the lease into the past
+    // (rather than settling anything here) hands the lease to the
+    // canonical path below: a concurrent result either already
+    // settled the task (its status no longer matches, so the force
+    // is a no-op) or will read an expired lease under its row lock.
+    const phase1 = await withScopeTx(async (client) => {
+      const marker = markerOf(await readProject(client));
+      if (marker && marker.run_id !== cfg.runId) return { kind: 'FOREIGN' as const, candidates: [] as string[] };
+      const job = await findRunJob(client);
+      let candidates: string[] = [];
+      if (job) {
+        candidates = (await client.query(
+          `SELECT task_id FROM agy_tasks WHERE job_id=$1 AND status IN ('CLAIMED','RUNNING')`, [job.job_id])).rows.map((r: any) => r.task_id);
+        if (candidates.length) {
+          await client.query(
+            `UPDATE agy_tasks SET lease_expires_at = LEAST(lease_expires_at, now() - interval '1 second')
+             WHERE job_id=$1 AND status IN ('CLAIMED','RUNNING') AND lease_token IS NOT NULL`, [job.job_id]);
+        }
+      }
+      await client.query(`UPDATE agy_connectors SET enabled=false
+        WHERE tenant_id=$1 AND workspace_id=$2 AND project_id=$3 AND connector_id=$4`,
+        [QUALIFICATION_SCOPE.tenantId, QUALIFICATION_SCOPE.workspaceId, QUALIFICATION_SCOPE.projectId, QUAL_CONNECTOR_ID]);
+      await client.query(`UPDATE agy_workers SET status='OFFLINE', quota_remaining=null WHERE worker_id=$1`,
+        [QUALIFICATION_WORKER_ID]);
+      await client.query(`UPDATE agy_projects SET status='PAUSED', priority=0
+        WHERE tenant_id=$1 AND workspace_id=$2 AND project_id=$3`,
+        [QUALIFICATION_SCOPE.tenantId, QUALIFICATION_SCOPE.workspaceId, QUALIFICATION_SCOPE.projectId]);
+      return { kind: 'DONE' as const, candidates };
+    });
+    if (phase1.kind === 'FOREIGN') return 'FOREIGN';
+    // Phase 2 — canonical expiry accounting (the engine's own
+    // reclaimExpired: task row locks, HELD→EXPIRED reservation
+    // settle under its state guard, task transition, capacity
+    // release trigger, job aggregation). Exactly-once by the
+    // store's own fences; a repeated pass changes nothing.
+    const store = new PostgresStore(scopedPool(), QUALIFICATION_SCOPE);
+    await store.reclaimExpired();
+    // Phase 3 — the neutralization event, exactly once, under a
+    // durable NOT EXISTS guard (safe across repeated cleanups and
+    // a crash between phases 2 and 3: a resumed cleanup finds the
+    // terminal LEASE_EXPIRED tasks of this run and backfills the
+    // event if — and only if — it is still missing).
+    const p = scopedPool();
+    const job = await findRunJob(p);
+    if (job) {
+      const rows = (await p.query(
+        `SELECT task_id, status FROM agy_tasks WHERE job_id=$1
+           AND status IN ('BLOCKED','RETRY') AND error->>'code'='LEASE_EXPIRED'`, [job.job_id])).rows;
+      for (const t of rows) {
+        await p.query(
+          `INSERT INTO agy_task_events(job_id,task_id,event_type,to_status,worker_id,detail)
+           SELECT $1,$2,'QUALIFICATION_LEASE_NEUTRALIZED',$3,$4,$5
+           WHERE NOT EXISTS (SELECT 1 FROM agy_task_events WHERE task_id=$2 AND event_type='QUALIFICATION_LEASE_NEUTRALIZED')`,
+          [job.job_id, t.task_id, t.status, QUALIFICATION_WORKER_ID, JSON.stringify({ run_id: cfg.runId })]);
+      }
+    }
+    return 'DONE';
+  }
+
+  async function doCleanup(): Promise<void> {
+    const r = await cleanup();
+    if (timer) { clearInterval(timer); timer = undefined; }
+    if (r === 'FOREIGN') {
+      state = 'BLOCKED';
+      log('QUALIFICATION_CONTROLLER_BLOCKED', { runId: cfg.runId, needs_owner_repair: true, reason: 'SCOPE_OWNED_BY_ANOTHER_RUN' });
+    } else {
+      state = 'ROLLED_BACK';
+      log('QUALIFICATION_ROLLED_BACK', { runId: cfg.runId });
+    }
+  }
+
+  async function tick(): Promise<void> {
+    if (ticking || state === 'DISABLED' || state === 'BLOCKED' || state === 'ROLLED_BACK') return;
+    ticking = true;
+    try {
+      if (pastDeadline()) { await doCleanup(); return; }
+      const r = await prepareOnce();
+      if (r === 'EXPIRED') { await doCleanup(); return; }
+      if (r === 'BLOCKED') {
+        state = 'BLOCKED';
+        if (timer) { clearInterval(timer); timer = undefined; }
+        log('QUALIFICATION_CONTROLLER_BLOCKED', { runId: cfg.runId, needs_owner_repair: true, reason: blockReason });
+        return;
+      }
+      state = 'ACTIVE';
+    } catch (e: any) {
+      state = 'BLOCKED';
+      if (timer) { clearInterval(timer); timer = undefined; }
+      log('QUALIFICATION_CONTROLLER_BLOCKED', { runId: cfg.runId, needs_owner_repair: true,
+        error: String(e?.message ?? e).slice(0, 200) });
+    } finally { ticking = false; }
+  }
+
+  function start(): QualificationState {
+    if (!cfg.enabled || !cfg.runId || !cfg.expiresAtMs) { state = 'DISABLED'; return state; }
+    if (state === 'RUNNING' || state === 'ACTIVE') return state;
+    state = 'RUNNING';
+    log('QUALIFICATION_CONTROLLER_STARTED', { runId: cfg.runId, expiresAt: expiresIso() });
+    void tick();
+    timer = setInterval(() => { void tick(); }, Math.max(25, cfg.intervalMs ?? 30_000));
+    timer.unref?.();
+    return state;
+  }
+
+  function stop(): QualificationState {
+    if (timer) { clearInterval(timer); timer = undefined; }
+    if (state === 'RUNNING' || state === 'ACTIVE') state = 'STOPPED';
+    return state;
+  }
+
+  return { start, stop, tick, state: () => state };
+}

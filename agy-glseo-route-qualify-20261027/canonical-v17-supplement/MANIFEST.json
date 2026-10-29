@@ -1,0 +1,140 @@
+{
+  "package": "AGY-GLSEO-ROUTE-QUALIFY-20261027 canonical v17 supplement (R2 on v16: R2a readEvidence reads in ONE REPEATABLE READ READ ONLY transaction on a single plain client from the runtime pool (modes in the BEGIN, identical set_config scope context; ProjectPool proxy proven unable to carry the isolation \u2014 T20, SQLSTATE 25001 both naive routes; shared wrapper untouched) so snapshots are never READ-COMMITTED hybrids; R2b full callback/receipt identity fields + task result_digest (canonical digestOf over persisted agy_tasks.result); T17/T18 deterministic rendezvous interleaves, T19 tamper visibility; plan candidate v13: P0#5 rewritten to starts-empty, #9 stopper sentence removed with blockers listed, runbook exact-compare + per-process dedup; patches 01-03 carried from v16)",
+  "task": "AGY-GLSEO-ROUTE-QUALIFY-20261027",
+  "attempt": "A1",
+  "base_pin": "36516473f4e41578bb5ee11e33273ce66f9d173d",
+  "deployment_base_owner_relayed": "f40c15b9e7d41a9259d73767ca9b7cfc173575f7 (deployed branch tip; ahead 2, 8 checkpoint-evidence files only)",
+  "stacks_on": "PR #15 canonical patch (head 65527f30e2b21b46a15943fea26428272e5c348f)",
+  "files": [
+    {
+      "path": "ACTIVATION_PLAN_CANDIDATE.md",
+      "bytes": 44606,
+      "sha256": "690aebd7c2ca563785f73d119d6f71187c2ad5e60db11585209cc4a74486d61a"
+    },
+    {
+      "path": "SUPPLEMENT_REPORT_V17.md",
+      "bytes": 9021,
+      "sha256": "e11740b9e85eb6158ca55e03cb22b7f27c9d15d9c126431898de4065f84a5dc3"
+    },
+    {
+      "path": "connector/CONNECTOR.md",
+      "bytes": 7357,
+      "sha256": "9ee98f06c51251b28f801e732ba721dc1559e8c090f41984659f5675b72dd148"
+    },
+    {
+      "path": "connector/bin/agy_worker.py",
+      "bytes": 11089,
+      "sha256": "e6d4cf3ba8d271d3cb457e4637a32e35d17ce4aef9257fc03f8023f6edb5225c"
+    },
+    {
+      "path": "connector/connector.yaml",
+      "bytes": 391,
+      "sha256": "27b18331f8c1e3b60438e99d26c70fc6a420cdc215cbf415ef1b23b38dfd0dd1"
+    },
+    {
+      "path": "migrations/012_worker_callbacks.sql",
+      "bytes": 3938,
+      "sha256": "acee2fc2bc9ef292610ca8030adb22dc01d0e3d7817e5c101e736b8044786bf1"
+    },
+    {
+      "path": "patches/01-postgres-store-v8.patch",
+      "bytes": 36713,
+      "sha256": "2cfe1887faa856d7af7d3672bced01a463fcb59a415500c26685d8743465960b"
+    },
+    {
+      "path": "patches/02-worker-surface-v10.patch",
+      "bytes": 26679,
+      "sha256": "15f8fb8fa9ce0cef28c3bdb8ffd0a2dc55db69ff0204c8f7576240bbd34bb6e7"
+    },
+    {
+      "path": "patches/03-worker-ui-v7.patch",
+      "bytes": 24050,
+      "sha256": "9236d9f84c30889845b4fb075980be9ff8a92721120549fee80d76cca21dd72e"
+    },
+    {
+      "path": "patches/04-new-modules.patch",
+      "bytes": 96955,
+      "sha256": "b15907e90386cbe836341573629653261088f04b30743715a7859bb559a27f73"
+    },
+    {
+      "path": "registry/qualification-registry.candidate.sql",
+      "bytes": 5470,
+      "sha256": "897a16627822dee6f0f9f546d9a2dafcbe363df365f88f6d880d6888c91755c0"
+    },
+    {
+      "path": "registry/worker-registry.candidate-v3.sql",
+      "bytes": 5553,
+      "sha256": "6acc706e2e57e1fa77d91e65a112722332aa62e21265dd7c12dc210676380aea"
+    },
+    {
+      "path": "src/digest.ts",
+      "bytes": 845,
+      "sha256": "f9c2f7ceffa0e98c6ffae609e85e5b82bcaf5808508f053ba5853e4322d06111"
+    },
+    {
+      "path": "src/qualification-controller.ts",
+      "bytes": 42582,
+      "sha256": "08a475c727284743df494a98022c64ccf42b27191fc877a5d825d06d1972022e"
+    },
+    {
+      "path": "src/worker-callback-driver.ts",
+      "bytes": 10728,
+      "sha256": "d7a8022554a5daa1c54da62ab46036efb957d17e6223c5234346e10a26d41969"
+    },
+    {
+      "path": "src/worker-callback-receiver.ts",
+      "bytes": 7079,
+      "sha256": "9811292a00340065b3b4302bf257146a0ba1ce7524b33d9a51ac37ac97924a16"
+    },
+    {
+      "path": "src/worker-callbacks.ts",
+      "bytes": 30725,
+      "sha256": "4b84e5dcdcfa01f328da7fd4c13961254f62e20501c65f4159f9266b8ec56faa"
+    },
+    {
+      "path": "src/worker-gate.ts",
+      "bytes": 2603,
+      "sha256": "cb6bf6ea6d33d73356d5159620f44ff3276885e7ce38847d19963a5abf1cd587"
+    },
+    {
+      "path": "src/worker-surface.ts",
+      "bytes": 22422,
+      "sha256": "1354a05a3f19a88cdbbe58d37ad7214e3906f8218e66421855bc0c92ab27aed5"
+    },
+    {
+      "path": "src/worker-ui.ts",
+      "bytes": 16245,
+      "sha256": "3a294c813288a855bfaa7f605df61dc47e459582762ace77dd2fd8f230a34c17"
+    },
+    {
+      "path": "test/agy-worker-cli-driver.py",
+      "bytes": 6113,
+      "sha256": "eca67160530d60bef50f0e926fa52de8820b106366e2c437b5c4b624af70a379"
+    },
+    {
+      "path": "test/agy-worker-cli-mocked.test.py",
+      "bytes": 9124,
+      "sha256": "97fb812f215d1f3eb25fa5076a1f0522a708c51e273adfb5a4bbfb52c8579849"
+    },
+    {
+      "path": "test/qualification-controller.integration.test.ts",
+      "bytes": 104982,
+      "sha256": "e844d95497179e4dc506ebbb610c119ec45be3e25a67b931b9c1e9ea2d5ff95a"
+    },
+    {
+      "path": "test/worker-gateway-loopback.integration.test.ts",
+      "bytes": 21492,
+      "sha256": "d176cd398c43a82646b3ec42fe74e0e6ea988adff081fefbf74bdff4daa15f47"
+    },
+    {
+      "path": "test/worker-surface-v3.integration.test.ts",
+      "bytes": 71643,
+      "sha256": "4e2382b049c8ef2dbbaf95baa6263f2b1e1b5e3010fab6a1a35089861936afc0"
+    },
+    {
+      "path": "test/worker-ui.integration.test.ts",
+      "bytes": 15833,
+      "sha256": "2c58d5883a76083fac34c07c6886846df7df6f84c37e74aa4049a878eedb84fa"
+    }
+  ]
+}

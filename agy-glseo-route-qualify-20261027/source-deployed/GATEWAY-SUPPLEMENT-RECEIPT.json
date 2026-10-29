@@ -1,0 +1,21 @@
+{
+  "scope": "AGY-GLSEO-ROUTE-QUALIFY-20261027",
+  "attempt": "A1",
+  "purpose": "Missing deployed gateway/RPC source for Muse integration candidate and independent Gemini QA",
+  "collected_at_utc": "2026-10-27 14:11:05 UTC",
+  "railway_project": "45e66534-44ed-484e-bbf4-d63c311d6f27",
+  "environment": "792d1b9e-73f5-434b-936f-f3b96d405253",
+  "service": "27be7aa3-3794-4f51-87b8-def294570762",
+  "deployment": "f3305b2d-96ea-4a5a-a332-013735300eb6",
+  "source": "deployed Railway Function returned by get_function_source_code; public RPC definitions via pg_get_functiondef read only",
+  "canonical_authority": "EXISTING_POSTGRES_D049",
+  "supabase": "SHADOW_ONLY",
+  "no_secrets": "Only environment variable names appear; no environment variable values collected",
+  "qa_findings": [
+    "Live HTTP gateway source has no caller authentication check before worker registration/task creation/claim; request headers are not authenticated identity",
+    "Live claim RPC consumes generic shadow queue without provider/task/project routing filter",
+    "Live callback RPC accepts target/status from payload; no immutable reply-tool acceptance demonstrated",
+    "No new connections should be activated through this path until identity/project/task/reply boundaries repaired and negative tests verified"
+  ],
+  "limitations": "Source inspection evidence, not exploit test, no write/claim/register/result/callback request issued"
+}

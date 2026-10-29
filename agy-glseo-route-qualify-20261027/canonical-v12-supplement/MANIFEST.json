@@ -1,0 +1,140 @@
+{
+  "package": "AGY-GLSEO-ROUTE-QUALIFY-20261027 canonical v12 supplement (offline, real-connector qualification: arrive HTTP route fix + custom.agy-worker connector candidate + loopback suite + connection package + activation plan candidate v8)",
+  "task": "AGY-GLSEO-ROUTE-QUALIFY-20261027",
+  "attempt": "A1",
+  "base_pin": "36516473f4e41578bb5ee11e33273ce66f9d173d",
+  "deployment_base_owner_relayed": "f40c15b9e7d41a9259d73767ca9b7cfc173575f7 (deployed branch tip; ahead 2, 8 checkpoint/evidence files only)",
+  "stacks_on": "PR #15 canonical patch (head 65527f30e2b21b46a15943fea26428272e5c348f)",
+  "files": [
+    {
+      "path": "ACTIVATION_PLAN_CANDIDATE.md",
+      "bytes": 25538,
+      "sha256": "b33c95f61003270ae9e64b7c7a70f244255e6a2b3837d224ab2ec7440dcc3fee"
+    },
+    {
+      "path": "SUPPLEMENT_REPORT_V12.md",
+      "bytes": 12415,
+      "sha256": "38bbd28f0f12c2ed24ae5dbd279bfc71339bdc62ecc05500054139cc94bb3b81"
+    },
+    {
+      "path": "connector/CONNECTOR.md",
+      "bytes": 6559,
+      "sha256": "b7a114fd32137716925dcd9d83d32ba70f6e08ec81ae47fbca5c70db9022f135"
+    },
+    {
+      "path": "connector/bin/agy_worker.py",
+      "bytes": 10327,
+      "sha256": "a519a722ade13e90a11883c16645c552a7273420a29b7e581eb7962b0dd2725d"
+    },
+    {
+      "path": "connector/connector.yaml",
+      "bytes": 391,
+      "sha256": "27b18331f8c1e3b60438e99d26c70fc6a420cdc215cbf415ef1b23b38dfd0dd1"
+    },
+    {
+      "path": "migrations/012_worker_callbacks.sql",
+      "bytes": 3938,
+      "sha256": "acee2fc2bc9ef292610ca8030adb22dc01d0e3d7817e5c101e736b8044786bf1"
+    },
+    {
+      "path": "patches/01-postgres-store-v6.patch",
+      "bytes": 23358,
+      "sha256": "660f204f2024178012dee6a2a7e0f6ab93324f66223a87eb10c699cb7d8950dd"
+    },
+    {
+      "path": "patches/02-worker-surface-v7.patch",
+      "bytes": 19404,
+      "sha256": "36f4197b8f7b1378432204230f66b3fbf8fe31c457f3f5d1b4dd6a028a4dbe6e"
+    },
+    {
+      "path": "patches/03-worker-ui-v6.patch",
+      "bytes": 24042,
+      "sha256": "44fd0de19cb9ea227a31152c61b42936ca4d4a0a04e43a69d48e1baa8e00be02"
+    },
+    {
+      "path": "patches/04-new-modules.patch",
+      "bytes": 77173,
+      "sha256": "00180fee323ba511366cfc1dcecc67bcf9eb1293e065a6e94b8dc23e3616950f"
+    },
+    {
+      "path": "registry/qualification-registry.candidate.sql",
+      "bytes": 5470,
+      "sha256": "897a16627822dee6f0f9f546d9a2dafcbe363df365f88f6d880d6888c91755c0"
+    },
+    {
+      "path": "registry/worker-registry.candidate-v3.sql",
+      "bytes": 5553,
+      "sha256": "6acc706e2e57e1fa77d91e65a112722332aa62e21265dd7c12dc210676380aea"
+    },
+    {
+      "path": "src/digest.ts",
+      "bytes": 845,
+      "sha256": "f9c2f7ceffa0e98c6ffae609e85e5b82bcaf5808508f053ba5853e4322d06111"
+    },
+    {
+      "path": "src/qualification-controller.ts",
+      "bytes": 23134,
+      "sha256": "0d60c2cce86d3646a334003b48baf0da9727d937a77e011977cfdb7705fac3c3"
+    },
+    {
+      "path": "src/worker-callback-driver.ts",
+      "bytes": 10728,
+      "sha256": "d7a8022554a5daa1c54da62ab46036efb957d17e6223c5234346e10a26d41969"
+    },
+    {
+      "path": "src/worker-callback-receiver.ts",
+      "bytes": 7079,
+      "sha256": "9811292a00340065b3b4302bf257146a0ba1ce7524b33d9a51ac37ac97924a16"
+    },
+    {
+      "path": "src/worker-callbacks.ts",
+      "bytes": 30725,
+      "sha256": "4b84e5dcdcfa01f328da7fd4c13961254f62e20501c65f4159f9266b8ec56faa"
+    },
+    {
+      "path": "src/worker-gate.ts",
+      "bytes": 2603,
+      "sha256": "cb6bf6ea6d33d73356d5159620f44ff3276885e7ce38847d19963a5abf1cd587"
+    },
+    {
+      "path": "src/worker-surface.ts",
+      "bytes": 15312,
+      "sha256": "87c9ba2225d1a5366c8b3179d0ed7b3780c9892a7dcbd232e0ea9c28036527bf"
+    },
+    {
+      "path": "src/worker-ui.ts",
+      "bytes": 16245,
+      "sha256": "3a294c813288a855bfaa7f605df61dc47e459582762ace77dd2fd8f230a34c17"
+    },
+    {
+      "path": "test/agy-worker-cli-driver.py",
+      "bytes": 5350,
+      "sha256": "b7c823ddf4664d86710a9613cd8bec364a766153a1923c58c8b3d6731441ef5c"
+    },
+    {
+      "path": "test/agy-worker-cli-mocked.test.py",
+      "bytes": 8327,
+      "sha256": "b2af8a6ec95f12025be4d5fba006350b6351bea55244d313048f2e9045c7e21c"
+    },
+    {
+      "path": "test/qualification-controller.integration.test.ts",
+      "bytes": 31776,
+      "sha256": "24a456514dbfeaa2f78dd241031b94f03a339c99949bb9cda92a90d8832fe559"
+    },
+    {
+      "path": "test/worker-gateway-loopback.integration.test.ts",
+      "bytes": 16489,
+      "sha256": "faf24ce85ad0b0ec8c90fc56d308cf7cb044be52b5dd43f4a60edf6add308b75"
+    },
+    {
+      "path": "test/worker-surface-v3.integration.test.ts",
+      "bytes": 71643,
+      "sha256": "4e2382b049c8ef2dbbaf95baa6263f2b1e1b5e3010fab6a1a35089861936afc0"
+    },
+    {
+      "path": "test/worker-ui.integration.test.ts",
+      "bytes": 15833,
+      "sha256": "2c58d5883a76083fac34c07c6886846df7df6f84c37e74aa4049a878eedb84fa"
+    }
+  ]
+}

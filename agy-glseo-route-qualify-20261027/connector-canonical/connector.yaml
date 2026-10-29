@@ -1,0 +1,10 @@
+id: custom.agy-worker
+name: AGY Canonical Worker
+description: Bounded worker namespace client for the AGY canonical hosted staging entrypoint (PostgresStore leases on EXISTING_POSTGRES_D049). Prepared for AGY-GLSEO-ROUTE-QUALIFY-20261027; NOT connected.
+auth:
+  type: api_key
+  placement: bearer_header
+  hosts:
+    - agy-temporal-staging-staging.up.railway.app
+require_auth: true
+include_in_prompt: false

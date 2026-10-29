@@ -1,0 +1,37 @@
+{
+  "package": "AGY-GLSEO-ROUTE-QUALIFY-20261027 auth-recovery candidate (PREPARED ONLY \u2014 not connected, not a connection grant): clone of custom.agy-worker as provider agy-worker-qual / custom.agy-worker-qual, minimal binding/label diff only (see DIFF.md), same canonical host/role/scope/key/api_key/bearer_header; sanitized platform bug report included, not sent anywhere",
+  "task": "AGY-GLSEO-ROUTE-QUALIFY-20261027",
+  "attempt": "A1",
+  "files": [
+    {
+      "path": "DIFF.md",
+      "bytes": 9695,
+      "sha256": "9148d6d4e7a9101952644e9a034e64b9cb953fe6557808021b8004348af7d077"
+    },
+    {
+      "path": "PLATFORM_BUG_REPORT.md",
+      "bytes": 3728,
+      "sha256": "016af87fb0a90db18ded5ecb328ae6c5d975076b817d30127bba7cc55ab4ebb1"
+    },
+    {
+      "path": "PROPOSAL.md",
+      "bytes": 3545,
+      "sha256": "25bc118fef141483f93ad3f22a40521728d5ec2d71497fe8178bfb5fdc5a6150"
+    },
+    {
+      "path": "connector/CONNECTOR.md",
+      "bytes": 8046,
+      "sha256": "ad693d383be00c1eae8d81e1d9f6e4a76d1f25327a57b497bfc01b5742d0865f"
+    },
+    {
+      "path": "connector/bin/agy_worker.py",
+      "bytes": 11109,
+      "sha256": "01e8689fd36c93547aa34ef5bda835984ea834f4be0998b046300b3b2299b05b"
+    },
+    {
+      "path": "connector/connector.yaml",
+      "bytes": 401,
+      "sha256": "70f0ab41b96035b05fab5bf0f125426236419e20acde98aac6e240e829fd3566"
+    }
+  ]
+}

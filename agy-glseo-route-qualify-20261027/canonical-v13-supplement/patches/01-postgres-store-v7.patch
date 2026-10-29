@@ -1,0 +1,327 @@
+--- a/agy-temporal-shadow/src/postgres-store.ts
++++ b/agy-temporal-shadow/src/postgres-store.ts
+@@ -6,13 +6,28 @@
+ import { createHash } from "node:crypto";
+ import type { ProjectScope } from './platform/scope.js';
+ import { selectProjectDemand } from './platform/allocation.js';
++import { workerGatePasses } from './platform/worker-gate.js';
+ 
+ export class PostgresStore implements EngineStore {
+   constructor(readonly pool: Pool, readonly scope?:ProjectScope) {}
+-  async createJob(input: { tenantId: string; idempotencyKey: string; objective: string; mode: any; passThreshold: number; tasks: TaskSpec[] }) {
++  async createJob(input: { tenantId: string; idempotencyKey: string; objective: string; mode: any; passThreshold: number; tasks: TaskSpec[]; deadlineMs?: number }) {
+     const client = await this.pool.connect();
++    // Absolute owner fence at the mutation transaction itself
++    // (candidate, opt-in via deadlineMs): the database's real clock
++    // (clock_timestamp(), never the transaction-start now()) is
++    // checked when the transaction opens AND again after the
++    // inserts, before COMMIT — a lock wait anywhere inside this
++    // transaction that spans the deadline therefore rolls the whole
++    // creation back instead of committing a late job. Callers
++    // without a deadline are untouched.
++    const fence = async () => {
++      if (!input.deadlineMs) return;
++      const now = (await client.query(`SELECT clock_timestamp() AS now`)).rows[0].now;
++      if (new Date(now).getTime() >= input.deadlineMs) throw new Error('JOB_CREATION_DEADLINE_EXCEEDED');
++    };
+     try {
+       await client.query("BEGIN");
++      await fence();
+       if(this.scope && input.tenantId!==this.scope.tenantId)throw new Error('PROJECT_SCOPE_DENIED');
+       const conflict=this.scope?'tenant_id,workspace_id,project_id,idempotency_key':'tenant_id,idempotency_key';
+       const job = await client.query(`INSERT INTO agy_jobs(tenant_id,idempotency_key,objective,mode,pass_threshold) VALUES($1,$2,$3,$4,$5) ON CONFLICT(${conflict}) DO NOTHING RETURNING job_id`, [input.tenantId,input.idempotencyKey,input.objective,input.mode,input.passThreshold]);
+@@ -24,6 +39,7 @@
+       const ids = new Map<string,string>();
+       for (const task of input.tasks) { const row = await client.query(`INSERT INTO agy_tasks(job_id,idempotency_key,name,task_type,payload,required_capabilities,priority,max_retry,timeout_seconds,policy,importance,expected_value) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING task_id`, [jobId,task.idempotencyKey,task.name,task.taskType,task.payload??{},task.requiredCapabilities??[],queuePriority(task),task.maxRetry??2,task.timeoutSeconds??300,task,task.importance??.5,task.expectedValue??.5]); ids.set(task.idempotencyKey,row.rows[0].task_id); }
+       for (const task of input.tasks) if (task.dependsOn?.length) await client.query(`UPDATE agy_tasks SET depends_on=$1 WHERE job_id=$2 AND idempotency_key=$3`, [task.dependsOn.map((key) => { const id=ids.get(key); if(!id) throw new Error(`Unknown dependency: ${key}`); return id; }),jobId,task.idempotencyKey]);
++      await fence();
+       await client.query("COMMIT"); return { jobId, duplicate: false };
+     } catch (error) { await client.query("ROLLBACK"); throw error; } finally { client.release(); }
+   }
+@@ -35,13 +51,47 @@
+       // Registry serializes resource reservations; task locks isolate concurrent execution.
+       const registry = await client.query(`SELECT * FROM agy_workers ORDER BY worker_id FOR UPDATE`);
+       const profiles = sharedPoolProfiles(registry.rows.map(resourceFromRow));
++      // Absolute deadline (candidate, opt-in via the request): the
++      // check runs AFTER the registry lock is held — the lock wait
++      // itself may have crossed the deadline, and a claim that
++      // starts late must not lease at all. Callers without a
++      // deadline are untouched.
++      if (request.deadlineMs && Date.now() > request.deadlineMs) { await client.query('COMMIT'); return null; }
+       if(this.scope) {
+         // Registry locks are held through selection+claim+reservation, so another project cannot steal capacity.
+-        const dispatch=(await client.query(`SELECT d.*,p.name,p.status AS project_status,p.priority AS project_priority,p.resource_policy,p.permissions,p.active,p.quota_used,p.spend_used,p.adapter_kinds,p.health
++        // Demand selection stays GLOBAL and pin-exact for the ungated
++        // route (B1): the dispatch query below is the pin's, with NO
++        // agy_tasks join — joining the RLS-scoped task table would hide
++        // other projects' demand from selectProjectDemand and break
++        // cross-project priority fairness for legacy callers.
++        const dispatchAll=(await client.query(`SELECT d.*,p.name,p.status AS project_status,p.priority AS project_priority,p.resource_policy,p.permissions,p.active,p.quota_used,p.spend_used,p.adapter_kinds,p.health
+           FROM agy_dispatch_tasks d JOIN agy_dispatch_projects p USING(tenant_id,workspace_id,project_id) WHERE d.available_at<=now()`)).rows;
++        // Worker gate (candidate): when the claim carries a gate (the
++        // NEW gated namespace only), demand is filtered INSIDE this
++        // transaction, before selection/allocation — a forbidden task
++        // is never claimed, attempted, or reserved. The projection's
++        // policy omits the task payload, so the gate reads payloads
++        // from agy_tasks directly; that read is RLS-scoped to this
++        // project, which is exactly the gated namespace's reach (a
++        // gated claim can only ever lease in-scope tasks). The ungated
++        // route applies NO payload filter: legacy semantics, including
++        // for addressed tasks, are unchanged from the pin.
++        // External-namespace isolation on the ungated route is done
++        // through the registry, not payloads: a worker whose metadata
++        // marks it external_namespace_only (the NEW external
++        // qualification worker) is excluded from allowedWorkers below
++        // whenever the claim carries no gate, so the legacy allocator
++        // can never select it — in any project — while its own gated
++        // claims are unaffected.
++        let dispatch=dispatchAll;
++        if(request.gate){
++          const payloadRows=(await client.query(`SELECT task_id,payload FROM agy_tasks`)).rows;
++          const payloadById=new Map(payloadRows.map((r:any)=>[r.task_id,r.payload]));
++          dispatch=dispatchAll.filter((d:any)=>workerGatePasses(request.gate!,{...d.policy,payload:payloadById.get(d.task_id)}));
++        }
+         const selected=selectProjectDemand(dispatch.map(d=>({project:{tenantId:d.tenant_id,workspaceId:d.workspace_id,projectId:d.project_id,name:d.name,status:d.project_status,priority:d.project_priority,resourcePolicy:d.resource_policy,permissions:d.permissions,sourceOfTruthRef:'not-loaded',policyRef:'not-loaded',defaultSkillPack:'',policies:{},createdAt:0,updatedAt:0},
+           jobId:d.job_id,taskId:d.task_id,task:d.policy,active:Number(d.active),quotaUsed:Number(d.quota_used),spendUsed:Number(d.spend_used),passThreshold:Number(d.pass_threshold),excluded:[...d.failed_workers,...d.health.filter((h:any)=>new Date(h.until).getTime()>Date.now()).map((h:any)=>h.workerId)],
+-          allowedWorkers:registry.rows.filter(w=>d.adapter_kinds.includes(w.adapter)&&(!d.policy.checkpointAdapter||w.adapter===d.policy.checkpointAdapter)).map(w=>w.worker_id)})),profiles);
++          allowedWorkers:registry.rows.filter(w=>d.adapter_kinds.includes(w.adapter)&&(!d.policy.checkpointAdapter||w.adapter===d.policy.checkpointAdapter)&&(!!request.gate||w.metadata?.external_namespace_only!==true)).map(w=>w.worker_id)})),profiles);
+         if(!selected||selected.allocation.workerId!==request.workerId||selected.scope!==JSON.stringify([this.scope.tenantId,this.scope.workspaceId,this.scope.projectId])){await client.query('COMMIT');return null;}
+         // Only the globally selected task is eligible in this transaction.
+         selectedTaskId=selected.taskId;
+@@ -65,6 +115,7 @@
+         AND NOT EXISTS(SELECT 1 FROM unnest(t.depends_on) dep LEFT JOIN agy_tasks d ON d.task_id=dep WHERE d.status IS DISTINCT FROM 'PASS')
+         ORDER BY t.priority DESC,t.available_at,t.created_at LIMIT 50 FOR UPDATE OF t SKIP LOCKED`);
+       for (const row of candidates.rows) {
++        if (request.deadlineMs && Date.now() > request.deadlineMs) break;
+         if(this.scope && row.task_id!==selectedTaskId)continue;
+         const spec = mapClaim(row);
+         if(spec.checkpoint&&registry.rows.find(w=>w.worker_id===request.workerId)?.adapter!==spec.checkpoint.adapter)continue;
+@@ -75,7 +126,7 @@
+         if (allocation.workerId !== request.workerId) continue;
+         const active = await client.query(`SELECT policy FROM agy_tasks WHERE status IN ('CLAIMED','RUNNING','QA') AND task_id<>$1 AND (job_id=$2 OR policy->>'sharedStateKey'=$3)`,[row.task_id,row.job_id,spec.sharedStateKey??null]);
+         if ((row.mode==='SINGLE_WORKFLOW' && active.rowCount) || (spec.sharedStateKey && active.rows.some(a=>a.policy.sharedStateKey===spec.sharedStateKey))) continue;
+-        const updated = await client.query(`UPDATE agy_tasks SET status='CLAIMED',claimed_by=$2,lease_token=gen_random_uuid(),lease_expires_at=now()+make_interval(secs=>$3),heartbeat_at=now(),attempt=attempt+1,updated_at=now() WHERE task_id=$1 RETURNING *`,[row.task_id,request.workerId,request.leaseSeconds]);
++        const updated = await client.query(`UPDATE agy_tasks SET status='CLAIMED',claimed_by=$2,lease_token=gen_random_uuid(),lease_expires_at=LEAST(now()+make_interval(secs=>$3),COALESCE($4::timestamptz,'infinity'::timestamptz)),heartbeat_at=now(),attempt=attempt+1,updated_at=now() WHERE task_id=$1 RETURNING *`,[row.task_id,request.workerId,request.leaseSeconds,request.deadlineMs?new Date(request.deadlineMs).toISOString():null]);
+         const claimed=updated.rows[0];
+         await client.query(`UPDATE agy_workers SET active_count=active_count+1,quota_remaining=quota_remaining-$2,
+           resource_profile=jsonb_set(jsonb_set(resource_profile,'{spendUsed}',to_jsonb(coalesce((resource_profile->>'spendUsed')::numeric,0)+$3)),
+@@ -88,12 +139,64 @@
+       await client.query("COMMIT"); return null;
+     } catch(error) {await client.query("ROLLBACK");throw error;} finally {client.release();}
+   }
+-  async heartbeat(taskId:string,workerId:string,leaseToken:string,leaseSeconds:number) { const result=await this.pool.query(`UPDATE agy_tasks SET heartbeat_at=now(),lease_expires_at=now()+make_interval(secs=>$4),updated_at=now() WHERE task_id=$1 AND claimed_by=$2 AND lease_token=$3 AND status IN ('CLAIMED','RUNNING') AND lease_expires_at>now()`,[taskId,workerId,leaseToken,leaseSeconds]); return result.rowCount===1; }
+-  async transition(taskId:string,leaseToken:string,from:TaskStatus[],to:TaskStatus,patch:Record<string,unknown>={}) {
+-    const update=`UPDATE agy_tasks SET status=$3::text::agy_task_status,result=COALESCE($4,result),error=COALESCE($5,error),policy=CASE WHEN $7 AND checkpoint->>'externalId' IS NOT NULL THEN jsonb_set(policy,'{submissionGeneration}',to_jsonb(coalesce((policy->>'submissionGeneration')::integer,0)+1)) ELSE policy END,checkpoint=CASE WHEN $7 THEN NULL ELSE checkpoint END,available_at=CASE WHEN $3::text='RETRY' THEN now()+make_interval(secs=>least(60,power(2,least(attempt,6))::integer)) ELSE available_at END,finished_at=CASE WHEN $3::text IN ('PASS','FAIL','BLOCKED','CANCELLED') THEN now() ELSE finished_at END,updated_at=now() WHERE task_id=$1 AND lease_token=$2 AND status=ANY($6::agy_task_status[]) AND (status='QA' OR lease_expires_at>now())`;
+-    const values:unknown[]=[taskId,leaseToken,to,patch.result??null,patch.error??null,from,patch.clearCheckpoint===true];
++  async heartbeat(taskId:string,workerId:string,leaseToken:string,leaseSeconds:number,deadlineMs?:number) {
++    // Without a deadline the statement is the pin's, unchanged.
++    if (!deadlineMs) {
++      const result=await this.pool.query(`UPDATE agy_tasks SET heartbeat_at=now(),lease_expires_at=now()+make_interval(secs=>$4),updated_at=now() WHERE task_id=$1 AND claimed_by=$2 AND lease_token=$3 AND status IN ('CLAIMED','RUNNING') AND lease_expires_at>now()`,[taskId,workerId,leaseToken,leaseSeconds]);
++      return result.rowCount===1;
++    }
++    // With a deadline (qualification route only) the fence must be
++    // a real-clock read taken AFTER the task row lock is held, in
++    // its own statement. Two tempting shortcuts do NOT work
++    // (both proven against PostgreSQL 18): a single UPDATE with
++    // clock_timestamp() in its WHERE still updates the row after
++    // a lock wait spanning the deadline (rowCount 1, past
++    // deadline); and clock_timestamp() in the locking SELECT's
++    // target list is bound at the first tuple fetch — i.e. BEFORE
++    // the wait — not when the lock is granted. So: lock the row
++    // (statement 1), read clock_timestamp() (statement 2, starts
++    // only once the lock is held), compare, and only then write —
++    // one transaction, the write's timestamps derived from that
++    // same post-lock read.
++    const client=await this.pool.connect();try{
++      await client.query('BEGIN');
++      const locked=await client.query(`SELECT lease_expires_at FROM agy_tasks WHERE task_id=$1 AND claimed_by=$2 AND lease_token=$3 AND status IN ('CLAIMED','RUNNING') FOR UPDATE`,[taskId,workerId,leaseToken]);
++      const row=locked.rows[0];
++      if(!row){await client.query('ROLLBACK');return false;}
++      const nowMs=new Date((await client.query(`SELECT clock_timestamp() AS now`)).rows[0].now).getTime();
++      if(nowMs>=deadlineMs||!row.lease_expires_at||new Date(row.lease_expires_at).getTime()<=nowMs){await client.query('ROLLBACK');return false;}
++      const result=await client.query(`UPDATE agy_tasks SET heartbeat_at=$4::timestamptz,lease_expires_at=LEAST($4::timestamptz+make_interval(secs=>$5),$6::timestamptz),updated_at=$4::timestamptz WHERE task_id=$1 AND claimed_by=$2 AND lease_token=$3 AND status IN ('CLAIMED','RUNNING')`,
++        [taskId,workerId,leaseToken,new Date(nowMs).toISOString(),leaseSeconds,new Date(deadlineMs).toISOString()]);
++      await client.query('COMMIT');
++      return result.rowCount===1;
++    }catch(error){await client.query('ROLLBACK').catch(()=>{});throw error;}finally{client.release();}
++  }
++  async transition(taskId:string,leaseToken:string,from:TaskStatus[],to:TaskStatus,patch:Record<string,unknown>={},deadlineMs?:number) {
++    // Optional worker binding (worker-surface v2): when patch.workerId is
++    // present the transition additionally requires the task to be claimed
++    // by exactly that worker. Existing callers omit it and are unchanged.
++    // Optional absolute deadline (qualification route only): after the
++    // registry lock is held, the database wall clock
++    // (clock_timestamp(), not the transaction-start now()) is read —
++    // if the lock wait itself crossed the deadline the transition
++    // refuses (returns false) and nothing mutates; the lease
++    // predicate in the deadline variant likewise uses
++    // clock_timestamp(). Callers without a deadline keep pin text.
++    const workerClause=typeof patch.workerId==='string'?' AND claimed_by=$8':'';
++    const leasePredicate=deadlineMs?'(status=\'QA\' OR lease_expires_at>clock_timestamp())':'(status=\'QA\' OR lease_expires_at>now())';
++    const update=`UPDATE agy_tasks SET status=$3::text::agy_task_status,result=COALESCE($4,result),error=COALESCE($5,error),policy=CASE WHEN $7 AND checkpoint->>'externalId' IS NOT NULL THEN jsonb_set(policy,'{submissionGeneration}',to_jsonb(coalesce((policy->>'submissionGeneration')::integer,0)+1)) ELSE policy END,checkpoint=CASE WHEN $7 THEN NULL ELSE checkpoint END,available_at=CASE WHEN $3::text='RETRY' THEN now()+make_interval(secs=>least(60,power(2,least(attempt,6))::integer)) ELSE available_at END,finished_at=CASE WHEN $3::text IN ('PASS','FAIL','BLOCKED','CANCELLED') THEN now() ELSE finished_at END,updated_at=now() WHERE task_id=$1 AND lease_token=$2 AND status=ANY($6::agy_task_status[]) AND ${leasePredicate}${workerClause}`;
++    const values:unknown[]=[taskId,leaseToken,to,patch.result??null,patch.error??null,from,patch.clearCheckpoint===true,...(workerClause?[patch.workerId]:[])];
+     const client=await this.pool.connect();try{
+-      await client.query('BEGIN');await client.query('SELECT worker_id FROM agy_workers ORDER BY worker_id FOR UPDATE');const result=await client.query(update+' RETURNING task_id,job_id',values);
++      await client.query('BEGIN');await client.query('SELECT worker_id FROM agy_workers ORDER BY worker_id FOR UPDATE');
++      if(deadlineMs){
++        // Lock the task row too, THEN read the wall clock: the
++        // check is authoritative only when no lock the mutation
++        // needs is still outstanding.
++        await client.query('SELECT task_id FROM agy_tasks WHERE task_id=$1 FOR UPDATE',[taskId]);
++        const now=(await client.query(`SELECT clock_timestamp() AS now`)).rows[0].now;
++        if(new Date(now).getTime()>=deadlineMs){await client.query('COMMIT');return false;}
++      }
++      const result=await client.query(update+' RETURNING task_id,job_id',values);
+       if(!result.rowCount){await client.query('COMMIT');return false;}
+       const jobId=result.rows[0].job_id;
+       if(this.scope&&to==='QA')await client.query(`INSERT INTO agy_qa_results(task_id,job_id,verdict,evidence,reviewed_by) VALUES($1,$2,$3,$4,current_setting('agy.subject'))`,[taskId,jobId,patch.qaVerdict??'PENDING',patch.qaEvidence??{}]);
+@@ -101,6 +204,74 @@
+       await client.query('COMMIT');return true;
+     }catch(error){await client.query('ROLLBACK');throw error;}finally{client.release();}
+   }
++  // Atomic worker result submission (candidate, worker-surface v3).
++  // ONE transaction under the task row lock: verifies the immutable
++  // binding (claimed_by = workerId, lease token, attempt), requires the
++  // RUNNING state (a result is never auto-acked from CLAIMED), then
++  // writes task->QA + QA-receipt row + task-event receipt + callback
++  // outbox row + reservation settlement + telemetry together. Any
++  // failure rolls back ALL of it, so a retry is always safe. A replay
++  // with identical content under the same attempt returns the recorded
++  // callback exactly once; different content conflicts. Settlement uses
++  // the caller-provided actuals when valid, else the reserved estimates
++  // (mirroring recordTelemetry's held-branch adjustment), and the
++  // reservation state guard (state='HELD') makes it exactly-once — a
++  // later recordTelemetry finds nothing HELD and cannot settle twice.
++  async workerResult(input:{taskId:string,workerId:string,leaseToken:string,attempt:number,result:Record<string,unknown>,evidence:Record<string,unknown>,contentDigest:string,target:string,quotaUnits?:unknown,costAmount?:unknown,deadlineMs?:number}) {
++    const client=await this.pool.connect();try{
++      await client.query('BEGIN');
++      const locked=await client.query(`SELECT * FROM agy_tasks WHERE task_id=$1 FOR UPDATE`,[input.taskId]);
++      const row=locked.rows[0];
++      if(!row)throw new Error('TASK_NOT_FOUND');
++      if(row.claimed_by!==input.workerId)throw new Error('WORKER_BINDING_DENIED');
++      if(String(row.lease_token)!==input.leaseToken)throw new Error('LEASE_DENIED');
++      if(Number(row.attempt)!==Number(input.attempt))throw new Error('ATTEMPT_DENIED');
++      if(row.status==='QA'){
++        const cb=(await client.query(`SELECT * FROM agy_worker_callbacks WHERE task_id=$1 AND attempt=$2`,[input.taskId,row.attempt])).rows[0];
++        if(!cb)throw new Error('RESULT_STATE_CONFLICT');
++        if(cb.content_digest!==input.contentDigest)throw new Error('RESULT_CONTENT_CONFLICT');
++        await client.query('COMMIT');
++        return {status:'RESULT_SUBMITTED',replay:true,task_id:input.taskId,attempt:Number(row.attempt),task_status:'QA',content_digest:input.contentDigest,callback:{callback_id:cb.callback_id,status:cb.status,target:cb.target}};
++      }
++      if(row.status==='CLAIMED')throw new Error('RESULT_REQUIRES_ACK');
++      if(row.status!=='RUNNING')throw new Error('RESULT_DENIED');
++      // Absolute owner deadline (qualification route only): the
++      // task row lock is already held here, and the wall clock is
++      // read from the database at this moment — a lock wait that
++      // crossed the deadline is caught before any mutation. (The
++      // QA-replay branch above is a pure read and stays available.)
++      if(input.deadlineMs){const now=(await client.query(`SELECT clock_timestamp() AS now`)).rows[0].now;if(new Date(now).getTime()>=input.deadlineMs)throw new Error('LEASE_EXPIRED');}
++      if(!row.lease_expires_at||new Date(row.lease_expires_at).getTime()<=Date.now())throw new Error('LEASE_EXPIRED');
++      const resultJson={...input.result,evidence:input.evidence,content_digest:input.contentDigest};
++      await client.query(`UPDATE agy_tasks SET status='QA',result=$2,updated_at=now() WHERE task_id=$1`,[input.taskId,resultJson]);
++      if(this.scope)await client.query(`INSERT INTO agy_qa_results(task_id,job_id,verdict,evidence,reviewed_by) VALUES($1,$2,'PENDING',$3,current_setting('agy.subject'))`,[input.taskId,row.job_id,input.evidence]);
++      await client.query(`INSERT INTO agy_task_events(job_id,task_id,event_type,to_status,worker_id,detail) VALUES($1,$2,'RESULT_SUBMITTED','QA',$3,$4)`,
++        [row.job_id,input.taskId,input.workerId,{attempt:Number(row.attempt),content_digest:input.contentDigest,external_operation_id:input.evidence.external_operation_id}]);
++      const cb=(await client.query(`INSERT INTO agy_worker_callbacks(job_id,task_id,attempt,worker_id,target,status,payload,content_digest) VALUES($1,$2,$3,$4,$5,'PENDING',$6,$7) RETURNING callback_id`,
++        [row.job_id,input.taskId,row.attempt,input.workerId,input.target,{result:input.result,evidence:input.evidence},input.contentDigest])).rows[0];
++      // Reservation settlement, same transaction, exactly once.
++      let settled=false;
++      const held=(await client.query(`SELECT * FROM agy_resource_reservations WHERE reservation_id=$1 AND state='HELD' FOR UPDATE`,[input.leaseToken])).rows[0];
++      if(held){
++        const qValid=typeof input.quotaUnits==='number'&&Number.isFinite(input.quotaUnits)&&input.quotaUnits>=0;
++        const cValid=typeof input.costAmount==='number'&&Number.isFinite(input.costAmount)&&input.costAmount>=0;
++        const actualQuota=qValid?Number(input.quotaUnits):Number(held.expected_quota);
++        const actualCost=cValid?Number(input.costAmount):Number(held.expected_cost);
++        await client.query(`UPDATE agy_workers SET quota_remaining=quota_remaining+$2-$3,
++          resource_profile=jsonb_set(jsonb_set(resource_profile,'{spendUsed}',to_jsonb(coalesce((resource_profile->>'spendUsed')::numeric,0)-$4+$5)),
++          '{quotaUsed}',to_jsonb(coalesce((resource_profile->>'quotaUsed')::numeric,0)-$2+$3)),updated_at=now() WHERE worker_id=$1`,
++          [input.workerId,Number(held.expected_quota),actualQuota,Number(held.expected_cost),actualCost]);
++        await client.query(`UPDATE agy_resource_reservations SET state='SETTLED',actual_quota=$2,actual_cost=$3 WHERE reservation_id=$1`,[input.leaseToken,actualQuota,actualCost]);
++        settled=true;
++        await client.query(`INSERT INTO agy_telemetry(job_id,task_id,worker_id,outcome,quota_units,cost_amount,metadata,attempt_id) VALUES($1,$2,$3,'RESULT_SUBMITTED',$4,$5,$6,$7)
++          ON CONFLICT(task_id,attempt_id,outcome) WHERE attempt_id IS NOT NULL DO NOTHING`,
++          [row.job_id,input.taskId,input.workerId,actualQuota,actualCost,{externalOperationId:input.evidence.external_operation_id,contentDigest:input.contentDigest},input.leaseToken]);
++      }
++      await this.aggregateJob(client,row.job_id);
++      await client.query('COMMIT');
++      return {status:'RESULT_SUBMITTED',replay:false,task_id:input.taskId,attempt:Number(row.attempt),task_status:'QA',content_digest:input.contentDigest,settled,callback:{callback_id:cb.callback_id,status:'PENDING',target:input.target}};
++    }catch(error){await client.query('ROLLBACK');throw error;}finally{client.release();}
++  }
+   private async aggregateJob(client:any,jobId:string){await client.query(`UPDATE agy_jobs SET status=(CASE
+     WHEN NOT EXISTS(SELECT 1 FROM agy_tasks WHERE job_id=$1 AND status<>'PASS') THEN 'PASS'
+     WHEN EXISTS(SELECT 1 FROM agy_tasks WHERE job_id=$1 AND status IN ('FAIL','BLOCKED','CANCELLED')) THEN 'BLOCKED'
+@@ -147,12 +318,38 @@
+     const recovery=await new ResourceStore(this.pool).fail(workerId,kind,attempt,maxRetry);
+     await this.pool.query(`UPDATE agy_tasks SET available_at=to_timestamp($2/1000.0) WHERE claimed_by=$1 AND status='RUNNING'`,[workerId,recovery.availableAt]);
+   }
+-  async saveCheckpoint(task:ClaimedTask,externalId:string,adapter:string) {
+-    const digest=createHash('sha256').update(JSON.stringify(task.payload??{})).digest('hex');
++  async saveCheckpoint(task:ClaimedTask,externalId:string,adapter:string,payload?:Record<string,unknown>,workerId?:string,attempt?:number,deadlineMs?:number) {
++    // The content digest covers the explicit checkpoint payload when given,
++    // else the claimed task's payload. (The worker surface previously
++    // passed a stub task, which silently digested {}.)
++    const effectivePayload=payload??task.payload??{};
++    const digest=createHash('sha256').update(JSON.stringify(effectivePayload)).digest('hex');
+     const client=await this.pool.connect();try {await client.query("BEGIN");
+-      const result=await client.query(`UPDATE agy_tasks SET checkpoint_version=checkpoint_version+1,checkpoint=coalesce(checkpoint,'{}'::jsonb)||$3::jsonb WHERE task_id=$1 AND lease_token=$2 AND lease_expires_at>now() AND status='RUNNING' RETURNING checkpoint_version`,[task.taskId,task.leaseToken,{externalId,digest,adapter,submissionState:'ACCEPTED'}]);
+-      if(!result.rowCount)throw new Error("STALE_CHECKPOINT_WRITER");
+-      await client.query(`INSERT INTO agy_checkpoints(task_id,version,attempt_id,external_id,context_digest,data) VALUES($1,$2,$3,$4,$5,$6)`,[task.taskId,result.rows[0].checkpoint_version,task.leaseToken,externalId,digest,{externalId,digest,adapter}]);await client.query("COMMIT");
++      // Lock and validate the task BEFORE any replay lookup: a stale,
++      // completed, foreign, or expired lease must never be answered with
++      // an existing version. The row lock also serializes concurrent
++      // writers, so a duplicate insert cannot slip between check and write.
++      const locked=await client.query(`SELECT status,claimed_by,lease_token,lease_expires_at,attempt FROM agy_tasks WHERE task_id=$1 FOR UPDATE`,[task.taskId]);
++      const row=locked.rows[0];
++      if(!row||row.status!=='RUNNING'||String(row.lease_token)!==task.leaseToken||(workerId&&row.claimed_by!==workerId)||!row.lease_expires_at||new Date(row.lease_expires_at).getTime()<=Date.now())throw new Error("STALE_CHECKPOINT_WRITER");
++      if(attempt!==undefined&&Number(attempt)!==Number(row.attempt))throw new Error("ATTEMPT_DENIED");
++      // Absolute owner deadline (qualification route only): the
++      // wall clock is read from the database while the task row
++      // lock is held, before any replay answer or write.
++      if(deadlineMs){const now=(await client.query(`SELECT clock_timestamp() AS now`)).rows[0].now;if(new Date(now).getTime()>=deadlineMs)throw new Error("LEASE_EXPIRED");}
++      // Idempotent replay: the same external operation with the same
++      // content returns the existing version without a new row; the same
++      // external operation with different content is a conflict.
++      const existing=await client.query(`SELECT version,context_digest FROM agy_checkpoints WHERE task_id=$1 AND external_id=$2 ORDER BY version DESC LIMIT 1`,[task.taskId,externalId]);
++      if(existing.rowCount){
++        if(existing.rows[0].context_digest!==digest)throw new Error("CHECKPOINT_CONFLICT");
++        await client.query("COMMIT");return existing.rows[0].version as number;
++      }
++      const result=await client.query(`UPDATE agy_tasks SET checkpoint_version=checkpoint_version+1,checkpoint=coalesce(checkpoint,'{}'::jsonb)||$2::jsonb WHERE task_id=$1 RETURNING checkpoint_version`,[task.taskId,{externalId,digest,adapter,submissionState:'ACCEPTED',payload:effectivePayload}]);
++      // Persist the real payload alongside the digest so a checkpoint is
++      // auditable content, not just a hash of nothing.
++      await client.query(`INSERT INTO agy_checkpoints(task_id,version,attempt_id,external_id,context_digest,data) VALUES($1,$2,$3,$4,$5,$6)`,[task.taskId,result.rows[0].checkpoint_version,task.leaseToken,externalId,digest,{externalId,digest,adapter,payload:effectivePayload}]);await client.query("COMMIT");
++      return result.rows[0].checkpoint_version as number;
+     }catch(error){await client.query("ROLLBACK");throw error;}finally{client.release();}
+   }
+   async saveSubmissionIntent(task:ClaimedTask,adapter:string,idempotencyKey:string){
+--- a/agy-temporal-shadow/src/types.ts
++++ b/agy-temporal-shadow/src/types.ts
+@@ -94,7 +94,7 @@
+   usage?(externalId:string):Promise<{tokens?:number;quotaUnits?:number;costAmount?:number|null;providerUsage?:Record<string,unknown>;sharedResourcePoolId?:string}>;
+ }
+ 
+-export interface ClaimRequest { workerId: string; capabilities: string[]; leaseSeconds: number }
++export interface ClaimRequest { workerId: string; capabilities: string[]; leaseSeconds: number; gate?: import('./platform/worker-gate.js').WorkerGate; deadlineMs?: number }
+ 
+ export interface EngineStore {
+   createJob(input: { tenantId: string; idempotencyKey: string; objective: string; mode: ScheduleMode; passThreshold: number; tasks: TaskSpec[] }): Promise<{ jobId: string; duplicate: boolean }>;
+@@ -103,7 +103,7 @@
+   transition(taskId: string, leaseToken: string, from: TaskStatus[], to: TaskStatus, patch?: Record<string, unknown>): Promise<boolean>;
+   reclaimExpired(): Promise<number>;
+   recordTelemetry(input: Record<string, unknown>): Promise<void>;
+-  saveCheckpoint?(task: ClaimedTask, externalId: string, adapter: string): Promise<void>;
++  saveCheckpoint?(task: ClaimedTask, externalId: string, adapter: string, payload?: Record<string, unknown>, workerId?: string, attempt?: number): Promise<number | void>;
+   saveSubmissionIntent?(task:ClaimedTask,adapter:string,idempotencyKey:string):Promise<void>;
+   deferTask?(task:ClaimedTask,workerId:string,retryAfterMs:number,code:string):Promise<boolean>;
+   recordWorkerFailure?(workerId: string, code: string, attempt: number, maxRetry: number): Promise<void>;
+--- a/agy-temporal-shadow/src/platform/service.ts
++++ b/agy-temporal-shadow/src/platform/service.ts
+@@ -27,7 +27,7 @@
+    const tasks=body.tasks as TaskSpec[];
+    for(const task of tasks)if((task.requiredPermissions??[]).some(p=>!project.permissions.includes(p)))throw new Error('PROJECT_PERMISSION_DENIED');
+    const routing=routeTasks(tasks,body.mode as ScheduleMode|undefined);
+-   return {...await this.store.createJob({tenantId:this.scope.tenantId,idempotencyKey:body.idempotency_key,objective:body.objective,mode:routing.mode,passThreshold:body.pass_threshold??.8,tasks:routing.tasks}),routing:routing.rationale};
++   return {...await this.store.createJob({tenantId:this.scope.tenantId,idempotencyKey:body.idempotency_key,objective:body.objective,mode:routing.mode,passThreshold:body.pass_threshold??.8,tasks:routing.tasks,deadlineMs:typeof body.deadline_ms==='number'?body.deadline_ms:undefined}),routing:routing.rationale};
+   }
+   const job=/^\/jobs\/([a-f0-9-]{36})$/.exec(path);
+   if(job&&method==='GET') {const row=(await this.pool.query('SELECT * FROM agy_jobs WHERE job_id=$1',[job[1]])).rows[0];return row?{job:row,tasks:(await this.pool.query('SELECT * FROM agy_tasks WHERE job_id=$1',[job[1]])).rows}:undefined;}
