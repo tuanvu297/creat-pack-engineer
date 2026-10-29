@@ -1,0 +1,6 @@
+id: "custom.agy-worker-qual"
+title: "AGY Worker Qual (canonical gateway)"
+description: "Use the canonical AGY gateway as Muse, a bounded worker that arrives, claims, acknowledges, heartbeats, checkpoints, submits results and reads back state on the existing Postgres ledger (EXISTING_POSTGRES_D049)."
+include_in_prompt: false
+require_auth: true
+aliases: ["AGY canonical worker", "AGY worker surface"]
