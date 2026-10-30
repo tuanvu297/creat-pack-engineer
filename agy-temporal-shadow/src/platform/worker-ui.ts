@@ -168,7 +168,9 @@ async function readBody(req: any): Promise<Record<string, any>> {
   const text = Buffer.concat(chunks).toString('utf8');
   if (!text) return {};
   const type = String(req.headers['content-type'] ?? '');
-  if (type.includes('application/json')) return JSON.parse(text);
+  // A malformed JSON body is a deterministic client error with its own code,
+  // not a raw SyntaxError that fail() would flatten into REQUEST_FAILED.
+  if (type.includes('application/json')) { try { return JSON.parse(text); } catch { throw new Error('INVALID_JSON_BODY'); } }
   return Object.fromEntries(new URLSearchParams(text));
 }
 
@@ -178,6 +180,14 @@ export function createWorkerUi(deps: WorkerUiDeps) {
     const url = String(req.url ?? '');
     if (!url.startsWith('/worker/ui')) return false;
     const isForm = String(req.headers['content-type'] ?? '').includes('application/x-www-form-urlencoded');
+    // Content negotiation (AGY route repair 20261030): form posts render the
+    // HTML envelope page by default, which a programmatic worker invocation
+    // cannot parse as JSON ("Non-JSON response"). A caller that explicitly
+    // sends Accept: application/json gets the JSON body instead. Browsers
+    // and DOM workers do not send that Accept value on form posts, so the
+    // visible-envelope flow is unchanged for them.
+    const wantsJson = String(req.headers.accept ?? '').includes('application/json');
+    const asHtml = isForm && !wantsJson;
     const json = (status: number, body: any) => { res.statusCode = status; res.setHeader('content-type', 'application/json'); res.end(JSON.stringify({ http_status: status, ...body })); };
     const html = (status: number, body: string) => { res.statusCode = status; res.setHeader('content-type', 'text/html; charset=utf-8'); res.end(body); };
     const statusOf = (message: string) =>
@@ -186,7 +196,7 @@ export function createWorkerUi(deps: WorkerUiDeps) {
       const message = e instanceof Error ? e.message : 'REQUEST_FAILED';
       const code = /^[A-Z_]+$/.test(message) ? message : 'REQUEST_FAILED';
       const status = statusOf(code);
-      if (isForm && req.method === 'POST') html(status, envelopePage(status, action, { ok: false, action, error: code }));
+      if (asHtml && req.method === 'POST') html(status, envelopePage(status, action, { ok: false, action, error: code }));
       else json(status, { ok: false, error: code });
     };
     const now = () => Math.floor(Date.now() / 1000);
@@ -214,7 +224,7 @@ export function createWorkerUi(deps: WorkerUiDeps) {
         const body = await readBody(req);
         if (!body.csrf || !sameSecret(String(body.csrf), claims.csrf)) throw new Error('CSRF_DENIED');
         res.setHeader('set-cookie', `${COOKIE}=; HttpOnly; Secure; SameSite=Lax; Path=/worker/ui; Max-Age=0`);
-        if (isForm) html(200, envelopePage(200, 'signout', { ok: true, action: 'signout', status: 'SIGNED_OUT' }));
+        if (asHtml) html(200, envelopePage(200, 'signout', { ok: true, action: 'signout', status: 'SIGNED_OUT' }));
         else json(200, { ok: true, status: 'SIGNED_OUT' });
         return true;
       }
@@ -241,7 +251,7 @@ export function createWorkerUi(deps: WorkerUiDeps) {
           exp: now() + ttl, csrf: randomBytes(24).toString('base64url') };
         res.setHeader('set-cookie', [`${COOKIE}=${mint(deps, claims)}; HttpOnly; Secure; SameSite=Lax; Path=/worker/ui; Max-Age=${ttl}`,
           `${PRE_COOKIE}=; HttpOnly; Secure; SameSite=Lax; Path=/worker/ui; Max-Age=0`]);
-        if (isForm) html(200, actionForm(claims));
+        if (asHtml) html(200, actionForm(claims));
         else json(200, { ok: true, status: 'SIGNED_IN', worker_id: claims.workerId, scope, csrf: claims.csrf, expires_at: claims.exp });
         return true;
       }
@@ -267,7 +277,7 @@ export function createWorkerUi(deps: WorkerUiDeps) {
         delete fields.result_summary; delete fields.external_operation_id; delete fields.idempotency_key;
         const principal: Principal = { subject: claims.sub, role: 'worker', scopes: [claims.scope], workerId: claims.workerId };
         const result = await deps.surface(principal, claims.scope, String(action ?? ''), fields);
-        if (isForm) html(200, envelopePage(200, String(action ?? ''), { ok: true, action, result }));
+        if (asHtml) html(200, envelopePage(200, String(action ?? ''), { ok: true, action, result }));
         else json(200, { ok: true, action, result });
         return true;
       }
