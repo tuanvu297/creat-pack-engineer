@@ -1,8 +1,55 @@
 import type { ClaimedTask, ExecutionResult, WorkerAdapter,ProviderRuntimeProfile } from "./types.js";
 import { createHash } from 'node:crypto';
 
+export interface ConnectorDiagnostic {status?:number;contentType?:string;requestId?:string;bodySnippet?:string;cause?:string}
 export class ConnectorError extends Error {
-  constructor(readonly code:string,readonly retryable:boolean,readonly retryAfterMs?:number){super(code);}
+  constructor(readonly code:string,readonly retryable:boolean,readonly retryAfterMs?:number,readonly diagnostic?:ConnectorDiagnostic){super(code);}
+}
+// Bounded, redacted evidence for a non-JSON provider body. Diagnostic only:
+// never headers, never credentials; long token-like runs are masked.
+export function redactedSnippet(text:string,max=200):string{
+  return text.slice(0,max)
+    .replace(/Bearer\s+[A-Za-z0-9._~+/=-]+/gi,'Bearer [REDACTED]')
+    .replace(/((?:api[-_]?key|access[-_]?token|token|secret|password|authorization)["'\s:=]+)[^"'\s,;}]+/gi,'$1[REDACTED]')
+    .replace(/[A-Za-z0-9_-]{32,}/g,'[REDACTED_LONG]');
+}
+// Parse a connector response body exactly once. A plain JSON body is used as
+// is; an SSE/streaming body contributes its last complete data: frame (a
+// stream parsed as a single JSON document is the historical NON_JSON defect).
+// Anything else is a deterministic parse failure, never a raw SyntaxError.
+export function parseConnectorBody(text:string,contentType?:string|null):{ok:true;data:any}|{ok:false}{
+  let candidate=text;
+  if((contentType??'').includes('text/event-stream')||/^\s*data:/.test(text)){
+    const frames=text.split(/\r?\n/).filter(l=>l.startsWith('data:')).map(l=>l.slice(5).trim()).filter(l=>l&&l!=='[DONE]');
+    if(!frames.length)return{ok:false};
+    candidate=frames[frames.length-1];
+  }
+  try{return{ok:true,data:JSON.parse(candidate)};}catch{return{ok:false};}
+}
+// Schema gate for a collected provider result (AGY route repair 20261030).
+// A result may only reach result-commit/callback when its state is a known
+// ExecutionResult state, its execution identity (when the provider reports
+// one) matches the requested externalId, and its output is a plain object.
+// A string output is accepted only when it carries a JSON object (directly
+// or in a single fenced block), which is how text-native models wrap results;
+// any other string is a deterministic RESULT_SCHEMA_INVALID, not a PASS.
+export function validateExecutionResult(raw:any,externalId:string):ExecutionResult{
+  if(!raw||typeof raw!=='object'||Array.isArray(raw)||!['RUNNING','SUCCEEDED','FAILED','CANCELLED'].includes(raw.state))
+    throw new ConnectorError('RESULT_SCHEMA_INVALID',false);
+  if(raw.externalOperationId!==undefined&&raw.externalOperationId!==externalId)
+    throw new ConnectorError('RESULT_IDENTITY_MISMATCH',false);
+  let output=raw.output;
+  if(typeof output==='string'){
+    let parsed:any;try{parsed=JSON.parse(output);}catch{
+      const fenced=output.match(/```(?:json)?\s*([\s\S]*?)```/);
+      if(fenced){try{parsed=JSON.parse(fenced[1]);}catch{}}
+    }
+    if(!parsed||typeof parsed!=='object'||Array.isArray(parsed))throw new ConnectorError('RESULT_SCHEMA_INVALID',false);
+    output=parsed;
+  }
+  if(output!==undefined&&(typeof output!=='object'||output===null||Array.isArray(output)))
+    throw new ConnectorError('RESULT_SCHEMA_INVALID',false);
+  return{...raw,output};
 }
 export function connectorIdempotencyKey(adapter:string,task:ClaimedTask){
  // Keep retries of the same submission stable; a terminal failed operation permits a
@@ -43,9 +90,28 @@ export class HttpJsonAdapter implements WorkerAdapter {
       try{response=await fetch(`${this.endpoint}${path}`, { method: body ? "POST" : "GET", signal:bounded,headers: { ...this.scopeHeaders,"content-type": "application/json", ...(this.token ? { authorization: `Bearer ${this.token}` } : {}),...(idempotencyKey?{'idempotency-key':idempotencyKey}:{}) }, body: body ? JSON.stringify(body) : undefined });}
       catch{if(body&&idempotencyKey&&(!this.runtimeProfile||this.runtimeProfile.submission_replay==='BLOCK_ON_UNCERTAINTY'))throw new ConnectorError('SUBMISSION_UNCERTAIN',false);
         if(bounded.aborted)throw new ConnectorError('CONNECTOR_TIMEOUT',true);if(retry===2)throw new ConnectorError('CONNECTOR_UNAVAILABLE',true);await pause(100*(retry+1),bounded);continue;}
-      if(response.ok){const data=await response.json() as any;return {...data,_agy_request_id:response.headers.get('x-request-id')??undefined};}
+      // Read the body once as text. The historical defect parsed an ok body
+      // with response.json(): any non-JSON success body (HTML UI page, plain
+      // text, SSE stream, provider error page) escaped as a raw SyntaxError
+      // with no code, which callers treated as retryable and could re-execute
+      // a submission the provider had already accepted.
+      const rawText=await response.text();
+      const parsed=parseConnectorBody(rawText,response.headers.get('content-type'));
+      if(response.ok){
+        if(!parsed.ok){
+          const diagnostic:ConnectorDiagnostic={status:response.status,contentType:response.headers.get('content-type')??undefined,
+            requestId:response.headers.get('x-request-id')??undefined,bodySnippet:redactedSnippet(rawText),cause:'NON_JSON_RESPONSE'};
+          // A submission whose acknowledgement cannot be parsed may already
+          // exist provider-side: classify SUBMISSION_UNCERTAIN (checkpoint is
+          // preserved, no blind retry, reconcile by idempotency key first).
+          // A read (status/result/usage) is a deterministic NON_JSON failure.
+          if(body&&idempotencyKey)throw new ConnectorError('SUBMISSION_UNCERTAIN',false,undefined,diagnostic);
+          throw new ConnectorError('NON_JSON_RESPONSE',false,undefined,diagnostic);
+        }
+        const data=parsed.data as any;return {...data,_agy_request_id:response.headers.get('x-request-id')??undefined};
+      }
       // Provider quota exhaustion is not a transient rate limit. Never export raw errors.
-      let providerCode:string|undefined;try{providerCode=(await response.json() as any)?.error?.code;}catch{}
+      let providerCode:string|undefined;if(parsed.ok)providerCode=(parsed.data as any)?.error?.code;
       if(['insufficient_quota','credit_balance_exhausted'].includes(providerCode??''))throw new ConnectorError('PROVIDER_QUOTA_EXHAUSTED',false);
       const delay=response.headers.get('retry-after'),ms=delay?(Number.isFinite(Number(delay))?Number(delay)*1000:Math.max(0,Date.parse(delay)-Date.now())):100*(retry+1);
       const transient=[429,502,503,504].includes(response.status);
@@ -60,9 +126,9 @@ export class HttpJsonAdapter implements WorkerAdapter {
     const key=connectorIdempotencyKey(this.name,task);
     return this.call("/execute", { task,idempotency_key:key },signal,key);
   }
-  async check_status(externalId: string) { return this.call(`/status/${encodeURIComponent(externalId)}`) as Promise<ExecutionResult>; }
+  async check_status(externalId: string) { return validateExecutionResult(await this.call(`/status/${encodeURIComponent(externalId)}`),externalId); }
   async cancel(externalId: string) { const result=await this.call(`/cancel/${encodeURIComponent(externalId)}`, {});if(result.remoteCancellationConfirmed!==true&&result.terminal!==true)throw new ConnectorError('CANCELLATION_UNCONFIRMED',false); }
-  async collect_result(externalId: string) { return this.call(`/result/${encodeURIComponent(externalId)}`) as Promise<ExecutionResult>; }
+  async collect_result(externalId: string) { return validateExecutionResult(await this.call(`/result/${encodeURIComponent(externalId)}`),externalId); }
   async health():Promise<{ready:boolean;detail?:string}> { try { const status=await this.call("/health");return {ready:status.ready===true,detail:status.detail}; } catch (error) { return { ready: false, detail: String(error) }; } }
   async usage(externalId:string){return this.call(`/usage/${encodeURIComponent(externalId)}`);}
 }

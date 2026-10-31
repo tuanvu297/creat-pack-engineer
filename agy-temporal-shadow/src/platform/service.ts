@@ -27,7 +27,7 @@ export class ProjectService {
    const tasks=body.tasks as TaskSpec[];
    for(const task of tasks)if((task.requiredPermissions??[]).some(p=>!project.permissions.includes(p)))throw new Error('PROJECT_PERMISSION_DENIED');
    const routing=routeTasks(tasks,body.mode as ScheduleMode|undefined);
-   return {...await this.store.createJob({tenantId:this.scope.tenantId,idempotencyKey:body.idempotency_key,objective:body.objective,mode:routing.mode,passThreshold:body.pass_threshold??.8,tasks:routing.tasks}),routing:routing.rationale};
+   return {...await this.store.createJob({tenantId:this.scope.tenantId,idempotencyKey:body.idempotency_key,objective:body.objective,mode:routing.mode,passThreshold:body.pass_threshold??.8,tasks:routing.tasks,deadlineMs:typeof body.deadline_ms==='number'?body.deadline_ms:undefined}),routing:routing.rationale};
   }
   const job=/^\/jobs\/([a-f0-9-]{36})$/.exec(path);
   if(job&&method==='GET') {const row=(await this.pool.query('SELECT * FROM agy_jobs WHERE job_id=$1',[job[1]])).rows[0];return row?{job:row,tasks:(await this.pool.query('SELECT * FROM agy_tasks WHERE job_id=$1',[job[1]])).rows}:undefined;}

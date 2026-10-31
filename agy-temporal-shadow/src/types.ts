@@ -94,7 +94,7 @@ export interface WorkerAdapter {
   usage?(externalId:string):Promise<{tokens?:number;quotaUnits?:number;costAmount?:number|null;providerUsage?:Record<string,unknown>;sharedResourcePoolId?:string}>;
 }
 
-export interface ClaimRequest { workerId: string; capabilities: string[]; leaseSeconds: number }
+export interface ClaimRequest { workerId: string; capabilities: string[]; leaseSeconds: number; gate?: import('./platform/worker-gate.js').WorkerGate; deadlineMs?: number }
 
 export interface EngineStore {
   createJob(input: { tenantId: string; idempotencyKey: string; objective: string; mode: ScheduleMode; passThreshold: number; tasks: TaskSpec[] }): Promise<{ jobId: string; duplicate: boolean }>;
@@ -103,7 +103,7 @@ export interface EngineStore {
   transition(taskId: string, leaseToken: string, from: TaskStatus[], to: TaskStatus, patch?: Record<string, unknown>): Promise<boolean>;
   reclaimExpired(): Promise<number>;
   recordTelemetry(input: Record<string, unknown>): Promise<void>;
-  saveCheckpoint?(task: ClaimedTask, externalId: string, adapter: string): Promise<void>;
+  saveCheckpoint?(task: ClaimedTask, externalId: string, adapter: string, payload?: Record<string, unknown>, workerId?: string, attempt?: number): Promise<number | void>;
   saveSubmissionIntent?(task:ClaimedTask,adapter:string,idempotencyKey:string):Promise<void>;
   deferTask?(task:ClaimedTask,workerId:string,retryAfterMs:number,code:string):Promise<boolean>;
   recordWorkerFailure?(workerId: string, code: string, attempt: number, maxRetry: number): Promise<void>;
