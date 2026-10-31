@@ -12,6 +12,23 @@ SELECT set_config('agy.tenant_id','gl',true);
 SELECT set_config('agy.workspace_id','legacy-workspace',true);
 SELECT set_config('agy.project_id','GEMINI_UI_STAGING',true);
 
+-- Fail closed before any mutation if the already-provisioned staging route is not exactly present.
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM agy_projects
+    WHERE tenant_id='gl' AND workspace_id='legacy-workspace' AND project_id='GEMINI_UI_STAGING'
+  ) THEN RAISE EXCEPTION 'GEMINI_UI_STAGING_PROJECT_MISSING'; END IF;
+  IF NOT EXISTS (
+    SELECT 1 FROM agy_connectors
+    WHERE tenant_id='gl' AND workspace_id='legacy-workspace' AND project_id='GEMINI_UI_STAGING'
+      AND connector_id='gemini-ui-staging-worker-ui' AND kind='gemini'
+  ) THEN RAISE EXCEPTION 'GEMINI_UI_STAGING_CONNECTOR_MISSING'; END IF;
+  IF NOT EXISTS (
+    SELECT 1 FROM agy_workers WHERE worker_id='GEMINI-SEO-WORKER' AND adapter='gemini'
+  ) THEN RAISE EXCEPTION 'GEMINI_SEO_WORKER_MISSING_OR_ADAPTER_CONFLICT'; END IF;
+END $$;
+
 -- Keep the scope staging-only, but owner has now explicitly authorized this bounded preview pilot.
 -- Extend only the arrival/grant window needed for the current run; no production enablement.
 UPDATE agy_projects
@@ -35,22 +52,12 @@ SET status='ACTIVE',
     updated_at=now()
 WHERE tenant_id='gl' AND workspace_id='legacy-workspace' AND project_id='GEMINI_UI_STAGING';
 
-DO $$
-BEGIN
-  IF NOT FOUND THEN RAISE EXCEPTION 'GEMINI_UI_STAGING_PROJECT_MISSING'; END IF;
-END $$;
-
 UPDATE agy_connectors
 SET capabilities=ARRAY['hello','video_preview']::text[],
     enabled=true,
     permissions=ARRAY['read','analyze','planning','qa']::text[]
 WHERE tenant_id='gl' AND workspace_id='legacy-workspace' AND project_id='GEMINI_UI_STAGING'
   AND connector_id='gemini-ui-staging-worker-ui' AND kind='gemini';
-
-DO $$
-BEGIN
-  IF NOT FOUND THEN RAISE EXCEPTION 'GEMINI_UI_STAGING_CONNECTOR_MISSING'; END IF;
-END $$;
 
 -- Expand only task/mission bindings inside the same already-authorized scope.
 UPDATE agy_workers
@@ -72,11 +79,6 @@ SET capabilities=(SELECT ARRAY(SELECT DISTINCT x FROM unnest(capabilities || ARR
     quota_reserve=0,
     updated_at=now()
 WHERE worker_id='GEMINI-SEO-WORKER' AND adapter='gemini';
-
-DO $$
-BEGIN
-  IF NOT FOUND THEN RAISE EXCEPTION 'GEMINI_SEO_WORKER_MISSING_OR_ADAPTER_CONFLICT'; END IF;
-END $$;
 
 INSERT INTO agy_jobs(
   job_id,tenant_id,workspace_id,project_id,idempotency_key,
