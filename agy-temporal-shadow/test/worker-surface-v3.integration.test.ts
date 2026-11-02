@@ -539,7 +539,14 @@ test("worker surface v3: in-transaction claim gate, atomic result, checkpoint lo
     drv.stop();
     assert.equal(Number((await q(`SELECT effect_count FROM agy_callback_receipts WHERE callback_id=$1`, [qualCb.callback_id]))[0].effect_count), 1);
     const drvX = createWorkerCallbackDriver(rawQ, { config: { enabled: true, scope: scopeQ, missionId: 'GL_QUALIFICATION', expiresAtMs: Date.now() + 60_000, runId: 'test-x', intervalMs: 50, timeboxMs: 0, limit: 1 }, operator: opQ, log: () => {} });
-    assert.equal(drvX.start(), 'EXPIRED', 'an exhausted timebox expires the driver before any pass');
+    // Contract change (2026-11-02 lifecycle fix): timeboxMs no
+    // longer gates delivery — the owner expiry is the only deadline
+    // (the startedAt+timebox cap stranded restore3's callback).
+    // Unit coverage: test/callback-lifecycle-fix.test.ts.
+    assert.equal(drvX.start(), 'RUNNING', 'timeboxMs no longer expires the driver; the owner expiry is the only deadline');
+    drvX.stop();
+    const drvY = createWorkerCallbackDriver(rawQ, { config: { enabled: true, scope: scopeQ, missionId: 'GL_QUALIFICATION', expiresAtMs: Date.now() - 1000, runId: 'test-y', intervalMs: 50, limit: 1 }, operator: opQ, log: () => {} });
+    assert.equal(drvY.start(), 'EXPIRED', 'an already-past owner expiry still expires the driver before any pass');
 
     // ---- B1: ungated fairness across projects + external exclusion --
     // A second 'muse' connector in the qualification project (fixture
