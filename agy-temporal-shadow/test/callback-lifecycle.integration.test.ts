@@ -32,7 +32,7 @@ async function setup() {
   const admin = new Pool({ connectionString: process.env.AGY_TEST_DATABASE_URL });
   const owner = new Pool({ connectionString: process.env.AGY_TEST_DATABASE_URL, options: `-c search_path=${schema},public` });
   await admin.query(`CREATE SCHEMA ${schema}`);
-  for (const file of ['001_worker_engine_v1.sql','002_resource_optimization.sql','003_resource_learning_engine.sql','004_platform_projects.sql','005_platform_dispatch.sql','006_global_approval_audit.sql','007_runtime_capability_projection.sql','008_durable_runtime.sql','012_worker_callbacks.sql'])
+  for (const file of ['001_worker_engine_v1.sql','002_resource_optimization.sql','003_resource_learning_engine.sql','004_platform_projects.sql','005_platform_dispatch.sql','006_global_approval_audit.sql','007_runtime_capability_projection.sql','008_durable_runtime.sql','012_worker_callbacks.sql','013_reservation_accounting_closure.sql'])
     await owner.query(await readFile(new URL(`../migrations/${file}`, import.meta.url), 'utf8'));
   await admin.query(`CREATE ROLE ${role} NOLOGIN NOSUPERUSER NOBYPASSRLS`);
   await owner.query(`GRANT USAGE ON SCHEMA ${schema} TO ${role}`);
@@ -117,6 +117,14 @@ test("L1: settled prior run is archived, not deleted — next grant proceeds and
     b.ctl.stop();
     const proj = await env.markerRow();
     assert.equal(proj.policies.qualificationRun.run_id, 'run-l1b');
+    // QA correction R2: run A's settled reservation is CLOSED at
+    // archival — the row and its actual_quota survive as evidence,
+    // but it no longer counts against run B's per-run cap (the
+    // lifecycle claim below is the live proof: without the closure
+    // it returns EMPTY, as restore3 did before the manual DB fix).
+    const resA = (await q(`SELECT state, actual_quota FROM agy_resource_reservations WHERE job_id=$1`, [runA.job_id]))[0];
+    assert.equal(resA.state, 'CLOSED', 'run A reservation accounting is closed at archival');
+    assert.equal(Number(resA.actual_quota), 1, 'run A reservation evidence (actual_quota) is preserved');
     const history = proj.policies.qualificationRunHistory;
     assert.ok(Array.isArray(history) && history.length === 1, 'exactly one archived history entry');
     assert.equal(history[0].run_id, 'run-l1a');
@@ -134,6 +142,40 @@ test("L1: settled prior run is archived, not deleted — next grant proceeds and
     // And the window actually works end to end:
     const runB = await env.lifecycle('op-l1b-1');
     assert.ok(runB.task_id, 'run B lifecycle completes in the same scope that used to require manual DB surgery');
+  } finally { await env.teardown(); }
+});
+
+test("L3: an expired run's never-claimed task can never be claimed under the next run's grant (QA R1)",
+{ skip: !process.env.AGY_TEST_DATABASE_URL, timeout: 120000 }, async () => {
+  const env = await setup();
+  const { q } = env;
+  try {
+    // Path 1 — the run's own cleanup retires its unclaimed task.
+    const a = await env.grant('run-l3a', 4000);
+    a.ctl.stop();
+    const jobA = (await q(`SELECT job_id FROM agy_jobs ORDER BY created_at DESC LIMIT 1`))[0];
+    const taskA = (await q(`SELECT task_id FROM agy_tasks WHERE job_id=$1`, [jobA.job_id]))[0];
+    assert.equal((await q(`SELECT status FROM agy_tasks WHERE task_id=$1`, [taskA.task_id]))[0].status, 'QUEUED');
+    await env.rollback(a.cfg);
+    assert.equal((await q(`SELECT status FROM agy_tasks WHERE task_id=$1`, [taskA.task_id]))[0].status, 'CANCELLED',
+      'cleanup retires the expired run\u2019s unclaimed task (row retained as evidence)');
+    await env.sleepPastMarker();
+
+    // Path 2 — cleanup never runs for run A2; the NEXT grant's
+    // archival retires its unclaimed task atomically, and a claim
+    // under run B returns B's task, never A2's.
+    const a2 = await env.grant('run-l3a2', 1500);
+    a2.ctl.stop();
+    const jobA2 = (await q(`SELECT job_id FROM agy_jobs ORDER BY created_at DESC LIMIT 1`))[0];
+    const taskA2 = (await q(`SELECT task_id FROM agy_tasks WHERE job_id=$1`, [jobA2.job_id]))[0];
+    await env.sleepPastMarker();
+    const b = await env.grant('run-l3b', 60_000);
+    b.ctl.stop();
+    assert.equal((await q(`SELECT status FROM agy_tasks WHERE task_id=$1`, [taskA2.task_id]))[0].status, 'CANCELLED',
+      'archival retires the prior run\u2019s unclaimed task before the new grant activates the scope');
+    const runB = await env.lifecycle('op-l3b-1');
+    assert.notEqual(runB.task_id, taskA2.task_id, 'the claim under run B is never the expired run\u2019s task');
+    assert.equal((await q(`SELECT status FROM agy_tasks WHERE task_id=$1`, [taskA2.task_id]))[0].status, 'CANCELLED');
   } finally { await env.teardown(); }
 });
 

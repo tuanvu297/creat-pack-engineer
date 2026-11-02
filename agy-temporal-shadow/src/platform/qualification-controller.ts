@@ -332,10 +332,57 @@ export function createQualificationController(raw: Pool, opts: {
       callbackStatuses: callbackRows.map((c: any) => String(c.status)),
     }, nowMs);
     if (verdict !== 'ARCHIVABLE') return { ok: false, reason: verdict };
+    // QA correction R1/R2 (2026-11-02): archiving also retires the
+    // run's still-runnable tasks and closes its accounting,
+    // atomically with the marker swap and BEFORE the new grant
+    // activates the project — an unclaimed task of the archived run
+    // can never be claimed under the new run's scope-wide deadline
+    // (worker-gate has no run fence and the claim stamps the CURRENT
+    // request deadline), and its settled reservations stop counting
+    // against the new run's per-run cap. Evidence is retained: task
+    // rows keep their payload under terminal CANCELLED (with a task
+    // event), reservation rows keep actual_quota under CLOSED.
+    let retiredTaskIds: string[] = [];
+    let closedReservations = 0;
+    if (job) {
+      const retired = await client.query(
+        `UPDATE agy_tasks SET status='CANCELLED', updated_at=now()
+         WHERE job_id=$1 AND status IN ('QUEUED','RETRY') RETURNING task_id`, [job.job_id]);
+      retiredTaskIds = retired.rows.map((r: any) => r.task_id);
+      for (const taskId of retiredTaskIds) {
+        await client.query(
+          `INSERT INTO agy_task_events(job_id,task_id,event_type,to_status,worker_id,detail)
+           VALUES($1,$2,'RUN_ARCHIVED_TASK_RETIRED','CANCELLED',$3,$4)`,
+          [job.job_id, taskId, QUALIFICATION_WORKER_ID,
+           JSON.stringify({ archived_run: marker.run_id, archived_by_run: cfg.runId })]);
+      }
+      const closed = await client.query(
+        `UPDATE agy_resource_reservations SET state='CLOSED'
+         WHERE job_id=$1 AND state='SETTLED' RETURNING reservation_id`, [job.job_id]);
+      closedReservations = closed.rowCount ?? 0;
+      await client.query(
+        `UPDATE agy_resource_reservations SET state='EXPIRED'
+         WHERE job_id=$1 AND state='HELD'`, [job.job_id]);
+    }
+    // The archived run's window is closed, so its worker cap and
+    // connector return to the dormant state its own cleanup would
+    // have left. Without this, a run whose cleanup never ran (the
+    // process was down at expiry — the exact restore2/restore3
+    // pattern) strands a live cap and the next grant blocks with
+    // WORKER_CAP_WITHOUT_GRANT. The expired marker is the window
+    // authority for this scope, so no live window can own that cap.
+    // Phase A re-grants both for the new run in this transaction.
+    await client.query(`UPDATE agy_workers SET status='OFFLINE', quota_remaining=null WHERE worker_id=$1`,
+      [QUALIFICATION_WORKER_ID]);
+    await client.query(`UPDATE agy_connectors SET enabled=false
+      WHERE tenant_id=$1 AND workspace_id=$2 AND project_id=$3 AND connector_id=$4`,
+      [QUALIFICATION_SCOPE.tenantId, QUALIFICATION_SCOPE.workspaceId, QUALIFICATION_SCOPE.projectId, QUAL_CONNECTOR_ID]);
     const entry = {
       run_id: marker.run_id,
       job_id: job?.job_id ?? null,
       task_ids: taskRows.map((t: any) => t.task_id),
+      retired_task_ids: retiredTaskIds,
+      reservations_closed: closedReservations,
       marker,
       archived_at: new Date(nowMs).toISOString(),
       archived_by_run: cfg.runId,
@@ -796,6 +843,27 @@ export function createQualificationController(raw: Pool, opts: {
           await client.query(
             `UPDATE agy_tasks SET lease_expires_at = LEAST(lease_expires_at, now() - interval '1 second')
              WHERE job_id=$1 AND status IN ('CLAIMED','RUNNING') AND lease_token IS NOT NULL`, [job.job_id]);
+        }
+        // QA correction R1: an expired run's unclaimed work is
+        // retired in this same transaction — after the deadline it
+        // can never be claimed legitimately, and leaving it QUEUED
+        // would let a FUTURE run's scope-wide claim deadline pick it
+        // up (the worker gate carries no run fence). Rows are
+        // retained as evidence (terminal CANCELLED + task event).
+        // Reservation accounting is deliberately NOT touched here:
+        // cleanup must never rewrite a result-settled reservation
+        // (T3b invariant) — the per-run accounting closure happens
+        // at archival time in the next grant, when the run is
+        // provably settled (see tryArchivePriorRun).
+        const retired = await client.query(
+          `UPDATE agy_tasks SET status='CANCELLED', updated_at=now()
+           WHERE job_id=$1 AND status IN ('QUEUED','RETRY') RETURNING task_id`, [job.job_id]);
+        for (const r of retired.rows) {
+          await client.query(
+            `INSERT INTO agy_task_events(job_id,task_id,event_type,to_status,worker_id,detail)
+             VALUES($1,$2,'RUN_EXPIRED_TASK_RETIRED','CANCELLED',$3,$4)`,
+            [job.job_id, r.task_id, QUALIFICATION_WORKER_ID,
+             JSON.stringify({ run_id: cfg.runId, reason: 'RUN_EXPIRED_UNCLAIMED' })]);
         }
       }
       await client.query(`UPDATE agy_connectors SET enabled=false

@@ -126,3 +126,65 @@ PostgreSQL D049 (`agy_hosted_staging`).
   deadline, never creates a window, and never touches an unexpired
   marker. Task-scoped authorization is unchanged (the grant still
   requires the full owner window variables).
+
+## QA correction round 2 (2026-11-02, reviewer findings R1/R2)
+
+Independent QA of 735f1a20 confirmed two P1 defects; both are fixed
+in this round and proven on a REAL local PostgreSQL (embedded
+binaries, repo migrations) — the integration tests are no longer
+skipped-only.
+
+R1 — an expired run's UNCLAIMED task stayed claimable under the
+next run's grant (the worker gate has no run fence and the claim
+stamps the CURRENT scope-wide deadline). Fix: expired work is made
+non-runnable atomically while retaining evidence. The run's own
+cleanup retires its QUEUED/RETRY tasks to terminal CANCELLED (row +
+payload kept, task event RUN_EXPIRED_TASK_RETIRED); archival does
+the same for a prior run whose cleanup never ran
+(RUN_ARCHIVED_TASK_RETIRED), in the same transaction as the marker
+swap and before the new grant activates the scope. Archival also
+returns the prior window's worker/connector to dormant, so a run
+whose cleanup never ran cannot strand a live cap
+(WORKER_CAP_WITHOUT_GRANT). Regression test L3: run A's task never
+claimed → expires → run B grant → claim returns B's task, never A's
+(both the cleanup path and the archival path are exercised).
+
+R2 — reservation accounting summed EVERY reservation in the
+project, so a settled prior run permanently consumed the next run's
+per-run cap (restore3's live EMPTY claim). Fix: authorized per-run
+accounting closure at archival. Migration
+013_reservation_accounting_closure.sql adds the terminal state
+CLOSED, redefines the dispatch projection sums to count only
+HELD/SETTLED, and recomputes existing projections. At archival the
+prior run's SETTLED reservations transition to CLOSED — the row and
+its actual_quota are retained as evidence; only the accounting
+state advances, recorded in the history entry
+(reservations_closed). The claim-time usage query applies the same
+state filter. Cleanup deliberately does NOT close reservations:
+the T3b invariant (cleanup never rewrites a result-settled
+reservation) is preserved — closure happens only at archival, when
+the gate has proven the run fully settled. Test L1 asserts the
+CLOSED state with actual_quota intact AND the next run's claim
+returning LEASED. A/B evidence: with the closure and retirement
+disabled, L1 fails with claim EMPTY (the restore3 symptom) and L3
+fails with the task left QUEUED; with the fixes, the full suite is
+227 tests / 221 pass / 3 fail, the 3 fails identical to the
+pristine-base run (pre-existing: Temporal startup sanitization,
+no-business-hard-coded, worker surface v2).
+
+All pre-existing PG integration harnesses now apply migration 013
+alongside 012 (their fixed migration lists are part of this
+candidate).
+
+## Routing decision path (D3/D4 runnable candidate)
+
+src/platform/routing-decision.ts implements the work-breakdown /
+action-journal / resource-aware routing contracts as a pure,
+versioned decision function (ASSIGN / TEACH_THEN_ASSIGN / REPAIR /
+RESOURCE_WAIT / RECONCILE_FIRST) over plain JSON records, so the
+brain state survives model/host replacement. Capacity is accounted
+per ACCOUNT shared across roles, expected totals are per ACCEPTED
+output including retries and the shared review charge, and UNKNOWN
+quota is a wait, never a guess. test/routing-decision.test.ts
+covers the seven contract scenarios plus dependency acceptance and
+journal append-only behaviour.

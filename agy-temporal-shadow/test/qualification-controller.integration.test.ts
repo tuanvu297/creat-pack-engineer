@@ -31,7 +31,7 @@ async function setup() {
   const admin = new Pool({ connectionString: process.env.AGY_TEST_DATABASE_URL });
   const owner = new Pool({ connectionString: process.env.AGY_TEST_DATABASE_URL, options: `-c search_path=${schema},public` });
   await admin.query(`CREATE SCHEMA ${schema}`);
-  for (const file of ['001_worker_engine_v1.sql','002_resource_optimization.sql','003_resource_learning_engine.sql','004_platform_projects.sql','005_platform_dispatch.sql','006_global_approval_audit.sql','007_runtime_capability_projection.sql','008_durable_runtime.sql','012_worker_callbacks.sql'])
+  for (const file of ['001_worker_engine_v1.sql','002_resource_optimization.sql','003_resource_learning_engine.sql','004_platform_projects.sql','005_platform_dispatch.sql','006_global_approval_audit.sql','007_runtime_capability_projection.sql','008_durable_runtime.sql','012_worker_callbacks.sql','013_reservation_accounting_closure.sql'])
     await owner.query(await readFile(new URL(`../migrations/${file}`, import.meta.url), 'utf8'));
   await admin.query(`CREATE ROLE ${role} NOLOGIN NOSUPERUSER NOBYPASSRLS`);
   await owner.query(`GRANT USAGE ON SCHEMA ${schema} TO ${role}`);

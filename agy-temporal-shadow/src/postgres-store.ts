@@ -121,7 +121,7 @@ export class PostgresStore implements EngineStore {
         const blocked=(await client.query(`SELECT worker_id FROM agy_project_worker_health WHERE blocked_until>now()`)).rows;
         for(const profile of profiles)if(blocked.some(r=>r.worker_id===profile.workerId)){profile.ready=false;profile.status='DEGRADED';}
         const usage=(await client.query(`SELECT (SELECT count(*) FROM agy_tasks WHERE status IN ('CLAIMED','RUNNING')) AS active,
-          coalesce(sum(coalesce(actual_quota,expected_quota)),0) AS quota,coalesce(sum(coalesce(actual_cost,expected_cost)),0) AS cost FROM agy_resource_reservations`)).rows[0];
+          coalesce(sum(coalesce(actual_quota,expected_quota)),0) AS quota,coalesce(sum(coalesce(actual_cost,expected_cost)),0) AS cost FROM agy_resource_reservations WHERE state IN ('HELD','SETTLED')`)).rows[0];
         if(Number(usage.active)>=Number(project.resource_policy.maxConcurrentTasks??0)) {await client.query('COMMIT');return null;}
         // Project budgets are enforced alongside the global provider balance/reserve.
         for(const profile of profiles) {
