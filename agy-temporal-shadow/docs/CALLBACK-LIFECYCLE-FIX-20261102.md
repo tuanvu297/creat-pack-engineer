@@ -353,3 +353,53 @@ provider call has been made, NO key exists yet; tests are
 mock-only (test/helper-providers.mock.test.ts, 8/8). The
 integration delta + credential/cost gates live in the Drive
 delta doc (mailbox MB-20261103-011).
+
+## Round 8 (2026-11-03): peer-QA F1–F5 repairs + provider provenance hardening + facade OAuth
+
+Root's four live repros against 85bd3e30 and Gemini's peer-QA
+(F1–F5, artifact Drive 1u_li23PNbQ0tfLapE635XPYtU3DzG_zK) are
+fixed at source, each failing-first:
+- Providers: readResultFor requires the persisted submission
+  binding (queue-read) and echo-checks the provider's own id;
+  unknown/missing/malformed statuses denied (Grok {} no longer
+  defaults to completed); Manus pagination past the cap raises
+  PARTIAL_RESULT with a resume cursor; reconcile is tri-state
+  (FOUND / NOT_FOUND only when the list is exhausted / UNKNOWN);
+  provider + exception text is sanitized of credential material.
+  helper-queue.loadSubmissionBinding +
+  readVerifiedHelperResult enforce the boundary.
+- F1: verifyHelperResult takes the authenticated principal and
+  now checks result types explicitly, the CURRENT parent fence,
+  the child's claim, submission_state = SUBMITTED, the EXACT
+  persisted external ref, and finite cost against the budget's
+  remaining room. digestOf(undefined) throws DIGEST_INPUT_INVALID
+  (never mapped to null - that would collide with a real null
+  payload; stableStringify's format is UNCHANGED for
+  compatibility, its locale-dependent sort is a documented v2
+  item per the corrected repair 5b).
+- F2: begin/record check role, child lease expiry and the
+  current-parent fence; record rejects empty refs (wedge).
+- F3: createDelegatedChild holds SELECT ... FOR UPDATE on the
+  parent row across verify+create, re-verifies after the
+  concurrent-winner wait, and verifies the persisted child
+  binding on both reconcile branches (reply-target drift under
+  a shared childKey is CHILD_BINDING_MISMATCH, not a silent
+  return).
+- F4: ChildSpec rejects negative/non-finite money and any
+  estimatedCost above the assignment budget's remaining room.
+- F5: scoped-pool classifies transaction statements properly
+  (BEGIN; / BEGIN ISOLATION LEVEL ... / START TRANSACTION are
+  honoured; ROLLBACK TO SAVEPOINT and SAVEPOINT are in-tx
+  statements, never ends, never auto-wrapped).
+Tests: providers mock 8/8 + adversarial 6/6; scoped-pool 2/2;
+queue + queue-security + surface-delegate PG integrations 3/3
+suites; delegation suites 19/19.
+- Facade v0.3 (tools/agy-mcp-facade): OAuth 2.1 mode on the
+  official SDK (see the facade README) - Gemini-compatible
+  discovery incl. the required registration_endpoint (gated
+  DCR), owner-in-person consent, S256 PKCE, audience-bound
+  tokens, persistent refresh for the Google client, family
+  revocation on replay. 5/5 facade tests (bearer regression +
+  OAuth flow). Deploy/consent steps: Drive doc (mailbox
+  MB-20261103-012). Nothing deployed; no key created; no
+  provider called.

@@ -144,9 +144,9 @@ test("helper queue: parent verification, unique child, reservation, submission f
     const payload = { findings: ['a', 'b'] };
     const aChild = childId === c1.childTaskId ? a1 : aConc;
     const env = { childKey: childKey(aChild), helperId: aChild.helperId, externalRef: 'grok-ref-1', digest: digestOf(payload), payload, costUnits: 1 };
-    assert.deepEqual(await verifyHelperResult(rt, scope, aChild, env as any), { verified: true });
-    await assert.rejects(() => verifyHelperResult(rt, scope, aChild, { ...env, digest: 'deadbeef' } as any), /RESULT_DIGEST_MISMATCH/);
-    await assert.rejects(() => verifyHelperResult(rt, scope, aChild, { ...env, childKey: 'helper:grok:nope:1:x' } as any), /RESULT_CHILD_MISMATCH/);
+    assert.deepEqual(await verifyHelperResult(rt, scope, gemini, aChild, env as any), { verified: true });
+    await assert.rejects(() => verifyHelperResult(rt, scope, gemini, aChild, { ...env, digest: 'deadbeef' } as any), /RESULT_DIGEST_MISMATCH/);
+    await assert.rejects(() => verifyHelperResult(rt, scope, gemini, aChild, { ...env, childKey: 'helper:grok:nope:1:x' } as any), /RESULT_CHILD_MISMATCH/);
 
     // Negative: expired parent lease (age the second parent claim's lease).
     await service.execute('/jobs', 'POST', { idempotency_key: 'job-parent2', objective: 'parent2',

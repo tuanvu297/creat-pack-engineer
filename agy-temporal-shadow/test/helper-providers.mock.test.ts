@@ -74,12 +74,13 @@ test('mock-only: manus error mapping - unauthenticated, and 5xx/internal on crea
 });
 
 test('mock-only: manus readResult maps running->NOT_READY and stopped->envelope with credit actuals + digest', async () => {
-  const running = manusAdapter({ apiKey: 'k', fetch: fakeFetch(() => ({ status: 200, body: { ok: true, task: { status: 'running' } } })).f });
-  await assert.rejects(() => running.readResultFor(a, 'tid1'), (e: unknown) => kindOf(e) === 'NOT_READY');
+  const b1 = { childKey: childKey(a), helperId: 'manus' as const, submissionRef: 'tid1' };
+  const running = manusAdapter({ apiKey: 'k', fetch: fakeFetch(() => ({ status: 200, body: { ok: true, task: { id: 'tid1', status: 'running' } } })).f });
+  await assert.rejects(() => running.readResultFor(a, 'tid1', b1), (e: unknown) => kindOf(e) === 'NOT_READY');
   const { f } = fakeFetch((url) => url.includes('task.detail')
-    ? { status: 200, body: { ok: true, task: { status: 'stopped', credit_usage: 15 } } }
-    : { status: 200, body: { ok: true, messages: [{ type: 'user_message', content: 'q' }, { type: 'assistant_message', content: [{ type: 'text', text: 'the answer' }] }], has_more: false } });
-  const env = await manusAdapter({ apiKey: 'k', fetch: f }).readResultFor(a, 'tid1');
+    ? { status: 200, body: { ok: true, task: { id: 'tid1', status: 'stopped', credit_usage: 15 } } }
+    : { status: 200, body: { ok: true, task_id: 'tid1', messages: [{ type: 'user_message', content: 'q' }, { type: 'assistant_message', content: [{ type: 'text', text: 'the answer' }] }], has_more: false } });
+  const env = await manusAdapter({ apiKey: 'k', fetch: f }).readResultFor(a, 'tid1', b1);
   assert.equal(env.costUnits, 15, 'actuals come from credit_usage');
   assert.equal((env.payload as any).text, 'the answer');
   assert.ok(resultMatchesAssignment(a, env), 'envelope binds to the assignment');
@@ -90,9 +91,9 @@ test('mock-only: manus reconcile finds the childKey-titled task in task.list', a
   const { f } = fakeFetch(() => ({ status: 200, body: { ok: true, has_more: false,
     data: [{ id: 'other', title: 'something else' }, { id: 'mine', title: `agy:${childKey(a)}` }] } }));
   const ad = manusAdapter({ apiKey: 'k', fetch: f });
-  assert.equal(await ad.reconcile(a), 'mine');
+  assert.deepEqual(await ad.reconcile(a), { state: 'FOUND', ref: 'mine' });
   const none = manusAdapter({ apiKey: 'k', fetch: fakeFetch(() => ({ status: 200, body: { ok: true, has_more: false, data: [] } })).f });
-  assert.equal(await none.reconcile(a), null);
+  assert.equal((await none.reconcile(a)).state, 'NOT_FOUND');
 });
 
 test('mock-only: grok probe lists models with a Bearer header; submit/readResult round-trip via the Responses API', async () => {

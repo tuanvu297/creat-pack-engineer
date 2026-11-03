@@ -1,7 +1,8 @@
 // Provider API adapters for the D-057 helper delegation
-// contract (candidate, 2026-11-03). These implement the
-// HelperAdapter interface from helper-delegation.ts against the
-// providers' OFFICIAL APIs, from their published docs:
+// contract (candidate, 2026-11-03; provenance-hardened after
+// root QA the same day). These implement the HelperAdapter
+// interface from helper-delegation.ts against the providers'
+// OFFICIAL APIs, from their published docs:
 //
 //   Manus v2  - https://api.manus.ai, header x-manus-api-key
 //     POST /v2/task.create        (async; NO budget parameter
@@ -35,14 +36,27 @@
 //    via task.list (the adapter stamps every task title with
 //    `agy:<childKey>` for exactly this), never blind-retried.
 //    xAI responses are synchronous creations with no documented
-//    idempotency either: same rule.
-//  - Keys are read from env NAMES by the factory and held in
-//    memory only; nothing here logs, persists, or returns a
-//    key. probe() surfaces only the provider user id (Manus
-//    user.me also returns name/email - deliberately dropped).
+//    idempotency either: same rule. A reconcile scan that runs
+//    out of pages reports UNKNOWN - never NOT_FOUND.
+//  - PROVENANCE: an adapter mints a result envelope ONLY
+//    against a PersistedSubmissionBinding the caller read from
+//    the canonical queue (helper-queue.loadSubmissionBinding),
+//    and ONLY when the provider's own answer echoes the bound
+//    ref. Stamping an assignment's identity onto an arbitrary
+//    provider response would fabricate ownership and digest
+//    provenance. Unknown/missing/malformed terminal statuses
+//    are denied, never defaulted to success; a paginated
+//    result cut off by the read cap is an explicit
+//    PARTIAL_RESULT with a resume cursor.
+//  - Provider/transport text is untrusted (it can echo the
+//    credential): everything reaching our errors is sanitized
+//    and length-capped. Keys live in memory only; probe()
+//    surfaces only the provider user id (Manus user.me also
+//    returns name/email - deliberately dropped).
 //  - NOTHING in this module is wired into the server yet, and
 //    constructing an adapter performs no network call. Tests
-//    are mock-only (test/helper-providers.mock.test.ts).
+//    are mock-only (test/helper-providers.mock.test.ts and
+//    test/helper-providers.adversarial.test.ts).
 import { childKey, unboundAdapter, type HelperAdapter, type HelperAssignment, type HelperId, type HelperResultEnvelope } from './helper-delegation.js';
 import { digestOf } from './digest.js';
 
@@ -57,12 +71,39 @@ export const defaultFetch: FetchLike = async (url, init) => {
 export type EnvelopeWithScope = HelperResultEnvelope & { scope: { tenantId: string; workspaceId: string; projectId: string } };
 
 export type ProviderErrorKind = 'UNAUTHENTICATED' | 'PERMISSION' | 'INVALID' | 'NOT_FOUND'
-  | 'RATE_LIMITED' | 'NOT_READY' | 'PROVIDER_ERROR' | 'SUBMISSION_UNCERTAIN' | 'RESULT_BINDING_UNKNOWN' | 'INPUT_TOO_LARGE';
+  | 'RATE_LIMITED' | 'NOT_READY' | 'PROVIDER_ERROR' | 'SUBMISSION_UNCERTAIN' | 'RESULT_BINDING_UNKNOWN' | 'INPUT_TOO_LARGE'
+  | 'RESULT_BINDING_MISMATCH' | 'RESULT_REF_MISMATCH' | 'UNKNOWN_STATUS' | 'PARTIAL_RESULT';
 export class ProviderCallError extends Error {
+  resumeCursor?: string;
+  pagesFetched?: number;
   constructor(public kind: ProviderErrorKind, message: string, public providerCode?: string) { super(message); }
 }
 
 const err = (kind: ProviderErrorKind, msg: string, code?: string) => new ProviderCallError(kind, msg, code);
+
+// The persisted operation binding, read by the CALLER from the
+// canonical queue: the child key, the helper, and the EXACT
+// provider ref recorded at submission time.
+export interface PersistedSubmissionBinding {
+  childKey: string;
+  helperId: HelperId;
+  submissionRef: string;
+}
+
+export type ReconcileOutcome =
+  | { state: 'FOUND'; ref: string }
+  | { state: 'NOT_FOUND'; pagesScanned: number }
+  | { state: 'UNKNOWN'; pagesScanned: number };
+
+export function sanitizeProviderText(text: unknown, secrets: string[] = []): string {
+  let out = String(text ?? '');
+  for (const sec of secrets) if (sec && sec.length >= 4) out = out.split(sec).join('[redacted]');
+  out = out.replace(/(bearer\s+)[A-Za-z0-9._~+\/-]+/gi, '$1[redacted]')
+    .replace(/(x-manus-api-key\s*[:=]\s*)\S+/gi, '$1[redacted]')
+    .replace(/(api[-_ ]?key\s*[:=]\s*)\S+/gi, '$1[redacted]')
+    .replace(/(authorization\s*[:=]\s*)\S+/gi, '$1[redacted]');
+  return out.slice(0, 300);
+}
 
 function extractText(input: unknown): { text: string; structuredOutputSchema?: Record<string, unknown> } {
   if (typeof input === 'string') return { text: input };
@@ -72,6 +113,11 @@ function extractText(input: unknown): { text: string; structuredOutputSchema?: R
     if (typeof o.prompt === 'string') return { text: o.prompt, structuredOutputSchema: o.structuredOutputSchema };
   }
   throw err('INVALID', 'helper input must be a string or { text }');
+}
+
+function checkBinding(a: HelperAssignment, helperId: HelperId, externalRef: string, binding?: PersistedSubmissionBinding): void {
+  if (!binding || binding.childKey !== childKey(a) || binding.helperId !== helperId || binding.submissionRef !== externalRef)
+    throw err('RESULT_BINDING_MISMATCH', 'persisted submission binding does not match this assignment and ref');
 }
 
 // ----------------------------------------------------------------
@@ -87,13 +133,14 @@ export interface ManusConfig {
 export interface ManusAdapter extends HelperAdapter {
   probe(): Promise<{ userId: string }>;
   discoverCredits(): Promise<{ totalCredits: number; currentPeriodEnd: number }>;
-  reconcile(a: HelperAssignment): Promise<string | null>;
-  readResultFor(a: HelperAssignment, externalRef: string): Promise<EnvelopeWithScope>;
+  reconcile(a: HelperAssignment): Promise<ReconcileOutcome>;
+  readResultFor(a: HelperAssignment, externalRef: string, binding: PersistedSubmissionBinding): Promise<EnvelopeWithScope>;
 }
 
 export function manusAdapter(cfg: ManusConfig): ManusAdapter {
   const base = (cfg.baseUrl ?? 'https://api.manus.ai').replace(/\/$/, '');
   const bindings = new Map<string, HelperAssignment>();
+  const titleOf = (a: HelperAssignment) => `agy:${childKey(a)}`;
   async function call(method: 'GET' | 'POST', path: string, opts: { query?: Record<string, string>; body?: unknown; mutating?: boolean } = {}): Promise<any> {
     const qs = opts.query ? `?${new URLSearchParams(opts.query).toString()}` : '';
     let res: { status: number; json(): Promise<any> };
@@ -103,14 +150,15 @@ export function manusAdapter(cfg: ManusConfig): ManusAdapter {
         body: opts.body !== undefined ? JSON.stringify(opts.body) : undefined,
       });
     } catch (e: any) {
-      if (opts.mutating) throw err('SUBMISSION_UNCERTAIN', `manus ${path}: network failure on a mutating call - reconcile, never resubmit (${e?.message ?? e})`);
-      throw err('PROVIDER_ERROR', `manus ${path}: ${e?.message ?? e}`);
+      const safe = sanitizeProviderText(e?.message ?? e, [cfg.apiKey]);
+      if (opts.mutating) throw err('SUBMISSION_UNCERTAIN', `manus ${path}: network failure on a mutating call - reconcile, never resubmit (${safe})`);
+      throw err('PROVIDER_ERROR', `manus ${path}: ${safe}`);
     }
     let data: any = null;
     try { data = await res.json(); } catch { /* non-JSON body */ }
     if (!data || data.ok !== true) {
       const code = data?.error?.code as string | undefined;
-      const msg = data?.error?.message ?? `HTTP ${res.status}`;
+      const msg = sanitizeProviderText(data?.error?.message ?? `HTTP ${res.status}`, [cfg.apiKey]);
       switch (code) {
         case 'unauthenticated': throw err('UNAUTHENTICATED', msg, code);
         case 'permission_denied': throw err('PERMISSION', msg, code);
@@ -125,17 +173,22 @@ export function manusAdapter(cfg: ManusConfig): ManusAdapter {
     }
     return data;
   }
-  const titleOf = (a: HelperAssignment) => `agy:${childKey(a)}`;
-  async function readResultFor(a: HelperAssignment, externalRef: string): Promise<EnvelopeWithScope> {
+  async function readResultFor(a: HelperAssignment, externalRef: string, binding?: PersistedSubmissionBinding): Promise<EnvelopeWithScope> {
+    checkBinding(a, 'manus', externalRef, binding);
     const detail = await call('GET', '/v2/task.detail', { query: { task_id: externalRef } });
-    const task = detail.task ?? {};
+    const task = detail.task;
+    if (!task || typeof task !== 'object') throw err('UNKNOWN_STATUS', 'manus task.detail returned no task object');
+    if (typeof task.id !== 'string') throw err('UNKNOWN_STATUS', 'manus task.detail returned a task without an id - malformed');
+    if (task.id !== externalRef) throw err('RESULT_REF_MISMATCH', 'manus task.detail answered about a different task than the bound ref');
     if (task.status === 'running' || task.status === 'waiting') throw err('NOT_READY', `manus task ${externalRef} is ${task.status}`);
     if (task.status === 'error' || task.status === 'deleted') throw err('PROVIDER_ERROR', `manus task ${externalRef} ended as ${task.status}`);
-    // stopped: collect assistant messages (asc, paginated).
+    if (task.status !== 'stopped') throw err('UNKNOWN_STATUS', `manus task ${externalRef} has an unknown or missing status: ${sanitizeProviderText(task.status, [cfg.apiKey])}`);
     const texts: string[] = [];
     let cursor: string | undefined;
-    for (let page = 0; page < 10; page++) {
+    const PAGE_CAP = 10;
+    for (let page = 0; page < PAGE_CAP; page++) {
       const r = await call('GET', '/v2/task.listMessages', { query: { task_id: externalRef, order: 'asc', limit: '200', ...(cursor ? { cursor } : {}) } });
+      if (r.task_id !== undefined && r.task_id !== externalRef) throw err('RESULT_REF_MISMATCH', 'manus task.listMessages answered about a different task than the bound ref');
       for (const m of r.messages ?? []) {
         if (m?.type !== 'assistant_message') continue;
         const c = m.content;
@@ -143,13 +196,17 @@ export function manusAdapter(cfg: ManusConfig): ManusAdapter {
         else if (Array.isArray(c)) for (const part of c) if (typeof part?.text === 'string') texts.push(part.text);
         else if (typeof m.text === 'string') texts.push(m.text);
       }
-      if (!r.has_more || !r.next_cursor) break;
+      if (!r.has_more || !r.next_cursor) {
+        const payload = { text: texts.join('\n'), status: 'stopped', creditUsage: typeof task.credit_usage === 'number' ? task.credit_usage : null };
+        return { childKey: childKey(a), helperId: 'manus', externalRef, digest: digestOf(payload),
+          payload, costUnits: payload.creditUsage ?? Number.NaN,
+          scope: { tenantId: a.scope.tenantId, workspaceId: a.scope.workspaceId, projectId: a.scope.projectId } };
+      }
       cursor = r.next_cursor;
     }
-    const payload = { text: texts.join('\n'), status: 'stopped', creditUsage: typeof task.credit_usage === 'number' ? task.credit_usage : null };
-    return { childKey: childKey(a), helperId: 'manus', externalRef, digest: digestOf(payload),
-      payload, costUnits: payload.creditUsage ?? Number.NaN,
-      scope: { tenantId: a.scope.tenantId, workspaceId: a.scope.workspaceId, projectId: a.scope.projectId } };
+    const partial = err('PARTIAL_RESULT', `manus task ${externalRef}: messages exceed the ${PAGE_CAP}-page read cap - result is PARTIAL, continue from the resume cursor`);
+    partial.resumeCursor = cursor; partial.pagesFetched = PAGE_CAP;
+    throw partial;
   }
   return {
     helperId: 'manus', surface: 'api', bound: true,
@@ -180,21 +237,25 @@ export function manusAdapter(cfg: ManusConfig): ManusAdapter {
     },
     async readResult(externalRef) {
       const a = bindings.get(externalRef);
-      if (!a) throw err('RESULT_BINDING_UNKNOWN', 'no submit-time binding for this ref in this process - use readResultFor(assignment, ref) after a restart; the queue-side persisted binding in helper-queue.verifyHelperResult remains authoritative');
-      return readResultFor(a, externalRef);
+      if (!a) throw err('RESULT_BINDING_UNKNOWN', 'no submit-time binding for this ref in this process - use readResultFor(assignment, ref, persistedBinding) with the queue-read binding; helper-queue.verifyHelperResult remains authoritative');
+      return readResultFor(a, externalRef, { childKey: childKey(a), helperId: 'manus', submissionRef: externalRef });
     },
     readResultFor,
     async reconcile(a) {
       const want = titleOf(a);
       let cursor: string | undefined;
-      for (let page = 0; page < 3; page++) {
+      const PAGE_BUDGET = 3;
+      for (let page = 1; page <= PAGE_BUDGET; page++) {
         const r = await call('GET', '/v2/task.list', { query: { limit: '100', order: 'desc',
           ...(cfg.apiKeyId ? { api_key_id: cfg.apiKeyId } : {}), ...(cursor ? { cursor } : {}) } });
-        for (const t of r.data ?? []) if (t?.title === want) return String(t.id);
-        if (!r.has_more || !r.next_cursor) break;
+        for (const t of r.data ?? []) if (t?.title === want) return { state: 'FOUND', ref: String(t.id) };
+        if (!r.has_more || !r.next_cursor) return { state: 'NOT_FOUND', pagesScanned: page };
         cursor = r.next_cursor;
       }
-      return null;
+      // Pages ran out while the provider says more remain: the
+      // task may well exist beyond the scan. That is UNKNOWN,
+      // never proof of absence.
+      return { state: 'UNKNOWN', pagesScanned: PAGE_BUDGET };
     },
   };
 }
@@ -213,7 +274,7 @@ export interface GrokConfig {
 export interface GrokAdapter extends HelperAdapter {
   probe(): Promise<{ models: string[] }>;
   discoverModels(): Promise<{ models: string[] }>;
-  readResultFor(a: HelperAssignment, externalRef: string): Promise<EnvelopeWithScope>;
+  readResultFor(a: HelperAssignment, externalRef: string, binding: PersistedSubmissionBinding): Promise<EnvelopeWithScope>;
 }
 
 export function grokAdapter(cfg: GrokConfig): GrokAdapter {
@@ -227,8 +288,9 @@ export function grokAdapter(cfg: GrokConfig): GrokAdapter {
         body: opts.body !== undefined ? JSON.stringify(opts.body) : undefined,
       });
     } catch (e: any) {
-      if (opts.mutating) throw err('SUBMISSION_UNCERTAIN', `xai ${path}: network failure on a mutating call - no documented idempotency, never blind-retry (${e?.message ?? e})`);
-      throw err('PROVIDER_ERROR', `xai ${path}: ${e?.message ?? e}`);
+      const safe = sanitizeProviderText(e?.message ?? e, [cfg.apiKey]);
+      if (opts.mutating) throw err('SUBMISSION_UNCERTAIN', `xai ${path}: network failure on a mutating call - no documented idempotency, never blind-retry (${safe})`);
+      throw err('PROVIDER_ERROR', `xai ${path}: ${safe}`);
     }
     let data: any = null;
     try { data = await res.json(); } catch { /* non-JSON body */ }
@@ -236,21 +298,30 @@ export function grokAdapter(cfg: GrokConfig): GrokAdapter {
     if (res.status === 429) throw err('RATE_LIMITED', 'xai rate limited');
     if (res.status === 404) throw err('NOT_FOUND', `xai ${path} not found`);
     if (res.status >= 400) {
+      const safe = sanitizeProviderText(data?.error?.message ?? data?.error ?? '', [cfg.apiKey]);
       if (opts.mutating && res.status >= 500) throw err('SUBMISSION_UNCERTAIN', `xai ${path}: HTTP ${res.status} on a mutating call - reconcile, never blind-retry`);
-      throw err('PROVIDER_ERROR', `xai ${path}: HTTP ${res.status} ${data?.error?.message ?? data?.error ?? ''}`.trim());
+      throw err('PROVIDER_ERROR', `xai ${path}: HTTP ${res.status} ${safe}`.trim());
     }
     return data;
   }
-  async function readResultFor(a: HelperAssignment, externalRef: string): Promise<EnvelopeWithScope> {
+  async function readResultFor(a: HelperAssignment, externalRef: string, binding?: PersistedSubmissionBinding): Promise<EnvelopeWithScope> {
+    checkBinding(a, 'grok', externalRef, binding);
     const r = await call('GET', `/v1/responses/${encodeURIComponent(externalRef)}`);
-    if (r?.status === 'in_progress' || r?.status === 'queued') throw err('NOT_READY', `xai response ${externalRef} is ${r.status}`);
-    if (r?.status === 'failed' || r?.status === 'incomplete' || r?.error) throw err('PROVIDER_ERROR', `xai response ${externalRef} ended as ${r?.status ?? 'error'}`);
+    if (!r || typeof r !== 'object') throw err('UNKNOWN_STATUS', 'xai returned a malformed response object');
+    if (typeof r.id !== 'string' || typeof r.status !== 'string')
+      throw err('UNKNOWN_STATUS', 'xai response is missing its id or status - malformed, never defaulted');
+    if (r.id !== externalRef) throw err('RESULT_REF_MISMATCH', 'xai answered about a different response than the bound ref');
+    if (r.status === 'in_progress' || r.status === 'queued') throw err('NOT_READY', `xai response ${externalRef} is ${r.status}`);
+    if (r.status === 'failed' || r.status === 'incomplete' || r.status === 'cancelled')
+      throw err('PROVIDER_ERROR', `xai response ${externalRef} ended as ${r.status}`);
+    if (r.status !== 'completed')
+      throw err('UNKNOWN_STATUS', `xai response ${externalRef} has an unknown or missing status: ${sanitizeProviderText(r.status, [cfg.apiKey])}`);
     const texts: string[] = [];
-    for (const item of r?.output ?? []) for (const part of item?.content ?? [])
+    for (const item of r.output ?? []) for (const part of item?.content ?? [])
       if (part?.type === 'output_text' && typeof part.text === 'string') texts.push(part.text);
-    if (typeof r?.output_text === 'string') texts.push(r.output_text);
-    const usage = r?.usage ?? null;
-    const payload = { text: texts.join('\n'), status: r?.status ?? 'completed', usage };
+    if (typeof r.output_text === 'string') texts.push(r.output_text);
+    const usage = r.usage ?? null;
+    const payload = { text: texts.join('\n'), status: 'completed', usage };
     let costUnits = Number.NaN;   // unknown actuals stay unknown (fail-closed money rules treat NaN as BUDGET_UNKNOWN downstream)
     if (usage && cfg.inputUsdPerMTok !== undefined && cfg.outputUsdPerMTok !== undefined) {
       const inTok = Number(usage.input_tokens ?? usage.prompt_tokens ?? 0);
@@ -280,8 +351,8 @@ export function grokAdapter(cfg: GrokConfig): GrokAdapter {
     },
     async readResult(externalRef) {
       const a = bindings.get(externalRef);
-      if (!a) throw err('RESULT_BINDING_UNKNOWN', 'no submit-time binding for this ref in this process - use readResultFor(assignment, ref) after a restart; the queue-side persisted binding in helper-queue.verifyHelperResult remains authoritative');
-      return readResultFor(a, externalRef);
+      if (!a) throw err('RESULT_BINDING_UNKNOWN', 'no submit-time binding for this ref in this process - use readResultFor(assignment, ref, persistedBinding) with the queue-read binding; helper-queue.verifyHelperResult remains authoritative');
+      return readResultFor(a, externalRef, { childKey: childKey(a), helperId: 'grok', submissionRef: externalRef });
     },
     readResultFor,
   };

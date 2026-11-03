@@ -1,1 +1,16 @@
-{"dependencies":{"@modelcontextprotocol/sdk":"^1.21.0","zod":"^3.25.0"},"description":"Candidate MCP facade over the AGY runtime's proven read routes. Not installed; see README.md.","name":"agy-mcp-facade","private":true,"scripts":{"start":"node server.mjs","test":"node --test test/facade.http.test.mjs"},"type":"module","version":"0.2.0"}
+{
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.21.0",
+    "zod": "^3.25.0",
+    "express": "^4.21.0"
+  },
+  "description": "Candidate MCP facade over the AGY runtime read routes, with an OAuth 2.1 mode for Gemini Connected Apps. Not installed; see README.md.",
+  "name": "agy-mcp-facade",
+  "private": true,
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test test/facade.http.test.mjs test/oauth.flow.test.mjs"
+  },
+  "type": "module",
+  "version": "0.3.0"
+}

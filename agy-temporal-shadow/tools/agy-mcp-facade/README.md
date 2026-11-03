@@ -1,8 +1,54 @@
-# AGY MCP facade — candidate package v0.2 (2026-11-03)
+# AGY MCP facade — candidate package v0.3 (2026-11-03)
 
 Status: **candidate code, tested locally, NOT installed, NOT
 connected.** Round-1 of this package was rejected in QA (no inbound
 authentication; assumed endpoints). v0.2 fixes both defects.
+
+## v0.3 — OAuth 2.1 mode for Gemini Connected Apps
+
+`AGY_AUTH_MODE=oauth` turns the facade into an OAuth 2.1
+authorization server + resource server on the OFFICIAL MCP SDK
+(`mcpAuthRouter` + `requireBearerAuth`; the SDK's token handler
+performs the S256 PKCE verification). Built to Google's
+Connected Apps OAuth guide (developers.google.com/connected-apps/
+mcp/oauth, read 2026-11-03):
+
+- Discovery at `/.well-known/oauth-authorization-server`
+  advertises authorization/token/**registration** endpoints,
+  `response_types_supported: [code]`,
+  `code_challenge_methods_supported: [S256]`,
+  `scopes_supported: [agy.read]`. Gemini REQUIRES the
+  registration_endpoint to be present even when client
+  id/secret are entered manually in its dialog - it is present.
+- Authorization is OWNER-IN-PERSON: `/authorize` renders a
+  consent page; a code is minted only after the owner enters
+  the operator approval secret (`AGY_MCP_OPERATOR_TOKEN`) on
+  that page and approves the exact client/scopes/resource.
+- Clients are pre-registered by configuration
+  (`AGY_OAUTH_CLIENTS_JSON`), each bound to an exact
+  redirect-URI allowlist (Google's documented
+  `oauth-redirect*.googleusercontent.com` `/r/` or `/a/` URIs),
+  a scope ceiling of `agy.read`, and an AGY subject identity.
+  Dynamic registration exists for discovery compatibility but
+  is DISABLED unless `AGY_OAUTH_DYNAMIC_REGISTRATION=on` +
+  `AGY_OAUTH_DYNAMIC_SUBJECT` are set, and even then it accepts
+  only Google-redirect clients under the same ceiling.
+- Codes are single-use (5 min); a replayed code revokes its
+  whole token family. Access tokens live 1 h and are
+  audience-bound to the facade's `/mcp` resource URL. Refresh
+  tokens live 30 d: rotating with reuse-detection by default,
+  or PERSISTENT (same token returned, expiry extended) for
+  clients configured `refresh_mode: "persistent"` - Google's
+  persistent-linking guidance for Connected Apps requires the
+  non-rotating behaviour, so the Gemini client uses it.
+- OAuth state is hash-only at rest (oauth-store.mjs);
+  `AGY_OAUTH_STORE=pg` at deploy (DDL:
+  migrations/001_oauth_store.sql), `memory` is dev/test only.
+- Tools stay READ-ONLY in this candidate. A connected Gemini
+  proves the host route; it is NOT a business helper PASS.
+
+Bearer mode remains the default and is byte-compatible with
+v0.2 behaviour.
 
 ## Tools (only proven routes)
 
