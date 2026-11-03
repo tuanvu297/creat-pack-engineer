@@ -304,3 +304,27 @@ The two worker-surface-v2 / Temporal-startup failures are the
 documented pre-existing base failures (round-2 comparison);
 the local PG from round 2 was lost to a VM replacement before
 a fresh A/B rerun this round.
+
+## Round 6 (2026-11-03, D-057 wiring): 'delegate' surface action
+
+helper-queue is now reachable through the worker surface —
+candidate wiring, NOT a deployment. worker-surface gains the
+'delegate' action: identity and scope are taken from the
+authenticated principal and the request scope (body copies are
+overwritten; scope keys in the body were already rejected),
+the parent lease token is a required possession proof verified
+against the persisted parent row (new optional
+ChildSpec.parentLeaseToken -> PARENT_LEASE_DENIED), and job
+creation runs under a caller-wired system principal resolver —
+server.ts wires it to the already-configured operator identity
+via the existing findCallbackOperator; an unwired surface
+answers DELEGATION_NOT_CONFIGURED and fabricates nothing.
+Routes: the HTTP worker route and the worker-UI dropdown both
+accept 'delegate' (UI authorization maps it to 'execute' like
+every non-readback action). Proven by
+test/worker-surface-delegate.integration.test.ts on real
+PostgreSQL (unconfigured denial, missing/forged token, forged
+body parentWorkerId ignored, surface idempotency, foreign
+worker denied); combined suites 94/94. Adapters remain
+unbound: 'delegate' creates the child assignment on the queue
+only — no provider call exists behind it yet.

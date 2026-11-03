@@ -141,7 +141,7 @@ const actionForm = (claims: Claims) => page('AGY worker', `
     <input type="hidden" name="csrf" value="${esc(claims.csrf)}">
     <label>Action <select name="action">
       <option>arrive</option><option>claim</option><option>ack</option><option>heartbeat</option>
-      <option>checkpoint</option><option>result</option><option>readback</option><option>recover</option>
+      <option>checkpoint</option><option>result</option><option>readback</option><option>recover</option><option>delegate</option>
     </select></label>
     <label>Task ID <input name="task_id"></label>
     <label>Run ID (recover) <input name="run_id"></label>

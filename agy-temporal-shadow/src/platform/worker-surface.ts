@@ -5,6 +5,8 @@ import { ProjectPool } from './scoped-pool.js';
 import { validateScope, type ProjectScope } from './scope.js';
 import { PostgresStore } from '../postgres-store.js';
 import { workerGatePasses, bindingsComplete, type WorkerGate } from './worker-gate.js';
+import { createDelegatedChild } from './helper-queue.js';
+import type { HelperAssignment } from './helper-delegation.js';
 import { stableStringify, digestOf } from './digest.js';
 
 // Bounded worker namespace for external personal workers — v3
@@ -48,8 +50,8 @@ import { stableStringify, digestOf } from './digest.js';
 //  - Readback: a worker reads only tasks it participates in (current
 //    claimant, event actor, or callback owner). Operator/reviewer
 //    principals keep their canonical read access.
-export type WorkerAction = 'arrive' | 'recover' | 'claim' | 'ack' | 'heartbeat' | 'checkpoint' | 'result' | 'readback';
-const ACTIONS: WorkerAction[] = ['arrive', 'recover', 'claim', 'ack', 'heartbeat', 'checkpoint', 'result', 'readback'];
+export type WorkerAction = 'arrive' | 'recover' | 'claim' | 'ack' | 'heartbeat' | 'checkpoint' | 'result' | 'readback' | 'delegate';
+const ACTIONS: WorkerAction[] = ['arrive', 'recover', 'claim', 'ack', 'heartbeat', 'checkpoint', 'result', 'readback', 'delegate'];
 
 const clampLease = (v: unknown) => Math.max(30, Math.min(Number.isFinite(Number(v)) ? Number(v) : 120, 900));
 const stable = stableStringify;
@@ -70,6 +72,13 @@ export function createWorkerSurface(raw: Pool, opts?: {
   // The qualification controller's owner deadline is wired through
   // this in server.ts; scopes without a deadline are untouched.
   leaseDeadlineMs?: (scope: ProjectScope) => number | undefined;
+  // Resolver for the system (operator) principal that job
+  // creation runs under for the 'delegate' action. Workers never
+  // create jobs directly, and this module never fabricates a
+  // principal: when the resolver returns nothing, delegate
+  // answers DELEGATION_NOT_CONFIGURED. server.ts wires it to the
+  // already configured operator identity from AGY_IDENTITIES_JSON.
+  delegationSystemPrincipal?: (scope: ProjectScope) => Principal | undefined;
 }) {
   return async function workerSurface(principal: Principal, scope: ProjectScope, action: string, body: any = {}): Promise<any> {
     if (!ACTIONS.includes(action as WorkerAction)) throw new Error('UNKNOWN_WORKER_ACTION');
@@ -335,6 +344,36 @@ export function createWorkerSurface(raw: Pool, opts?: {
       // store changes underneath this surface.
       if (!workerGatePasses(gate, task as any)) throw new Error('CLAIM_GATE_INCONSISTENCY');
       return { status: 'LEASED', task };
+    }
+
+    if (act === 'delegate') {
+      // Helper delegation (D-057): the calling worker stays the
+      // parent of record. Identity and scope come from the
+      // authenticated principal and the request scope - body
+      // copies are overwritten, never trusted (BODY_SCOPE_OVERRIDE
+      // above already rejects scope keys). The parent lease token
+      // is required as possession proof and verified against the
+      // persisted parent row inside createDelegatedChild.
+      const systemPrincipal = opts?.delegationSystemPrincipal?.(scope);
+      if (!systemPrincipal) return { status: 'DENIED', reason: 'DELEGATION_NOT_CONFIGURED' };
+      const a = body?.assignment;
+      if (!a || typeof a !== 'object') return { status: 'DENIED', reason: 'ASSIGNMENT_REQUIRED' };
+      if (typeof body?.parentLeaseToken !== 'string' || !body.parentLeaseToken) {
+        return { status: 'DENIED', reason: 'PARENT_LEASE_TOKEN_REQUIRED' };
+      }
+      const assignment: HelperAssignment = { ...a, parentWorkerId: workerId,
+        scope: { tenantId: scope.tenantId, workspaceId: scope.workspaceId, projectId: scope.projectId } };
+      try {
+        const r = await createDelegatedChild(raw, scope, principal, systemPrincipal, assignment, {
+          estimatedQuota: Number(body?.spec?.estimatedQuota ?? 1),
+          estimatedCost: Number(body?.spec?.estimatedCost ?? 0),
+          requiredCapabilities: Array.isArray(body?.spec?.requiredCapabilities) ? body.spec.requiredCapabilities : [],
+          parentLeaseToken: body.parentLeaseToken,
+        });
+        return { status: r.created ? 'CREATED' : 'EXISTS', ...r };
+      } catch (e: any) {
+        return { status: 'DENIED', reason: String(e?.message ?? e) };
+      }
     }
 
     if (act === 'readback') {

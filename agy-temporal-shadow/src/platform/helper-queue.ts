@@ -40,7 +40,11 @@ import type { ProjectScope } from './scope.js';
 
 const scoped = (pool: Pool, scope: ProjectScope) => new ProjectPool(pool, scope, 'helper-queue').asPool();
 
-export interface ChildSpec { estimatedQuota: number; estimatedCost: number; requiredCapabilities: string[] }
+export interface ChildSpec { estimatedQuota: number; estimatedCost: number; requiredCapabilities: string[];
+  /** Possession proof for the parent lease; verified against the
+      persisted row when provided. The worker surface always
+      provides it. */
+  parentLeaseToken?: string }
 
 // Two principals, by design: the WORKER principal is the
 // authenticated parent making the delegation request (verified
@@ -68,10 +72,12 @@ export async function createDelegatedChild(pool: Pool, scope: ProjectScope, prin
   // otherwise any worker could attach to another's child by
   // re-deriving its key.
   const parent = (await sp.query(
-    `SELECT claimed_by, attempt, status, lease_expires_at, payload FROM agy_tasks WHERE task_id=$1`, [a.parentTaskId])).rows[0];
+    `SELECT claimed_by, attempt, status, lease_expires_at, lease_token, payload FROM agy_tasks WHERE task_id=$1`, [a.parentTaskId])).rows[0];
   if (!parent) throw new Error('PARENT_NOT_FOUND');
   if (parent.claimed_by !== principal.workerId) throw new Error('PARENT_NOT_OWNER');
   if (Number(parent.attempt) !== a.parentAttempt) throw new Error('PARENT_ATTEMPT_MISMATCH');
+  if (spec.parentLeaseToken !== undefined && String(parent.lease_token ?? '') !== spec.parentLeaseToken)
+    throw new Error('PARENT_LEASE_DENIED');
   if (!['CLAIMED', 'RUNNING'].includes(parent.status)) throw new Error('PARENT_NOT_ACTIVE');
   if (!parent.lease_expires_at || new Date(parent.lease_expires_at).getTime() <= Date.now()) throw new Error('PARENT_LEASE_EXPIRED');
   const mission = parent.payload?.mission_id;

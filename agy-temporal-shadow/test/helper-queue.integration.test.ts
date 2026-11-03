@@ -53,6 +53,7 @@ test("helper queue: parent verification, unique child, reservation, submission f
     await owner.query(`GRANT DELETE ON agy_dispatch_tasks TO ${role}`);
     await owner.query(`GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA ${schema} TO ${role}`);
     runtime = new Pool({ connectionString: process.env.AGY_TEST_DATABASE_URL, options: `-c search_path=${schema},public -c role=${role}` });
+    const rt: Pool = runtime;
     const scopedSetup = new ProjectPool(runtime, scope, 'setup').asPool();
     await scopedSetup.query(`UPDATE agy_projects SET status='ACTIVE',permissions=ARRAY['read'],resource_policy='{"maxConcurrentTasks":4,"quotaCap":100,"spendCap":0,"reservation":1}'`);
     const resources = new ResourceStore(owner);
@@ -91,9 +92,9 @@ test("helper queue: parent verification, unique child, reservation, submission f
 
     // Happy path + idempotent re-create.
     const a1 = assignment();
-    const c1 = await createDelegatedChild(runtime, scope, gemini, op, a1, SPEC);
+    const c1 = await createDelegatedChild(rt, scope, gemini, op, a1, SPEC);
     assert.equal(c1.created, true);
-    const c2 = await createDelegatedChild(runtime, scope, gemini, op, a1, SPEC);
+    const c2 = await createDelegatedChild(rt, scope, gemini, op, a1, SPEC);
     assert.equal(c2.created, false, 're-create reconciles to the same child');
     assert.equal(c2.childTaskId, c1.childTaskId);
     assert.equal((await q(`SELECT count(*)::int n FROM agy_jobs WHERE idempotency_key=$1`, [childKey(a1)]))[0].n, 1, 'exactly one child job');
@@ -101,21 +102,21 @@ test("helper queue: parent verification, unique child, reservation, submission f
     // Concurrency: two simultaneous creates of a fresh subtask.
     const aConc = assignment({ subtaskKey: 'extract-concurrent' });
     const [r1, r2] = await Promise.all([
-      createDelegatedChild(runtime, scope, gemini, op, aConc, SPEC),
-      createDelegatedChild(runtime, scope, gemini, op, aConc, SPEC)]);
+      createDelegatedChild(rt, scope, gemini, op, aConc, SPEC),
+      createDelegatedChild(rt, scope, gemini, op, aConc, SPEC)]);
     assert.equal(r1.childTaskId, r2.childTaskId, 'concurrent creates converge on one child');
     assert.equal((await q(`SELECT count(*)::int n FROM agy_jobs WHERE idempotency_key=$1`, [childKey(aConc)]))[0].n, 1);
 
     // Negative: wrong authenticated parent.
-    await assert.rejects(() => createDelegatedChild(runtime, scope, other, op, a1, SPEC), /PARENT_MISMATCH/);
+    await assert.rejects(() => createDelegatedChild(rt, scope, other, op, a1, SPEC), /PARENT_MISMATCH/);
     // Negative: assignment naming a parent the caller does not own.
-    await assert.rejects(() => createDelegatedChild(runtime, scope, other, op, assignment({ parentWorkerId: 'OTHER-WORKER' }), SPEC), /PARENT_NOT_OWNER/);
+    await assert.rejects(() => createDelegatedChild(rt, scope, other, op, assignment({ parentWorkerId: 'OTHER-WORKER' }), SPEC), /PARENT_NOT_OWNER/);
     // Negative: stale attempt.
-    await assert.rejects(() => createDelegatedChild(runtime, scope, gemini, op, assignment({ parentAttempt: 2, subtaskKey: 'extract-2' }), SPEC), /PARENT_ATTEMPT_MISMATCH/);
+    await assert.rejects(() => createDelegatedChild(rt, scope, gemini, op, assignment({ parentAttempt: 2, subtaskKey: 'extract-2' }), SPEC), /PARENT_ATTEMPT_MISMATCH/);
     // Negative: cross-scope.
-    await assert.rejects(() => createDelegatedChild(runtime, { ...scope, projectId: 'OTHER' }, gemini, op, a1, SPEC), /CROSS_SCOPE/);
+    await assert.rejects(() => createDelegatedChild(rt, { ...scope, projectId: 'OTHER' }, gemini, op, a1, SPEC), /CROSS_SCOPE/);
     // Negative: expired assignment.
-    await assert.rejects(() => createDelegatedChild(runtime, scope, gemini, op, assignment({ subtaskKey: 'extract-3', expiresAtMs: Date.now() - 1 }), SPEC), /ASSIGNMENT_DENIED/);
+    await assert.rejects(() => createDelegatedChild(rt, scope, gemini, op, assignment({ subtaskKey: 'extract-3', expiresAtMs: Date.now() - 1 }), SPEC), /ASSIGNMENT_DENIED/);
 
     // The child claims through the normal path: transactional reservation.
     const childClaim = await surface(gemini, scope, 'claim', {});
@@ -127,12 +128,12 @@ test("helper queue: parent verification, unique child, reservation, submission f
 
     // Submission fence.
     const lt = childClaim.task.leaseToken; const att = childClaim.task.attempt;
-    assert.equal((await beginHelperSubmission(runtime, scope, gemini, childId, lt, att)).state, 'NEW');
-    assert.equal((await beginHelperSubmission(runtime, scope, gemini, childId, lt, att)).state, 'IN_FLIGHT');
-    await recordHelperSubmission(runtime, scope, gemini, childId, lt, att, 'grok-ref-1');
-    const after = await beginHelperSubmission(runtime, scope, gemini, childId, lt, att);
+    assert.equal((await beginHelperSubmission(rt, scope, gemini, childId, lt, att)).state, 'NEW');
+    assert.equal((await beginHelperSubmission(rt, scope, gemini, childId, lt, att)).state, 'IN_FLIGHT');
+    await recordHelperSubmission(rt, scope, gemini, childId, lt, att, 'grok-ref-1');
+    const after = await beginHelperSubmission(rt, scope, gemini, childId, lt, att);
     assert.equal(after.state, 'SUBMITTED'); assert.equal(after.externalRef, 'grok-ref-1');
-    await assert.rejects(() => recordHelperSubmission(runtime, scope, gemini, childId, lt, att, 'grok-ref-2'), /SUBMISSION_RECORD_DENIED/);
+    await assert.rejects(() => recordHelperSubmission(rt, scope, gemini, childId, lt, att, 'grok-ref-2'), /SUBMISSION_RECORD_DENIED/);
     // Durability across a "restart": a fresh pool sees the same state.
     const runtime2 = new Pool({ connectionString: process.env.AGY_TEST_DATABASE_URL, options: `-c search_path=${schema},public -c role=${role}` });
     const afterRestart = await beginHelperSubmission(runtime2, scope, gemini, childId, lt, att);
@@ -143,9 +144,9 @@ test("helper queue: parent verification, unique child, reservation, submission f
     const payload = { findings: ['a', 'b'] };
     const aChild = childId === c1.childTaskId ? a1 : aConc;
     const env = { childKey: childKey(aChild), helperId: aChild.helperId, externalRef: 'grok-ref-1', digest: digestOf(payload), payload, costUnits: 1 };
-    assert.deepEqual(await verifyHelperResult(runtime, scope, aChild, env as any), { verified: true });
-    await assert.rejects(() => verifyHelperResult(runtime, scope, aChild, { ...env, digest: 'deadbeef' } as any), /RESULT_DIGEST_MISMATCH/);
-    await assert.rejects(() => verifyHelperResult(runtime, scope, aChild, { ...env, childKey: 'helper:grok:nope:1:x' } as any), /RESULT_CHILD_MISMATCH/);
+    assert.deepEqual(await verifyHelperResult(rt, scope, aChild, env as any), { verified: true });
+    await assert.rejects(() => verifyHelperResult(rt, scope, aChild, { ...env, digest: 'deadbeef' } as any), /RESULT_DIGEST_MISMATCH/);
+    await assert.rejects(() => verifyHelperResult(rt, scope, aChild, { ...env, childKey: 'helper:grok:nope:1:x' } as any), /RESULT_CHILD_MISMATCH/);
 
     // Negative: expired parent lease (age the second parent claim's lease).
     await service.execute('/jobs', 'POST', { idempotency_key: 'job-parent2', objective: 'parent2',
@@ -155,7 +156,7 @@ test("helper queue: parent verification, unique child, reservation, submission f
     const p2 = await surface(gemini, scope, 'claim', {});
     assert.equal(p2.status, 'LEASED');
     await ownerScoped(`UPDATE agy_tasks SET lease_expires_at=now()-interval '1 minute' WHERE task_id=$1`, [p2.task.taskId]);
-    await assert.rejects(() => createDelegatedChild(runtime, scope, gemini, op,
+    await assert.rejects(() => createDelegatedChild(rt, scope, gemini, op,
       assignment({ parentTaskId: p2.task.taskId, subtaskKey: 'extract-late' }), SPEC), /PARENT_LEASE_EXPIRED/);
   } finally {
     if (runtime) await runtime.end().catch(() => {});

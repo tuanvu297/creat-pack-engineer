@@ -35,7 +35,7 @@ async function main(){
   // leases at the owner's absolute deadline (no lease outlives the
   // window, even across a service outage at the deadline).
   const qualCfg=parseQualificationConfig(process.env);
-  const workerSurface=createWorkerSurface(pool,{leaseDeadlineMs:(s)=>qualCfg.config.enabled&&s.tenantId===QUALIFICATION_SCOPE.tenantId&&s.workspaceId===QUALIFICATION_SCOPE.workspaceId&&s.projectId===QUALIFICATION_SCOPE.projectId?qualCfg.config.expiresAtMs:undefined});
+  const workerSurface=createWorkerSurface(pool,{delegationSystemPrincipal:(s)=>findCallbackOperator(identities,s),leaseDeadlineMs:(s)=>qualCfg.config.enabled&&s.tenantId===QUALIFICATION_SCOPE.tenantId&&s.workspaceId===QUALIFICATION_SCOPE.workspaceId&&s.projectId===QUALIFICATION_SCOPE.projectId?qualCfg.config.expiresAtMs:undefined});
   const server=createGatewayHttpServer({identities,worker:workerSurface,callbacks:createCallbackReceiver(pool),ui:process.env.AGY_WORKER_UI_SESSION_SECRET?createWorkerUi({identities,surface:workerSurface,secret:process.env.AGY_WORKER_UI_SESSION_SECRET}):undefined,execute:async(m,p,action,body)=>{
    if(action==='r11_control'){authorize(p,m,'write');validateMission(m);return hostedR11Control(body?.command);}
    return gateway.execute(m,p,action,body);
