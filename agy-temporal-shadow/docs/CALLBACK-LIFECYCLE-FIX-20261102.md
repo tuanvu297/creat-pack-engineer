@@ -265,3 +265,42 @@ output including retries and the shared review charge, and UNKNOWN
 quota is a wait, never a guess. test/routing-decision.test.ts
 covers the seven contract scenarios plus dependency acceptance and
 journal append-only behaviour.
+
+## Round 5 — worker-UI actions preservation + single-task admission (2026-11-03)
+Root findings: (1) worker-ui's action form offered no arrive/
+recover although the surface supports both — a real UI gap for
+the Gemini admission; (2) the UI reconstructed the Principal
+without the configured identity's actions allowlist and recheck
+ignored actions, so the round-4 restriction was not enforced
+through the UI. Fixes (candidate, same branch):
+- worker-ui.ts: session claims snapshot the login actions, but
+  enforcement re-reads the CURRENT configured identity on every
+  request (liveClaims -> currentIdentity): a mid-session
+  narrowing/revocation takes effect on the next action. The
+  Principal handed to the surface carries the current allowlist,
+  and authorize() gates each action before the surface runs
+  (readback -> 'read'; arrive/claim/ack/heartbeat/checkpoint/
+  result/recover -> 'execute'). Form gains arrive + recover
+  options and the recover run_id field.
+- worker-gate.ts + postgres-store.ts: optional admission pin —
+  when gate.admission is present, only the pinned taskId passes
+  and only until expiresAtMs; the store passes taskId into the
+  in-transaction gate filter.
+- worker-surface.ts: metadata.admission (task/mission/type/
+  scope/expiry/presence TTL) narrows claim missions+types to the
+  admission, requires a fresh arrival stamp (presence) before
+  claim, and gives arrive an admission branch that stamps
+  heartbeat_at under bindings-complete + READY checks. Expiry
+  denies in both arrive and claim with no cleanup dependency.
+Tests: worker-gate-admission 6/6; worker-ui-actions 5/5
+(restricted claim/result denied with zero surface calls,
+readback passes with the allowlist on the Principal,
+mid-session restriction + revocation); worker-admission
+integration 1/1 on real local Postgres (presence denied ->
+arrive -> pinned HELLO leased over the higher-priority video
+task, video attempt stays 0, one-task capacity, fail-closed
+expiry). Combined run with the existing suites: 90/90 pass.
+The two worker-surface-v2 / Temporal-startup failures are the
+documented pre-existing base failures (round-2 comparison);
+the local PG from round 2 was lost to a VM replacement before
+a fresh A/B rerun this round.

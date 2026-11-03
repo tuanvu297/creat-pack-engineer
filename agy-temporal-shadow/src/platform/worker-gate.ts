@@ -24,6 +24,15 @@ export interface WorkerGate {
   missions?: string[] | null;
   taskTypes?: string[] | null;
   replyTargets?: string[] | null;
+  // Optional single-task admission (AGY Gemini admission candidate,
+  // 2026-11-03): when present, ONLY the pinned task may pass, and only
+  // until expiresAtMs. The surface narrows missions to the admission's
+  // mission alongside this pin, so an admission can never widen what
+  // the bindings allow — it only narrows a claim to one task, one
+  // mission, one window. Expiry is evaluated by the caller-supplied
+  // nowMs inside the claim transaction, so a lapsed admission denies
+  // even if no cleanup ever runs (fail-closed).
+  admission?: { taskId: string; expiresAtMs: number; nowMs: number } | null;
 }
 
 const nonEmpty = (v: unknown): v is string[] =>
@@ -33,8 +42,12 @@ export function bindingsComplete(b: { missions?: unknown; task_types?: unknown; 
   return !!b && nonEmpty(b.missions) && nonEmpty(b.task_types) && nonEmpty(b.reply_targets);
 }
 
-export function workerGatePasses(gate: WorkerGate, spec: { taskType?: string; payload?: Record<string, unknown> | null }): boolean {
+export function workerGatePasses(gate: WorkerGate, spec: { taskType?: string; taskId?: string; payload?: Record<string, unknown> | null }): boolean {
   const p = (spec?.payload ?? {}) as Record<string, unknown>;
+  if (gate.admission) {
+    if (spec?.taskId !== gate.admission.taskId) return false;
+    if (!(gate.admission.nowMs <= gate.admission.expiresAtMs)) return false;
+  }
   if (p.auto_dispatch === false) return false;
   if (!nonEmpty(gate.missions) || !nonEmpty(gate.taskTypes) || !nonEmpty(gate.replyTargets)) return false;
   if (typeof p.mission_id !== 'string' || !p.mission_id || !gate.missions!.includes(p.mission_id)) return false;

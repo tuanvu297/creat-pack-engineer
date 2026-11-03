@@ -1,5 +1,5 @@
 import { createHash, createHmac, randomBytes, timingSafeEqual } from 'node:crypto';
-import { authenticate, type IdentityConfig, type Principal } from './auth.js';
+import { authenticate, authorize, type Action, type IdentityConfig, type Principal } from './auth.js';
 import { validateScope, type ProjectScope } from './scope.js';
 
 // Browser surface for workers without a native MCP/connector client —
@@ -51,7 +51,7 @@ export interface WorkerUiDeps {
   ttlSeconds?: number;
 }
 
-interface Claims { sub: string; workerId: string; scope: ProjectScope; exp: number; csrf: string }
+interface Claims { sub: string; workerId: string; scope: ProjectScope; exp: number; csrf: string; actions?: string[] }
 
 const COOKIE = 'agy_worker_session';
 const PRE_COOKIE = 'agy_ui_pre';
@@ -82,10 +82,19 @@ function parse(deps: WorkerUiDeps, value: string | undefined): Claims | null {
 
 // A session lives only while the registry still backs it: same subject,
 // still a worker, same workerId, and the bound scope still granted.
-function recheck(deps: WorkerUiDeps, claims: Claims): boolean {
+// The CURRENT configured identity is returned (not just a boolean) so
+// callers enforce the identity's CURRENT actions allowlist: a
+// restriction or revocation applied after sign-in takes effect on the
+// very next request, never at some later re-login.
+function currentIdentity(deps: WorkerUiDeps, claims: Claims): IdentityConfig | null {
   const id = deps.identities.find((i) => i.subject === claims.sub);
-  if (!id || id.role !== 'worker' || id.workerId !== claims.workerId) return false;
-  return id.scopes.some((s) => s.tenantId === claims.scope.tenantId && s.workspaceId === claims.scope.workspaceId && s.projectId === claims.scope.projectId);
+  if (!id || id.role !== 'worker' || id.workerId !== claims.workerId) return null;
+  const inScope = id.scopes.some((s) => s.tenantId === claims.scope.tenantId && s.workspaceId === claims.scope.workspaceId && s.projectId === claims.scope.projectId);
+  return inScope ? id : null;
+}
+
+function recheck(deps: WorkerUiDeps, claims: Claims): boolean {
+  return currentIdentity(deps, claims) !== null;
 }
 
 function cookiesOf(req: any): Record<string, string> {
@@ -131,10 +140,11 @@ const actionForm = (claims: Claims) => page('AGY worker', `
   <form id="agy-action-form" data-worker="${esc(claims.workerId)}" method="post" action="/worker/ui/action">
     <input type="hidden" name="csrf" value="${esc(claims.csrf)}">
     <label>Action <select name="action">
-      <option>claim</option><option>ack</option><option>heartbeat</option>
-      <option>checkpoint</option><option>result</option><option>readback</option>
+      <option>arrive</option><option>claim</option><option>ack</option><option>heartbeat</option>
+      <option>checkpoint</option><option>result</option><option>readback</option><option>recover</option>
     </select></label>
     <label>Task ID <input name="task_id"></label>
+    <label>Run ID (recover) <input name="run_id"></label>
     <label>Lease token <input name="lease_token"></label>
     <label>Attempt <input name="attempt" type="number"></label>
     <label>Lease seconds (claim/heartbeat) <input name="lease_seconds" type="number"></label>
@@ -204,8 +214,12 @@ export function createWorkerUi(deps: WorkerUiDeps) {
       const claims = parse(deps, cookiesOf(req)[COOKIE]);
       if (!claims) throw new Error('SESSION_INVALID');
       if (claims.exp <= now()) throw new Error('SESSION_EXPIRED');
-      if (!recheck(deps, claims)) throw new Error('SESSION_REVOKED');
-      return claims;
+      const identity = currentIdentity(deps, claims);
+      if (!identity) throw new Error('SESSION_REVOKED');
+      // Effective actions are the CURRENT configured allowlist, not the
+      // login-time snapshot: narrowing or revoking actions mid-session
+      // applies to the next action.
+      return { ...claims, actions: identity.actions ? [...identity.actions] : undefined };
     };
     try {
       if (req.method === 'GET' && url === '/worker/ui') {
@@ -248,7 +262,8 @@ export function createWorkerUi(deps: WorkerUiDeps) {
           if (!match) throw new Error('PROJECT_SCOPE_DENIED');
         }
         const claims: Claims = { sub: principal.subject, workerId: principal.workerId, scope,
-          exp: now() + ttl, csrf: randomBytes(24).toString('base64url') };
+          exp: now() + ttl, csrf: randomBytes(24).toString('base64url'),
+          ...(principal.actions ? { actions: [...principal.actions] } : {}) };
         res.setHeader('set-cookie', [`${COOKIE}=${mint(deps, claims)}; HttpOnly; Secure; SameSite=Lax; Path=/worker/ui; Max-Age=${ttl}`,
           `${PRE_COOKIE}=; HttpOnly; Secure; SameSite=Lax; Path=/worker/ui; Max-Age=0`]);
         if (asHtml) html(200, actionForm(claims));
@@ -275,7 +290,19 @@ export function createWorkerUi(deps: WorkerUiDeps) {
           if (action === 'checkpoint' && !fields.external_id) fields.external_id = String(fields.idempotency_key);
         }
         delete fields.result_summary; delete fields.external_operation_id; delete fields.idempotency_key;
-        const principal: Principal = { subject: claims.sub, role: 'worker', scopes: [claims.scope], workerId: claims.workerId };
+        // The Principal carries the identity's CURRENT actions allowlist
+        // (QA round 5): reconstructing it without actions silently
+        // dropped configured restrictions for every UI action. The
+        // allowlist is also enforced HERE, per action, before the
+        // surface runs: readback maps to 'read'; every state-changing
+        // worker action (arrive/claim/ack/heartbeat/checkpoint/result/
+        // recover) maps to 'execute'. authorize() applies the role map
+        // AND the allowlist, so a restricted identity is denied even
+        // though its session and scope are valid.
+        const principal: Principal = { subject: claims.sub, role: 'worker', scopes: [claims.scope], workerId: claims.workerId,
+          ...(claims.actions ? { actions: claims.actions as Action[] } : {}) };
+        const requiredAction: Action = String(action ?? '') === 'readback' ? 'read' : 'execute';
+        authorize(principal, claims.scope, requiredAction);
         const result = await deps.surface(principal, claims.scope, String(action ?? ''), fields);
         if (asHtml) html(200, envelopePage(200, String(action ?? ''), { ok: true, action, result }));
         else json(200, { ok: true, action, result });

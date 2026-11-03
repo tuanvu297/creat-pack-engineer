@@ -108,7 +108,7 @@ export class PostgresStore implements EngineStore {
         if(request.gate){
           const payloadRows=(await client.query(`SELECT task_id,payload FROM agy_tasks`)).rows;
           const payloadById=new Map(payloadRows.map((r:any)=>[r.task_id,r.payload]));
-          dispatch=dispatchAll.filter((d:any)=>workerGatePasses(request.gate!,{...d.policy,payload:payloadById.get(d.task_id)}));
+          dispatch=dispatchAll.filter((d:any)=>workerGatePasses(request.gate!,{...d.policy,taskId:d.task_id,payload:payloadById.get(d.task_id)}));
         }
         const selected=selectProjectDemand(dispatch.map(d=>({project:{tenantId:d.tenant_id,workspaceId:d.workspace_id,projectId:d.project_id,name:d.name,status:d.project_status,priority:d.project_priority,resourcePolicy:d.resource_policy,permissions:d.permissions,sourceOfTruthRef:'not-loaded',policyRef:'not-loaded',defaultSkillPack:'',policies:{},createdAt:0,updatedAt:0},
           jobId:d.job_id,taskId:d.task_id,task:d.policy,active:Number(d.active),quotaUsed:Number(d.quota_used),spendUsed:Number(d.spend_used),passThreshold:Number(d.pass_threshold),excluded:[...d.failed_workers,...d.health.filter((h:any)=>new Date(h.until).getTime()>Date.now()).map((h:any)=>h.workerId)],
