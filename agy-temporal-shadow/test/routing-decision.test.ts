@@ -9,16 +9,16 @@ import { decideRouting, planWorkBreakdown, appendJournal,
 const NOW = Date.parse('2026-11-03T00:00:00Z');
 const FRESH = { snapshotAtMs: NOW - 60_000 };
 const task: RoutingTaskInput = { taskId: 't1', taskClass: 'research', requiredScope: 'gl/research',
-  estimatedCredits: 10, resultDestination: 'mailbox:MB-1' };
-const rich = { accountId: 'acct-rich', creditsRemaining: 500, reserveCredits: 10, ...FRESH };
+  estimatedCredits: 10, estimateUnit: 'credit', resultDestination: 'mailbox:MB-1' };
+const rich = { accountId: 'acct-rich', creditsRemaining: 500, reserveCredits: 10, unit: 'credit', ...FRESH };
 const reviewRich: RoutingContext = { accounts: [rich], reviewAccountId: 'acct-rich', reviewCostCredits: 4, journal: [], nowMs: NOW };
 
 test("routing: high-skill worker on a low-credit account is assigned when the expected total fits", () => {
   const strong: WorkerCandidate = { workerId: 'W-STRONG', provider: 'test', accountId: 'acct-low', callable: true,
     scopes: ['gl/research'], taskClasses: ['research'],
     performance: { research: { firstPassRate: 0.95, meanCreditsPerAccepted: 8, samples: 20 } } };
-  const low = { accountId: 'acct-low', creditsRemaining: 20, reserveCredits: 5, ...FRESH };
-  const d = decideRouting(task, [strong], { accounts: [low, { accountId: 'acct-review', creditsRemaining: 50, reserveCredits: 0, ...FRESH }], reviewAccountId: 'acct-review', reviewCostCredits: 4, journal: [], nowMs: NOW });
+  const low = { accountId: 'acct-low', creditsRemaining: 20, reserveCredits: 5, unit: 'credit', ...FRESH };
+  const d = decideRouting(task, [strong], { accounts: [low, { accountId: 'acct-review', creditsRemaining: 50, reserveCredits: 0, unit: 'credit', ...FRESH }], reviewAccountId: 'acct-review', reviewCostCredits: 4, journal: [], nowMs: NOW });
   assert.equal(d.kind, 'ASSIGN');
   if (d.kind === 'ASSIGN') { assert.equal(d.workerId, 'W-STRONG'); assert.ok(d.expectedTotalCredits! < 9); }
 });
@@ -36,8 +36,8 @@ test("routing: UNKNOWN quota is a resource wait, never a guessed assignment", ()
   const w: WorkerCandidate = { workerId: 'W-X', provider: 'test', accountId: 'acct-unknown', callable: true,
     scopes: ['gl/research'], taskClasses: ['research'],
     performance: { research: { firstPassRate: 0.9, meanCreditsPerAccepted: 5, samples: 9 } } };
-  const d = decideRouting(task, [w], { accounts: [{ accountId: 'acct-unknown', creditsRemaining: null, reserveCredits: 0, ...FRESH },
-    { accountId: 'acct-review', creditsRemaining: 50, reserveCredits: 0, ...FRESH }],
+  const d = decideRouting(task, [w], { accounts: [{ accountId: 'acct-unknown', creditsRemaining: null, reserveCredits: 0, unit: 'credit', ...FRESH },
+    { accountId: 'acct-review', creditsRemaining: 50, reserveCredits: 0, unit: 'credit', ...FRESH }],
     reviewAccountId: 'acct-review', reviewCostCredits: 4, journal: [], nowMs: NOW });
   assert.equal(d.kind, 'RESOURCE_WAIT');
 });
@@ -46,7 +46,7 @@ test("routing: exhausted controller/review capacity blocks assignment even with 
   const exec: WorkerCandidate = { workerId: 'W-EXEC', provider: 'test', accountId: 'acct-rich', callable: true,
     scopes: ['gl/research'], taskClasses: ['research'],
     performance: { research: { firstPassRate: 0.9, meanCreditsPerAccepted: 5, samples: 9 } } };
-  const ctx: RoutingContext = { accounts: [rich, { accountId: 'acct-review', creditsRemaining: 2, reserveCredits: 0, ...FRESH }],
+  const ctx: RoutingContext = { accounts: [rich, { accountId: 'acct-review', creditsRemaining: 2, reserveCredits: 0, unit: 'credit', ...FRESH }],
     reviewAccountId: 'acct-review', reviewCostCredits: 4, journal: [], nowMs: NOW };
   const d = decideRouting(task, [exec], ctx);
   assert.equal(d.kind, 'RESOURCE_WAIT');
@@ -95,7 +95,7 @@ test("routing: two roles on ONE shared account are charged against the same pool
   const exec: WorkerCandidate = { workerId: 'W-EXEC', provider: 'test', accountId: 'acct-shared', callable: true,
     scopes: ['gl/research'], taskClasses: ['research'],
     performance: { research: { firstPassRate: 1, meanCreditsPerAccepted: 8, samples: 5 } } };
-  const ctx: RoutingContext = { accounts: [{ accountId: 'acct-shared', creditsRemaining: 10, reserveCredits: 0, ...FRESH }],
+  const ctx: RoutingContext = { accounts: [{ accountId: 'acct-shared', creditsRemaining: 10, reserveCredits: 0, unit: 'credit', ...FRESH }],
     reviewAccountId: 'acct-shared', reviewCostCredits: 4, journal: [], nowMs: NOW };
   const d = decideRouting(task, [exec], ctx);
   assert.equal(d.kind, 'RESOURCE_WAIT');

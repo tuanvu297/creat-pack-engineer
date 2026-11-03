@@ -215,6 +215,44 @@ tests (SDK client + negative cases, stub upstream implementing
 the proven contracts): 3/3 pass. The README carries the concrete
 install config for owner consent; still NOT installed.
 
+## QA round 4 (2026-11-03) — routing v3, auth allowlist, D6 inventory
+
+Routing v3 (same public decision shapes as v2; new fields are
+additive): requiredTools is a hard per-model gate (known-lacking
+excludes; UNKNOWN support or availability yields a TEACH plan
+carrying pendingVerification that reserves and executes nothing
+until verified); model caps are three-state (an UNKNOWN cap
+waits for a reading); TEACH reserves the model cap in the plan
+ledger; model pools are keyed (provider|account|pool) so role
+aliases share one ledger, and inconsistent snapshots of one
+pool are a plan-wide REPAIR; freshness rejects future snapshots
+beyond a 60 s skew; budget units are enforced (account.unit
+names the pool unit, estimates must name estimateUnit and match,
+unnamed-unit pools fund nothing); hardBudget tasks route only
+where budgetEnforcement is provider/runtime — prompt targets
+are not ceilings (live proof: Manus prompt targets 10/5 produced
+actuals 20/15; the official Manus task.create has no budget
+parameter). Regressions: test/routing-decision-round4.test.ts,
+11/11 failing-first on v2; routing+callback+auth suites 51/51.
+
+Auth: Principal gains an optional actions allowlist
+(src/platform/auth.ts) — when present it narrows every role,
+platform-admin included; absent = legacy behaviour. This makes
+a genuinely read-only operator representable for the first
+time; without it the facade upstream identity would carry
+scope-limited WRITE authority, so the facade README now says
+so and the facade stays uninstalled. Tests:
+test/auth-actions.test.ts (4/4; platform suite unchanged apart
+from the one pre-existing failure).
+
+D6 is NOT completed by the read facade: the real control/result
+surface (POST /v1/agy/{current_state,get_run,active_missions,
+callback_status,dispatch,reconcile,...} over pinned missions)
+is inventoried separately in the job record
+(D6_REMAINING_INVENTORY_20261103.md) with the bounded
+least-privilege exposure set and the exact missing
+provisioning actions. No deploy/grant/consent implied.
+
 ## Routing decision path (D3/D4 runnable candidate)
 
 src/platform/routing-decision.ts implements the work-breakdown /

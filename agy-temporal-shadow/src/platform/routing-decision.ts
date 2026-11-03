@@ -35,8 +35,25 @@
 // snapshotAtMs; a missing or stale snapshot (older than
 // ctx.maxSnapshotAgeMs) is not evidence and cannot ground an
 // eligible decision.
+//
+// Version 3 (QA round 4): requiredTools is a hard per-model gate
+// (known-lacking excludes; UNKNOWN support or UNKNOWN
+// availability prepares a TEACH plan carrying pendingVerification
+// that reserves and executes NOTHING until verified); a model
+// cap is three-state (none / known / UNKNOWN — an unknown cap
+// waits for a reading, never reads as uncapped); TEACH reserves
+// the model cap too; model pools are keyed (provider, account,
+// poolId ?? modelId) so role aliases share ONE cap ledger, and
+// inconsistent snapshots of one pool are a repair; freshness
+// rejects future snapshots beyond a small clock skew; budget
+// units are real — account.unit names the pool's unit, caller
+// estimates must name estimateUnit and match it, an unnamed-unit
+// pool funds nothing; hardBudget tasks route only where the
+// pool enforces the ceiling (budgetEnforcement provider/runtime)
+// — a prompt-level target is not a ceiling, and every TEACH
+// decision states budgetEnforced explicitly.
 
-export const ROUTING_DECISION_VERSION = 2;
+export const ROUTING_DECISION_VERSION = 3;
 
 export interface RoutingTaskInput {
   taskId: string;
@@ -46,6 +63,12 @@ export interface RoutingTaskInput {
   estimatedCredits: number | null;
   /** Bounded budget for calibrating an unknown-cost task. */
   calibrationBudgetCredits?: number | null;
+  /** Tools the task cannot be done without (hard per-model gate). */
+  requiredTools?: string[];
+  /** Unit of estimatedCredits; REQUIRED when an estimate is given. */
+  estimateUnit?: string;
+  /** true = the ceiling must be ENFORCED (provider/runtime), not merely stated. */
+  hardBudget?: boolean;
   dependsOn?: string[];
   resultDestination: string;
 }
@@ -58,6 +81,12 @@ export interface AccountState {
   creditsRemaining: number | null;
   reserveCredits: number;
   quotaKind?: QuotaKind;
+  /** The pool's budget unit ('api_credit', 'provider_credit',
+   *  'subscription_message', ...). Undefined = unnamed: funds nothing. */
+  unit?: string;
+  /** Whether a spending ceiling on this pool is actually enforced.
+   *  Undefined = 'unknown'. Prompt-level targets are NOT enforcement. */
+  budgetEnforcement?: 'provider' | 'runtime' | 'prompt_only' | 'unknown';
   /** When this snapshot was observed; missing = unverifiable. */
   snapshotAtMs?: number;
 }
@@ -76,6 +105,9 @@ export interface ModelOption {
   taskClasses: string[];
   /** Observed tool support for this mode, when known. */
   toolSupport?: string[];
+  /** Shared-pool identity; defaults to modelId. Aliases of one
+   *  pool (same provider+account+pool) draw ONE cap ledger. */
+  poolId?: string;
   /** Model-specific remaining cap; null = no separate cap OR unknown — see capKnown. */
   creditsRemaining: number | null;
   /** true when creditsRemaining is a real separate cap (vs none). */
@@ -93,6 +125,8 @@ export interface WorkerCandidate {
   callable: boolean;
   scopes: string[];
   taskClasses: string[];
+  /** Tool support of the implicit/default unit, when known. */
+  toolSupport?: string[];
   /** Observed models/modes. Absent = one implicit worker-default unit. */
   models?: ModelOption[];
   performance?: Record<string, ClassPerformance>;
@@ -108,8 +142,8 @@ export interface JournalEntry {
 }
 
 export type RoutingDecision =
-  | { kind: 'ASSIGN'; taskId: string; workerId: string; modelId: string; accountId: string; quotaKind: QuotaKind; expectedTotalCredits: number; costBasis: 'measured' | 'estimated'; rationale: string[] }
-  | { kind: 'TEACH_THEN_ASSIGN'; taskId: string; workerId: string; modelId: string; accountId: string; calibrationBudgetCredits: number | null; teachPlan: string[]; rationale: string[] }
+  | { kind: 'ASSIGN'; taskId: string; workerId: string; modelId: string; accountId: string; quotaKind: QuotaKind; expectedTotalCredits: number; costBasis: 'measured' | 'estimated'; unit: string | null; budgetEnforced: boolean; rationale: string[] }
+  | { kind: 'TEACH_THEN_ASSIGN'; taskId: string; workerId: string; modelId: string; accountId: string; calibrationBudgetCredits: number | null; teachPlan: string[]; unit: string | null; budgetEnforced: boolean; pendingVerification?: string[]; rationale: string[] }
   | { kind: 'REPAIR'; taskId: string; repair: string; rationale: string[] }
   | { kind: 'RESOURCE_WAIT'; taskId: string; waitFor: string; rationale: string[] }
   | { kind: 'RECONCILE_FIRST'; taskId: string; operationId: string; rationale: string[] };
@@ -124,6 +158,8 @@ export interface RoutingContext {
   minFirstPassRate?: number;
   nowMs?: number;
   maxSnapshotAgeMs?: number;
+  /** Future tolerance for snapshot timestamps; default 60 s. */
+  maxClockSkewMs?: number;
 }
 
 const DEFAULT_MIN_FIRST_PASS = 0.5;
@@ -141,6 +177,11 @@ const isNonNeg = (v: unknown): v is number => isNum(v) && (v as number) >= 0;
 function validateInputs(task: RoutingTaskInput, workers: WorkerCandidate[], ctx: RoutingContext): string[] {
   const issues: string[] = [];
   if (task.estimatedCredits != null && !isNonNeg(task.estimatedCredits)) issues.push(`task.estimatedCredits invalid: ${task.estimatedCredits}`);
+  if (task.estimatedCredits != null && (typeof task.estimateUnit !== 'string' || !task.estimateUnit)) issues.push('task.estimatedCredits is unnamed: estimateUnit is required (an estimate must state its budget unit)');
+  for (const t of task.requiredTools ?? []) if (typeof t !== 'string' || !t) issues.push('task.requiredTools entries must be non-empty strings');
+  if (ctx.nowMs !== undefined && !isNonNeg(ctx.nowMs)) issues.push(`nowMs invalid: ${ctx.nowMs}`);
+  if (ctx.maxSnapshotAgeMs !== undefined && !(isNum(ctx.maxSnapshotAgeMs) && ctx.maxSnapshotAgeMs > 0)) issues.push(`maxSnapshotAgeMs invalid: ${ctx.maxSnapshotAgeMs}`);
+  if (ctx.maxClockSkewMs !== undefined && !isNonNeg(ctx.maxClockSkewMs)) issues.push(`maxClockSkewMs invalid: ${ctx.maxClockSkewMs}`);
   if (task.calibrationBudgetCredits != null && !(isNum(task.calibrationBudgetCredits) && task.calibrationBudgetCredits > 0)) issues.push(`task.calibrationBudgetCredits invalid: ${task.calibrationBudgetCredits}`);
   if (!isNonNeg(ctx.reviewCostCredits)) issues.push(`reviewCostCredits invalid: ${ctx.reviewCostCredits}`);
   if (ctx.reviewModelCapCredits != null && ctx.reviewModelCapCredits !== undefined && !isNonNeg(ctx.reviewModelCapCredits)) issues.push(`reviewModelCapCredits invalid: ${ctx.reviewModelCapCredits}`);
@@ -148,6 +189,8 @@ function validateInputs(task: RoutingTaskInput, workers: WorkerCandidate[], ctx:
     if (a.creditsRemaining != null && !isNonNeg(a.creditsRemaining)) issues.push(`account ${a.accountId} creditsRemaining invalid: ${a.creditsRemaining}`);
     if (!isNonNeg(a.reserveCredits)) issues.push(`account ${a.accountId} reserveCredits invalid: ${a.reserveCredits}`);
     if (a.snapshotAtMs !== undefined && !isNonNeg(a.snapshotAtMs)) issues.push(`account ${a.accountId} snapshotAtMs invalid`);
+    if (a.unit !== undefined && (typeof a.unit !== 'string' || !a.unit)) issues.push(`account ${a.accountId} unit invalid`);
+    if (a.budgetEnforcement !== undefined && !['provider', 'runtime', 'prompt_only', 'unknown'].includes(a.budgetEnforcement)) issues.push(`account ${a.accountId} budgetEnforcement invalid: ${a.budgetEnforcement}`);
   }
   const checkPerf = (owner: string, perf?: Record<string, ClassPerformance>) => {
     for (const [cls, p] of Object.entries(perf ?? {})) {
@@ -184,6 +227,10 @@ interface Unit {
   perf?: ClassPerformance;
   availability: 'available' | 'unavailable' | 'unknown';
   modelCap: number | null; // null = no separate known cap
+  capState: 'none' | 'known' | 'unknown';
+  toolsState: 'ok' | 'unknown' | 'lacking';
+  missingTools: string[];
+  poolKey: string;
   expected: number | null;
   costBasis: 'measured' | 'estimated' | 'unknown';
 }
@@ -193,7 +240,10 @@ export function decideRouting(task: RoutingTaskInput, workers: WorkerCandidate[]
   const now = ctx.nowMs ?? Date.now();
   const maxAge = ctx.maxSnapshotAgeMs ?? DEFAULT_MAX_SNAPSHOT_AGE_MS;
   const minFirstPass = ctx.minFirstPassRate ?? DEFAULT_MIN_FIRST_PASS;
-  const fresh = (snapshotAtMs?: number) => snapshotAtMs !== undefined && isNonNeg(snapshotAtMs) && now - snapshotAtMs <= maxAge;
+  const skew = ctx.maxClockSkewMs ?? 60_000;
+  const fresh = (snapshotAtMs?: number) => snapshotAtMs !== undefined && isNonNeg(snapshotAtMs)
+    && snapshotAtMs <= now + skew && now - snapshotAtMs <= maxAge;
+  const enforced = (a: AccountState) => a.budgetEnforcement === 'provider' || a.budgetEnforcement === 'runtime';
 
   // 0. Validation before interpretation: invalid amounts are a
   //    repair of the input record, never a decision input.
@@ -224,6 +274,8 @@ export function decideRouting(task: RoutingTaskInput, workers: WorkerCandidate[]
     rationale: ['acceptance capacity cannot be verified without the reviewer account snapshot'] };
   if (!fresh(reviewAccount.snapshotAtMs)) return { kind: 'RESOURCE_WAIT', taskId: task.taskId,
     waitFor: `a fresh snapshot of reviewer account ${ctx.reviewAccountId}`, rationale: ['reviewer account snapshot is stale or undated'] };
+  if (reviewAccount.unit == null) return { kind: 'RESOURCE_WAIT', taskId: task.taskId,
+    waitFor: `a named budget unit for reviewer account ${ctx.reviewAccountId}`, rationale: ['reviewer account unit is unnamed; the review cost cannot be denominated or reserved'] };
   if (reviewAccount.creditsRemaining == null) return { kind: 'RESOURCE_WAIT', taskId: task.taskId,
     waitFor: `a quota reading for reviewer account ${ctx.reviewAccountId}`, rationale: ['reviewer balance UNKNOWN — acceptance capacity unverifiable'] };
   if (reviewAccount.creditsRemaining - reviewAccount.reserveCredits < ctx.reviewCostCredits) {
@@ -257,10 +309,21 @@ export function decideRouting(task: RoutingTaskInput, workers: WorkerCandidate[]
       if (!m.taskClasses.includes(task.taskClass)) { rationale.push(`${w.workerId}/${m.modelId}: model does not support class ${task.taskClass}`); continue; }
       const modelFresh = m.snapshotAtMs === undefined ? w.models === undefined : fresh(m.snapshotAtMs);
       const availability = m.availability ?? 'available';
+      const support = m.toolSupport ?? (w.models === undefined ? w.toolSupport : undefined);
+      let toolsState: Unit['toolsState'] = 'ok'; const missingTools: string[] = [];
+      const required = task.requiredTools ?? [];
+      if (required.length) {
+        if (support == null) toolsState = 'unknown';
+        else { for (const t of required) if (!support.includes(t)) missingTools.push(t); if (missingTools.length) toolsState = 'lacking'; }
+      }
+      if (toolsState === 'lacking') rationale.push(`${w.workerId}/${m.modelId}: lacks required tool(s) ${missingTools.join(', ')}`);
       units.push({ w, modelId: m.modelId,
         perf: m.performance?.[task.taskClass] ?? (w.models === undefined ? w.performance?.[task.taskClass] : undefined),
         availability: !modelFresh && w.models !== undefined ? 'unknown' : availability,
         modelCap: m.capKnown && m.creditsRemaining != null ? m.creditsRemaining : null,
+        capState: !m.capKnown ? 'none' : m.creditsRemaining != null ? 'known' : 'unknown',
+        toolsState, missingTools,
+        poolKey: `${w.provider}|${w.accountId}|${m.poolId ?? m.modelId}`,
         expected: null, costBasis: 'unknown' });
     }
   }
@@ -277,8 +340,14 @@ export function decideRouting(task: RoutingTaskInput, workers: WorkerCandidate[]
     if (!account) { rationale.push(`${u.w.workerId}: account ${u.w.accountId} has no state record`); continue; }
     if (!fresh(account.snapshotAtMs)) { rationale.push(`${u.w.workerId}: account ${u.w.accountId} snapshot stale or undated`); continue; }
     const measured = u.perf && u.perf.samples > 0 && u.perf.meanCreditsPerAccepted != null;
-    u.expected = measured ? u.perf!.meanCreditsPerAccepted! : task.estimatedCredits;
-    u.costBasis = measured ? 'measured' : task.estimatedCredits != null ? 'estimated' : 'unknown';
+    // Measured performance is denominated in the pool it was
+    // measured on. A caller estimate spends against this pool
+    // ONLY when its named unit matches the pool's unit.
+    const estimateUsable = task.estimatedCredits != null && account.unit != null && task.estimateUnit === account.unit;
+    u.expected = measured ? u.perf!.meanCreditsPerAccepted! : estimateUsable ? task.estimatedCredits : null;
+    u.costBasis = measured ? 'measured' : estimateUsable ? 'estimated' : 'unknown';
+    if (task.estimatedCredits != null && !measured && !estimateUsable)
+      rationale.push(`${u.w.workerId}/${u.modelId}: estimate unit ${task.estimateUnit ?? '(unnamed)'} does not match pool unit ${account.unit ?? '(unnamed)'} — estimate not spendable here`);
     let headroom: number | null = null;
     if (account.creditsRemaining != null) {
       headroom = account.creditsRemaining - account.reserveCredits
@@ -290,7 +359,9 @@ export function decideRouting(task: RoutingTaskInput, workers: WorkerCandidate[]
   if (!scored.length) return { kind: 'RESOURCE_WAIT', taskId: task.taskId,
     waitFor: 'a fresh account snapshot for at least one eligible unit', rationale };
 
-  const affordableKnown = scored.filter((s) => s.expected != null && s.headroom != null && s.headroom >= s.expected);
+  const fundable = (s: Scored) => s.toolsState === 'ok' && s.capState !== 'unknown' && s.account.unit != null
+    && (!task.hardBudget || enforced(s.account));
+  const affordableKnown = scored.filter((s) => s.expected != null && s.headroom != null && s.headroom >= s.expected && fundable(s));
 
   // 7. Direct ASSIGN: known cost, verified capacity, observed
   //    availability, measured quality at/above the gate.
@@ -301,34 +372,67 @@ export function decideRouting(task: RoutingTaskInput, workers: WorkerCandidate[]
       || ((a.perf!.meanLatencyMs ?? Number.POSITIVE_INFINITY) - (b.perf!.meanLatencyMs ?? Number.POSITIVE_INFINITY)))[0];
     return { kind: 'ASSIGN', taskId: task.taskId, workerId: best.w.workerId, modelId: best.modelId,
       accountId: best.w.accountId, quotaKind: best.account.quotaKind ?? 'unknown',
-      expectedTotalCredits: best.expected!, costBasis: best.costBasis,
+      expectedTotalCredits: best.expected!, costBasis: best.costBasis === 'measured' ? 'measured' : 'estimated',
+      unit: best.account.unit ?? null, budgetEnforced: enforced(best.account),
       rationale: [...rationale, `${best.w.workerId}/${best.modelId} callable, in-scope, measured first-pass ${best.perf!.firstPassRate.toFixed(2)}, expected total ${best.expected} credits (${best.costBasis}, rework included) on account ${best.w.accountId} (${best.account.quotaKind ?? 'unknown'} quota)`] };
   }
 
   // 8. TEACH_THEN_ASSIGN: (a) quality calibration with a known,
   //    affordable cost as its bound; (b) unknown-cost calibration
   //    ONLY under the task's bounded calibration budget.
-  const qualityTeach = affordableKnown.filter((s) => s.availability !== 'unavailable');
+  const qualityTeach = affordableKnown.filter((s) => s.availability === 'available');
   if (qualityTeach.length) {
     const best = [...qualityTeach].sort((a, b) => a.expected! - b.expected!)[0];
     return { kind: 'TEACH_THEN_ASSIGN', taskId: task.taskId, workerId: best.w.workerId, modelId: best.modelId,
       accountId: best.w.accountId, calibrationBudgetCredits: best.expected, teachPlan: TEACH_PLAN,
+      unit: best.account.unit ?? null, budgetEnforced: enforced(best.account),
       rationale: [...rationale, best.perf && best.perf.samples > 0
         ? `${best.w.workerId}/${best.modelId} measured first-pass ${best.perf.firstPassRate.toFixed(2)} < ${minFirstPass} for ${task.taskClass}; calibrate before production assignment`
         : `${best.w.workerId}/${best.modelId} is unmeasured for ${task.taskClass}; calibrate before trusting expected totals`] };
   }
   const budget = task.calibrationBudgetCredits ?? null;
   if (budget != null) {
-    const budgetOk = scored.filter((s) => s.availability !== 'unavailable' && s.headroom != null && s.headroom >= budget);
+    const budgetOk = scored.filter((s) => s.availability === 'available' && s.headroom != null && s.headroom >= budget && fundable(s));
     if (budgetOk.length) {
       const best = budgetOk[0];
       return { kind: 'TEACH_THEN_ASSIGN', taskId: task.taskId, workerId: best.w.workerId, modelId: best.modelId,
         accountId: best.w.accountId, calibrationBudgetCredits: budget, teachPlan: TEACH_PLAN,
+        unit: best.account.unit ?? null, budgetEnforced: enforced(best.account),
         rationale: [...rationale, `cost of ${task.taskClass} on ${best.w.workerId}/${best.modelId} is UNKNOWN; calibration bounded at ${budget} credits`] };
     }
   }
 
+  // 8b. Verification teach: availability or tool support UNKNOWN
+  //     (never known-lacking). The plan is prepared, but it is
+  //     NOT executable and the planner reserves nothing for it
+  //     until the listed verifications land.
+  const verifiable = scored.filter((s) => s.toolsState !== 'lacking' && s.capState !== 'unknown'
+    && (s.availability === 'unknown' || s.toolsState === 'unknown')
+    && s.account.unit != null && s.headroom != null
+    && (!task.hardBudget || enforced(s.account))
+    && (s.expected != null ? s.headroom >= s.expected : budget != null && s.headroom >= budget));
+  if (verifiable.length) {
+    const best = verifiable[0];
+    const pendingVerification: string[] = [];
+    if (best.availability === 'unknown') pendingVerification.push('availability');
+    if (best.toolsState === 'unknown') for (const t of task.requiredTools ?? []) pendingVerification.push(`tool:${t}`);
+    return { kind: 'TEACH_THEN_ASSIGN', taskId: task.taskId, workerId: best.w.workerId, modelId: best.modelId,
+      accountId: best.w.accountId, calibrationBudgetCredits: best.expected ?? budget, teachPlan: TEACH_PLAN,
+      unit: best.account.unit ?? null, budgetEnforced: enforced(best.account), pendingVerification,
+      rationale: [...rationale, `plan prepared for ${best.w.workerId}/${best.modelId} but NOT executable yet: verify ${pendingVerification.join(', ')} first; nothing is reserved until verification lands`] };
+  }
+
   // 9. Otherwise wait — naming the actual binding constraint.
+  if (scored.length && scored.every((s) => s.toolsState === 'lacking')) return { kind: 'REPAIR', taskId: task.taskId,
+    repair: `provision a model whose tool support includes: ${[...new Set(scored.flatMap((s) => s.missingTools))].join(', ')}`,
+    rationale: [...rationale, 'every eligible model is known to lack a required tool — a hard eligibility failure, not a resource wait'] };
+  if (task.hardBudget && scored.some((s) => s.toolsState !== 'lacking' && !enforced(s.account))) return { kind: 'RESOURCE_WAIT', taskId: task.taskId,
+    waitFor: 'a pool that ENFORCES the budget ceiling (provider/runtime), or explicit budget approval',
+    rationale: [...rationale, 'hard budget required but no available pool enforces a spending ceiling; prompt-level targets are not ceilings and self-reported zero cost proves nothing'] };
+  if (scored.some((s) => s.capState === 'unknown')) return { kind: 'RESOURCE_WAIT', taskId: task.taskId,
+    waitFor: 'a reading of the model cap balance', rationale: [...rationale, 'a model cap exists but its balance is UNKNOWN; it is never treated as no cap'] };
+  if (scored.some((s) => s.account.unit == null)) return { kind: 'RESOURCE_WAIT', taskId: task.taskId,
+    waitFor: 'a named budget unit for the candidate pool', rationale: [...rationale, 'API credits, provider credits and subscription messages are not interchangeable; an unnamed-unit pool funds nothing'] };
   const anyKnownPool = scored.some((s) => s.headroom != null);
   if (!anyKnownPool) return { kind: 'RESOURCE_WAIT', taskId: task.taskId,
     waitFor: 'a quota/credits reading for an eligible unit account', rationale: [...rationale, 'every eligible unit account has UNKNOWN credits'] };
@@ -348,11 +452,17 @@ export function appendJournal(journal: JournalEntry[], entry: JournalEntry): Jou
  * Plan a whole work breakdown in dependency order, carrying a
  * RESERVATION LEDGER across the plan: every ASSIGN reserves its
  * expected total on the executor account (and on the model cap
- * when one binds), every TEACH_THEN_ASSIGN reserves its
- * calibration budget, and every assignment reserves the review
- * cost on the reviewer account (and reviewer model cap). Later
- * tasks therefore see the pools as earlier decisions left them —
- * a shared account is never double-spent by role or task name.
+ * when one binds), every executable TEACH_THEN_ASSIGN reserves
+ * its calibration budget on the account AND the model cap, and
+ * every assignment reserves the review cost on the reviewer
+ * account (and reviewer model cap). A TEACH carrying
+ * pendingVerification reserves NOTHING — it is a plan, not an
+ * execution. Model caps are ledgered by shared pool identity
+ * (provider|account|pool), so role aliases of one pool draw one
+ * ledger; inconsistent cap snapshots of one pool (or of one
+ * account) make the whole plan a repair. Later tasks therefore
+ * see the pools as earlier decisions left them — a shared pool
+ * is never double-spent by role or task name.
  */
 export function planWorkBreakdown(tasks: RoutingTaskInput[], workers: WorkerCandidate[], ctx: RoutingContext): RoutingDecision[] {
   const byId = new Map(tasks.map((t) => [t.taskId, t]));
@@ -368,15 +478,37 @@ export function planWorkBreakdown(tasks: RoutingTaskInput[], workers: WorkerCand
 
   const accounts = ctx.accounts.map((a) => ({ ...a }));
   const accountOf = new Map(accounts.map((a) => [a.accountId, a]));
-  const modelCaps = new Map<string, number>(); // "workerId/modelId" -> remaining cap
+  // Shared-pool seeding + consistency: aliases reporting the
+  // same pool with different known caps (or duplicate account
+  // snapshots that disagree) make the whole plan a repair.
+  const poolKey = (w: WorkerCandidate, m: ModelOption) => `${w.provider}|${w.accountId}|${m.poolId ?? m.modelId}`;
+  const modelCaps = new Map<string, number>(); // poolKey -> remaining cap
+  const acctSeen = new Map<string, AccountState>();
+  for (const a of ctx.accounts) {
+    const prev = acctSeen.get(a.accountId);
+    if (prev && (prev.creditsRemaining !== a.creditsRemaining || prev.unit !== a.unit))
+      return tasks.map((t) => ({ kind: 'REPAIR', taskId: t.taskId,
+        repair: `reconcile duplicate snapshots for account ${a.accountId} (balance or unit disagree)`,
+        rationale: ['one pool, two disagreeing snapshots — never silently pick one'] }));
+    acctSeen.set(a.accountId, a);
+  }
+  for (const w of workers) for (const m of w.models ?? []) {
+    if (!m.capKnown || m.creditsRemaining == null) continue;
+    const key = poolKey(w, m); const prev = modelCaps.get(key);
+    if (prev !== undefined && prev !== m.creditsRemaining)
+      return tasks.map((t) => ({ kind: 'REPAIR', taskId: t.taskId,
+        repair: `reconcile inconsistent cap snapshots for shared model pool ${key}: ${prev} vs ${m.creditsRemaining}`,
+        rationale: ['aliases of one pool share one cap; disagreeing snapshots are a repair, not a pick'] }));
+    modelCaps.set(key, m.creditsRemaining);
+  }
   let reviewModelCap = ctx.reviewModelCapCredits;
   const decisions: RoutingDecision[] = [];
 
   for (const t of ordered) {
     const adjustedWorkers = workers.map((w) => !w.models ? w : ({
       ...w, models: w.models.map((m) => {
-        const key = `${w.workerId}/${m.modelId}`;
-        return modelCaps.has(key) ? { ...m, creditsRemaining: modelCaps.get(key)! } : m;
+        const key = poolKey(w, m);
+        return m.capKnown && modelCaps.has(key) ? { ...m, creditsRemaining: modelCaps.get(key)! } : m;
       }),
     }));
     const d = decideRouting(t, adjustedWorkers, { ...ctx, accounts, reviewModelCapCredits: reviewModelCap });
@@ -385,20 +517,22 @@ export function planWorkBreakdown(tasks: RoutingTaskInput[], workers: WorkerCand
       const a = accountOf.get(accountId);
       if (a && a.creditsRemaining != null && amount != null) a.creditsRemaining -= amount;
     };
+    const reserveModelCap = (amount: number | null) => {
+      if (amount == null) return;
+      const w = workers.find((x) => x.workerId === (d as { workerId: string }).workerId);
+      const m = w?.models?.find((x) => x.modelId === (d as { modelId: string }).modelId);
+      if (w && m?.capKnown) { const key = poolKey(w, m); if (modelCaps.has(key)) modelCaps.set(key, modelCaps.get(key)! - amount); }
+    };
     if (d.kind === 'ASSIGN') {
       reserveOn(d.accountId, d.expectedTotalCredits);
       reserveOn(ctx.reviewAccountId, ctx.reviewCostCredits);
       if (reviewModelCap != null && reviewModelCap !== undefined) reviewModelCap -= ctx.reviewCostCredits;
-      const w = workers.find((x) => x.workerId === d.workerId);
-      const m = w?.models?.find((x) => x.modelId === d.modelId);
-      if (m?.capKnown && m.creditsRemaining != null) {
-        const key = `${d.workerId}/${d.modelId}`;
-        modelCaps.set(key, (modelCaps.get(key) ?? m.creditsRemaining) - d.expectedTotalCredits);
-      }
-    } else if (d.kind === 'TEACH_THEN_ASSIGN') {
+      reserveModelCap(d.expectedTotalCredits);
+    } else if (d.kind === 'TEACH_THEN_ASSIGN' && !d.pendingVerification) {
       reserveOn(d.accountId, d.calibrationBudgetCredits);
       reserveOn(ctx.reviewAccountId, ctx.reviewCostCredits);
       if (reviewModelCap != null && reviewModelCap !== undefined) reviewModelCap -= ctx.reviewCostCredits;
+      reserveModelCap(d.calibrationBudgetCredits);
     }
   }
   return decisions;

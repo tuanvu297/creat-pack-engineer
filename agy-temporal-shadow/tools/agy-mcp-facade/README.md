@@ -61,9 +61,17 @@ inbound≠upstream separation, fail-closed startup. **3/3 pass**
    - `AGY_FACADE_INBOUND_TOKEN=` — owner generates a fresh random
      token and enters it in the dashboard (never via chat).
    - `AGY_UPSTREAM_TOKEN=` — Control Plane provisions a NEW
-     dedicated read-only operator identity in AGY_IDENTITIES_JSON
-     (guard `read` on the allowlisted scope) and the owner enters
-     its token in the dashboard. No existing token is reused.
+     dedicated operator identity in AGY_IDENTITIES_JSON carrying
+     `actions: ["read"]` and the owner enters its token in the
+     dashboard. No existing token is reused. HONESTY NOTE: in the
+     CURRENTLY DEPLOYED auth model a principal has only
+     role/scopes, and an operator holds read AND write within
+     scope — "read-only" is enforceable only with the candidate
+     Principal action-allowlist change in PR #19
+     (src/platform/auth.ts + test/auth-actions.test.ts). Until
+     that change is deployed, any operator identity the facade
+     could use carries scope-limited WRITE authority, so the
+     facade stays uninstalled and unapproved.
 3. **Host registration** (after 1–2 exist): in Muse, add a custom
    connector — transport: streamable HTTP; URL:
    `https://<facade-domain>/mcp`; header:
