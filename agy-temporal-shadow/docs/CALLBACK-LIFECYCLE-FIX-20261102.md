@@ -328,3 +328,28 @@ body parentWorkerId ignored, surface idempotency, foreign
 worker denied); combined suites 94/94. Adapters remain
 unbound: 'delegate' creates the child assignment on the queue
 only — no provider call exists behind it yet.
+
+## Round 7 (2026-11-03, D-057 equip): provider API adapters, mock-only
+
+Owner asked for API/MCP routes after local-Chrome autoBrowse
+proved unavailable. helper-providers.ts implements the
+HelperAdapter interface against the providers' official REST
+APIs, built entirely from their published OpenAPI/docs (read
+2026-11-03): Manus v2 (POST /v2/task.create, GET /v2/user.me
+probe, GET /v2/usage.availableCredits, GET /v2/task.detail,
+GET /v2/task.listMessages, GET /v2/task.list reconcile) and
+xAI (POST /v1/responses, GET /v1/responses/{id},
+GET /v1/models). Neither provider documents a per-task hard
+budget cap or an idempotency key, so both adapters report
+prompt_only / actualCostBounded=false in
+PROVIDER_BUDGET_POSTURE, uncertain submissions raise
+SUBMISSION_UNCERTAIN (Manus reconciles via the `agy:<childKey>`
+task title in task.list), and actuals are read back after the
+fact (Manus credit_usage; xAI token usage x configured rates,
+NaN when rates are unconfigured - never invented). The env
+factory returns the honest unbound adapter when a key (or the
+Grok model) is not configured. NOT wired into the server, NO
+provider call has been made, NO key exists yet; tests are
+mock-only (test/helper-providers.mock.test.ts, 8/8). The
+integration delta + credential/cost gates live in the Drive
+delta doc (mailbox MB-20261103-011).
