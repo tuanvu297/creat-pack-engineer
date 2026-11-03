@@ -1,14 +1,15 @@
 // Primary-worker -> helper delegation contract (AGY D-057,
-// 2026-11-03). Runs ON the existing canonical queue: a helper
-// subtask is a child of exactly one parent task/attempt, claimed
-// and settled through the same PostgresStore leases — there is
-// no parallel queue and no shadow dispatch. This module is the
-// pure contract + adapter surface: it validates an assignment
-// before any helper is touched, derives the child idempotency
-// identity, and defines the result envelope the parent must
-// validate before integration. Adapters bind a helper's OWN
-// supported surface (browser bridge preferred); an unbound
-// adapter refuses — it never fakes an ACK or a native binding.
+// 2026-11-03). This module is the PURE contract: it validates an
+// assignment's shape and fences, derives the child idempotency
+// identity, and defines the result envelope. It does NOT by
+// itself create, claim, or settle anything — the binding to the
+// existing canonical queue (authenticated parent principal,
+// persisted child ownership, transactional reservation, result
+// verification) lives in helper-queue.ts and is what makes the
+// runtime claims true. Validation here is necessary, never
+// sufficient. Adapters bind a helper's OWN supported surface
+// (browser bridge preferred); an unbound adapter refuses — it
+// never fakes an ACK or a native binding.
 //
 // Roles (D-057): primary workers (Claude, Muse, Gemini) own
 // the main output and validate/integrate; helpers (Manus, Grok)
@@ -35,6 +36,12 @@ export interface HelperAssignment {
   toolAllowlist: string[];
   // Budget fence: cap in a NAMED unit, with an enforcement class.
   budget: { unit: string; cap: number; spent: number; enforcement: BudgetEnforcement; hard: boolean };
+  // Whether the helper surface bounds the ACTUAL per-call cost
+  // (fixed-price surface) as opposed to provider-metered actuals
+  // a preflight estimate cannot bound (Manus). Required true for
+  // any hard budget that is not provider-enforced; absent counts
+  // as false (fail closed).
+  actualCostBounded?: boolean;
   // Lease fence: absolute expiry; a dead parent cannot extend it.
   expiresAtMs: number;
   // Immutable reply routing: the parent's own reply target.
@@ -61,21 +68,28 @@ export function validateAssignment(a: HelperAssignment, nowMs: number): Validati
   if (!Number.isInteger(a.parentAttempt) || a.parentAttempt < 1) denies.push('ATTEMPT_INVALID');
   if (a.helperId !== 'manus' && a.helperId !== 'grok') denies.push('HELPER_NOT_ALLOWED');
   if (!a.scope?.tenantId || !a.scope?.workspaceId || !a.scope?.projectId) denies.push('CROSS_SCOPE');
-  if (!(nowMs <= a.expiresAtMs)) denies.push('EXPIRED');
+  // Strict deadline: the expiry instant itself is already dead.
+  if (!Number.isFinite(a.expiresAtMs) || !(nowMs < a.expiresAtMs)) denies.push('EXPIRED');
   if (!a.sourceAllowlist?.length || !a.toolAllowlist?.length) denies.push('ALLOWLIST_EMPTY');
   if (!a.replyTarget) denies.push('REPLY_TARGET_REQUIRED');
-  // Resource authority must be KNOWN: an unnamed unit, a null or
-  // non-finite cap, or unknown enforcement never funds a child.
-  if (!a.budget?.unit || !Number.isFinite(a.budget?.cap) || a.budget.cap < 0 || a.budget.enforcement === 'unknown')
+  // Resource authority must be KNOWN and SANE: an unnamed unit,
+  // a non-finite or negative cap, a non-finite or negative spent
+  // (root probe: spent=-100 and NaN were accepted), or unknown
+  // enforcement never funds a child. All checks fail closed.
+  const b = a.budget;
+  if (!b?.unit || !Number.isFinite(b?.cap) || b.cap < 0 || !Number.isFinite(b?.spent) || b.spent < 0 || b?.enforcement === 'unknown')
     denies.push('BUDGET_UNKNOWN');
   else {
-    if (a.budget.spent > a.budget.cap) denies.push('BUDGET_EXCEEDED');
-    // The Manus lesson, encoded: a hard budget on a prompt-only
-    // surface is not a budget. Hard budgets require provider or
-    // RUNTIME enforcement — the runtime fence being this
-    // contract's own pre-submit check (validateBeforeSubmit),
-    // evaluated by the parent before EVERY helper submission.
-    if (a.budget.hard && a.budget.enforcement === 'prompt_only') denies.push('HARD_BUDGET_UNENFORCED');
+    if (b.spent > b.cap) denies.push('BUDGET_EXCEEDED');
+    // The Manus lesson, encoded twice. A hard budget on a
+    // prompt-only surface is not a budget. AND a runtime
+    // preflight fence bounds submission ESTIMATES only: when the
+    // helper's ACTUAL per-call cost is provider-metered and
+    // unbounded, no estimate check can make a hard cap true —
+    // hard budgets then require provider enforcement with a
+    // real provider-side cap, else they are denied.
+    if (b.hard && b.enforcement === 'prompt_only') denies.push('HARD_BUDGET_UNENFORCED');
+    else if (b.hard && b.enforcement !== 'provider' && a.actualCostBounded !== true) denies.push('HARD_BUDGET_UNENFORCED');
   }
   return { ok: denies.length === 0, denies };
 }
@@ -91,12 +105,17 @@ export function resultMatchesAssignment(a: HelperAssignment, r: { childKey: stri
 
 // Pre-submit runtime fence: the parent calls this before EVERY
 // helper submission under the assignment. When it denies, the
-// submission does not happen — this is what makes a 'runtime'
-// enforcement claim true rather than aspirational.
+// submission does not happen. The fence bounds the ESTIMATED
+// cost of submissions; per validateAssignment, that supports a
+// hard-budget claim ONLY when actual per-call cost is bounded
+// (or the provider enforces the cap). A non-finite or negative
+// nextCost is itself a deny (root probe: NaN/Infinity/-5 were
+// accepted).
 export function validateBeforeSubmit(a: HelperAssignment, nextCost: number, nowMs: number): Validation {
   const base = validateAssignment(a, nowMs);
   const denies = [...base.denies];
-  if (Number.isFinite(nextCost) && a.budget.spent + nextCost > a.budget.cap && !denies.includes('BUDGET_EXCEEDED'))
+  if (!Number.isFinite(nextCost) || nextCost < 0) { if (!denies.includes('BUDGET_UNKNOWN')) denies.push('BUDGET_UNKNOWN'); }
+  else if (a.budget.spent + nextCost > a.budget.cap && !denies.includes('BUDGET_EXCEEDED'))
     denies.push('BUDGET_EXCEEDED');
   return { ok: denies.length === 0, denies };
 }
