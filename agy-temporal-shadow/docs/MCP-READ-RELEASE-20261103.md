@@ -80,26 +80,49 @@ concrete action instead of the whole unfinished PR #19.
   lack of a local DB; this is LOCAL proof, NOT a hosted PASS.
 
 ## Deploy configuration (for the consent decision; NOT executed)
-- Repo + SHA: `tuanvu297/creat-pack-engineer` @ the release
-  branch head returned with this package.
-- Facade service (created only at consent): NEW Railway
-  service in the EXISTING project (AGY Core Staging),
+Exact environment names below are read verbatim from the
+release's `tools/agy-mcp-facade/server.mjs` (full config
+reference: that file's header + the facade README in the
+release). The deploy is TWO steps at the SAME release pin:
+
+- STEP 1 — existing runtime, auth-only (required, and NOT
+  "untouched"): redeploy the EXISTING app service
+  `9c9f2634-...` pinned to this release commit. Against its
+  current base `14f06677` the only runtime change is the
+  auth.ts actions restriction. Its predeploy provision-cli
+  simply reruns the hash-tracked EXISTING migrations — this
+  release adds NO new migrations, the existing initialization
+  marker skips re-initialization, and nothing is a provider
+  or table reset. In the same step, add ONE identity to that
+  service's AGY_IDENTITIES_JSON: subject `agy-facade-read`,
+  role operator, actions ["read"], scopes
+  [gl/legacy-workspace/GEMINI_UI_STAGING], with a fresh token.
+- STEP 2 — new standalone facade (created only at consent):
+  NEW Railway service in the EXISTING project (AGY Core
+  Staging), source = this repo @ the release pin,
   rootDirectory `agy-temporal-shadow/tools/agy-mcp-facade`,
   build `npm ci`, start `node server.mjs`, one public HTTPS
-  domain (= AGY_PUBLIC_BASE_URL).
-- Database: the EXISTING Postgres service
-  `f84bdcee-...` — no new database. Apply
+  domain. Environment (exact names):
+    AGY_AUTH_MODE=oauth
+    AGY_PUBLIC_BASE_URL=https://<facade-domain>
+    AGY_UPSTREAM_URL=https://agy-temporal-staging-staging.up.railway.app
+    AGY_UPSTREAM_TOKEN=<the agy-facade-read token from step 1>
+    AGY_FACADE_ALLOWED_SCOPES=gl/legacy-workspace/GEMINI_UI_STAGING
+    AGY_MCP_OPERATOR_TOKEN=<generated at deploy>
+    AGY_OAUTH_SIGNING_SECRET=<generated at deploy>
+    AGY_OAUTH_CLIENTS_JSON=<one manual client, redirect_uris []
+      per the capture flow>
+    AGY_OAUTH_STORE=pg
+    AGY_OAUTH_DATABASE_URL=<connection string for the
+      facade's own DB role on the EXISTING Postgres
+      `f84bdcee-...`>
+  Database: no new database. Apply
   `tools/agy-mcp-facade/migrations/001_oauth_store.sql`
-  (creates schema `agy_oauth` only) and give the facade its
-  OWN DB role with rights only in that schema.
-- Runtime identity (fresh, read-only): ONE new identity in the
-  EXISTING app service's AGY_IDENTITIES_JSON —
-  subject `agy-facade-read`, role operator,
-  actions ["read"], scopes [gl/legacy-workspace/GEMINI_UI_STAGING]
-  — plus its token in the facade env as AGY_GATEWAY_TOKEN with
-  AGY_GATEWAY_SUBJECT=agy-facade-read. The facade's tools stay
-  health + callback lookup; its allowlist is the same single
-  GEMINI_UI_STAGING scope.
+  (creates schema `agy_oauth` and its three tables only) and
+  give the facade its OWN DB role with rights only in that
+  schema. The schema name is the store's BUILT-IN DEFAULT
+  constant `agy_oauth` — this release's server does not take
+  a schema config knob; do not set one.
 - Explicitly NOT in this release/consent: no GL_QUALIFICATION
   window, no callback-driver repoint, no video changes, no
   Manus executor wiring (separate, after host proof + real
@@ -107,13 +130,22 @@ concrete action instead of the whole unfinished PR #19.
   no merge of PR #19.
 
 ## The one owner action this package asks for
-Approve creating the facade service exactly as configured
-above and completing the Gemini custom-app connect (dialog URL
-= https://<facade-domain>/mcp, Advanced OAuth client
-id/secret from deploy-time generation, owner consent on the
-facade's own page, redirect URI registered via the capture
-flow). Verification after deploy: @-mention agy.health in
-Gemini (read-only host proof) + one agy.callback_lookup.
-Rollback: delete the facade service + remove the
-`agy-facade-read` identity; the runtime is untouched
-throughout.
+Approve the two deploy steps above, exactly as configured,
+and completing the Gemini custom-app connect (dialog URL =
+https://<facade-domain>/mcp, Advanced OAuth client id/secret
+from deploy-time generation, owner consent on the facade's
+own page, redirect URI registered via the capture flow).
+This consent covers ONLY these privileges and this hosting,
+funded by the remaining Railway TRIAL credit (fresh UI at
+review time: 6 days or $3.48 left) — no plan upgrade and no
+card purchase is inferred, requested, or required.
+Verification after deploy: @-mention agy.health in Gemini
+(read-only host proof) + one agy.callback_lookup.
+Rollback (no data destruction): redeploy the existing app
+service to its previous deployment (the pre-release
+deployment on base `14f06677`); restore the prior identity
+config, removing ONLY the `agy-facade-read` identity; revoke
+the MCP client and its token families in the `agy_oauth`
+tables (revoked flags — the OAuth evidence is RETAINED);
+stop/remove the new facade service. No blanket DROP, no
+business-data deletion.
