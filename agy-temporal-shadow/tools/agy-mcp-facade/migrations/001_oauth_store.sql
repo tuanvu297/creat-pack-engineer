@@ -1,6 +1,16 @@
 -- AGY MCP facade OAuth store (candidate v0.3) - applied ONLY at
 -- deploy time, by the deploy step, never by application code.
 -- Secrets are stored as sha256 hashes (code_hash / token_hash).
+-- Family registry: the durable revocation tombstone. A family
+-- is born at code issuance; revocation flips revoked=true, and
+-- token inserts are guarded by this row (locked FOR UPDATE in
+-- the insert statement) so no token can be minted into a
+-- revoked family, even concurrently.
+CREATE TABLE IF NOT EXISTS agy_oauth_families (
+  family_id  text PRIMARY KEY,
+  revoked    boolean NOT NULL DEFAULT false,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
 CREATE TABLE IF NOT EXISTS agy_oauth_codes (
   code_hash     text PRIMARY KEY,
   client_id     text NOT NULL,

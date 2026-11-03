@@ -56,7 +56,11 @@ export function createAgyOAuthProvider({ store, clients, operatorSecret, signing
   const byId = new Map();
   for (const c of clients ?? []) {
     if (!c.client_id || !c.client_secret || !c.subject) throw new Error('oauth: every client needs client_id, client_secret and subject');
-    if (!Array.isArray(c.redirect_uris) || !c.redirect_uris.length) throw new Error(`oauth: client ${c.client_id} needs at least one registered redirect URI`);
+    if (!Array.isArray(c.redirect_uris)) throw new Error(`oauth: client ${c.client_id} needs a redirect_uris array (possibly empty)`);
+    // An EMPTY redirect_uris list is legitimate: the client is
+    // INERT (every authorize is denied) until the exact redirect
+    // URI is captured from a real connect attempt and registered
+    // - the supported bootstrap flow in the deploy runbook.
     for (const s of c.scopes ?? []) if (!SUPPORTED_SCOPES.includes(s)) throw new Error(`oauth: client ${c.client_id} requests unsupported scope ${s}`);
     byId.set(c.client_id, c);
   }
@@ -88,7 +92,14 @@ export function createAgyOAuthProvider({ store, clients, operatorSecret, signing
         // discovery REQUIRES a registration_endpoint in the
         // metadata (Google Connected Apps OAuth guide, read
         // 2026-11-03) - the SDK advertises the endpoint only
-        // when this method exists. It is GATED, not open:
+        // when this method exists. SUPPORTED STATE: manual
+        // registration by configuration is the only supported
+        // path; this method REFUSES unless the deployment
+        // explicitly enabled DCR, and even then registrations
+        // are runtime-only (held in this process's map, NOT
+        // persisted - they vanish on restart, and their tokens
+        // then fail client-existence verification). It is
+        // GATED, not open:
         // registration is refused unless the deployment enabled
         // it (dynamicRegistration), every redirect URI is one of
         // Google's documented oauth-redirect hosts (/r/ or /a/
@@ -179,6 +190,7 @@ Scopes requested: <b>${esc(scopes.join(' '))}</b><br>Resource: <b>${esc(params.r
 
     async exchangeAuthorizationCode(client, authorizationCode, _codeVerifier, redirectUri, resource) {
       const rec = await store.consumeCode(sha256hex(authorizationCode));
+      if (rec && await store.isFamilyRevoked(rec.familyId)) throw new InvalidGrantError('authorization family was revoked');
       if (!rec) {
         // Replay detection: a consumed code presented again
         // revokes everything it ever minted.
@@ -199,6 +211,13 @@ Scopes requested: <b>${esc(scopes.join(' '))}</b><br>Resource: <b>${esc(params.r
       const rec = await store.getRefresh(oldHash);
       if (!rec || rec.clientId !== client.client_id || rec.expiresAt <= now() || rec.revoked)
         throw new InvalidGrantError('refresh token unknown, mismatched, revoked or expired');
+      if (await store.isFamilyRevoked(rec.familyId)) throw new InvalidGrantError('token family was revoked');
+      // O1: the client must STILL exist with the SAME binding -
+      // a removed or re-bound client cannot mint new access.
+      const cur = byId.get(rec.clientId);
+      if (!cur) throw new InvalidGrantError('client is no longer registered');
+      if (rec.subject !== cur.subject) throw new InvalidGrantError('client subject binding changed; re-authorize');
+      if (rec.scopes.some((s) => !(cur.scopes ?? []).includes(s))) throw new InvalidGrantError('token scopes exceed the client current ceiling');
       if (rec.rotatedTo) {   // reuse of a rotated token = theft signal
         await store.revokeFamily(rec.familyId);
         throw new InvalidGrantError('refresh token reuse detected; family revoked');
@@ -221,8 +240,14 @@ Scopes requested: <b>${esc(scopes.join(' '))}</b><br>Resource: <b>${esc(params.r
       const granted = scopes?.length ? scopes : rec.scopes;
       if (granted.some((s) => !rec.scopes.includes(s))) throw new InvalidScopeError('scope escalation is not allowed');
       const access = newToken(); const refresh = newToken();
-      const rotated = await store.rotateRefresh(oldHash, { tokenHash: sha256hex(refresh), clientId: rec.clientId,
-        subject: rec.subject, scopes: granted, resource: rec.resource, familyId: rec.familyId, expiresAt: now() + REFRESH_TTL_MS, revoked: false });
+      let rotated;
+      try {
+        rotated = await store.rotateRefresh(oldHash, { tokenHash: sha256hex(refresh), clientId: rec.clientId,
+          subject: rec.subject, scopes: granted, resource: rec.resource, familyId: rec.familyId, expiresAt: now() + REFRESH_TTL_MS, revoked: false });
+      } catch (e) {
+        if (e?.code === 'FAMILY_REVOKED' || e?.message === 'FAMILY_REVOKED') throw new InvalidGrantError('token family was revoked during rotation');
+        throw e;
+      }
       if (!rotated) { await store.revokeFamily(rec.familyId); throw new InvalidGrantError('refresh token rotation race; family revoked'); }
       await store.putAccess({ tokenHash: sha256hex(access), clientId: rec.clientId, subject: rec.subject,
         scopes: granted, resource: rec.resource, familyId: rec.familyId, expiresAt: now() + ACCESS_TTL_MS, revoked: false });
@@ -232,7 +257,18 @@ Scopes requested: <b>${esc(scopes.join(' '))}</b><br>Resource: <b>${esc(params.r
     async verifyAccessToken(token) {
       const rec = await store.getAccess(sha256hex(token));
       if (!rec || rec.revoked || rec.expiresAt <= now()) throw new InvalidTokenError('access token unknown, revoked or expired');
+      if (await store.isFamilyRevoked(rec.familyId)) throw new InvalidTokenError('token family was revoked');
       if (rec.resource !== resourceUrl) throw new InvalidTokenError('access token was minted for another resource (audience)');
+      // O1 (root QA): a token must not outlive its client's
+      // registration. Removing the client from configuration +
+      // restart revokes its tokens HERE - the store is shared
+      // and persistent, the registry is current config. A
+      // narrowed scope ceiling or a changed subject binding
+      // also invalidates outstanding tokens.
+      const cur = byId.get(rec.clientId);
+      if (!cur) throw new InvalidTokenError('client is no longer registered');
+      if (rec.subject !== cur.subject) throw new InvalidTokenError('client subject binding changed');
+      if (rec.scopes.some((s) => !(cur.scopes ?? []).includes(s))) throw new InvalidTokenError('token scopes exceed the client current ceiling');
       return { token, clientId: rec.clientId, scopes: rec.scopes, expiresAt: Math.floor(rec.expiresAt / 1000),
         resource: new URL(rec.resource), extra: { subject: rec.subject } };
     },
@@ -248,10 +284,18 @@ Scopes requested: <b>${esc(scopes.join(' '))}</b><br>Resource: <b>${esc(params.r
 
   async function mintPair(rec) {
     const access = newToken(); const refresh = newToken();
-    await store.putAccess({ tokenHash: sha256hex(access), clientId: rec.clientId, subject: rec.subject,
-      scopes: rec.scopes, resource: rec.resource, familyId: rec.familyId, expiresAt: now() + ACCESS_TTL_MS, revoked: false });
-    await store.putRefresh({ tokenHash: sha256hex(refresh), clientId: rec.clientId, subject: rec.subject,
-      scopes: rec.scopes, resource: rec.resource, familyId: rec.familyId, expiresAt: now() + REFRESH_TTL_MS, revoked: false });
+    try {
+      await store.putAccess({ tokenHash: sha256hex(access), clientId: rec.clientId, subject: rec.subject,
+        scopes: rec.scopes, resource: rec.resource, familyId: rec.familyId, expiresAt: now() + ACCESS_TTL_MS, revoked: false });
+      await store.putRefresh({ tokenHash: sha256hex(refresh), clientId: rec.clientId, subject: rec.subject,
+        scopes: rec.scopes, resource: rec.resource, familyId: rec.familyId, expiresAt: now() + REFRESH_TTL_MS, revoked: false });
+    } catch (e) {
+      // A revocation landed mid-issuance (root QA O2): the
+      // store's tombstone kept the family un-mintable; the
+      // durable answer is a grant error, never a usable pair.
+      if (e?.code === 'FAMILY_REVOKED' || e?.message === 'FAMILY_REVOKED') throw new InvalidGrantError('token family was revoked during issuance');
+      throw e;
+    }
     return { access_token: access, token_type: 'Bearer', expires_in: ACCESS_TTL_MS / 1000, refresh_token: refresh, scope: rec.scopes.join(' ') };
   }
 

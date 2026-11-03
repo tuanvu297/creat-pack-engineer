@@ -84,6 +84,16 @@ export function createFacadeApp(cfg) {
   };
 
   if (cfg.authMode === 'oauth') {
+    // Bootstrap capture: log the client_id + redirect_uri of
+    // every authorize attempt (neither is a secret). When a
+    // connect attempt is DENIED for an unregistered redirect,
+    // this line is how the exact platform redirect URI is
+    // captured and then registered verbatim - see the deploy
+    // runbook's capture flow.
+    app.use('/authorize', (req, _res, next) => {
+      if (req.method === 'GET') console.log(`agy-oauth authorize attempt client_id=${req.query.client_id ?? ''} redirect_uri=${req.query.redirect_uri ?? ''}`);
+      next();
+    });
     const issuerUrl = new URL(cfg.publicBaseUrl);
     const resourceUrl = new URL('/mcp', cfg.publicBaseUrl);
     app.use(mcpAuthRouter({

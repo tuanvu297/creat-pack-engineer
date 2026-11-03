@@ -1,4 +1,4 @@
-# AGY MCP facade — candidate package v0.3 (2026-11-03)
+# AGY MCP facade — candidate package v0.3.1 (2026-11-03)
 
 Status: **candidate code, tested locally, NOT installed, NOT
 connected.** Round-1 of this package was rejected in QA (no inbound
@@ -44,6 +44,25 @@ mcp/oauth, read 2026-11-03):
 - OAuth state is hash-only at rest (oauth-store.mjs);
   `AGY_OAUTH_STORE=pg` at deploy (DDL:
   migrations/001_oauth_store.sql), `memory` is dev/test only.
+- Dependencies are LOCKED (package-lock.json: SDK 1.32.2,
+  express 4.22.3, zod 3.25.76, pg 8.23.1 - the versions the
+  independent QA resolved and tested). Deploy with `npm ci`.
+- Revocation semantics (root QA O1/O2, v0.3.1): every token
+  use re-verifies the CURRENT client registry - removing a
+  client, changing its subject binding, or narrowing its scope
+  ceiling invalidates its outstanding tokens even over the
+  shared persistent store. Family revocation is a durable
+  tombstone (`agy_oauth_families`): token inserts are guarded
+  by the family row lock, so a revocation racing an issuance
+  can never leave a live token behind.
+- Registration state: MANUAL ONLY. The registration endpoint
+  is advertised (Gemini requires its presence) but dynamic
+  registration is refused unless explicitly enabled, and
+  enabled registrations are runtime-only (not persisted).
+  Clients are registered by configuration; a client with an
+  empty `redirect_uris` list is inert until the deploy
+  runbook's capture flow registers the exact platform
+  redirect URI.
 - Tools stay READ-ONLY in this candidate. A connected Gemini
   proves the host route; it is NOT a business helper PASS.
 

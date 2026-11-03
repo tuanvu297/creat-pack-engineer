@@ -61,10 +61,12 @@ if (mode === 'bearer') {
     store = new InMemoryOAuthStore();
   } else if (storeKind === 'pg') {
     let pg;
-    try { pg = await import('pg'); } catch { die("AGY_OAUTH_STORE=pg requires the 'pg' package (deploy-time dependency)"); }
+    try { pg = await import('pg'); } catch { die("AGY_OAUTH_STORE=pg requires the declared 'pg' dependency (install from the lockfile)"); }
     const pool = new pg.Pool({ connectionString: env.AGY_OAUTH_DATABASE_URL ?? env.DATABASE_URL });
     store = createPgOAuthStore((sql, params) => pool.query(sql, params));
   } else die("AGY_OAUTH_STORE must be 'pg' (deploy) or 'memory' (dev/test)");
+  for (const c of clients) if (Array.isArray(c.redirect_uris) && !c.redirect_uris.length)
+    console.warn(`agy-mcp-facade: client ${c.client_id} has NO redirect URIs - it is INERT until the exact redirect is captured and registered (capture flow).`);
   const resourceUrl = new URL('/mcp', publicBaseUrl).toString();
   const dynamicRegistration = env.AGY_OAUTH_DYNAMIC_REGISTRATION === 'on' && env.AGY_OAUTH_DYNAMIC_SUBJECT
     ? { enabled: true, subject: env.AGY_OAUTH_DYNAMIC_SUBJECT } : undefined;

@@ -403,3 +403,26 @@ suites; delegation suites 19/19.
   OAuth flow). Deploy/consent steps: Drive doc (mailbox
   MB-20261103-012). Nothing deployed; no key created; no
   provider called.
+
+## Round 8.1 (2026-11-03): OAuth O1/O2 revocation correctness + locked packaging
+
+Root QA on 5b0b00ad confirmed two revocation defects with
+direct repros; both fixed:
+- O1: tokens outlived their client. verifyAccessToken and
+  exchangeRefreshToken now re-verify the CURRENT registry
+  (client exists, subject binding unchanged, scopes within the
+  client's current ceiling) against the persistent store.
+- O2: mintPair's second write could resurrect a family revoked
+  mid-issuance. Family revocation is now a durable tombstone
+  (agy_oauth_families); token inserts are guarded by the family
+  row lock (PG CTE ... FOR UPDATE) or the synchronous in-memory
+  check, and revocation during issuance surfaces as a grant
+  error. Proven by an in-memory gated race test and a REAL
+  local-Postgres concurrent test (oauth-store.pg.test.mjs).
+- Packaging: pg is a declared dependency; package-lock.json
+  pins SDK 1.32.2 / express 4.22.3 / zod 3.25.76 / pg 8.23.1
+  (the versions root's isolated QA resolved); facade suite
+  9/9 on the locked install. Deploy prep de-circularised
+  (authorize capture flow for the exact redirect), scoped to
+  GEMINI_UI_STAGING (GL_QUALIFICATION not reopened), DCR state
+  stated MANUAL ONLY.
