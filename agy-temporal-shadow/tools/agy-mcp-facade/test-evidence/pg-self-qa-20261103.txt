@@ -1,0 +1,17 @@
+# RAW PG SELF-QA EVIDENCE - RELEASE oauth-store.pg.test.mjs (dedicated schema agy_oauth)
+# date: 2026-11-03T16:18:21+00:00
+# node: v24.22.1
+# facade package: agy-mcp-facade@0.3.2 (isolated MCP READ release, base 14f06677 + auth restriction + facade)
+# command: AGY_TEST_DATABASE_URL=postgres://postgres@127.0.0.1:55432/agy_test node --test test/oauth-store.pg.test.mjs
+# db: PostgreSQL 18.6 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0, 64-bit
+# DDL file sha256: 32c79a6f71da07a59fd1da7e68323a0c9028136cf30c6862652c13522f0b156d
+# ---- test stdout ----
+✔ pg oauth store: tombstone wins the issuance race; codes are single-use (91.399665ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 232.126132
