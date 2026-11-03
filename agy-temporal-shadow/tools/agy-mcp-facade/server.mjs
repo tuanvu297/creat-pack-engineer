@@ -1,96 +1,126 @@
-// AGY MCP facade — CANDIDATE, NOT INSTALLED (2026-11-02).
+// AGY MCP facade — CANDIDATE, NOT INSTALLED (2026-11-03, v0.2).
 //
-// A minimal Model Context Protocol server (streamable HTTP,
-// JSON-RPC) that exposes the AGY runtime's EXISTING read/reconcile
-// endpoints as MCP tools, so a host (Muse, ChatGPT, another agent)
-// can query mission state without the Google Doc mailbox bridge.
-// It adds no new authority: every tool is read-only or a dry-run
-// report, it holds its own operator identity token (env), and it
-// refuses to start without one. Dispatch/submit is intentionally
-// NOT a tool here — submissions require an owner-granted window and
-// go through the qualification grant protocol, not an MCP call.
+// A Model Context Protocol server (official SDK, streamable HTTP)
+// exposing ONLY the AGY runtime read routes whose contracts are
+// proven in the runtime source (src/temporal/http-server.ts):
 //
-// Run (after owner consent — see README.md):
-//   AGY_SURFACE_URL=https://<runtime-host> \
-//   AGY_OPERATOR_TOKEN=<own operator identity token> \
-//   PORT=8787 node tools/agy-mcp-facade/server.mjs
+//   GET /health
+//     -> 200 {status:'READY', dependencies:{...}, mode, production}
+//        or 503 when a dependency is down.
+//   GET /v1/callbacks/tenants/:t/workspaces/:w/projects/:p/receive/:callbackId
+//     -> the callback receiver's lookup: {found:true, callback_id,
+//        task_id, attempt, worker_id, target, content_digest,
+//        received_at, effect_count} or {found:false} (HTTP 404).
+//
+// Tools whose routes are NOT proven under an operator identity are
+// omitted by design: there is no mission-result read here (worker
+// 'readback' belongs to the worker's own identity; this facade
+// never impersonates a worker), and no reconcile/dispatch tool
+// (submissions require an owner-granted window, not an MCP call).
+//
+// Security model — two SEPARATE credentials, fail closed:
+// - AGY_FACADE_INBOUND_TOKEN: the host's credential TO this facade.
+//   Every /mcp request must carry it as a Bearer token; missing or
+//   wrong -> 401, nothing is executed, upstream is never touched.
+// - AGY_UPSTREAM_TOKEN: this facade's own operator identity token
+//   toward the runtime, used only after inbound auth + scope checks.
+// Scope: AGY_FACADE_ALLOWED_SCOPES is an exact allowlist of
+// tenant/workspace/project triples. A lookup naming any other scope
+// is rejected before the upstream call. Request bodies are bounded
+// at 64 KiB (mirroring the runtime's own limit). The facade refuses
+// to start when any required variable is missing.
 import { createServer } from 'node:http';
+import { timingSafeEqual } from 'node:crypto';
+import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
+import { z } from 'zod';
 
-const SURFACE = process.env.AGY_SURFACE_URL ?? '';
-const TOKEN = process.env.AGY_OPERATOR_TOKEN ?? '';
+const INBOUND = process.env.AGY_FACADE_INBOUND_TOKEN ?? '';
+const UPSTREAM = process.env.AGY_UPSTREAM_URL ?? '';
+const UPSTREAM_TOKEN = process.env.AGY_UPSTREAM_TOKEN ?? '';
+const ALLOWED = (process.env.AGY_FACADE_ALLOWED_SCOPES ?? '')
+  .split(',').map((s) => s.trim()).filter(Boolean);
 const PORT = Number(process.env.PORT ?? 8787);
-if (!SURFACE || !TOKEN) {
-  console.error('agy-mcp-facade: AGY_SURFACE_URL and AGY_OPERATOR_TOKEN are required; refusing to start.');
+const MAX_BODY = 65536;
+
+if (!INBOUND || !UPSTREAM || !UPSTREAM_TOKEN || !ALLOWED.length) {
+  console.error('agy-mcp-facade: AGY_FACADE_INBOUND_TOKEN, AGY_UPSTREAM_URL, AGY_UPSTREAM_TOKEN and a non-empty AGY_FACADE_ALLOWED_SCOPES are all required; refusing to start.');
   process.exit(2);
 }
 
-async function surfaceGet(path) {
-  const res = await fetch(`${SURFACE}${path}`, { headers: { authorization: `Bearer ${TOKEN}` } });
-  if (!res.ok) throw new Error(`surface ${path} -> HTTP ${res.status}`);
-  return res.json();
+const bearerOk = (header) => {
+  if (typeof header !== 'string' || !header.startsWith('Bearer ')) return false;
+  const got = Buffer.from(header.slice(7));
+  const want = Buffer.from(INBOUND);
+  return got.length === want.length && timingSafeEqual(got, want);
+};
+
+const SCOPE_PART = /^[A-Za-z0-9_-]+$/;
+const UUID = /^[a-f0-9-]{36}$/;
+
+async function upstreamJson(path) {
+  const res = await fetch(`${UPSTREAM}${path}`, { headers: { authorization: `Bearer ${UPSTREAM_TOKEN}` } });
+  const text = await res.text();
+  let body;
+  try { body = JSON.parse(text); } catch { throw new Error(`upstream ${path} returned non-JSON (HTTP ${res.status})`); }
+  return { status: res.status, body };
 }
 
-const TOOLS = [
-  {
-    name: 'agy.health',
-    description: 'Runtime health of the AGY staging service (READY/production flags). Read-only.',
-    inputSchema: { type: 'object', properties: {} },
-    run: async () => surfaceGet('/health'),
-  },
-  {
-    name: 'agy.callback_lookup',
-    description: 'Look up one worker callback by id: delivery status, effect_count, receipt digest. Read-only.',
-    inputSchema: { type: 'object', properties: { callback_id: { type: 'string' } }, required: ['callback_id'] },
-    run: async (args) => surfaceGet(`/worker/callbacks/${encodeURIComponent(args.callback_id)}`),
-  },
-  {
-    name: 'agy.callback_reconcile',
-    description: 'Dry-run reconciliation report for a task: compares the durable outbox state against receipts and lists any PENDING/unknown callbacks. Changes nothing.',
-    inputSchema: { type: 'object', properties: { task_id: { type: 'string' } }, required: ['task_id'] },
-    run: async (args) => surfaceGet(`/worker/callbacks?task_id=${encodeURIComponent(args.task_id)}&reconcile=dry-run`),
-  },
-  {
-    name: 'agy.mission_result',
-    description: 'Where a mission result lives. Until a grant-scoped read endpoint is provisioned, results are delivered through the authorized mailbox bridge; this tool returns that pointer instead of inventing a read.',
-    inputSchema: { type: 'object', properties: { mission_id: { type: 'string' } }, required: ['mission_id'] },
-    run: async (args) => ({
-      mission_id: args.mission_id,
-      result_destination: 'google-doc-mailbox:1JrDh8ChZdPb137ety4xE3_TwRHTFYOgQPukmxKyeuDE (section 4 RESULT blocks)',
-      note: 'No grant-scoped HTTP read endpoint exists yet; the mailbox is the authorized bridge. Do not treat this pointer as the result itself.',
-    }),
-  },
-];
-
-async function handleRpc(msg) {
-  if (msg.method === 'initialize') {
-    return { protocolVersion: '2025-03-26', capabilities: { tools: {} },
-      serverInfo: { name: 'agy-mcp-facade', version: '0.1.0-candidate' } };
-  }
-  if (msg.method === 'tools/list') {
-    return { tools: TOOLS.map(({ name, description, inputSchema }) => ({ name, description, inputSchema })) };
-  }
-  if (msg.method === 'tools/call') {
-    const tool = TOOLS.find((t) => t.name === msg.params?.name);
-    if (!tool) throw new Error(`unknown tool: ${msg.params?.name}`);
-    const out = await tool.run(msg.params?.arguments ?? {});
-    return { content: [{ type: 'text', text: JSON.stringify(out, null, 2) }] };
-  }
-  if (msg.method === 'ping') return {};
-  throw new Error(`unsupported method: ${msg.method}`);
+function buildServer() {
+  const server = new McpServer({ name: 'agy-mcp-facade', version: '0.2.0' });
+  server.tool('agy.health',
+    'Runtime health of the AGY staging service, proxied verbatim from the proven GET /health route.',
+    {},
+    async () => {
+      const { body } = await upstreamJson('/health');
+      return { content: [{ type: 'text', text: JSON.stringify(body) }] };
+    });
+  server.tool('agy.callback_lookup',
+    'Look up one worker callback receipt by id within an allowlisted scope (proven receiver lookup route). Returns the full receipt identity incl. effect_count, or {found:false}.',
+    { tenant_id: z.string(), workspace_id: z.string(), project_id: z.string(), callback_id: z.string() },
+    async ({ tenant_id, workspace_id, project_id, callback_id }) => {
+      if (!SCOPE_PART.test(tenant_id) || !SCOPE_PART.test(workspace_id) || !SCOPE_PART.test(project_id)) {
+        throw new Error('SCOPE_PART_INVALID');
+      }
+      const scope = `${tenant_id}/${workspace_id}/${project_id}`;
+      if (!ALLOWED.includes(scope)) throw new Error(`SCOPE_NOT_ALLOWED: ${scope}`);
+      if (!UUID.test(callback_id)) throw new Error('CALLBACK_ID_INVALID');
+      const { status, body } = await upstreamJson(
+        `/v1/callbacks/tenants/${tenant_id}/workspaces/${workspace_id}/projects/${project_id}/receive/${callback_id}`);
+      // An upstream auth failure is never data: surface it as a
+      // tool error. The route's own 404 carries {found:false},
+      // which IS data and passes through untouched.
+      if (status === 401 || status === 403) throw new Error(`UPSTREAM_AUTH_FAILED (HTTP ${status})`);
+      if (status !== 200 && status !== 404) throw new Error(`UPSTREAM_ERROR (HTTP ${status})`);
+      return { content: [{ type: 'text', text: JSON.stringify(body) }] };
+    });
+  return server;
 }
 
 createServer(async (req, res) => {
-  if (req.method !== 'POST' || req.url !== '/mcp') { res.writeHead(404).end(); return; }
-  let body = '';
-  for await (const chunk of req) body += chunk;
-  let msg;
-  try { msg = JSON.parse(body); } catch { res.writeHead(400).end(); return; }
-  try {
-    const result = await handleRpc(msg);
-    res.writeHead(200, { 'content-type': 'application/json' })
-      .end(JSON.stringify({ jsonrpc: '2.0', id: msg.id ?? null, result }));
-  } catch (e) {
-    res.writeHead(200, { 'content-type': 'application/json' })
-      .end(JSON.stringify({ jsonrpc: '2.0', id: msg.id ?? null, error: { code: -32000, message: String(e?.message ?? e) } }));
+  if (req.url !== '/mcp' || (req.method !== 'POST' && req.method !== 'GET' && req.method !== 'DELETE')) {
+    res.writeHead(404, { 'content-type': 'application/json' }).end(JSON.stringify({ error: 'NOT_FOUND' }));
+    return;
   }
-}).listen(PORT, () => console.log(`agy-mcp-facade listening on :${PORT} (candidate, read-only tools)`));
+  if (!bearerOk(req.headers.authorization)) {
+    res.writeHead(401, { 'content-type': 'application/json' }).end(JSON.stringify({ error: 'UNAUTHORIZED' }));
+    return;
+  }
+  const chunks = [];
+  let size = 0;
+  for await (const chunk of req) {
+    size += chunk.length;
+    if (size > MAX_BODY) {
+      res.writeHead(413, { 'content-type': 'application/json' }).end(JSON.stringify({ error: 'REQUEST_TOO_LARGE' }));
+      return;
+    }
+    chunks.push(Buffer.from(chunk));
+  }
+  let body;
+  try { body = chunks.length ? JSON.parse(Buffer.concat(chunks).toString('utf8')) : undefined; }
+  catch { res.writeHead(400, { 'content-type': 'application/json' }).end(JSON.stringify({ error: 'INVALID_JSON' })); return; }
+  const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined });
+  const server = buildServer();
+  await server.connect(transport);
+  await transport.handleRequest(req, res, body);
+}).listen(PORT, () => console.log(`agy-mcp-facade listening on :${PORT} (candidate; inbound-authenticated; scopes: ${ALLOWED.join(' ')})`));

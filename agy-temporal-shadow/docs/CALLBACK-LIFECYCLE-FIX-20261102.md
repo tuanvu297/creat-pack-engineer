@@ -176,6 +176,45 @@ All pre-existing PG integration harnesses now apply migration 013
 alongside 012 (their fixed migration lists are part of this
 candidate).
 
+## QA round 3 (2026-11-03) — routing v2 and facade v0.2
+
+Routing: independent execution of the v1 module reproduced four
+defects, all fixed in routing-decision.ts v2
+(ROUTING_DECISION_VERSION = 2) with failing-first regressions in
+test/routing-decision-round3.test.ts (8/8 failed on v1, all pass
+on v2; 36/36 across the routing + callback unit suites):
+(1) planWorkBreakdown now carries a reservation ledger across the
+plan — execution, model caps, and the reviewer pool are reserved
+per decision, so a shared account is never double-spent;
+(2) an unknown cost is never a funded ASSIGN — it requires the
+task's bounded calibration budget (TEACH_THEN_ASSIGN) or waits;
+(3) reviewer capacity is verified before assignment — a missing
+reviewer snapshot is a REPAIR, an UNKNOWN/stale/insufficient one a
+RESOURCE_WAIT, including the reviewer's own model cap;
+(4) the metric is defined once: meanCreditsPerAccepted already
+includes rework and is never divided by firstPassRate (a quality
+gate) again. Inputs are validated (finite, nonnegative, rates in
+[0,1]) and snapshots must be fresh. The routing unit is now
+(provider, account, observed model/mode, class): model-level
+task eligibility and tool support, model-specific caps alongside
+the shared account pool, unknown/stale mode availability as
+calibration-only, native automatic modes as ordinary observed
+modes, and quotaKind (api_credits vs subscription) carried on
+every decision and never conflated.
+
+Facade: v0.1 was rejected (no inbound authentication; assumed
+endpoints). v0.2 (tools/agy-mcp-facade) is built on the official
+MCP SDK with a separate inbound host token (fail-closed 401,
+constant-time compare), its own upstream operator identity, an
+exact scope allowlist enforced before any upstream call, and a
+64 KiB body bound. It exposes ONLY the two routes proven in
+src/temporal/http-server.ts — GET /health and the callback
+receiver lookup — and omits mission-result/reconcile tools whose
+contracts are not proven under an operator identity. Real HTTP
+tests (SDK client + negative cases, stub upstream implementing
+the proven contracts): 3/3 pass. The README carries the concrete
+install config for owner consent; still NOT installed.
+
 ## Routing decision path (D3/D4 runnable candidate)
 
 src/platform/routing-decision.ts implements the work-breakdown /
