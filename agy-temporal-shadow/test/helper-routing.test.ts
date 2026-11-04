@@ -1,1 +1,56 @@
-Ly8gUHVyZSByb3V0aW5nIHRlc3RzIChoZWxwZXItcm91dGluZy50cyk6IGNhcGFiaWxpdHkvcXVhbGl0eQovLyBnYXRlIGZpcnN0LCBidWRnZXQgY29tcGF0aWJpbGl0eSBzZWNvbmQsIG1lYXN1cmVkIGZpdCB0aGlyZC4KLy8gTm8gSS9PIGFueXdoZXJlIGluIHRoZSBtb2R1bGUgdW5kZXIgdGVzdC4KaW1wb3J0IHRlc3QgZnJvbSAibm9kZTp0ZXN0IjsKaW1wb3J0IGFzc2VydCBmcm9tICJub2RlOmFzc2VydC9zdHJpY3QiOwppbXBvcnQgeyByb3V0ZUhlbHBlciwgdHlwZSBIZWxwZXJDYW5kaWRhdGUgfSBmcm9tICIuLi9zcmMvcGxhdGZvcm0vaGVscGVyLXJvdXRpbmcuanMiOwoKY29uc3QgbWFudXM6IEhlbHBlckNhbmRpZGF0ZSA9IHsgaGVscGVySWQ6ICdtYW51cycsIGJvdW5kOiB0cnVlLCBzdXJmYWNlczogWydhcGknLCAnYnJvd3Nlci1icmlkZ2UnXSwKICBjYXBhYmlsaXRpZXM6IFsndGV4dCcsICd3ZWItcmVzZWFyY2gnLCAnZXh0cmFjdGlvbiddLCBmaXRTY29yZTogMC44LAogIGJhbGFuY2U6IHsga25vd246IHRydWUsIHVuaXRzOiA1MDAgfSwgZW5mb3JjZW1lbnQ6ICdwcm9tcHRfb25seScsIGFjdHVhbENvc3RCb3VuZGVkOiBmYWxzZSwgZXhwZWN0ZWRDb3N0OiAxNSB9Owpjb25zdCBncm9rOiBIZWxwZXJDYW5kaWRhdGUgPSB7IGhlbHBlcklkOiAnZ3JvaycsIGJvdW5kOiB0cnVlLCBzdXJmYWNlczogWydhcGknXSwKICBjYXBhYmlsaXRpZXM6IFsndGV4dCcsICdyZWFzb25pbmcnXSwgZml0U2NvcmU6IDAuNiwKICBiYWxhbmNlOiB7IGtub3duOiB0cnVlLCB1bml0czogMyB9LCBlbmZvcmNlbWVudDogJ3J1bnRpbWUnLCBhY3R1YWxDb3N0Qm91bmRlZDogdHJ1ZSwgZXhwZWN0ZWRDb3N0OiAwLjAxIH07CmNvbnN0IHNvZnQgPSB7IHJlcXVpcmVkQ2FwYWJpbGl0aWVzOiBbJ3RleHQnXSwgc3VyZmFjZUtpbmQ6ICdhcGknLCBidWRnZXQ6IHsgY2FwOiAxMDAsIHNwZW50OiAwLCBoYXJkOiBmYWxzZSB9IH07Cgp0ZXN0KCdyb3V0aW5nOiBjYXBhYmlsaXR5IGdhdGUgYmVhdHMgZml0IC0gYSBoZWxwZXIgbWlzc2luZyB0aGUgY2FwYWJpbGl0eSBuZXZlciB3aW5zJywgKCkgPT4gewogIGNvbnN0IGQ6IGFueSA9IHJvdXRlSGVscGVyKHsgLi4uc29mdCwgcmVxdWlyZWRDYXBhYmlsaXRpZXM6IFsnd2ViLXJlc2VhcmNoJ10gfSwgW2dyb2ssIG1hbnVzXSk7CiAgYXNzZXJ0LmVxdWFsKGQuaGVscGVySWQsICdtYW51cycpOwogIGNvbnN0IG5vbmU6IGFueSA9IHJvdXRlSGVscGVyKHsgLi4uc29mdCwgcmVxdWlyZWRDYXBhYmlsaXRpZXM6IFsndmlkZW8nXSB9LCBbZ3JvaywgbWFudXNdKTsKICBhc3NlcnQub2soQXJyYXkuaXNBcnJheShub25lLmRlbmllZCkgJiYgbm9uZS5kZW5pZWQubGVuZ3RoID09PSAyLCAnYm90aCBkZW5pZWQgd2l0aCByZWFzb25zJyk7CiAgYXNzZXJ0Lm9rKG5vbmUuZGVuaWVkLmV2ZXJ5KCh4OiBhbnkpID0+IHgucmVhc29ucy5zb21lKChyOiBzdHJpbmcpID0+IHIuc3RhcnRzV2l0aCgnQ0FQQUJJTElUWV9NSVNTSU5HJykpKSk7Cn0pOwoKdGVzdCgncm91dGluZzogaGlnaGVzdCBtZWFzdXJlZCBmaXQgd2lucyBhbW9uZyBlbGlnaWJsZTsgdW5ib3VuZCBpcyBvdXQnLCAoKSA9PiB7CiAgY29uc3QgZDogYW55ID0gcm91dGVIZWxwZXIoc29mdCwgW3sgLi4ubWFudXMsIGJvdW5kOiBmYWxzZSB9LCBncm9rXSk7CiAgYXNzZXJ0LmVxdWFsKGQuaGVscGVySWQsICdncm9rJyk7CiAgY29uc3QgZDI6IGFueSA9IHJvdXRlSGVscGVyKHNvZnQsIFtncm9rLCBtYW51c10pOwogIGFzc2VydC5lcXVhbChkMi5oZWxwZXJJZCwgJ21hbnVzJywgJ2ZpdCAwLjggYmVhdHMgMC42Jyk7CiAgYXNzZXJ0LmVxdWFsKGQyLmZpdE1lYXN1cmVkLCB0cnVlKTsKfSk7Cgp0ZXN0KCdyb3V0aW5nOiBoYXJkIGJ1ZGdldCBkZW5pZXMgcHJvbXB0X29ubHkvdW5ib3VuZGVkIGFuZCB1bmtub3duIGJhbGFuY2U7IGJvdW5kZWQra25vd24gcGFzc2VzJywgKCkgPT4gewogIGNvbnN0IGhhcmQgPSB7IC4uLnNvZnQsIGJ1ZGdldDogeyBjYXA6IDEwMCwgc3BlbnQ6IDAsIGhhcmQ6IHRydWUgfSB9OwogIGNvbnN0IGQ6IGFueSA9IHJvdXRlSGVscGVyKGhhcmQsIFttYW51cywgZ3Jva10pOwogIGFzc2VydC5lcXVhbChkLmhlbHBlcklkLCAnZ3JvaycsICdtYW51cyBwcm9tcHRfb25seSt1bmJvdW5kZWQgaXMgb3V0IHVuZGVyIGEgaGFyZCBjYXAnKTsKICBjb25zdCB1bmtub3duID0geyAuLi5ncm9rLCBiYWxhbmNlOiB7IGtub3duOiBmYWxzZSB9IH07CiAgY29uc3Qgbm9uZTogYW55ID0gcm91dGVIZWxwZXIoaGFyZCwgW21hbnVzLCB1bmtub3duXSk7CiAgYXNzZXJ0Lm9rKG5vbmUuZGVuaWVkPy5zb21lKCh4OiBhbnkpID0+IHguaGVscGVySWQgPT09ICdncm9rJyAmJiB4LnJlYXNvbnMuaW5jbHVkZXMoJ0JBTEFOQ0VfVU5LTk9XTl9IQVJEX0JVREdFVCcpKSwKICAgICd1bmtub3duIGJhbGFuY2UgY2Fubm90IGZ1bmQgYSBoYXJkLWNhcHBlZCBhdHRlbXB0Jyk7Cn0pOwoKdGVzdCgncm91dGluZzoga25vd24gYmFsYW5jZSBtdXN0IGNvdmVyIHRoZSBleHBlY3RlZCBjb3N0JywgKCkgPT4gewogIGNvbnN0IHBvb3IgPSB7IC4uLm1hbnVzLCBiYWxhbmNlOiB7IGtub3duOiB0cnVlLCB1bml0czogNSB9LCBleHBlY3RlZENvc3Q6IDE1IH07CiAgY29uc3Qgbm9uZTogYW55ID0gcm91dGVIZWxwZXIoc29mdCwgW3Bvb3JdKTsKICBhc3NlcnQub2sobm9uZS5kZW5pZWQ/LlswXS5yZWFzb25zLmluY2x1ZGVzKCdCQUxBTkNFX0lOU1VGRklDSUVOVCcpKTsKICBjb25zdCBkOiBhbnkgPSByb3V0ZUhlbHBlcih7IC4uLnNvZnQsIGJ1ZGdldDogeyBjYXA6IDEwLCBzcGVudDogMCwgaGFyZDogZmFsc2UgfSB9LCBbbWFudXNdKTsKICBhc3NlcnQub2soZC5kZW5pZWQ/LlswXS5yZWFzb25zLmluY2x1ZGVzKCdCQUxBTkNFX0lOU1VGRklDSUVOVCcpLCAnYXNzaWdubWVudCBjYXAgcm9vbSBhbHNvIGJvdW5kcywgbm90IGp1c3QgYmFsYW5jZScpOwp9KTsKCnRlc3QoJ3JvdXRpbmc6IHN1cmZhY2UgdGhlIGFzc2lnbm1lbnQgY2Fubm90IHBpbiBpcyBpbmVsaWdpYmxlOyB0aWVzIGJyZWFrIG9uIGNvc3QgdGhlbiBpZCcsICgpID0+IHsKICBjb25zdCBkOiBhbnkgPSByb3V0ZUhlbHBlcih7IC4uLnNvZnQsIHN1cmZhY2VLaW5kOiAnYnJvd3Nlci1icmlkZ2UnIH0sIFtncm9rLCBtYW51c10pOwogIGFzc2VydC5lcXVhbChkLmhlbHBlcklkLCAnbWFudXMnLCAnZ3JvayBvZmZlcnMgbm8gYnJvd3Nlci1icmlkZ2Ugc3VyZmFjZScpOwogIGNvbnN0IHRpZSA9IFt7IC4uLmdyb2ssIGZpdFNjb3JlOiAwLjUsIGV4cGVjdGVkQ29zdDogMiB9LCB7IC4uLm1hbnVzLCBmaXRTY29yZTogMC41LCBleHBlY3RlZENvc3Q6IDEsIGJhbGFuY2U6IHsga25vd246IHRydWUsIHVuaXRzOiA1MDAgfSB9XTsKICBjb25zdCBkMjogYW55ID0gcm91dGVIZWxwZXIoc29mdCwgdGllIGFzIGFueSk7CiAgYXNzZXJ0LmVxdWFsKGQyLmhlbHBlcklkLCAnbWFudXMnLCAnZXF1YWwgZml0IC0+IGxvd2VyIGV4cGVjdGVkIGNvc3Qgd2lucycpOwp9KTsK
+// Pure routing tests (helper-routing.ts): capability/quality
+// gate first, budget compatibility second, measured fit third.
+// No I/O anywhere in the module under test.
+import test from "node:test";
+import assert from "node:assert/strict";
+import { routeHelper, type HelperCandidate } from "../src/platform/helper-routing.js";
+
+const manus: HelperCandidate = { helperId: 'manus', bound: true, surfaces: ['api', 'browser-bridge'],
+  capabilities: ['text', 'web-research', 'extraction'], fitScore: 0.8,
+  balance: { known: true, units: 500 }, enforcement: 'prompt_only', actualCostBounded: false, expectedCost: 15 };
+const grok: HelperCandidate = { helperId: 'grok', bound: true, surfaces: ['api'],
+  capabilities: ['text', 'reasoning'], fitScore: 0.6,
+  balance: { known: true, units: 3 }, enforcement: 'runtime', actualCostBounded: true, expectedCost: 0.01 };
+const soft = { requiredCapabilities: ['text'], surfaceKind: 'api', budget: { cap: 100, spent: 0, hard: false } };
+
+test('routing: capability gate beats fit - a helper missing the capability never wins', () => {
+  const d: any = routeHelper({ ...soft, requiredCapabilities: ['web-research'] }, [grok, manus]);
+  assert.equal(d.helperId, 'manus');
+  const none: any = routeHelper({ ...soft, requiredCapabilities: ['video'] }, [grok, manus]);
+  assert.ok(Array.isArray(none.denied) && none.denied.length === 2, 'both denied with reasons');
+  assert.ok(none.denied.every((x: any) => x.reasons.some((r: string) => r.startsWith('CAPABILITY_MISSING'))));
+});
+
+test('routing: highest measured fit wins among eligible; unbound is out', () => {
+  const d: any = routeHelper(soft, [{ ...manus, bound: false }, grok]);
+  assert.equal(d.helperId, 'grok');
+  const d2: any = routeHelper(soft, [grok, manus]);
+  assert.equal(d2.helperId, 'manus', 'fit 0.8 beats 0.6');
+  assert.equal(d2.fitMeasured, true);
+});
+
+test('routing: hard budget denies prompt_only/unbounded and unknown balance; bounded+known passes', () => {
+  const hard = { ...soft, budget: { cap: 100, spent: 0, hard: true } };
+  const d: any = routeHelper(hard, [manus, grok]);
+  assert.equal(d.helperId, 'grok', 'manus prompt_only+unbounded is out under a hard cap');
+  const unknown = { ...grok, balance: { known: false } };
+  const none: any = routeHelper(hard, [manus, unknown]);
+  assert.ok(none.denied?.some((x: any) => x.helperId === 'grok' && x.reasons.includes('BALANCE_UNKNOWN_HARD_BUDGET')),
+    'unknown balance cannot fund a hard-capped attempt');
+});
+
+test('routing: known balance must cover the expected cost', () => {
+  const poor = { ...manus, balance: { known: true, units: 5 }, expectedCost: 15 };
+  const none: any = routeHelper(soft, [poor]);
+  assert.ok(none.denied?.[0].reasons.includes('BALANCE_INSUFFICIENT'));
+  const d: any = routeHelper({ ...soft, budget: { cap: 10, spent: 0, hard: false } }, [manus]);
+  assert.ok(d.denied?.[0].reasons.includes('BALANCE_INSUFFICIENT'), 'assignment cap room also bounds, not just balance');
+});
+
+test('routing: surface the assignment cannot pin is ineligible; ties break on cost then id', () => {
+  const d: any = routeHelper({ ...soft, surfaceKind: 'browser-bridge' }, [grok, manus]);
+  assert.equal(d.helperId, 'manus', 'grok offers no browser-bridge surface');
+  const tie = [{ ...grok, fitScore: 0.5, expectedCost: 2 }, { ...manus, fitScore: 0.5, expectedCost: 1, balance: { known: true, units: 500 } }];
+  const d2: any = routeHelper(soft, tie as any);
+  assert.equal(d2.helperId, 'manus', 'equal fit -> lower expected cost wins');
+});
