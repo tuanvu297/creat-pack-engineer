@@ -1,1 +1,65 @@
-Ly8gSGVscGVyIGRlbGVnYXRpb24gY29udHJhY3QgcmVncmVzc2lvbnMgKEQtMDU3LCAyMDI2LTExLTAzKToKLy8gZXZlcnkgZGVueSB0aGUgZGlyZWN0aXZlIG5hbWVzLCBwbHVzIHRoZSBoYXBweSBwYXRoLCB0aGUKLy8gcnVudGltZSBidWRnZXQgZmVuY2UsIGFuZCBjaGlsZC1rZXkgaWRlbXBvdGVuY3kuCmltcG9ydCB0ZXN0IGZyb20gJ25vZGU6dGVzdCc7CmltcG9ydCBhc3NlcnQgZnJvbSAnbm9kZTphc3NlcnQvc3RyaWN0JzsKaW1wb3J0IHsgdmFsaWRhdGVBc3NpZ25tZW50LCB2YWxpZGF0ZUJlZm9yZVN1Ym1pdCwgY2hpbGRLZXksIHJlc3VsdE1hdGNoZXNBc3NpZ25tZW50LAogIHVuYm91bmRBZGFwdGVyLCB0eXBlIEhlbHBlckFzc2lnbm1lbnQgfSBmcm9tICcuLi9zcmMvcGxhdGZvcm0vaGVscGVyLWRlbGVnYXRpb24uanMnOwoKY29uc3QgTk9XID0gRGF0ZS5wYXJzZSgnMjAyNi0xMS0wM1QwNTowMDowMFonKTsKY29uc3Qgb2s6IEhlbHBlckFzc2lnbm1lbnQgPSB7IHBhcmVudFdvcmtlcklkOiAnR0VNSU5JLVNFTy1XT1JLRVInLCBwYXJlbnRUYXNrSWQ6ICc1OWE4ZTAyNS01Nzc5LTRkYzUtOGYyNS00ZDA3Yzk0MTQ3MWMnLAogIHBhcmVudEF0dGVtcHQ6IDEsIHN1YnRhc2tLZXk6ICdleHRyYWN0LXNvdXJjZXMnLCBoZWxwZXJJZDogJ2dyb2snLAogIHNjb3BlOiB7IHRlbmFudElkOiAnZ2wnLCB3b3Jrc3BhY2VJZDogJ2xlZ2FjeS13b3Jrc3BhY2UnLCBwcm9qZWN0SWQ6ICdHRU1JTklfVUlfU1RBR0lORycgfSwKICBzb3VyY2VBbGxvd2xpc3Q6IFsnaHR0cHM6Ly9kZXZlbG9wZXJzLmZhY2Vib29rLmNvbSddLCB0b29sQWxsb3dsaXN0OiBbJ2Jyb3dzZXIucmVhZCddLAogIGJ1ZGdldDogeyB1bml0OiAncHJvdmlkZXJfY3JlZGl0cycsIGNhcDogMTAsIHNwZW50OiAwLCBlbmZvcmNlbWVudDogJ3J1bnRpbWUnLCBoYXJkOiB0cnVlIH0sIGFjdHVhbENvc3RCb3VuZGVkOiB0cnVlLAogIGV4cGlyZXNBdE1zOiBOT1cgKyA2MDBfMDAwLCByZXBseVRhcmdldDogJ0NIQVRHUFRfQVNTSVNUQU5UX0NPTlRST0xfUExBTkUnLAogIGVxdWlwbWVudDogeyBwaW5uZWRTb3VyY2U6IHsgcmVmOiAnZG9jOmZpeHR1cmUtaW5wdXQnLCBkaWdlc3Q6ICdhJy5yZXBlYXQoNjQpIH0sCiAgICBzdXJmYWNlOiB7IGtpbmQ6ICdhcGknLCBtb2RlbDogJ2ZpeHR1cmUtbW9kZWwnLCBhdXRoQmluZGluZzogJ2ZpeHR1cmU6YmluZGluZycgfSwKICAgIHNraWxsUmVmOiAnc2tpbGw6Zml4dHVyZScsIGNyaXRlcmlhOiBbJ291dHB1dCBhZGRyZXNzZXMgdGhlIHBpbm5lZCBzb3VyY2UnXSwgcmV3b3JrOiB7IG1heEF0dGVtcHRzOiAxIH0gfSB9OwoKdGVzdCgnYSBjb21wbGV0ZSBib3VuZGVkIGFzc2lnbm1lbnQgdmFsaWRhdGVzJywgKCkgPT4gewogIGFzc2VydC5kZWVwRXF1YWwodmFsaWRhdGVBc3NpZ25tZW50KG9rLCBOT1cpLCB7IG9rOiB0cnVlLCBkZW5pZXM6IFtdIH0pOwp9KTsKdGVzdCgnd3Jvbmcgb3IgbWlzc2luZyBwYXJlbnQgaXMgZGVuaWVkJywgKCkgPT4gewogIGFzc2VydC5vayh2YWxpZGF0ZUFzc2lnbm1lbnQoeyAuLi5vaywgcGFyZW50V29ya2VySWQ6ICcnIH0sIE5PVykuZGVuaWVzLmluY2x1ZGVzKCdQQVJFTlRfUkVRVUlSRUQnKSk7CiAgYXNzZXJ0Lm9rKHZhbGlkYXRlQXNzaWdubWVudCh7IC4uLm9rLCBwYXJlbnRBdHRlbXB0OiAwIH0sIE5PVykuZGVuaWVzLmluY2x1ZGVzKCdBVFRFTVBUX0lOVkFMSUQnKSk7Cn0pOwp0ZXN0KCdjcm9zcy1zY29wZSAoaW5jb21wbGV0ZSBzY29wZSBmZW5jZSkgaXMgZGVuaWVkJywgKCkgPT4gewogIGFzc2VydC5vayh2YWxpZGF0ZUFzc2lnbm1lbnQoeyAuLi5vaywgc2NvcGU6IHsgdGVuYW50SWQ6ICdnbCcsIHdvcmtzcGFjZUlkOiAnJywgcHJvamVjdElkOiAnWCcgfSB9LCBOT1cpLmRlbmllcy5pbmNsdWRlcygnQ1JPU1NfU0NPUEUnKSk7Cn0pOwp0ZXN0KCdhbiBleHBpcmVkIGxlYXNlIGlzIGRlbmllZCcsICgpID0+IHsKICBhc3NlcnQub2sodmFsaWRhdGVBc3NpZ25tZW50KG9rLCBOT1cgKyA2MDBfMDAxKS5kZW5pZXMuaW5jbHVkZXMoJ0VYUElSRUQnKSk7Cn0pOwp0ZXN0KCd1bmtub3duIHJlc291cmNlIGF1dGhvcml0eSBpcyBkZW5pZWQgKHVubmFtZWQgdW5pdCAvIHVua25vd24gZW5mb3JjZW1lbnQpJywgKCkgPT4gewogIGFzc2VydC5vayh2YWxpZGF0ZUFzc2lnbm1lbnQoeyAuLi5vaywgYnVkZ2V0OiB7IC4uLm9rLmJ1ZGdldCwgdW5pdDogJycgfSB9LCBOT1cpLmRlbmllcy5pbmNsdWRlcygnQlVER0VUX1VOS05PV04nKSk7CiAgYXNzZXJ0Lm9rKHZhbGlkYXRlQXNzaWdubWVudCh7IC4uLm9rLCBidWRnZXQ6IHsgLi4ub2suYnVkZ2V0LCBlbmZvcmNlbWVudDogJ3Vua25vd24nIH0gfSwgTk9XKS5kZW5pZXMuaW5jbHVkZXMoJ0JVREdFVF9VTktOT1dOJykpOwp9KTsKdGVzdCgnYSBoYXJkIGJ1ZGdldCBvbiBhIHByb21wdC1vbmx5IHN1cmZhY2UgaXMgZGVuaWVkICh0aGUgTWFudXMgbGVzc29uKScsICgpID0+IHsKICBjb25zdCB2ID0gdmFsaWRhdGVBc3NpZ25tZW50KHsgLi4ub2ssIGhlbHBlcklkOiAnbWFudXMnLCBidWRnZXQ6IHsgLi4ub2suYnVkZ2V0LCBlbmZvcmNlbWVudDogJ3Byb21wdF9vbmx5JyB9IH0sIE5PVyk7CiAgYXNzZXJ0Lm9rKHYuZGVuaWVzLmluY2x1ZGVzKCdIQVJEX0JVREdFVF9VTkVORk9SQ0VEJykpOwogIC8vIC4uLmFuZCBhIHJ1bnRpbWUgZmVuY2UgdmFsaWRhdGVzIG9ubHkgd2hlbiBhY3R1YWwgcGVyLWNhbGwKICAvLyBjb3N0IGlzIGJvdW5kZWQgKHRoZSBiYXNlIGZpeHR1cmUpOyBNYW51cyBhY3R1YWxzIGFyZSBub3QsCiAgLy8gd2hpY2ggdGhlIGFkdmVyc2FyaWFsIHN1aXRlIGNvdmVycyBzZXBhcmF0ZWx5Lgp9KTsKdGVzdCgnZW1wdHkgYWxsb3dsaXN0cyBhbmQgYSBtaXNzaW5nIHJlcGx5IHRhcmdldCBhcmUgZGVuaWVkJywgKCkgPT4gewogIGFzc2VydC5vayh2YWxpZGF0ZUFzc2lnbm1lbnQoeyAuLi5vaywgdG9vbEFsbG93bGlzdDogW10gfSwgTk9XKS5kZW5pZXMuaW5jbHVkZXMoJ0FMTE9XTElTVF9FTVBUWScpKTsKICBhc3NlcnQub2sodmFsaWRhdGVBc3NpZ25tZW50KHsgLi4ub2ssIHJlcGx5VGFyZ2V0OiAnJyB9LCBOT1cpLmRlbmllcy5pbmNsdWRlcygnUkVQTFlfVEFSR0VUX1JFUVVJUkVEJykpOwp9KTsKdGVzdCgndGhlIHJ1bnRpbWUgZmVuY2Ugc3RvcHMgYSBzdWJtaXNzaW9uIHRoYXQgd291bGQgZXhjZWVkIHRoZSBjYXAnLCAoKSA9PiB7CiAgYXNzZXJ0LmVxdWFsKHZhbGlkYXRlQmVmb3JlU3VibWl0KHsgLi4ub2ssIGJ1ZGdldDogeyAuLi5vay5idWRnZXQsIHNwZW50OiA4IH0gfSwgMiwgTk9XKS5vaywgdHJ1ZSk7CiAgY29uc3QgdiA9IHZhbGlkYXRlQmVmb3JlU3VibWl0KHsgLi4ub2ssIGJ1ZGdldDogeyAuLi5vay5idWRnZXQsIHNwZW50OiA4IH0gfSwgMywgTk9XKTsKICBhc3NlcnQuZXF1YWwodi5vaywgZmFsc2UpOyBhc3NlcnQub2sodi5kZW5pZXMuaW5jbHVkZXMoJ0JVREdFVF9FWENFRURFRCcpKTsKfSk7CnRlc3QoJ2NoaWxkIGlkZW50aXR5IGlzIGRldGVybWluaXN0aWMg4oCUIGEgcmV0cnkgcmUtZGVyaXZlcyB0aGUgc2FtZSBjaGlsZCAobm8gZHVwbGljYXRlKScsICgpID0+IHsKICBhc3NlcnQuZXF1YWwoY2hpbGRLZXkob2spLCBjaGlsZEtleSh7IC4uLm9rIH0pKTsKICBhc3NlcnQubm90RXF1YWwoY2hpbGRLZXkob2spLCBjaGlsZEtleSh7IC4uLm9rLCBwYXJlbnRBdHRlbXB0OiAyIH0pKTsKfSk7CnRlc3QoJ2EgcmVzdWx0IGZyb20gYW5vdGhlciBzY29wZSBvciBjaGlsZCBkb2VzIG5vdCBtYXRjaCB0aGUgYXNzaWdubWVudCcsICgpID0+IHsKICBhc3NlcnQuZXF1YWwocmVzdWx0TWF0Y2hlc0Fzc2lnbm1lbnQob2ssIHsgY2hpbGRLZXk6IGNoaWxkS2V5KG9rKSwgc2NvcGU6IG9rLnNjb3BlIH0pLCB0cnVlKTsKICBhc3NlcnQuZXF1YWwocmVzdWx0TWF0Y2hlc0Fzc2lnbm1lbnQob2ssIHsgY2hpbGRLZXk6IGNoaWxkS2V5KG9rKSwgc2NvcGU6IHsgLi4ub2suc2NvcGUsIHByb2plY3RJZDogJ09USEVSJyB9IH0pLCBmYWxzZSk7Cn0pOwp0ZXN0KCdhbiB1bmJvdW5kIGFkYXB0ZXIgcmVmdXNlcyBob25lc3RseSAobm8gZmFrZSBBQ0spJywgYXN5bmMgKCkgPT4gewogIGNvbnN0IGEgPSB1bmJvdW5kQWRhcHRlcignbWFudXMnLCAnYnJvd3Nlci1icmlkZ2UnKTsKICBhc3NlcnQuZXF1YWwoYS5ib3VuZCwgZmFsc2UpOwogIGF3YWl0IGFzc2VydC5yZWplY3RzKCgpID0+IGEuc3VibWl0KG9rLCB7fSksIC9IRUxQRVJfTk9UX0JPVU5ELyk7Cn0pOwo=
+// Helper delegation contract regressions (D-057, 2026-11-03):
+// every deny the directive names, plus the happy path, the
+// runtime budget fence, and child-key idempotency.
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { validateAssignment, validateBeforeSubmit, childKey, resultMatchesAssignment,
+  unboundAdapter, type HelperAssignment } from '../src/platform/helper-delegation.js';
+
+const NOW = Date.parse('2026-11-03T05:00:00Z');
+const ok: HelperAssignment = { parentWorkerId: 'GEMINI-SEO-WORKER', parentTaskId: '59a8e025-5779-4dc5-8f25-4d07c941471c',
+  parentAttempt: 1, subtaskKey: 'extract-sources', helperId: 'grok',
+  scope: { tenantId: 'gl', workspaceId: 'legacy-workspace', projectId: 'GEMINI_UI_STAGING' },
+  sourceAllowlist: ['https://developers.facebook.com'], toolAllowlist: ['browser.read'],
+  budget: { unit: 'provider_credits', cap: 10, spent: 0, enforcement: 'runtime', hard: true }, actualCostBounded: true,
+  expiresAtMs: NOW + 600_000, replyTarget: 'CHATGPT_ASSISTANT_CONTROL_PLANE',
+  equipment: { pinnedSource: { ref: 'doc:fixture-input', digest: 'a'.repeat(64) },
+    surface: { kind: 'api', model: 'fixture-model', authBinding: 'fixture:binding' },
+    skillRef: 'skill:fixture', criteria: ['output addresses the pinned source'], rework: { maxAttempts: 1 } } };
+
+test('a complete bounded assignment validates', () => {
+  assert.deepEqual(validateAssignment(ok, NOW), { ok: true, denies: [] });
+});
+test('wrong or missing parent is denied', () => {
+  assert.ok(validateAssignment({ ...ok, parentWorkerId: '' }, NOW).denies.includes('PARENT_REQUIRED'));
+  assert.ok(validateAssignment({ ...ok, parentAttempt: 0 }, NOW).denies.includes('ATTEMPT_INVALID'));
+});
+test('cross-scope (incomplete scope fence) is denied', () => {
+  assert.ok(validateAssignment({ ...ok, scope: { tenantId: 'gl', workspaceId: '', projectId: 'X' } }, NOW).denies.includes('CROSS_SCOPE'));
+});
+test('an expired lease is denied', () => {
+  assert.ok(validateAssignment(ok, NOW + 600_001).denies.includes('EXPIRED'));
+});
+test('unknown resource authority is denied (unnamed unit / unknown enforcement)', () => {
+  assert.ok(validateAssignment({ ...ok, budget: { ...ok.budget, unit: '' } }, NOW).denies.includes('BUDGET_UNKNOWN'));
+  assert.ok(validateAssignment({ ...ok, budget: { ...ok.budget, enforcement: 'unknown' } }, NOW).denies.includes('BUDGET_UNKNOWN'));
+});
+test('a hard budget on a prompt-only surface is denied (the Manus lesson)', () => {
+  const v = validateAssignment({ ...ok, helperId: 'manus', budget: { ...ok.budget, enforcement: 'prompt_only' } }, NOW);
+  assert.ok(v.denies.includes('HARD_BUDGET_UNENFORCED'));
+  // ...and a runtime fence validates only when actual per-call
+  // cost is bounded (the base fixture); Manus actuals are not,
+  // which the adversarial suite covers separately.
+});
+test('empty allowlists and a missing reply target are denied', () => {
+  assert.ok(validateAssignment({ ...ok, toolAllowlist: [] }, NOW).denies.includes('ALLOWLIST_EMPTY'));
+  assert.ok(validateAssignment({ ...ok, replyTarget: '' }, NOW).denies.includes('REPLY_TARGET_REQUIRED'));
+});
+test('the runtime fence stops a submission that would exceed the cap', () => {
+  assert.equal(validateBeforeSubmit({ ...ok, budget: { ...ok.budget, spent: 8 } }, 2, NOW).ok, true);
+  const v = validateBeforeSubmit({ ...ok, budget: { ...ok.budget, spent: 8 } }, 3, NOW);
+  assert.equal(v.ok, false); assert.ok(v.denies.includes('BUDGET_EXCEEDED'));
+});
+test('child identity is deterministic — a retry re-derives the same child (no duplicate)', () => {
+  assert.equal(childKey(ok), childKey({ ...ok }));
+  assert.notEqual(childKey(ok), childKey({ ...ok, parentAttempt: 2 }));
+});
+test('a result from another scope or child does not match the assignment', () => {
+  assert.equal(resultMatchesAssignment(ok, { childKey: childKey(ok), scope: ok.scope }), true);
+  assert.equal(resultMatchesAssignment(ok, { childKey: childKey(ok), scope: { ...ok.scope, projectId: 'OTHER' } }), false);
+});
+test('an unbound adapter refuses honestly (no fake ACK)', async () => {
+  const a = unboundAdapter('manus', 'browser-bridge');
+  assert.equal(a.bound, false);
+  await assert.rejects(() => a.submit(ok, {}), /HELPER_NOT_BOUND/);
+});
