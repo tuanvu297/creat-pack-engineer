@@ -1,1 +1,133 @@
-Ly8gTU9DSy1PTkxZIHRlc3RzIGZvciB0aGUgcHJvdmlkZXIgQVBJIGFkYXB0ZXJzIChELTA1NyBlcXVpcAovLyByb3VuZCwgMjAyNi0xMS0wMykuIEV2ZXJ5IEhUVFAgY2FsbCBnb2VzIHRvIGEgcmVjb3JkaW5nIGZha2UKLy8gZmV0Y2g7IE5PIG5ldHdvcmssIE5PIHJlYWwga2V5LCBOTyBwcm92aWRlciBzcGVuZC4gVGhlc2UKLy8gdGVzdHMgcHJvdmUgcmVxdWVzdCBzaGFwZXMsIGhlYWRlciBuYW1lcywgZW52ZWxvcGUgcGFyc2luZywKLy8gZXJyb3IgbWFwcGluZyBhbmQgdGhlIHVuY2VydGFpbi1zdWJtaXNzaW9uIHNlbWFudGljcyBhZ2FpbnN0Ci8vIHRoZSBwcm92aWRlcnMnIGRvY3VtZW50ZWQgc2NoZW1hcyAtIHRoZXkgZG8gbm90IHByb3ZlIGFueQovLyBsaXZlIHJvdXRlIHdvcmtzLiBMaXZlIHZlcmlmaWNhdGlvbiBoYXBwZW5zIG9ubHkgYWZ0ZXIgYSBrZXkKLy8gaXMgcHJvdmlzaW9uZWQgdGhyb3VnaCB0aGUgb3duZXIncyBvd24gZmxvdy4KaW1wb3J0IHRlc3QgZnJvbSAibm9kZTp0ZXN0IjsKaW1wb3J0IGFzc2VydCBmcm9tICJub2RlOmFzc2VydC9zdHJpY3QiOwppbXBvcnQgeyBtYW51c0FkYXB0ZXIsIGdyb2tBZGFwdGVyLCBoZWxwZXJBZGFwdGVyRnJvbUVudiwgUHJvdmlkZXJDYWxsRXJyb3IsIHR5cGUgRmV0Y2hMaWtlIH0gZnJvbSAiLi4vc3JjL3BsYXRmb3JtL2hlbHBlci1wcm92aWRlcnMuanMiOwppbXBvcnQgeyBjaGlsZEtleSwgcmVzdWx0TWF0Y2hlc0Fzc2lnbm1lbnQsIHR5cGUgSGVscGVyQXNzaWdubWVudCB9IGZyb20gIi4uL3NyYy9wbGF0Zm9ybS9oZWxwZXItZGVsZWdhdGlvbi5qcyI7Cgpjb25zdCBhOiBIZWxwZXJBc3NpZ25tZW50ID0gewogIHBhcmVudFdvcmtlcklkOiAnR0VNSU5JLVNFTy1XT1JLRVInLCBwYXJlbnRUYXNrSWQ6ICd0YXNrLXBhcmVudC0xJywgcGFyZW50QXR0ZW1wdDogMSwKICBzdWJ0YXNrS2V5OiAnZXh0cmFjdC0xJywgaGVscGVySWQ6ICdtYW51cycsCiAgc2NvcGU6IHsgdGVuYW50SWQ6ICdnbCcsIHdvcmtzcGFjZUlkOiAnbGVnYWN5LXdvcmtzcGFjZScsIHByb2plY3RJZDogJ0dFTUlOSV9VSV9TVEFHSU5HJyB9LAogIHNvdXJjZUFsbG93bGlzdDogWydodHRwczovL2V4YW1wbGUuY29tJ10sIHRvb2xBbGxvd2xpc3Q6IFsnYnJvd3Nlci5yZWFkJ10sCiAgYnVkZ2V0OiB7IHVuaXQ6ICdwcm92aWRlcl9jcmVkaXRzJywgY2FwOiA1LCBzcGVudDogMCwgZW5mb3JjZW1lbnQ6ICdydW50aW1lJywgaGFyZDogZmFsc2UgfSwKICBleHBpcmVzQXRNczogRGF0ZS5ub3coKSArIDYwMF8wMDAsIHJlcGx5VGFyZ2V0OiAnQ0hBVEdQVF9BU1NJU1RBTlRfQ09OVFJPTF9QTEFORScsCiAgZXF1aXBtZW50OiB7IHBpbm5lZFNvdXJjZTogeyByZWY6ICdkb2M6Zml4dHVyZS1pbnB1dCcsIGRpZ2VzdDogJ2EnLnJlcGVhdCg2NCkgfSwKICAgIHN1cmZhY2U6IHsga2luZDogJ2FwaScsIG1vZGVsOiAnZml4dHVyZS1tb2RlbCcsIGF1dGhCaW5kaW5nOiAnZml4dHVyZTpiaW5kaW5nJyB9LAogICAgc2tpbGxSZWY6ICdza2lsbDpmaXh0dXJlJywgY3JpdGVyaWE6IFsnb3V0cHV0IGFkZHJlc3NlcyB0aGUgcGlubmVkIHNvdXJjZSddLCByZXdvcms6IHsgbWF4QXR0ZW1wdHM6IDEgfSB9LAp9Owpjb25zdCBncm9rQTogSGVscGVyQXNzaWdubWVudCA9IHsgLi4uYSwgaGVscGVySWQ6ICdncm9rJywgYnVkZ2V0OiB7IHVuaXQ6ICd1c2QnLCBjYXA6IDEsIHNwZW50OiAwLCBlbmZvcmNlbWVudDogJ3J1bnRpbWUnLCBoYXJkOiBmYWxzZSB9IH07CgpmdW5jdGlvbiBmYWtlRmV0Y2goaGFuZGxlcjogKHVybDogc3RyaW5nLCBpbml0OiBhbnkpID0+IHsgc3RhdHVzOiBudW1iZXI7IGJvZHk6IGFueSB9IHwgJ05FVFdPUktfRkFJTCcpIHsKICBjb25zdCBjYWxsczogeyB1cmw6IHN0cmluZzsgaW5pdDogYW55IH1bXSA9IFtdOwogIGNvbnN0IGY6IEZldGNoTGlrZSA9IGFzeW5jICh1cmwsIGluaXQpID0+IHsKICAgIGNhbGxzLnB1c2goeyB1cmwsIGluaXQgfSk7CiAgICBjb25zdCByID0gaGFuZGxlcih1cmwsIGluaXQpOwogICAgaWYgKHIgPT09ICdORVRXT1JLX0ZBSUwnKSB0aHJvdyBuZXcgRXJyb3IoJ3NvY2tldCBoYW5ndXAnKTsKICAgIHJldHVybiB7IHN0YXR1czogci5zdGF0dXMsIGpzb246IGFzeW5jICgpID0+IHIuYm9keSB9OwogIH07CiAgcmV0dXJuIHsgZiwgY2FsbHMgfTsKfQpjb25zdCBraW5kT2YgPSAoZTogdW5rbm93bikgPT4gKGUgYXMgUHJvdmlkZXJDYWxsRXJyb3IpLmtpbmQ7Cgp0ZXN0KCdtb2NrLW9ubHk6IG1hbnVzIHByb2JlIGhpdHMgR0VUIC92Mi91c2VyLm1lIHdpdGggdGhlIGFwaS1rZXkgaGVhZGVyIGFuZCBkcm9wcyBQSUkgZmllbGRzJywgYXN5bmMgKCkgPT4gewogIGNvbnN0IHsgZiwgY2FsbHMgfSA9IGZha2VGZXRjaCgoKSA9PiAoeyBzdGF0dXM6IDIwMCwgYm9keTogeyBvazogdHJ1ZSwgcmVxdWVzdF9pZDogJ3IxJywgdXNlcl9pZDogJ3UtMTIzJywgbmFtZTogJ1NvbWUgT25lJywgZW1haWw6ICd4QGV4YW1wbGUuY29tJyB9IH0pKTsKICBjb25zdCBhZCA9IG1hbnVzQWRhcHRlcih7IGFwaUtleTogJ3Rlc3Qta2V5JywgZmV0Y2g6IGYgfSk7CiAgY29uc3QgcCA9IGF3YWl0IGFkLnByb2JlKCk7CiAgYXNzZXJ0LmVxdWFsKHAudXNlcklkLCAndS0xMjMnKTsKICBhc3NlcnQuZGVlcEVxdWFsKE9iamVjdC5rZXlzKHApLCBbJ3VzZXJJZCddLCAncHJvYmUgc3VyZmFjZXMgdGhlIGlkIG9ubHkgLSBubyBuYW1lL2VtYWlsJyk7CiAgYXNzZXJ0LmVxdWFsKGNhbGxzWzBdLnVybCwgJ2h0dHBzOi8vYXBpLm1hbnVzLmFpL3YyL3VzZXIubWUnKTsKICBhc3NlcnQuZXF1YWwoY2FsbHNbMF0uaW5pdC5tZXRob2QsICdHRVQnKTsKICBhc3NlcnQuZXF1YWwoY2FsbHNbMF0uaW5pdC5oZWFkZXJzWyd4LW1hbnVzLWFwaS1rZXknXSwgJ3Rlc3Qta2V5Jyk7Cn0pOwoKdGVzdCgnbW9jay1vbmx5OiBtYW51cyBkaXNjb3ZlckNyZWRpdHMgcmVhZHMgdGhlIGF1dGhvcml0YXRpdmUgdG90YWwnLCBhc3luYyAoKSA9PiB7CiAgY29uc3QgeyBmIH0gPSBmYWtlRmV0Y2goKCkgPT4gKHsgc3RhdHVzOiAyMDAsIGJvZHk6IHsgb2s6IHRydWUsIGRhdGE6IHsgdG90YWxfY3JlZGl0czogMTI3NCwgY3VycmVudF9wZXJpb2RfZW5kOiAxNzk5OTk5OTk5IH0gfSB9KSk7CiAgY29uc3QgZCA9IGF3YWl0IG1hbnVzQWRhcHRlcih7IGFwaUtleTogJ2snLCBmZXRjaDogZiB9KS5kaXNjb3ZlckNyZWRpdHMoKTsKICBhc3NlcnQuZXF1YWwoZC50b3RhbENyZWRpdHMsIDEyNzQpOwp9KTsKCnRlc3QoJ21vY2stb25seTogbWFudXMgc3VibWl0IHNlbmRzIHRoZSBkb2N1bWVudGVkIHNoYXBlIChjaGlsZEtleSB0aXRsZSwgbGl0ZSBwcm9maWxlLCBOTyBidWRnZXQgZmllbGQpIGFuZCByZXR1cm5zIHRhc2tfaWQnLCBhc3luYyAoKSA9PiB7CiAgY29uc3QgeyBmLCBjYWxscyB9ID0gZmFrZUZldGNoKCgpID0+ICh7IHN0YXR1czogMjAwLCBib2R5OiB7IG9rOiB0cnVlLCByZXF1ZXN0X2lkOiAncicsIHRhc2tfaWQ6ICdBYkNkRWZHaElqS2xNbk9wUXJTdFV2JywgdGFza190aXRsZTogJ3QnIH0gfSkpOwogIGNvbnN0IGFkID0gbWFudXNBZGFwdGVyKHsgYXBpS2V5OiAnaycsIGZldGNoOiBmIH0pOwogIGNvbnN0IHIgPSBhd2FpdCBhZC5zdWJtaXQoYSwgeyB0ZXh0OiAncmVhZCB0aGUgc291cmNlIGFuZCBleHRyYWN0IGRhdGVzJyB9KTsKICBhc3NlcnQuZXF1YWwoci5leHRlcm5hbFJlZiwgJ0FiQ2RFZkdoSWpLbE1uT3BRclN0VXYnKTsKICBjb25zdCBib2R5ID0gSlNPTi5wYXJzZShjYWxsc1swXS5pbml0LmJvZHkpOwogIGFzc2VydC5lcXVhbChjYWxsc1swXS51cmwsICdodHRwczovL2FwaS5tYW51cy5haS92Mi90YXNrLmNyZWF0ZScpOwogIGFzc2VydC5lcXVhbChib2R5LmFnZW50X3Byb2ZpbGUsICdsaXRlJyk7CiAgYXNzZXJ0LmVxdWFsKGJvZHkudGl0bGUsIGBhZ3k6JHtjaGlsZEtleShhKX1gLCAndGl0bGUgY2FycmllcyB0aGUgcmVjb25jaWxlIGhhbmRsZScpOwogIGFzc2VydC5lcXVhbChib2R5Lm1lc3NhZ2UuY29udGVudFswXS50ZXh0LCAncmVhZCB0aGUgc291cmNlIGFuZCBleHRyYWN0IGRhdGVzJyk7CiAgYXNzZXJ0Lm9rKCEoJ2J1ZGdldCcgaW4gYm9keSkgJiYgISgnbWF4X2NyZWRpdHMnIGluIGJvZHkpICYmICEoJ2J1ZGdldF9jcmVkaXRzJyBpbiBib2R5KSwKICAgICdubyBidWRnZXQgZmllbGQgZXhpc3RzIGluIHRoZSBkb2N1bWVudGVkIHNjaGVtYSAtIG5vbmUgaXMgc2VudCcpOwp9KTsKCnRlc3QoJ21vY2stb25seTogbWFudXMgZXJyb3IgbWFwcGluZyAtIHVuYXV0aGVudGljYXRlZCwgYW5kIDV4eC9pbnRlcm5hbCBvbiBjcmVhdGUgaXMgU1VCTUlTU0lPTl9VTkNFUlRBSU4nLCBhc3luYyAoKSA9PiB7CiAgY29uc3QgdW5hdXRoID0gbWFudXNBZGFwdGVyKHsgYXBpS2V5OiAnaycsIGZldGNoOiBmYWtlRmV0Y2goKCkgPT4gKHsgc3RhdHVzOiA0MDEsIGJvZHk6IHsgb2s6IGZhbHNlLCBlcnJvcjogeyBjb2RlOiAndW5hdXRoZW50aWNhdGVkJywgbWVzc2FnZTogJ2JhZCBrZXknIH0gfSB9KSkuZiB9KTsKICBhd2FpdCBhc3NlcnQucmVqZWN0cygoKSA9PiB1bmF1dGgucHJvYmUoKSwgKGU6IHVua25vd24pID0+IGtpbmRPZihlKSA9PT0gJ1VOQVVUSEVOVElDQVRFRCcpOwogIGNvbnN0IGZpdmUgPSBtYW51c0FkYXB0ZXIoeyBhcGlLZXk6ICdrJywgZmV0Y2g6IGZha2VGZXRjaCgoKSA9PiAoeyBzdGF0dXM6IDUwMCwgYm9keTogeyBvazogZmFsc2UsIGVycm9yOiB7IGNvZGU6ICdpbnRlcm5hbCcsIG1lc3NhZ2U6ICdib29tJyB9IH0gfSkpLmYgfSk7CiAgYXdhaXQgYXNzZXJ0LnJlamVjdHMoKCkgPT4gZml2ZS5zdWJtaXQoYSwgJ3gnKSwgKGU6IHVua25vd24pID0+IGtpbmRPZihlKSA9PT0gJ1NVQk1JU1NJT05fVU5DRVJUQUlOJyk7CiAgY29uc3QgbmV0ID0gbWFudXNBZGFwdGVyKHsgYXBpS2V5OiAnaycsIGZldGNoOiBmYWtlRmV0Y2goKCkgPT4gJ05FVFdPUktfRkFJTCcpLmYgfSk7CiAgYXdhaXQgYXNzZXJ0LnJlamVjdHMoKCkgPT4gbmV0LnN1Ym1pdChhLCAneCcpLCAoZTogdW5rbm93bikgPT4ga2luZE9mKGUpID09PSAnU1VCTUlTU0lPTl9VTkNFUlRBSU4nKTsKfSk7Cgp0ZXN0KCdtb2NrLW9ubHk6IG1hbnVzIHJlYWRSZXN1bHQgbWFwcyBydW5uaW5nLT5OT1RfUkVBRFkgYW5kIHN0b3BwZWQtPmVudmVsb3BlIHdpdGggY3JlZGl0IGFjdHVhbHMgKyBkaWdlc3QnLCBhc3luYyAoKSA9PiB7CiAgY29uc3QgYjEgPSB7IGNoaWxkS2V5OiBjaGlsZEtleShhKSwgaGVscGVySWQ6ICdtYW51cycgYXMgY29uc3QsIHN1Ym1pc3Npb25SZWY6ICd0aWQxJyB9OwogIGNvbnN0IHJ1bm5pbmcgPSBtYW51c0FkYXB0ZXIoeyBhcGlLZXk6ICdrJywgZmV0Y2g6IGZha2VGZXRjaCgoKSA9PiAoeyBzdGF0dXM6IDIwMCwgYm9keTogeyBvazogdHJ1ZSwgdGFzazogeyBpZDogJ3RpZDEnLCBzdGF0dXM6ICdydW5uaW5nJyB9IH0gfSkpLmYgfSk7CiAgYXdhaXQgYXNzZXJ0LnJlamVjdHMoKCkgPT4gcnVubmluZy5yZWFkUmVzdWx0Rm9yKGEsICd0aWQxJywgYjEpLCAoZTogdW5rbm93bikgPT4ga2luZE9mKGUpID09PSAnTk9UX1JFQURZJyk7CiAgY29uc3QgeyBmIH0gPSBmYWtlRmV0Y2goKHVybCkgPT4gdXJsLmluY2x1ZGVzKCd0YXNrLmRldGFpbCcpCiAgICA/IHsgc3RhdHVzOiAyMDAsIGJvZHk6IHsgb2s6IHRydWUsIHRhc2s6IHsgaWQ6ICd0aWQxJywgc3RhdHVzOiAnc3RvcHBlZCcsIGNyZWRpdF91c2FnZTogMTUgfSB9IH0KICAgIDogeyBzdGF0dXM6IDIwMCwgYm9keTogeyBvazogdHJ1ZSwgdGFza19pZDogJ3RpZDEnLCBtZXNzYWdlczogW3sgdHlwZTogJ3VzZXJfbWVzc2FnZScsIGNvbnRlbnQ6ICdxJyB9LCB7IHR5cGU6ICdhc3Npc3RhbnRfbWVzc2FnZScsIGNvbnRlbnQ6IFt7IHR5cGU6ICd0ZXh0JywgdGV4dDogJ3RoZSBhbnN3ZXInIH1dIH1dLCBoYXNfbW9yZTogZmFsc2UgfSB9KTsKICBjb25zdCBlbnYgPSBhd2FpdCBtYW51c0FkYXB0ZXIoeyBhcGlLZXk6ICdrJywgZmV0Y2g6IGYgfSkucmVhZFJlc3VsdEZvcihhLCAndGlkMScsIGIxKTsKICBhc3NlcnQuZXF1YWwoZW52LmNvc3RVbml0cywgMTUsICdhY3R1YWxzIGNvbWUgZnJvbSBjcmVkaXRfdXNhZ2UnKTsKICBhc3NlcnQuZXF1YWwoKGVudi5wYXlsb2FkIGFzIGFueSkudGV4dCwgJ3RoZSBhbnN3ZXInKTsKICBhc3NlcnQub2socmVzdWx0TWF0Y2hlc0Fzc2lnbm1lbnQoYSwgZW52KSwgJ2VudmVsb3BlIGJpbmRzIHRvIHRoZSBhc3NpZ25tZW50Jyk7CiAgYXNzZXJ0Lm9rKHR5cGVvZiBlbnYuZGlnZXN0ID09PSAnc3RyaW5nJyAmJiBlbnYuZGlnZXN0Lmxlbmd0aCA+IDApOwp9KTsKCnRlc3QoJ21vY2stb25seTogbWFudXMgcmVjb25jaWxlIGZpbmRzIHRoZSBjaGlsZEtleS10aXRsZWQgdGFzayBpbiB0YXNrLmxpc3QnLCBhc3luYyAoKSA9PiB7CiAgY29uc3QgeyBmIH0gPSBmYWtlRmV0Y2goKCkgPT4gKHsgc3RhdHVzOiAyMDAsIGJvZHk6IHsgb2s6IHRydWUsIGhhc19tb3JlOiBmYWxzZSwKICAgIGRhdGE6IFt7IGlkOiAnb3RoZXInLCB0aXRsZTogJ3NvbWV0aGluZyBlbHNlJyB9LCB7IGlkOiAnbWluZScsIHRpdGxlOiBgYWd5OiR7Y2hpbGRLZXkoYSl9YCB9XSB9IH0pKTsKICBjb25zdCBhZCA9IG1hbnVzQWRhcHRlcih7IGFwaUtleTogJ2snLCBmZXRjaDogZiB9KTsKICBhc3NlcnQuZGVlcEVxdWFsKGF3YWl0IGFkLnJlY29uY2lsZShhKSwgeyBzdGF0ZTogJ0ZPVU5EJywgcmVmOiAnbWluZScgfSk7CiAgY29uc3Qgbm9uZSA9IG1hbnVzQWRhcHRlcih7IGFwaUtleTogJ2snLCBmZXRjaDogZmFrZUZldGNoKCgpID0+ICh7IHN0YXR1czogMjAwLCBib2R5OiB7IG9rOiB0cnVlLCBoYXNfbW9yZTogZmFsc2UsIGRhdGE6IFtdIH0gfSkpLmYgfSk7CiAgYXNzZXJ0LmVxdWFsKChhd2FpdCBub25lLnJlY29uY2lsZShhKSkuc3RhdGUsICdOT1RfRk9VTkQnKTsKfSk7Cgp0ZXN0KCdtb2NrLW9ubHk6IGdyb2sgcHJvYmUgbGlzdHMgbW9kZWxzIHdpdGggYSBCZWFyZXIgaGVhZGVyOyBzdWJtaXQvcmVhZFJlc3VsdCByb3VuZC10cmlwIHZpYSB0aGUgUmVzcG9uc2VzIEFQSScsIGFzeW5jICgpID0+IHsKICBjb25zdCB7IGYsIGNhbGxzIH0gPSBmYWtlRmV0Y2goKHVybCwgaW5pdCkgPT4gewogICAgaWYgKHVybC5lbmRzV2l0aCgnL3YxL21vZGVscycpKSByZXR1cm4geyBzdGF0dXM6IDIwMCwgYm9keTogeyBkYXRhOiBbeyBpZDogJ2dyb2stNC43JyB9LCB7IGlkOiAnZ3Jvay00LjctbWluaScgfV0gfSB9OwogICAgaWYgKHVybC5lbmRzV2l0aCgnL3YxL3Jlc3BvbnNlcycpICYmIGluaXQubWV0aG9kID09PSAnUE9TVCcpIHJldHVybiB7IHN0YXR1czogMjAwLCBib2R5OiB7IGlkOiAncmVzcF8xJywgc3RhdHVzOiAnY29tcGxldGVkJyB9IH07CiAgICBpZiAodXJsLmluY2x1ZGVzKCcvdjEvcmVzcG9uc2VzL3Jlc3BfMScpKSByZXR1cm4geyBzdGF0dXM6IDIwMCwgYm9keTogeyBpZDogJ3Jlc3BfMScsIHN0YXR1czogJ2NvbXBsZXRlZCcsCiAgICAgIG91dHB1dDogW3sgY29udGVudDogW3sgdHlwZTogJ291dHB1dF90ZXh0JywgdGV4dDogJ2dyb2sgYW5zd2VyJyB9XSB9XSwgdXNhZ2U6IHsgaW5wdXRfdG9rZW5zOiAxMDAwLCBvdXRwdXRfdG9rZW5zOiA1MDAgfSB9IH07CiAgICByZXR1cm4geyBzdGF0dXM6IDQwNCwgYm9keToge30gfTsKICB9KTsKICBjb25zdCBhZCA9IGdyb2tBZGFwdGVyKHsgYXBpS2V5OiAneGtleScsIGZldGNoOiBmLCBtb2RlbDogJ2dyb2stNC43JywgaW5wdXRVc2RQZXJNVG9rOiAyLCBvdXRwdXRVc2RQZXJNVG9rOiA2IH0pOwogIGFzc2VydC5kZWVwRXF1YWwoKGF3YWl0IGFkLnByb2JlKCkpLm1vZGVscywgWydncm9rLTQuNycsICdncm9rLTQuNy1taW5pJ10pOwogIGFzc2VydC5lcXVhbChjYWxsc1swXS5pbml0LmhlYWRlcnMuYXV0aG9yaXphdGlvbiwgJ0JlYXJlciB4a2V5Jyk7CiAgY29uc3QgcyA9IGF3YWl0IGFkLnN1Ym1pdChncm9rQSwgJ3N1bW1hcmlzZScpOwogIGFzc2VydC5lcXVhbChzLmV4dGVybmFsUmVmLCAncmVzcF8xJyk7CiAgY29uc3QgZW52ID0gYXdhaXQgYWQucmVhZFJlc3VsdCgncmVzcF8xJyk7CiAgYXNzZXJ0LmVxdWFsKChlbnYucGF5bG9hZCBhcyBhbnkpLnRleHQsICdncm9rIGFuc3dlcicpOwogIGFzc2VydC5vayhNYXRoLmFicyhlbnYuY29zdFVuaXRzIC0gKDEwMDAgKiAyICsgNTAwICogNikgLyAxXzAwMF8wMDApIDwgMWUtMTIsICdhY3R1YWwgVVNEIGNvbXB1dGVkIGZyb20gdXNhZ2UgeCBjb25maWd1cmVkIHJhdGVzJyk7CiAgLy8gV2l0aG91dCBjb25maWd1cmVkIHJhdGVzLCBhY3R1YWxzIHN0YXkgaG9uZXN0bHkgdW5rbm93bi4KICBjb25zdCBhZDIgPSBncm9rQWRhcHRlcih7IGFwaUtleTogJ3hrZXknLCBmZXRjaDogZiwgbW9kZWw6ICdncm9rLTQuNycgfSk7CiAgY29uc3QgczIgPSBhd2FpdCBhZDIuc3VibWl0KGdyb2tBLCAnc3VtbWFyaXNlJyk7CiAgY29uc3QgZW52MiA9IGF3YWl0IGFkMi5yZWFkUmVzdWx0KHMyLmV4dGVybmFsUmVmKTsKICBhc3NlcnQub2soTnVtYmVyLmlzTmFOKGVudjIuY29zdFVuaXRzKSwgJ25vIHJhdGVzIGNvbmZpZ3VyZWQgLT4gY29zdFVuaXRzIE5hTiwgbmV2ZXIgaW52ZW50ZWQnKTsKfSk7Cgp0ZXN0KCdtb2NrLW9ubHk6IGdyb2sgdW5jZXJ0YWluIHN1Ym1pdCBuZXZlciBwcmV0ZW5kczsgZmFjdG9yeSB3aXRob3V0IGtleXMgcmV0dXJucyB0aGUgdW5ib3VuZCBhZGFwdGVyJywgYXN5bmMgKCkgPT4gewogIGNvbnN0IGRvd24gPSBncm9rQWRhcHRlcih7IGFwaUtleTogJ2snLCBmZXRjaDogZmFrZUZldGNoKCgpID0+ICdORVRXT1JLX0ZBSUwnKS5mLCBtb2RlbDogJ2dyb2stNC43JyB9KTsKICBhd2FpdCBhc3NlcnQucmVqZWN0cygoKSA9PiBkb3duLnN1Ym1pdChncm9rQSwgJ3gnKSwgKGU6IHVua25vd24pID0+IGtpbmRPZihlKSA9PT0gJ1NVQk1JU1NJT05fVU5DRVJUQUlOJyk7CiAgY29uc3QgdW4xID0gaGVscGVyQWRhcHRlckZyb21FbnYoJ21hbnVzJywge30sIGZha2VGZXRjaCgoKSA9PiAoeyBzdGF0dXM6IDIwMCwgYm9keToge30gfSkpLmYpOwogIGFzc2VydC5lcXVhbCh1bjEuYm91bmQsIGZhbHNlKTsKICBhd2FpdCBhc3NlcnQucmVqZWN0cygoKSA9PiB1bjEuc3VibWl0KGEsICd4JyksIC9IRUxQRVJfTk9UX0JPVU5ELyk7CiAgY29uc3QgdW4yID0gaGVscGVyQWRhcHRlckZyb21FbnYoJ2dyb2snLCB7IFhBSV9BUElfS0VZOiAnaycgfSwgZmFrZUZldGNoKCgpID0+ICh7IHN0YXR1czogMjAwLCBib2R5OiB7fSB9KSkuZik7CiAgYXNzZXJ0LmVxdWFsKHVuMi5ib3VuZCwgZmFsc2UsICdncm9rIHdpdGhvdXQgYSBjb25maWd1cmVkIG1vZGVsIHN0YXlzIHVuYm91bmQgLSBubyBzaWxlbnQgbW9kZWwgZGVmYXVsdCcpOwp9KTsK
+// MOCK-ONLY tests for the provider API adapters (D-057 equip
+// round, 2026-11-03). Every HTTP call goes to a recording fake
+// fetch; NO network, NO real key, NO provider spend. These
+// tests prove request shapes, header names, envelope parsing,
+// error mapping and the uncertain-submission semantics against
+// the providers' documented schemas - they do not prove any
+// live route works. Live verification happens only after a key
+// is provisioned through the owner's own flow.
+import test from "node:test";
+import assert from "node:assert/strict";
+import { manusAdapter, grokAdapter, helperAdapterFromEnv, ProviderCallError, type FetchLike } from "../src/platform/helper-providers.js";
+import { childKey, resultMatchesAssignment, type HelperAssignment } from "../src/platform/helper-delegation.js";
+
+const a: HelperAssignment = {
+  parentWorkerId: 'GEMINI-SEO-WORKER', parentTaskId: 'task-parent-1', parentAttempt: 1,
+  subtaskKey: 'extract-1', helperId: 'manus',
+  scope: { tenantId: 'gl', workspaceId: 'legacy-workspace', projectId: 'GEMINI_UI_STAGING' },
+  sourceAllowlist: ['https://example.com'], toolAllowlist: ['browser.read'],
+  budget: { unit: 'provider_credits', cap: 5, spent: 0, enforcement: 'runtime', hard: false },
+  expiresAtMs: Date.now() + 600_000, replyTarget: 'CHATGPT_ASSISTANT_CONTROL_PLANE',
+  equipment: { pinnedSource: { ref: 'doc:fixture-input', digest: 'a'.repeat(64) },
+    surface: { kind: 'api', model: 'fixture-model', authBinding: 'fixture:binding' },
+    skillRef: 'skill:fixture', criteria: ['output addresses the pinned source'], rework: { maxAttempts: 1 } },
+};
+const grokA: HelperAssignment = { ...a, helperId: 'grok', budget: { unit: 'usd', cap: 1, spent: 0, enforcement: 'runtime', hard: false } };
+
+function fakeFetch(handler: (url: string, init: any) => { status: number; body: any } | 'NETWORK_FAIL') {
+  const calls: { url: string; init: any }[] = [];
+  const f: FetchLike = async (url, init) => {
+    calls.push({ url, init });
+    const r = handler(url, init);
+    if (r === 'NETWORK_FAIL') throw new Error('socket hangup');
+    return { status: r.status, json: async () => r.body };
+  };
+  return { f, calls };
+}
+const kindOf = (e: unknown) => (e as ProviderCallError).kind;
+
+test('mock-only: manus probe hits GET /v2/user.me with the api-key header and drops PII fields', async () => {
+  const { f, calls } = fakeFetch(() => ({ status: 200, body: { ok: true, request_id: 'r1', user_id: 'u-123', name: 'Some One', email: 'x@example.com' } }));
+  const ad = manusAdapter({ apiKey: 'test-key', fetch: f });
+  const p = await ad.probe();
+  assert.equal(p.userId, 'u-123');
+  assert.deepEqual(Object.keys(p), ['userId'], 'probe surfaces the id only - no name/email');
+  assert.equal(calls[0].url, 'https://api.manus.ai/v2/user.me');
+  assert.equal(calls[0].init.method, 'GET');
+  assert.equal(calls[0].init.headers['x-manus-api-key'], 'test-key');
+});
+
+test('mock-only: manus discoverCredits reads the authoritative total', async () => {
+  const { f } = fakeFetch(() => ({ status: 200, body: { ok: true, data: { total_credits: 1274, current_period_end: 1799999999 } } }));
+  const d = await manusAdapter({ apiKey: 'k', fetch: f }).discoverCredits();
+  assert.equal(d.totalCredits, 1274);
+});
+
+test('mock-only: manus submit sends the documented shape (childKey title, lite profile, NO budget field) and returns task_id', async () => {
+  const { f, calls } = fakeFetch(() => ({ status: 200, body: { ok: true, request_id: 'r', task_id: 'AbCdEfGhIjKlMnOpQrStUv', task_title: 't' } }));
+  const ad = manusAdapter({ apiKey: 'k', fetch: f });
+  const r = await ad.submit(a, { text: 'read the source and extract dates' });
+  assert.equal(r.externalRef, 'AbCdEfGhIjKlMnOpQrStUv');
+  const body = JSON.parse(calls[0].init.body);
+  assert.equal(calls[0].url, 'https://api.manus.ai/v2/task.create');
+  assert.equal(body.agent_profile, 'lite');
+  assert.equal(body.title, `agy:${childKey(a)}`, 'title carries the reconcile handle');
+  assert.equal(body.message.content[0].text, 'read the source and extract dates');
+  assert.ok(!('budget' in body) && !('max_credits' in body) && !('budget_credits' in body),
+    'no budget field exists in the documented schema - none is sent');
+});
+
+test('mock-only: manus error mapping - unauthenticated, and 5xx/internal on create is SUBMISSION_UNCERTAIN', async () => {
+  const unauth = manusAdapter({ apiKey: 'k', fetch: fakeFetch(() => ({ status: 401, body: { ok: false, error: { code: 'unauthenticated', message: 'bad key' } } })).f });
+  await assert.rejects(() => unauth.probe(), (e: unknown) => kindOf(e) === 'UNAUTHENTICATED');
+  const five = manusAdapter({ apiKey: 'k', fetch: fakeFetch(() => ({ status: 500, body: { ok: false, error: { code: 'internal', message: 'boom' } } })).f });
+  await assert.rejects(() => five.submit(a, 'x'), (e: unknown) => kindOf(e) === 'SUBMISSION_UNCERTAIN');
+  const net = manusAdapter({ apiKey: 'k', fetch: fakeFetch(() => 'NETWORK_FAIL').f });
+  await assert.rejects(() => net.submit(a, 'x'), (e: unknown) => kindOf(e) === 'SUBMISSION_UNCERTAIN');
+});
+
+test('mock-only: manus readResult maps running->NOT_READY and stopped->envelope with credit actuals + digest', async () => {
+  const b1 = { childKey: childKey(a), helperId: 'manus' as const, submissionRef: 'tid1' };
+  const running = manusAdapter({ apiKey: 'k', fetch: fakeFetch(() => ({ status: 200, body: { ok: true, task: { id: 'tid1', status: 'running' } } })).f });
+  await assert.rejects(() => running.readResultFor(a, 'tid1', b1), (e: unknown) => kindOf(e) === 'NOT_READY');
+  const { f } = fakeFetch((url) => url.includes('task.detail')
+    ? { status: 200, body: { ok: true, task: { id: 'tid1', status: 'stopped', credit_usage: 15 } } }
+    : { status: 200, body: { ok: true, task_id: 'tid1', messages: [{ type: 'user_message', content: 'q' }, { type: 'assistant_message', content: [{ type: 'text', text: 'the answer' }] }], has_more: false } });
+  const env = await manusAdapter({ apiKey: 'k', fetch: f }).readResultFor(a, 'tid1', b1);
+  assert.equal(env.costUnits, 15, 'actuals come from credit_usage');
+  assert.equal((env.payload as any).text, 'the answer');
+  assert.ok(resultMatchesAssignment(a, env), 'envelope binds to the assignment');
+  assert.ok(typeof env.digest === 'string' && env.digest.length > 0);
+});
+
+test('mock-only: manus reconcile finds the childKey-titled task in task.list', async () => {
+  const { f } = fakeFetch(() => ({ status: 200, body: { ok: true, has_more: false,
+    data: [{ id: 'other', title: 'something else' }, { id: 'mine', title: `agy:${childKey(a)}` }] } }));
+  const ad = manusAdapter({ apiKey: 'k', fetch: f });
+  assert.deepEqual(await ad.reconcile(a), { state: 'FOUND', ref: 'mine' });
+  const none = manusAdapter({ apiKey: 'k', fetch: fakeFetch(() => ({ status: 200, body: { ok: true, has_more: false, data: [] } })).f });
+  assert.equal((await none.reconcile(a)).state, 'NOT_FOUND');
+});
+
+test('mock-only: grok probe lists models with a Bearer header; submit/readResult round-trip via the Responses API', async () => {
+  const { f, calls } = fakeFetch((url, init) => {
+    if (url.endsWith('/v1/models')) return { status: 200, body: { data: [{ id: 'grok-4.7' }, { id: 'grok-4.7-mini' }] } };
+    if (url.endsWith('/v1/responses') && init.method === 'POST') return { status: 200, body: { id: 'resp_1', status: 'completed' } };
+    if (url.includes('/v1/responses/resp_1')) return { status: 200, body: { id: 'resp_1', status: 'completed',
+      output: [{ content: [{ type: 'output_text', text: 'grok answer' }] }], usage: { input_tokens: 1000, output_tokens: 500 } } };
+    return { status: 404, body: {} };
+  });
+  const ad = grokAdapter({ apiKey: 'xkey', fetch: f, model: 'grok-4.7', inputUsdPerMTok: 2, outputUsdPerMTok: 6 });
+  assert.deepEqual((await ad.probe()).models, ['grok-4.7', 'grok-4.7-mini']);
+  assert.equal(calls[0].init.headers.authorization, 'Bearer xkey');
+  const s = await ad.submit(grokA, 'summarise');
+  assert.equal(s.externalRef, 'resp_1');
+  const env = await ad.readResult('resp_1');
+  assert.equal((env.payload as any).text, 'grok answer');
+  assert.ok(Math.abs(env.costUnits - (1000 * 2 + 500 * 6) / 1_000_000) < 1e-12, 'actual USD computed from usage x configured rates');
+  // Without configured rates, actuals stay honestly unknown.
+  const ad2 = grokAdapter({ apiKey: 'xkey', fetch: f, model: 'grok-4.7' });
+  const s2 = await ad2.submit(grokA, 'summarise');
+  const env2 = await ad2.readResult(s2.externalRef);
+  assert.ok(Number.isNaN(env2.costUnits), 'no rates configured -> costUnits NaN, never invented');
+});
+
+test('mock-only: grok uncertain submit never pretends; factory without keys returns the unbound adapter', async () => {
+  const down = grokAdapter({ apiKey: 'k', fetch: fakeFetch(() => 'NETWORK_FAIL').f, model: 'grok-4.7' });
+  await assert.rejects(() => down.submit(grokA, 'x'), (e: unknown) => kindOf(e) === 'SUBMISSION_UNCERTAIN');
+  const un1 = helperAdapterFromEnv('manus', {}, fakeFetch(() => ({ status: 200, body: {} })).f);
+  assert.equal(un1.bound, false);
+  await assert.rejects(() => un1.submit(a, 'x'), /HELPER_NOT_BOUND/);
+  const un2 = helperAdapterFromEnv('grok', { XAI_API_KEY: 'k' }, fakeFetch(() => ({ status: 200, body: {} })).f);
+  assert.equal(un2.bound, false, 'grok without a configured model stays unbound - no silent model default');
+});
