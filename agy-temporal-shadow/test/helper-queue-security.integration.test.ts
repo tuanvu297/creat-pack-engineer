@@ -1,1 +1,178 @@
-Ly8gU2VjdXJpdHkvbmVnYXRpdmUgaW50ZWdyYXRpb24gcHJvb2ZzIGZvciB0aGUgaGFyZGVuZWQKLy8gaGVscGVyLXF1ZXVlIGJvdW5kYXJ5IChwZWVyLVFBIHJvdW5kLCAyMDI2LTExLTAzKS4gUmVhbCBsb2NhbAovLyBQb3N0Z3JlU1FMLiBDb3ZlcnMgd2hhdCB0aGUgZmlyc3QgcXVldWUgdGVzdCBkaWQgbm90OiBzcGVjCi8vIG1vbmV5IGZlbmNlcywgbGVhc2UtZXhwaXJ5IGFuZCBjdXJyZW50LXBhcmVudCBmZW5jZXMgb24KLy8gYmVnaW4vcmVjb3JkL3ZlcmlmeSwgZXhhY3QtcmVmIGFuZCBzdWJtaXNzaW9uLXN0YXRlIGNoZWNrcyBhdAovLyByZXN1bHQgdmVyaWZpY2F0aW9uLCBleHBsaWNpdCByZXN1bHQtdHlwZSByZWplY3Rpb24sIGFuZAovLyBiaW5kaW5nIGR1cmFiaWxpdHkgYWNyb3NzIGEgZnJlc2ggcG9vbCAoInJlc3RhcnQiKS4KaW1wb3J0IHRlc3QgZnJvbSAibm9kZTp0ZXN0IjsKaW1wb3J0IGFzc2VydCBmcm9tICJub2RlOmFzc2VydC9zdHJpY3QiOwppbXBvcnQgeyByZWFkRmlsZSB9IGZyb20gIm5vZGU6ZnMvcHJvbWlzZXMiOwppbXBvcnQgeyByYW5kb21VVUlEIH0gZnJvbSAibm9kZTpjcnlwdG8iOwppbXBvcnQgeyBQb29sIH0gZnJvbSAicGciOwppbXBvcnQgeyBQcm9qZWN0UG9vbCB9IGZyb20gIi4uL3NyYy9wbGF0Zm9ybS9zY29wZWQtcG9vbC5qcyI7CmltcG9ydCB7IFByb2plY3RTZXJ2aWNlIH0gZnJvbSAiLi4vc3JjL3BsYXRmb3JtL3NlcnZpY2UuanMiOwppbXBvcnQgeyBSZXNvdXJjZVN0b3JlIH0gZnJvbSAiLi4vc3JjL3Jlc291cmNlLXN0b3JlLmpzIjsKaW1wb3J0IHsgZGlzY292ZXJSZXNvdXJjZSB9IGZyb20gIi4uL3NyYy9yZXNvdXJjZXMvZGlzY292ZXJ5LmpzIjsKaW1wb3J0IHsgY3JlYXRlV29ya2VyU3VyZmFjZSB9IGZyb20gIi4uL3NyYy9wbGF0Zm9ybS93b3JrZXItc3VyZmFjZS5qcyI7CmltcG9ydCB7IGNyZWF0ZURlbGVnYXRlZENoaWxkLCBiZWdpbkhlbHBlclN1Ym1pc3Npb24sIHJlY29yZEhlbHBlclN1Ym1pc3Npb24sIHZlcmlmeUhlbHBlclJlc3VsdCwgbG9hZFN1Ym1pc3Npb25CaW5kaW5nLCByZWFkVmVyaWZpZWRIZWxwZXJSZXN1bHQgfSBmcm9tICIuLi9zcmMvcGxhdGZvcm0vaGVscGVyLXF1ZXVlLmpzIjsKaW1wb3J0IHsgY2hpbGRLZXksIHR5cGUgSGVscGVyQXNzaWdubWVudCB9IGZyb20gIi4uL3NyYy9wbGF0Zm9ybS9oZWxwZXItZGVsZWdhdGlvbi5qcyI7CmltcG9ydCB7IGRpZ2VzdE9mIH0gZnJvbSAiLi4vc3JjL3BsYXRmb3JtL2RpZ2VzdC5qcyI7CmltcG9ydCB0eXBlIHsgUHJpbmNpcGFsIH0gZnJvbSAiLi4vc3JjL3BsYXRmb3JtL2F1dGguanMiOwoKY29uc3Qgc2NvcGUgPSB7IHRlbmFudElkOiAnZ2wnLCB3b3Jrc3BhY2VJZDogJ2xlZ2FjeS13b3Jrc3BhY2UnLCBwcm9qZWN0SWQ6ICdHRU1JTklfVUlfU1RBR0lORycgfTsKY29uc3Qgb3A6IFByaW5jaXBhbCA9IHsgc3ViamVjdDogJ2NvbnRyb2wtb3AnLCByb2xlOiAnb3BlcmF0b3InLCBzY29wZXM6IFtzY29wZV0gfTsKY29uc3QgZ2VtaW5pOiBQcmluY2lwYWwgPSB7IHN1YmplY3Q6ICdnZW1pbmktd29ya2VyJywgcm9sZTogJ3dvcmtlcicsIHNjb3BlczogW3Njb3BlXSwgd29ya2VySWQ6ICdHRU1JTkktU0VPLVdPUktFUicgfTsKY29uc3Qgb3RoZXI6IFByaW5jaXBhbCA9IHsgc3ViamVjdDogJ290aGVyLXdvcmtlcicsIHJvbGU6ICd3b3JrZXInLCBzY29wZXM6IFtzY29wZV0sIHdvcmtlcklkOiAnT1RIRVItV09SS0VSJyB9Owpjb25zdCBSVCA9ICdDSEFUR1BUX0FTU0lTVEFOVF9DT05UUk9MX1BMQU5FJzsKY29uc3QgU1BFQyA9IHsgZXN0aW1hdGVkUXVvdGE6IDEsIGVzdGltYXRlZENvc3Q6IDAsIHJlcXVpcmVkQ2FwYWJpbGl0aWVzOiBbJ3RleHQnXSB9OwoKdGVzdCgiaGVscGVyIHF1ZXVlIHNlY3VyaXR5OiBzcGVjIGZlbmNlcywgbGVhc2UvcGFyZW50IGZlbmNlcywgZXhhY3QtcmVmIHJlc3VsdCB2ZXJpZmljYXRpb24sIHJlc3RhcnQgZHVyYWJpbGl0eSIsCnsgc2tpcDogIXByb2Nlc3MuZW52LkFHWV9URVNUX0RBVEFCQVNFX1VSTCwgdGltZW91dDogMTgwMDAwIH0sIGFzeW5jICgpID0+IHsKICBjb25zdCBzY2hlbWEgPSBgYWd5X2hxc18ke3JhbmRvbVVVSUQoKS5yZXBsYWNlQWxsKCctJywgJycpfWA7CiAgY29uc3Qgcm9sZSA9IGBhZ3lfaHFzX3JvbGVfJHtyYW5kb21VVUlEKCkucmVwbGFjZUFsbCgnLScsICcnKS5zbGljZSgwLCAxMil9YDsKICBjb25zdCBhZG1pbiA9IG5ldyBQb29sKHsgY29ubmVjdGlvblN0cmluZzogcHJvY2Vzcy5lbnYuQUdZX1RFU1RfREFUQUJBU0VfVVJMIH0pOwogIGNvbnN0IG93bmVyID0gbmV3IFBvb2woeyBjb25uZWN0aW9uU3RyaW5nOiBwcm9jZXNzLmVudi5BR1lfVEVTVF9EQVRBQkFTRV9VUkwsIG9wdGlvbnM6IGAtYyBzZWFyY2hfcGF0aD0ke3NjaGVtYX0scHVibGljYCB9KTsKICBsZXQgcnVudGltZTogUG9vbCB8IHVuZGVmaW5lZDsKICB0cnkgewogICAgYXdhaXQgYWRtaW4ucXVlcnkoYENSRUFURSBTQ0hFTUEgJHtzY2hlbWF9YCk7CiAgICBmb3IgKGNvbnN0IGZpbGUgb2YgWycwMDFfd29ya2VyX2VuZ2luZV92MS5zcWwnLCcwMDJfcmVzb3VyY2Vfb3B0aW1pemF0aW9uLnNxbCcsJzAwM19yZXNvdXJjZV9sZWFybmluZ19lbmdpbmUuc3FsJywnMDA0X3BsYXRmb3JtX3Byb2plY3RzLnNxbCcsJzAwNV9wbGF0Zm9ybV9kaXNwYXRjaC5zcWwnLCcwMDZfZ2xvYmFsX2FwcHJvdmFsX2F1ZGl0LnNxbCcsJzAwN19ydW50aW1lX2NhcGFiaWxpdHlfcHJvamVjdGlvbi5zcWwnLCcwMDhfZHVyYWJsZV9ydW50aW1lLnNxbCcsJzAxMl93b3JrZXJfY2FsbGJhY2tzLnNxbCcsJzAxM19yZXNlcnZhdGlvbl9hY2NvdW50aW5nX2Nsb3N1cmUuc3FsJ10pCiAgICAgIGF3YWl0IG93bmVyLnF1ZXJ5KGF3YWl0IHJlYWRGaWxlKG5ldyBVUkwoYC4uL21pZ3JhdGlvbnMvJHtmaWxlfWAsIGltcG9ydC5tZXRhLnVybCksICd1dGY4JykpOwogICAgY29uc3Qgc2VlZCA9IGF3YWl0IG93bmVyLmNvbm5lY3QoKTsKICAgIHRyeSB7IGF3YWl0IHNlZWQucXVlcnkoJ0JFR0lOJyk7CiAgICAgIGF3YWl0IHNlZWQucXVlcnkoIlNFTEVDVCBzZXRfY29uZmlnKCdhZ3kudGVuYW50X2lkJywkMSx0cnVlKSxzZXRfY29uZmlnKCdhZ3kud29ya3NwYWNlX2lkJywkMix0cnVlKSxzZXRfY29uZmlnKCdhZ3kucHJvamVjdF9pZCcsJDMsdHJ1ZSkiLCBbc2NvcGUudGVuYW50SWQsIHNjb3BlLndvcmtzcGFjZUlkLCBzY29wZS5wcm9qZWN0SWRdKTsKICAgICAgYXdhaXQgc2VlZC5xdWVyeSgiSU5TRVJUIElOVE8gYWd5X3Byb2plY3RzKHRlbmFudF9pZCx3b3Jrc3BhY2VfaWQscHJvamVjdF9pZCxuYW1lLHNvdXJjZV9vZl90cnV0aF9yZWYscG9saWN5X3JlZikgVkFMVUVTKCQxLCQyLCQzLCdHZW1pbmkgc3RhZ2luZycsJ3JlcG86Z2wnLCdwb2xpY3k6Z2wnKSBPTiBDT05GTElDVCBETyBOT1RISU5HIiwgW3Njb3BlLnRlbmFudElkLCBzY29wZS53b3Jrc3BhY2VJZCwgc2NvcGUucHJvamVjdElkXSk7CiAgICAgIGF3YWl0IHNlZWQucXVlcnkoIklOU0VSVCBJTlRPIGFneV9jb25uZWN0b3JzKHRlbmFudF9pZCx3b3Jrc3BhY2VfaWQscHJvamVjdF9pZCxjb25uZWN0b3JfaWQsa2luZCxjYXBhYmlsaXRpZXMsZW5kcG9pbnQsc2VjcmV0X3JlZixlbmFibGVkLHBlcm1pc3Npb25zKSBWQUxVRVMoJDEsJDIsJDMsJ2dlbWluaS14JywnZ2VtaW5pJyxBUlJBWVsndGV4dCddLCdsb2NhbCcsJ3ZhdWx0OnRlc3QnLHRydWUsQVJSQVlbJ3JlYWQnXSkiLCBbc2NvcGUudGVuYW50SWQsIHNjb3BlLndvcmtzcGFjZUlkLCBzY29wZS5wcm9qZWN0SWRdKTsKICAgICAgYXdhaXQgc2VlZC5xdWVyeSgnQ09NTUlUJyk7CiAgICB9IGNhdGNoIChlKSB7IGF3YWl0IHNlZWQucXVlcnkoJ1JPTExCQUNLJyk7IHRocm93IGU7IH0gZmluYWxseSB7IHNlZWQucmVsZWFzZSgpOyB9CiAgICBhd2FpdCBhZG1pbi5xdWVyeShgQ1JFQVRFIFJPTEUgJHtyb2xlfSBOT0xPR0lOIE5PU1VQRVJVU0VSIE5PQllQQVNTUkxTYCk7CiAgICBhd2FpdCBvd25lci5xdWVyeShgR1JBTlQgVVNBR0UgT04gU0NIRU1BICR7c2NoZW1hfSBUTyAke3JvbGV9YCk7CiAgICBhd2FpdCBvd25lci5xdWVyeShgR1JBTlQgU0VMRUNULElOU0VSVCxVUERBVEUgT04gQUxMIFRBQkxFUyBJTiBTQ0hFTUEgJHtzY2hlbWF9IFRPICR7cm9sZX1gKTsKICAgIGF3YWl0IG93bmVyLnF1ZXJ5KGBHUkFOVCBERUxFVEUgT04gYWd5X2Rpc3BhdGNoX3Rhc2tzIFRPICR7cm9sZX1gKTsKICAgIGF3YWl0IG93bmVyLnF1ZXJ5KGBHUkFOVCBVU0FHRSwgU0VMRUNUIE9OIEFMTCBTRVFVRU5DRVMgSU4gU0NIRU1BICR7c2NoZW1hfSBUTyAke3JvbGV9YCk7CiAgICBydW50aW1lID0gbmV3IFBvb2woeyBjb25uZWN0aW9uU3RyaW5nOiBwcm9jZXNzLmVudi5BR1lfVEVTVF9EQVRBQkFTRV9VUkwsIG9wdGlvbnM6IGAtYyBzZWFyY2hfcGF0aD0ke3NjaGVtYX0scHVibGljIC1jIHJvbGU9JHtyb2xlfWAgfSk7CiAgICBjb25zdCBydDogUG9vbCA9IHJ1bnRpbWU7CiAgICBjb25zdCBzY29wZWRTZXR1cCA9IG5ldyBQcm9qZWN0UG9vbChydW50aW1lLCBzY29wZSwgJ3NldHVwJykuYXNQb29sKCk7CiAgICBhd2FpdCBzY29wZWRTZXR1cC5xdWVyeShgVVBEQVRFIGFneV9wcm9qZWN0cyBTRVQgc3RhdHVzPSdBQ1RJVkUnLHBlcm1pc3Npb25zPUFSUkFZWydyZWFkJ10scmVzb3VyY2VfcG9saWN5PSd7Im1heENvbmN1cnJlbnRUYXNrcyI6NCwicXVvdGFDYXAiOjEwMCwic3BlbmRDYXAiOjAsInJlc2VydmF0aW9uIjoxfSdgKTsKICAgIGNvbnN0IHJlc291cmNlcyA9IG5ldyBSZXNvdXJjZVN0b3JlKG93bmVyKTsKICAgIGNvbnN0IHByb2ZpbGUgPSB7IC4uLmRpc2NvdmVyUmVzb3VyY2UoJ0dFTUlOSS1TRU8tV09SS0VSJywgWyd0ZXh0J10sIERhdGUubm93KCkpLAogICAgICBzdGF0dXM6ICdSRUFEWScgYXMgY29uc3QsIHJlYWR5OiB0cnVlLCBxdW90YVJlbWFpbmluZzogMTAsIHF1b3RhUmVzZXJ2ZTogMCwgbWF4Q29uY3VycmVuY3k6IDQsCiAgICAgIHBhc3NSYXRlOiAuOTUsIHJldHJ5UmF0ZTogMCwgZXJyb3JSYXRlOiAwLCBjb250ZXh0TG9zc1Jpc2s6IDAsIGNvc3RQZXJUYXNrOiAwLCBzcGVuZENhcDogMCwgcXVvdGFDYXA6IDEwLAogICAgICBwZXJtaXNzaW9uczogWydyZWFkJ10gfTsKICAgIGF3YWl0IHJlc291cmNlcy5yZWdpc3Rlcihwcm9maWxlIGFzIGFueSwgJ2dlbWluaScpOwogICAgYXdhaXQgb3duZXIucXVlcnkoYFVQREFURSBhZ3lfd29ya2VycyBTRVQgbWV0YWRhdGE9JDEgV0hFUkUgd29ya2VyX2lkPSdHRU1JTkktU0VPLVdPUktFUidgLAogICAgICBbSlNPTi5zdHJpbmdpZnkoeyBiaW5kaW5nczogeyBtaXNzaW9uczogWydHRU1JTklfVUlfU1RBR0lORyddLCB0YXNrX3R5cGVzOiBbJ2hlbGxvJywgJ2hlbHBlcl9kZWxlZ2F0aW9uJ10sIHJlcGx5X3RhcmdldHM6IFtSVF0gfSB9KV0pOwogICAgY29uc3Qgc2VydmljZSA9IG5ldyBQcm9qZWN0U2VydmljZShydW50aW1lLCBzY29wZSwgb3ApOwogICAgYXdhaXQgc2VydmljZS5leGVjdXRlKCcvam9icycsICdQT1NUJywgeyBpZGVtcG90ZW5jeV9rZXk6ICdqb2ItcGFyZW50Jywgb2JqZWN0aXZlOiAncGFyZW50JywKICAgICAgdGFza3M6IFt7IG5hbWU6ICdwYXJlbnQnLCBpZGVtcG90ZW5jeUtleTogJ2pvYi1wYXJlbnQtdCcsIHRhc2tUeXBlOiAnaGVsbG8nLCByZXF1aXJlZENhcGFiaWxpdGllczogWyd0ZXh0J10sIHJlcXVpcmVkUGVybWlzc2lvbnM6IFsncmVhZCddLAogICAgICAgIHBlcm1pc3Npb25HcmFudGVkOiB0cnVlLCBzYWZldHlBcHByb3ZlZDogdHJ1ZSwgZXN0aW1hdGVkUXVvdGE6IDEsIGVzdGltYXRlZENvc3Q6IDAsIG1heFJldHJ5OiAwLCBwcmlvcml0eTogMTAsCiAgICAgICAgcGF5bG9hZDogeyBtaXNzaW9uX2lkOiAnR0VNSU5JX1VJX1NUQUdJTkcnLCB0YXJnZXRfd29ya2VyX2lkOiAnR0VNSU5JLVNFTy1XT1JLRVInLCBjYWxsYmFja190YXJnZXQ6IFJUIH0gfV0gfSk7CiAgICBjb25zdCBzdXJmYWNlID0gY3JlYXRlV29ya2VyU3VyZmFjZShydW50aW1lKTsKICAgIGNvbnN0IG93bmVyU2NvcGVkID0gYXN5bmMgKHNxbDogc3RyaW5nLCBwYXJhbXM6IHVua25vd25bXSkgPT4gewogICAgICBjb25zdCBjID0gYXdhaXQgb3duZXIuY29ubmVjdCgpOwogICAgICB0cnkgeyBhd2FpdCBjLnF1ZXJ5KCdCRUdJTicpOwogICAgICAgIGF3YWl0IGMucXVlcnkoIlNFTEVDVCBzZXRfY29uZmlnKCdhZ3kudGVuYW50X2lkJywkMSx0cnVlKSxzZXRfY29uZmlnKCdhZ3kud29ya3NwYWNlX2lkJywkMix0cnVlKSxzZXRfY29uZmlnKCdhZ3kucHJvamVjdF9pZCcsJDMsdHJ1ZSkiLCBbc2NvcGUudGVuYW50SWQsIHNjb3BlLndvcmtzcGFjZUlkLCBzY29wZS5wcm9qZWN0SWRdKTsKICAgICAgICBjb25zdCByID0gYXdhaXQgYy5xdWVyeShzcWwsIHBhcmFtcyBhcyBhbnkpOyBhd2FpdCBjLnF1ZXJ5KCdDT01NSVQnKTsgcmV0dXJuIHI7CiAgICAgIH0gY2F0Y2ggKGUpIHsgYXdhaXQgYy5xdWVyeSgnUk9MTEJBQ0snKTsgdGhyb3cgZTsgfSBmaW5hbGx5IHsgYy5yZWxlYXNlKCk7IH0KICAgIH07CiAgICBjb25zdCBwYXJlbnRDbGFpbSA9IGF3YWl0IHN1cmZhY2UoZ2VtaW5pLCBzY29wZSwgJ2NsYWltJywge30pOwogICAgYXNzZXJ0LmVxdWFsKHBhcmVudENsYWltLnN0YXR1cywgJ0xFQVNFRCcpOwogICAgY29uc3QgcGFyZW50SWQgPSBwYXJlbnRDbGFpbS50YXNrLnRhc2tJZDsKICAgIGNvbnN0IGFzc2lnbm1lbnQgPSAob3ZlcjogUGFydGlhbDxIZWxwZXJBc3NpZ25tZW50PiA9IHt9KTogSGVscGVyQXNzaWdubWVudCA9PiAoewogICAgICBwYXJlbnRXb3JrZXJJZDogJ0dFTUlOSS1TRU8tV09SS0VSJywgcGFyZW50VGFza0lkOiBwYXJlbnRJZCwgcGFyZW50QXR0ZW1wdDogMSwKICAgICAgc3VidGFza0tleTogJ3NlYy0xJywgaGVscGVySWQ6ICdncm9rJywgc2NvcGU6IHsgLi4uc2NvcGUgfSwKICAgICAgc291cmNlQWxsb3dsaXN0OiBbJ2h0dHBzOi8vZXhhbXBsZS5jb20nXSwgdG9vbEFsbG93bGlzdDogWydicm93c2VyLnJlYWQnXSwKICAgICAgYnVkZ2V0OiB7IHVuaXQ6ICdwcm92aWRlcl9jcmVkaXRzJywgY2FwOiA1LCBzcGVudDogMCwgZW5mb3JjZW1lbnQ6ICdydW50aW1lJywgaGFyZDogdHJ1ZSB9LCBhY3R1YWxDb3N0Qm91bmRlZDogdHJ1ZSwKICAgICAgZXhwaXJlc0F0TXM6IERhdGUubm93KCkgKyA2MDBfMDAwLCByZXBseVRhcmdldDogUlQsCiAgICAgIGVxdWlwbWVudDogeyBwaW5uZWRTb3VyY2U6IHsgcmVmOiAnZG9jOmZpeHR1cmUtaW5wdXQnLCBkaWdlc3Q6ICdhJy5yZXBlYXQoNjQpIH0sCiAgICBzdXJmYWNlOiB7IGtpbmQ6ICdhcGknLCBtb2RlbDogJ2ZpeHR1cmUtbW9kZWwnLCBhdXRoQmluZGluZzogJ2ZpeHR1cmU6YmluZGluZycgfSwKICAgIHNraWxsUmVmOiAnc2tpbGw6Zml4dHVyZScsIGNyaXRlcmlhOiBbJ291dHB1dCBhZGRyZXNzZXMgdGhlIHBpbm5lZCBzb3VyY2UnXSwgcmV3b3JrOiB7IG1heEF0dGVtcHRzOiAxIH0gfSwgLi4ub3ZlciB9KTsKCiAgICAvLyAtLS0gU1BFQyBtb25leSBmZW5jZXM6IG5vdGhpbmcgaXMgd3JpdHRlbiBvbiByZWplY3Rpb24uCiAgICBjb25zdCBhU3BlYyA9IGFzc2lnbm1lbnQoeyBzdWJ0YXNrS2V5OiAnc2VjLXNwZWMnIH0pOwogICAgYXdhaXQgYXNzZXJ0LnJlamVjdHMoKCkgPT4gY3JlYXRlRGVsZWdhdGVkQ2hpbGQocnQsIHNjb3BlLCBnZW1pbmksIG9wLCBhU3BlYywgeyAuLi5TUEVDLCBlc3RpbWF0ZWRRdW90YTogLTEgfSksIC9TUEVDX0lOVkFMSUQvKTsKICAgIGF3YWl0IGFzc2VydC5yZWplY3RzKCgpID0+IGNyZWF0ZURlbGVnYXRlZENoaWxkKHJ0LCBzY29wZSwgZ2VtaW5pLCBvcCwgYVNwZWMsIHsgLi4uU1BFQywgZXN0aW1hdGVkQ29zdDogTnVtYmVyLk5hTiB9KSwgL1NQRUNfSU5WQUxJRC8pOwogICAgYXdhaXQgYXNzZXJ0LnJlamVjdHMoKCkgPT4gY3JlYXRlRGVsZWdhdGVkQ2hpbGQocnQsIHNjb3BlLCBnZW1pbmksIG9wLCBhU3BlYywgeyAuLi5TUEVDLCBlc3RpbWF0ZWRDb3N0OiBJbmZpbml0eSB9KSwgL1NQRUNfSU5WQUxJRC8pOwogICAgYXdhaXQgYXNzZXJ0LnJlamVjdHMoKCkgPT4gbG9hZFN1Ym1pc3Npb25CaW5kaW5nKHJ0LCBzY29wZSwgYVNwZWMpLCAvQ0hJTERfTk9UX0ZPVU5ELywgJ3JlamVjdGVkIHNwZWNzIGNyZWF0ZWQgbm8gY2hpbGQnKTsKCiAgICAvLyAtLS0gSGFwcHkgY2hpbGQsIGNsYWltZWQuCiAgICBjb25zdCBhMSA9IGFzc2lnbm1lbnQoKTsKICAgIGNvbnN0IGMxID0gYXdhaXQgY3JlYXRlRGVsZWdhdGVkQ2hpbGQocnQsIHNjb3BlLCBnZW1pbmksIG9wLCBhMSwgU1BFQyk7CiAgICBjb25zdCBjaGlsZENsYWltID0gYXdhaXQgc3VyZmFjZShnZW1pbmksIHNjb3BlLCAnY2xhaW0nLCB7fSk7CiAgICBhc3NlcnQuZXF1YWwoY2hpbGRDbGFpbS50YXNrLnRhc2tJZCwgYzEuY2hpbGRUYXNrSWQpOwogICAgY29uc3QgbHQgPSBjaGlsZENsYWltLnRhc2subGVhc2VUb2tlbjsgY29uc3QgYXR0ID0gY2hpbGRDbGFpbS50YXNrLmF0dGVtcHQ7CgogICAgLy8gLS0tIFJlY29yZCBiZWZvcmUgYmVnaW4gaXMgZGVuaWVkOyBiZWdpbiB0d2ljZSBmZW5jZXMuCiAgICBhd2FpdCBhc3NlcnQucmVqZWN0cygoKSA9PiByZWNvcmRIZWxwZXJTdWJtaXNzaW9uKHJ0LCBzY29wZSwgZ2VtaW5pLCBjMS5jaGlsZFRhc2tJZCwgbHQsIGF0dCwgJ3JlZi14JyksIC9TVUJNSVNTSU9OX1JFQ09SRF9ERU5JRUQvKTsKICAgIGFzc2VydC5lcXVhbCgoYXdhaXQgYmVnaW5IZWxwZXJTdWJtaXNzaW9uKHJ0LCBzY29wZSwgZ2VtaW5pLCBjMS5jaGlsZFRhc2tJZCwgbHQsIGF0dCkpLnN0YXRlLCAnTkVXJyk7CgogICAgLy8gLS0tIFZlcmlmeSB3aGlsZSBJTl9GTElHSFQgKG5vdCB5ZXQgU1VCTUlUVEVEKSBpcyBkZW5pZWQuCiAgICBjb25zdCBwYXlsb2FkID0geyBmaW5kaW5nczogWyd4J10gfTsKICAgIGNvbnN0IGVudkZvciA9IChyZWY6IHN0cmluZykgPT4gKHsgY2hpbGRLZXk6IGNoaWxkS2V5KGExKSwgaGVscGVySWQ6ICdncm9rJyBhcyBjb25zdCwgZXh0ZXJuYWxSZWY6IHJlZiwKICAgICAgZGlnZXN0OiBkaWdlc3RPZihwYXlsb2FkKSwgcGF5bG9hZCwgY29zdFVuaXRzOiAxIH0pOwogICAgYXdhaXQgYXNzZXJ0LnJlamVjdHMoKCkgPT4gdmVyaWZ5SGVscGVyUmVzdWx0KHJ0LCBzY29wZSwgZ2VtaW5pLCBhMSwgZW52Rm9yKCdncm9rLXJlZi0xJykgYXMgYW55KSwgL1NVQk1JU1NJT05fU1RBVEVfTUlTTUFUQ0gvKTsKICAgIGF3YWl0IHJlY29yZEhlbHBlclN1Ym1pc3Npb24ocnQsIHNjb3BlLCBnZW1pbmksIGMxLmNoaWxkVGFza0lkLCBsdCwgYXR0LCAnZ3Jvay1yZWYtMScpOwoKICAgIC8vIC0tLSBFeGFjdC1yZWYgKyB0eXBlICsgY29zdCBmZW5jZXMgYXQgdmVyaWZpY2F0aW9uLgogICAgYXdhaXQgYXNzZXJ0LnJlamVjdHMoKCkgPT4gdmVyaWZ5SGVscGVyUmVzdWx0KHJ0LCBzY29wZSwgZ2VtaW5pLCBhMSwgZW52Rm9yKCdncm9rLXJlZi1PVEhFUicpIGFzIGFueSksIC9SRVNVTFRfUkVGX01JU01BVENILyk7CiAgICBhd2FpdCBhc3NlcnQucmVqZWN0cygoKSA9PiB2ZXJpZnlIZWxwZXJSZXN1bHQocnQsIHNjb3BlLCBvdGhlciwgYTEsIGVudkZvcignZ3Jvay1yZWYtMScpIGFzIGFueSksIC9QQVJFTlRfTUlTTUFUQ0gvKTsKICAgIGF3YWl0IGFzc2VydC5yZWplY3RzKCgpID0+IHZlcmlmeUhlbHBlclJlc3VsdChydCwgc2NvcGUsIGdlbWluaSwgYTEsIHsgLi4uZW52Rm9yKCdncm9rLXJlZi0xJyksIGNvc3RVbml0czogLTEgfSBhcyBhbnkpLCAvUkVTVUxUX0NPU1RfSU5WQUxJRC8pOwogICAgYXdhaXQgYXNzZXJ0LnJlamVjdHMoKCkgPT4gdmVyaWZ5SGVscGVyUmVzdWx0KHJ0LCBzY29wZSwgZ2VtaW5pLCBhMSwgeyAuLi5lbnZGb3IoJ2dyb2stcmVmLTEnKSwgY29zdFVuaXRzOiAnb25lJyB9IGFzIGFueSksIC9SRVNVTFRfQ09TVF9JTlZBTElELyk7CiAgICBhd2FpdCBhc3NlcnQucmVqZWN0cygoKSA9PiB2ZXJpZnlIZWxwZXJSZXN1bHQocnQsIHNjb3BlLCBnZW1pbmksIGExLCB7IC4uLmVudkZvcignZ3Jvay1yZWYtMScpLCBjb3N0VW5pdHM6IEluZmluaXR5IH0gYXMgYW55KSwgL1JFU1VMVF9DT1NUX0lOVkFMSUQvKTsKICAgIGF3YWl0IGFzc2VydC5yZWplY3RzKCgpID0+IHZlcmlmeUhlbHBlclJlc3VsdChydCwgc2NvcGUsIGdlbWluaSwgYTEsIHsgLi4uZW52Rm9yKCdncm9rLXJlZi0xJyksIHBheWxvYWQ6IHVuZGVmaW5lZCB9IGFzIGFueSksIC9SRVNVTFRfUEFZTE9BRF9JTlZBTElELyk7CiAgICBhd2FpdCBhc3NlcnQucmVqZWN0cygoKSA9PiB2ZXJpZnlIZWxwZXJSZXN1bHQocnQsIHNjb3BlLCBnZW1pbmksIGExLCB7IC4uLmVudkZvcignZ3Jvay1yZWYtMScpLCBkaWdlc3Q6IDQyIH0gYXMgYW55KSwgL1JFU1VMVF9UWVBFX0lOVkFMSUQvKTsKICAgIGF3YWl0IGFzc2VydC5yZWplY3RzKCgpID0+IHZlcmlmeUhlbHBlclJlc3VsdChydCwgc2NvcGUsIGdlbWluaSwgYTEsIHsgLi4uZW52Rm9yKCdncm9rLXJlZi0xJyksIGhlbHBlcklkOiAnZXZpbCcgfSBhcyBhbnkpLCAvUkVTVUxUX1RZUEVfSU5WQUxJRC8pOwogICAgLy8gTmFOIGNvc3QgKHVua25vd24gYWN0dWFscykgaXMgdGhlIHNhbmN0aW9uZWQgcGFzcy10aHJvdWdoLgogICAgYXNzZXJ0LmRlZXBFcXVhbChhd2FpdCB2ZXJpZnlIZWxwZXJSZXN1bHQocnQsIHNjb3BlLCBnZW1pbmksIGExLCB7IC4uLmVudkZvcignZ3Jvay1yZWYtMScpLCBjb3N0VW5pdHM6IE51bWJlci5OYU4gfSBhcyBhbnkpLCB7IHZlcmlmaWVkOiB0cnVlIH0pOwoKICAgIC8vIC0tLSBUaGUgY29tcG9zZWQgYm91bmRhcnk6IGJpbmRpbmcgZnJvbSB0aGUgcXVldWUsIHJlYWRlciBzZWVzIG9ubHkgdGhlIHBlcnNpc3RlZCByZWYuCiAgICBsZXQgc2VlblJlZiA9ICcnOwogICAgY29uc3QgcmVhZGVyID0geyBhc3luYyByZWFkUmVzdWx0Rm9yKF9hOiBIZWxwZXJBc3NpZ25tZW50LCByZWY6IHN0cmluZykgeyBzZWVuUmVmID0gcmVmOyByZXR1cm4gZW52Rm9yKHJlZik7IH0gfTsKICAgIGNvbnN0IGVudiA9IGF3YWl0IHJlYWRWZXJpZmllZEhlbHBlclJlc3VsdChydCwgc2NvcGUsIGdlbWluaSwgYTEsIHJlYWRlciBhcyBhbnkpOwogICAgYXNzZXJ0LmVxdWFsKHNlZW5SZWYsICdncm9rLXJlZi0xJyk7CiAgICBhc3NlcnQuZXF1YWwoZW52LmV4dGVybmFsUmVmLCAnZ3Jvay1yZWYtMScpOwoKICAgIC8vIC0tLSBGMTogYSBmaW5pdGUgYWN0dWFsIG92ZXIgdGhlIGJ1ZGdldCdzIHJlbWFpbmluZyByb29tIGlzIGRlbmllZC4KICAgIGF3YWl0IGFzc2VydC5yZWplY3RzKCgpID0+IHZlcmlmeUhlbHBlclJlc3VsdChydCwgc2NvcGUsIGdlbWluaSwgYTEsIHsgLi4uZW52Rm9yKCdncm9rLXJlZi0xJyksIGNvc3RVbml0czogOTkgfSBhcyBhbnkpLCAvUkVTVUxUX0NPU1RfRVhDRUVEU19CVURHRVQvKTsKICAgIC8vIC0tLSBGNDogYSBzcGVjIHByaWNlZCBhYm92ZSB0aGUgYXNzaWdubWVudCBjYXAgaXMgZGVuaWVkIHVwIGZyb250LgogICAgYXdhaXQgYXNzZXJ0LnJlamVjdHMoKCkgPT4gY3JlYXRlRGVsZWdhdGVkQ2hpbGQocnQsIHNjb3BlLCBnZW1pbmksIG9wLCBhc3NpZ25tZW50KHsgc3VidGFza0tleTogJ3NlYy1zcGVjMicgfSksIHsgLi4uU1BFQywgZXN0aW1hdGVkQ29zdDogOTkgfSksIC9TUEVDX0VYQ0VFRFNfQlVER0VULyk7CiAgICAvLyAtLS0gRjM6IHNhbWUgY2hpbGRLZXksIGRyaWZ0ZWQgcmVwbHkgdGFyZ2V0IC0+IHRoZSBwcmUtZXhpc3RpbmcgY2hpbGQgaXMgTk9UIHNpbGVudGx5IHJldHVybmVkLgogICAgYXdhaXQgYXNzZXJ0LnJlamVjdHMoKCkgPT4gY3JlYXRlRGVsZWdhdGVkQ2hpbGQocnQsIHNjb3BlLCBnZW1pbmksIG9wLCBhc3NpZ25tZW50KHsgcmVwbHlUYXJnZXQ6ICdTT01FV0hFUkVfRUxTRScgfSksIFNQRUMpLCAvQ0hJTERfQklORElOR19NSVNNQVRDSC8pOwogICAgLy8gLS0tIEYyOiByb2xlIGNoZWNrICsgZW1wdHktcmVmIHdlZGdlLCBvbiBhIHNlY29uZCBjaGlsZC4KICAgIGNvbnN0IGEyID0gYXNzaWdubWVudCh7IHN1YnRhc2tLZXk6ICdzZWMtMicgfSk7CiAgICBjb25zdCBjMiA9IGF3YWl0IGNyZWF0ZURlbGVnYXRlZENoaWxkKHJ0LCBzY29wZSwgZ2VtaW5pLCBvcCwgYTIsIFNQRUMpOwogICAgY29uc3QgY2xhaW0yID0gYXdhaXQgc3VyZmFjZShnZW1pbmksIHNjb3BlLCAnY2xhaW0nLCB7fSk7CiAgICBhc3NlcnQuZXF1YWwoY2xhaW0yLnRhc2sudGFza0lkLCBjMi5jaGlsZFRhc2tJZCk7CiAgICBhd2FpdCBhc3NlcnQucmVqZWN0cygoKSA9PiBiZWdpbkhlbHBlclN1Ym1pc3Npb24ocnQsIHNjb3BlLCBvcCwgYzIuY2hpbGRUYXNrSWQsIGNsYWltMi50YXNrLmxlYXNlVG9rZW4sIGNsYWltMi50YXNrLmF0dGVtcHQpLCAvUEFSRU5UX1JFUVVJUkVELyk7CiAgICBhc3NlcnQuZXF1YWwoKGF3YWl0IGJlZ2luSGVscGVyU3VibWlzc2lvbihydCwgc2NvcGUsIGdlbWluaSwgYzIuY2hpbGRUYXNrSWQsIGNsYWltMi50YXNrLmxlYXNlVG9rZW4sIGNsYWltMi50YXNrLmF0dGVtcHQpKS5zdGF0ZSwgJ05FVycpOwogICAgYXdhaXQgYXNzZXJ0LnJlamVjdHMoKCkgPT4gcmVjb3JkSGVscGVyU3VibWlzc2lvbihydCwgc2NvcGUsIGdlbWluaSwgYzIuY2hpbGRUYXNrSWQsIGNsYWltMi50YXNrLmxlYXNlVG9rZW4sIGNsYWltMi50YXNrLmF0dGVtcHQsICcnKSwgL1NVQk1JU1NJT05fUkVGX0lOVkFMSUQvKTsKICAgIGF3YWl0IHJlY29yZEhlbHBlclN1Ym1pc3Npb24ocnQsIHNjb3BlLCBnZW1pbmksIGMyLmNoaWxkVGFza0lkLCBjbGFpbTIudGFzay5sZWFzZVRva2VuLCBjbGFpbTIudGFzay5hdHRlbXB0LCAnZ3Jvay1yZWYtMicpOwoKICAgIC8vIC0tLSBSZXN0YXJ0IGR1cmFiaWxpdHk6IGEgZnJlc2ggcG9vbCBsb2FkcyB0aGUgc2FtZSBiaW5kaW5nLgogICAgY29uc3QgcnVudGltZTIgPSBuZXcgUG9vbCh7IGNvbm5lY3Rpb25TdHJpbmc6IHByb2Nlc3MuZW52LkFHWV9URVNUX0RBVEFCQVNFX1VSTCwgb3B0aW9uczogYC1jIHNlYXJjaF9wYXRoPSR7c2NoZW1hfSxwdWJsaWMgLWMgcm9sZT0ke3JvbGV9YCB9KTsKICAgIGNvbnN0IGJpbmRpbmcgPSBhd2FpdCBsb2FkU3VibWlzc2lvbkJpbmRpbmcocnVudGltZTIsIHNjb3BlLCBhMSk7CiAgICBhc3NlcnQuZXF1YWwoYmluZGluZy5zdWJtaXNzaW9uUmVmLCAnZ3Jvay1yZWYtMScpOwogICAgYXdhaXQgcnVudGltZTIuZW5kKCk7CgogICAgLy8gLS0tIFBhcmVudCBzdXBlcnNlZGVkOiBhdHRlbXB0IGJ1bXAgZGVuaWVzIHZlcmlmeSBBTkQgYmVnaW4uCiAgICBhd2FpdCBvd25lclNjb3BlZChgVVBEQVRFIGFneV90YXNrcyBTRVQgYXR0ZW1wdD0yIFdIRVJFIHRhc2tfaWQ9JDFgLCBbcGFyZW50SWRdKTsKICAgIGF3YWl0IGFzc2VydC5yZWplY3RzKCgpID0+IHZlcmlmeUhlbHBlclJlc3VsdChydCwgc2NvcGUsIGdlbWluaSwgYTEsIGVudkZvcignZ3Jvay1yZWYtMScpIGFzIGFueSksIC9QQVJFTlRfQVRURU1QVF9NSVNNQVRDSC8pOwogICAgYXdhaXQgYXNzZXJ0LnJlamVjdHMoKCkgPT4gYmVnaW5IZWxwZXJTdWJtaXNzaW9uKHJ0LCBzY29wZSwgZ2VtaW5pLCBjMS5jaGlsZFRhc2tJZCwgbHQsIGF0dCksIC9QQVJFTlRfQVRURU1QVF9NSVNNQVRDSC8pOwogICAgYXdhaXQgb3duZXJTY29wZWQoYFVQREFURSBhZ3lfdGFza3MgU0VUIGF0dGVtcHQ9MSBXSEVSRSB0YXNrX2lkPSQxYCwgW3BhcmVudElkXSk7CgogICAgLy8gLS0tIExlYXNlLWV4cGlyeSBmZW5jZXMuCiAgICBhd2FpdCBvd25lclNjb3BlZChgVVBEQVRFIGFneV90YXNrcyBTRVQgbGVhc2VfZXhwaXJlc19hdD1ub3coKS1pbnRlcnZhbCAnMSBtaW51dGUnIFdIRVJFIHRhc2tfaWQ9JDFgLCBbcGFyZW50SWRdKTsKICAgIGF3YWl0IGFzc2VydC5yZWplY3RzKCgpID0+IHZlcmlmeUhlbHBlclJlc3VsdChydCwgc2NvcGUsIGdlbWluaSwgYTEsIGVudkZvcignZ3Jvay1yZWYtMScpIGFzIGFueSksIC9QQVJFTlRfTEVBU0VfRVhQSVJFRC8pOwogICAgYXdhaXQgb3duZXJTY29wZWQoYFVQREFURSBhZ3lfdGFza3MgU0VUIGxlYXNlX2V4cGlyZXNfYXQ9bm93KCkraW50ZXJ2YWwgJzMwIG1pbnV0ZXMnIFdIRVJFIHRhc2tfaWQ9JDFgLCBbcGFyZW50SWRdKTsKICAgIGF3YWl0IG93bmVyU2NvcGVkKGBVUERBVEUgYWd5X3Rhc2tzIFNFVCBsZWFzZV9leHBpcmVzX2F0PW5vdygpLWludGVydmFsICcxIG1pbnV0ZScgV0hFUkUgdGFza19pZD0kMWAsIFtjMS5jaGlsZFRhc2tJZF0pOwogICAgYXdhaXQgYXNzZXJ0LnJlamVjdHMoKCkgPT4gYmVnaW5IZWxwZXJTdWJtaXNzaW9uKHJ0LCBzY29wZSwgZ2VtaW5pLCBjMS5jaGlsZFRhc2tJZCwgbHQsIGF0dCksIC9MRUFTRV9FWFBJUkVELyk7CiAgICBhd2FpdCBvd25lclNjb3BlZChgVVBEQVRFIGFneV90YXNrcyBTRVQgbGVhc2VfZXhwaXJlc19hdD1ub3coKStpbnRlcnZhbCAnMzAgbWludXRlcycgV0hFUkUgdGFza19pZD0kMWAsIFtjMS5jaGlsZFRhc2tJZF0pOwogICAgYXNzZXJ0LmRlZXBFcXVhbChhd2FpdCB2ZXJpZnlIZWxwZXJSZXN1bHQocnQsIHNjb3BlLCBnZW1pbmksIGExLCBlbnZGb3IoJ2dyb2stcmVmLTEnKSBhcyBhbnkpLCB7IHZlcmlmaWVkOiB0cnVlIH0sICdzdGF0ZSByZXN0b3JlZDogdmVyaWZpY2F0aW9uIHBhc3NlcyBhZ2FpbicpOwogIH0gZmluYWxseSB7CiAgICBpZiAocnVudGltZSkgYXdhaXQgcnVudGltZS5lbmQoKS5jYXRjaCgoKSA9PiB7fSk7CiAgICBhd2FpdCBvd25lci5lbmQoKS5jYXRjaCgoKSA9PiB7fSk7CiAgICBhd2FpdCBhZG1pbi5xdWVyeShgRFJPUCBTQ0hFTUEgJHtzY2hlbWF9IENBU0NBREVgKS5jYXRjaCgoKSA9PiB7fSk7CiAgICBhd2FpdCBhZG1pbi5xdWVyeShgRFJPUCBST0xFIElGIEVYSVNUUyAke3JvbGV9YCkuY2F0Y2goKCkgPT4ge30pOwogICAgYXdhaXQgYWRtaW4uZW5kKCkuY2F0Y2goKCkgPT4ge30pOwogIH0KfSk7Cg==
+// Security/negative integration proofs for the hardened
+// helper-queue boundary (peer-QA round, 2026-11-03). Real local
+// PostgreSQL. Covers what the first queue test did not: spec
+// money fences, lease-expiry and current-parent fences on
+// begin/record/verify, exact-ref and submission-state checks at
+// result verification, explicit result-type rejection, and
+// binding durability across a fresh pool ("restart").
+import test from "node:test";
+import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import { randomUUID } from "node:crypto";
+import { Pool } from "pg";
+import { ProjectPool } from "../src/platform/scoped-pool.js";
+import { ProjectService } from "../src/platform/service.js";
+import { ResourceStore } from "../src/resource-store.js";
+import { discoverResource } from "../src/resources/discovery.js";
+import { createWorkerSurface } from "../src/platform/worker-surface.js";
+import { createDelegatedChild, beginHelperSubmission, recordHelperSubmission, verifyHelperResult, loadSubmissionBinding, readVerifiedHelperResult } from "../src/platform/helper-queue.js";
+import { childKey, type HelperAssignment } from "../src/platform/helper-delegation.js";
+import { digestOf } from "../src/platform/digest.js";
+import type { Principal } from "../src/platform/auth.js";
+
+const scope = { tenantId: 'gl', workspaceId: 'legacy-workspace', projectId: 'GEMINI_UI_STAGING' };
+const op: Principal = { subject: 'control-op', role: 'operator', scopes: [scope] };
+const gemini: Principal = { subject: 'gemini-worker', role: 'worker', scopes: [scope], workerId: 'GEMINI-SEO-WORKER' };
+const other: Principal = { subject: 'other-worker', role: 'worker', scopes: [scope], workerId: 'OTHER-WORKER' };
+const RT = 'CHATGPT_ASSISTANT_CONTROL_PLANE';
+const SPEC = { estimatedQuota: 1, estimatedCost: 0, requiredCapabilities: ['text'] };
+
+test("helper queue security: spec fences, lease/parent fences, exact-ref result verification, restart durability",
+{ skip: !process.env.AGY_TEST_DATABASE_URL, timeout: 180000 }, async () => {
+  const schema = `agy_hqs_${randomUUID().replaceAll('-', '')}`;
+  const role = `agy_hqs_role_${randomUUID().replaceAll('-', '').slice(0, 12)}`;
+  const admin = new Pool({ connectionString: process.env.AGY_TEST_DATABASE_URL });
+  const owner = new Pool({ connectionString: process.env.AGY_TEST_DATABASE_URL, options: `-c search_path=${schema},public` });
+  let runtime: Pool | undefined;
+  try {
+    await admin.query(`CREATE SCHEMA ${schema}`);
+    for (const file of ['001_worker_engine_v1.sql','002_resource_optimization.sql','003_resource_learning_engine.sql','004_platform_projects.sql','005_platform_dispatch.sql','006_global_approval_audit.sql','007_runtime_capability_projection.sql','008_durable_runtime.sql','012_worker_callbacks.sql','013_reservation_accounting_closure.sql'])
+      await owner.query(await readFile(new URL(`../migrations/${file}`, import.meta.url), 'utf8'));
+    const seed = await owner.connect();
+    try { await seed.query('BEGIN');
+      await seed.query("SELECT set_config('agy.tenant_id',$1,true),set_config('agy.workspace_id',$2,true),set_config('agy.project_id',$3,true)", [scope.tenantId, scope.workspaceId, scope.projectId]);
+      await seed.query("INSERT INTO agy_projects(tenant_id,workspace_id,project_id,name,source_of_truth_ref,policy_ref) VALUES($1,$2,$3,'Gemini staging','repo:gl','policy:gl') ON CONFLICT DO NOTHING", [scope.tenantId, scope.workspaceId, scope.projectId]);
+      await seed.query("INSERT INTO agy_connectors(tenant_id,workspace_id,project_id,connector_id,kind,capabilities,endpoint,secret_ref,enabled,permissions) VALUES($1,$2,$3,'gemini-x','gemini',ARRAY['text'],'local','vault:test',true,ARRAY['read'])", [scope.tenantId, scope.workspaceId, scope.projectId]);
+      await seed.query('COMMIT');
+    } catch (e) { await seed.query('ROLLBACK'); throw e; } finally { seed.release(); }
+    await admin.query(`CREATE ROLE ${role} NOLOGIN NOSUPERUSER NOBYPASSRLS`);
+    await owner.query(`GRANT USAGE ON SCHEMA ${schema} TO ${role}`);
+    await owner.query(`GRANT SELECT,INSERT,UPDATE ON ALL TABLES IN SCHEMA ${schema} TO ${role}`);
+    await owner.query(`GRANT DELETE ON agy_dispatch_tasks TO ${role}`);
+    await owner.query(`GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA ${schema} TO ${role}`);
+    runtime = new Pool({ connectionString: process.env.AGY_TEST_DATABASE_URL, options: `-c search_path=${schema},public -c role=${role}` });
+    const rt: Pool = runtime;
+    const scopedSetup = new ProjectPool(runtime, scope, 'setup').asPool();
+    await scopedSetup.query(`UPDATE agy_projects SET status='ACTIVE',permissions=ARRAY['read'],resource_policy='{"maxConcurrentTasks":4,"quotaCap":100,"spendCap":0,"reservation":1}'`);
+    const resources = new ResourceStore(owner);
+    const profile = { ...discoverResource('GEMINI-SEO-WORKER', ['text'], Date.now()),
+      status: 'READY' as const, ready: true, quotaRemaining: 10, quotaReserve: 0, maxConcurrency: 4,
+      passRate: .95, retryRate: 0, errorRate: 0, contextLossRisk: 0, costPerTask: 0, spendCap: 0, quotaCap: 10,
+      permissions: ['read'] };
+    await resources.register(profile as any, 'gemini');
+    await owner.query(`UPDATE agy_workers SET metadata=$1 WHERE worker_id='GEMINI-SEO-WORKER'`,
+      [JSON.stringify({ bindings: { missions: ['GEMINI_UI_STAGING'], task_types: ['hello', 'helper_delegation'], reply_targets: [RT] } })]);
+    const service = new ProjectService(runtime, scope, op);
+    await service.execute('/jobs', 'POST', { idempotency_key: 'job-parent', objective: 'parent',
+      tasks: [{ name: 'parent', idempotencyKey: 'job-parent-t', taskType: 'hello', requiredCapabilities: ['text'], requiredPermissions: ['read'],
+        permissionGranted: true, safetyApproved: true, estimatedQuota: 1, estimatedCost: 0, maxRetry: 0, priority: 10,
+        payload: { mission_id: 'GEMINI_UI_STAGING', target_worker_id: 'GEMINI-SEO-WORKER', callback_target: RT } }] });
+    const surface = createWorkerSurface(runtime);
+    const ownerScoped = async (sql: string, params: unknown[]) => {
+      const c = await owner.connect();
+      try { await c.query('BEGIN');
+        await c.query("SELECT set_config('agy.tenant_id',$1,true),set_config('agy.workspace_id',$2,true),set_config('agy.project_id',$3,true)", [scope.tenantId, scope.workspaceId, scope.projectId]);
+        const r = await c.query(sql, params as any); await c.query('COMMIT'); return r;
+      } catch (e) { await c.query('ROLLBACK'); throw e; } finally { c.release(); }
+    };
+    const parentClaim = await surface(gemini, scope, 'claim', {});
+    assert.equal(parentClaim.status, 'LEASED');
+    const parentId = parentClaim.task.taskId;
+    const assignment = (over: Partial<HelperAssignment> = {}): HelperAssignment => ({
+      parentWorkerId: 'GEMINI-SEO-WORKER', parentTaskId: parentId, parentAttempt: 1,
+      subtaskKey: 'sec-1', helperId: 'grok', scope: { ...scope },
+      sourceAllowlist: ['https://example.com'], toolAllowlist: ['browser.read'],
+      budget: { unit: 'provider_credits', cap: 5, spent: 0, enforcement: 'runtime', hard: true }, actualCostBounded: true,
+      expiresAtMs: Date.now() + 600_000, replyTarget: RT,
+      equipment: { pinnedSource: { ref: 'doc:fixture-input', digest: 'a'.repeat(64) },
+    surface: { kind: 'api', model: 'fixture-model', authBinding: 'fixture:binding' },
+    skillRef: 'skill:fixture', criteria: ['output addresses the pinned source'], rework: { maxAttempts: 1 } }, ...over });
+
+    // --- SPEC money fences: nothing is written on rejection.
+    const aSpec = assignment({ subtaskKey: 'sec-spec' });
+    await assert.rejects(() => createDelegatedChild(rt, scope, gemini, op, aSpec, { ...SPEC, estimatedQuota: -1 }), /SPEC_INVALID/);
+    await assert.rejects(() => createDelegatedChild(rt, scope, gemini, op, aSpec, { ...SPEC, estimatedCost: Number.NaN }), /SPEC_INVALID/);
+    await assert.rejects(() => createDelegatedChild(rt, scope, gemini, op, aSpec, { ...SPEC, estimatedCost: Infinity }), /SPEC_INVALID/);
+    await assert.rejects(() => loadSubmissionBinding(rt, scope, aSpec), /CHILD_NOT_FOUND/, 'rejected specs created no child');
+
+    // --- Happy child, claimed.
+    const a1 = assignment();
+    const c1 = await createDelegatedChild(rt, scope, gemini, op, a1, SPEC);
+    const childClaim = await surface(gemini, scope, 'claim', {});
+    assert.equal(childClaim.task.taskId, c1.childTaskId);
+    const lt = childClaim.task.leaseToken; const att = childClaim.task.attempt;
+
+    // --- Record before begin is denied; begin twice fences.
+    await assert.rejects(() => recordHelperSubmission(rt, scope, gemini, c1.childTaskId, lt, att, 'ref-x'), /SUBMISSION_RECORD_DENIED/);
+    assert.equal((await beginHelperSubmission(rt, scope, gemini, c1.childTaskId, lt, att)).state, 'NEW');
+
+    // --- Verify while IN_FLIGHT (not yet SUBMITTED) is denied.
+    const payload = { findings: ['x'] };
+    const envFor = (ref: string) => ({ childKey: childKey(a1), helperId: 'grok' as const, externalRef: ref,
+      digest: digestOf(payload), payload, costUnits: 1 });
+    await assert.rejects(() => verifyHelperResult(rt, scope, gemini, a1, envFor('grok-ref-1') as any), /SUBMISSION_STATE_MISMATCH/);
+    await recordHelperSubmission(rt, scope, gemini, c1.childTaskId, lt, att, 'grok-ref-1');
+
+    // --- Exact-ref + type + cost fences at verification.
+    await assert.rejects(() => verifyHelperResult(rt, scope, gemini, a1, envFor('grok-ref-OTHER') as any), /RESULT_REF_MISMATCH/);
+    await assert.rejects(() => verifyHelperResult(rt, scope, other, a1, envFor('grok-ref-1') as any), /PARENT_MISMATCH/);
+    await assert.rejects(() => verifyHelperResult(rt, scope, gemini, a1, { ...envFor('grok-ref-1'), costUnits: -1 } as any), /RESULT_COST_INVALID/);
+    await assert.rejects(() => verifyHelperResult(rt, scope, gemini, a1, { ...envFor('grok-ref-1'), costUnits: 'one' } as any), /RESULT_COST_INVALID/);
+    await assert.rejects(() => verifyHelperResult(rt, scope, gemini, a1, { ...envFor('grok-ref-1'), costUnits: Infinity } as any), /RESULT_COST_INVALID/);
+    await assert.rejects(() => verifyHelperResult(rt, scope, gemini, a1, { ...envFor('grok-ref-1'), payload: undefined } as any), /RESULT_PAYLOAD_INVALID/);
+    await assert.rejects(() => verifyHelperResult(rt, scope, gemini, a1, { ...envFor('grok-ref-1'), digest: 42 } as any), /RESULT_TYPE_INVALID/);
+    await assert.rejects(() => verifyHelperResult(rt, scope, gemini, a1, { ...envFor('grok-ref-1'), helperId: 'evil' } as any), /RESULT_TYPE_INVALID/);
+    // NaN cost (unknown actuals) is the sanctioned pass-through.
+    assert.deepEqual(await verifyHelperResult(rt, scope, gemini, a1, { ...envFor('grok-ref-1'), costUnits: Number.NaN } as any), { verified: true });
+
+    // --- The composed boundary: binding from the queue, reader sees only the persisted ref.
+    let seenRef = '';
+    const reader = { async readResultFor(_a: HelperAssignment, ref: string) { seenRef = ref; return envFor(ref); } };
+    const env = await readVerifiedHelperResult(rt, scope, gemini, a1, reader as any);
+    assert.equal(seenRef, 'grok-ref-1');
+    assert.equal(env.externalRef, 'grok-ref-1');
+
+    // --- F1: a finite actual over the budget's remaining room is denied.
+    await assert.rejects(() => verifyHelperResult(rt, scope, gemini, a1, { ...envFor('grok-ref-1'), costUnits: 99 } as any), /RESULT_COST_EXCEEDS_BUDGET/);
+    // --- F4: a spec priced above the assignment cap is denied up front.
+    await assert.rejects(() => createDelegatedChild(rt, scope, gemini, op, assignment({ subtaskKey: 'sec-spec2' }), { ...SPEC, estimatedCost: 99 }), /SPEC_EXCEEDS_BUDGET/);
+    // --- F3: same childKey, drifted reply target -> the pre-existing child is NOT silently returned.
+    await assert.rejects(() => createDelegatedChild(rt, scope, gemini, op, assignment({ replyTarget: 'SOMEWHERE_ELSE' }), SPEC), /CHILD_BINDING_MISMATCH/);
+    // --- F2: role check + empty-ref wedge, on a second child.
+    const a2 = assignment({ subtaskKey: 'sec-2' });
+    const c2 = await createDelegatedChild(rt, scope, gemini, op, a2, SPEC);
+    const claim2 = await surface(gemini, scope, 'claim', {});
+    assert.equal(claim2.task.taskId, c2.childTaskId);
+    await assert.rejects(() => beginHelperSubmission(rt, scope, op, c2.childTaskId, claim2.task.leaseToken, claim2.task.attempt), /PARENT_REQUIRED/);
+    assert.equal((await beginHelperSubmission(rt, scope, gemini, c2.childTaskId, claim2.task.leaseToken, claim2.task.attempt)).state, 'NEW');
+    await assert.rejects(() => recordHelperSubmission(rt, scope, gemini, c2.childTaskId, claim2.task.leaseToken, claim2.task.attempt, ''), /SUBMISSION_REF_INVALID/);
+    await recordHelperSubmission(rt, scope, gemini, c2.childTaskId, claim2.task.leaseToken, claim2.task.attempt, 'grok-ref-2');
+
+    // --- Restart durability: a fresh pool loads the same binding.
+    const runtime2 = new Pool({ connectionString: process.env.AGY_TEST_DATABASE_URL, options: `-c search_path=${schema},public -c role=${role}` });
+    const binding = await loadSubmissionBinding(runtime2, scope, a1);
+    assert.equal(binding.submissionRef, 'grok-ref-1');
+    await runtime2.end();
+
+    // --- Parent superseded: attempt bump denies verify AND begin.
+    await ownerScoped(`UPDATE agy_tasks SET attempt=2 WHERE task_id=$1`, [parentId]);
+    await assert.rejects(() => verifyHelperResult(rt, scope, gemini, a1, envFor('grok-ref-1') as any), /PARENT_ATTEMPT_MISMATCH/);
+    await assert.rejects(() => beginHelperSubmission(rt, scope, gemini, c1.childTaskId, lt, att), /PARENT_ATTEMPT_MISMATCH/);
+    await ownerScoped(`UPDATE agy_tasks SET attempt=1 WHERE task_id=$1`, [parentId]);
+
+    // --- Lease-expiry fences.
+    await ownerScoped(`UPDATE agy_tasks SET lease_expires_at=now()-interval '1 minute' WHERE task_id=$1`, [parentId]);
+    await assert.rejects(() => verifyHelperResult(rt, scope, gemini, a1, envFor('grok-ref-1') as any), /PARENT_LEASE_EXPIRED/);
+    await ownerScoped(`UPDATE agy_tasks SET lease_expires_at=now()+interval '30 minutes' WHERE task_id=$1`, [parentId]);
+    await ownerScoped(`UPDATE agy_tasks SET lease_expires_at=now()-interval '1 minute' WHERE task_id=$1`, [c1.childTaskId]);
+    await assert.rejects(() => beginHelperSubmission(rt, scope, gemini, c1.childTaskId, lt, att), /LEASE_EXPIRED/);
+    await ownerScoped(`UPDATE agy_tasks SET lease_expires_at=now()+interval '30 minutes' WHERE task_id=$1`, [c1.childTaskId]);
+    assert.deepEqual(await verifyHelperResult(rt, scope, gemini, a1, envFor('grok-ref-1') as any), { verified: true }, 'state restored: verification passes again');
+  } finally {
+    if (runtime) await runtime.end().catch(() => {});
+    await owner.end().catch(() => {});
+    await admin.query(`DROP SCHEMA ${schema} CASCADE`).catch(() => {});
+    await admin.query(`DROP ROLE IF EXISTS ${role}`).catch(() => {});
+    await admin.end().catch(() => {});
+  }
+});
