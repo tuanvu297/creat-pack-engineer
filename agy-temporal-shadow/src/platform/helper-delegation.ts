@@ -1,1 +1,218 @@
-Ly8gUHJpbWFyeS13b3JrZXIgLT4gaGVscGVyIGRlbGVnYXRpb24gY29udHJhY3QgKEFHWSBELTA1NywKLy8gMjAyNi0xMS0wMykuIFRoaXMgbW9kdWxlIGlzIHRoZSBQVVJFIGNvbnRyYWN0OiBpdCB2YWxpZGF0ZXMgYW4KLy8gYXNzaWdubWVudCdzIHNoYXBlIGFuZCBmZW5jZXMsIGRlcml2ZXMgdGhlIGNoaWxkIGlkZW1wb3RlbmN5Ci8vIGlkZW50aXR5LCBhbmQgZGVmaW5lcyB0aGUgcmVzdWx0IGVudmVsb3BlLiBJdCBkb2VzIE5PVCBieQovLyBpdHNlbGYgY3JlYXRlLCBjbGFpbSwgb3Igc2V0dGxlIGFueXRoaW5nIOKAlCB0aGUgYmluZGluZyB0byB0aGUKLy8gZXhpc3RpbmcgY2Fub25pY2FsIHF1ZXVlIChhdXRoZW50aWNhdGVkIHBhcmVudCBwcmluY2lwYWwsCi8vIHBlcnNpc3RlZCBjaGlsZCBvd25lcnNoaXAsIHRyYW5zYWN0aW9uYWwgcmVzZXJ2YXRpb24sIHJlc3VsdAovLyB2ZXJpZmljYXRpb24pIGxpdmVzIGluIGhlbHBlci1xdWV1ZS50cyBhbmQgaXMgd2hhdCBtYWtlcyB0aGUKLy8gcnVudGltZSBjbGFpbXMgdHJ1ZS4gVmFsaWRhdGlvbiBoZXJlIGlzIG5lY2Vzc2FyeSwgbmV2ZXIKLy8gc3VmZmljaWVudC4gQWRhcHRlcnMgYmluZCBhIGhlbHBlcidzIE9XTiBzdXBwb3J0ZWQgc3VyZmFjZQovLyAoYnJvd3NlciBicmlkZ2UgcHJlZmVycmVkKTsgYW4gdW5ib3VuZCBhZGFwdGVyIHJlZnVzZXMg4oCUIGl0Ci8vIG5ldmVyIGZha2VzIGFuIEFDSyBvciBhIG5hdGl2ZSBiaW5kaW5nLgovLwovLyBSb2xlcyAoRC0wNTcpOiBwcmltYXJ5IHdvcmtlcnMgKENsYXVkZSwgTXVzZSwgR2VtaW5pKSBvd24KLy8gdGhlIG1haW4gb3V0cHV0IGFuZCB2YWxpZGF0ZS9pbnRlZ3JhdGU7IGhlbHBlcnMgKE1hbnVzLCBHcm9rKQovLyBhcmUgc3Vib3JkaW5hdGUgc3VwcG9ydCBmb3IgcmVhZGluZy9leHRyYWN0aW9uL2Jyb3dzZXIvaW5wdXQKLy8gcHJlcGFyYXRpb24uIE5vIHBlcm1hbmVudCBkby9RQSBzcGxpdDogdGhlIHNhbWUgY29udHJhY3QKLy8gc2VydmVzIGV4ZWN1dGlvbiBhbmQgcGVlci1RQSBhc3NpZ25tZW50cy4KCmltcG9ydCB7IGRpZ2VzdE9mLCBpc0RpZ2VzdEhleCB9IGZyb20gJy4vZGlnZXN0LmpzJzsKCi8vIFRoZSBlcXVpcG1lbnQgaWRlbnRpdHkgb2YgYW4gYXNzaWdubWVudDogdHdvIGFzc2lnbm1lbnRzCi8vIHRoYXQgZGlmZmVyIGluIGVxdWlwbWVudCBhcmUgZGlmZmVyZW50IHdvcmssIGV2ZW4gd2hlbiBldmVyeQovLyBpZGVudGl0eSBmaWVsZCBtYXRjaGVzLiBUaGUgcXVldWUgcGVyc2lzdHMgdGhpcyBkaWdlc3QgaW4KLy8gdGhlIGNoaWxkIHBheWxvYWQgYW5kIGJpbmRpbmctY2hlY2tzIGl0IG9uIHJldXNlIGFuZCBhdAovLyByZXN1bHQgdGltZSwgc28gYSBzaWxlbnQgZXF1aXBtZW50IHN3YXAgdW5kZXIgYSByZXVzZWQKLy8gY2hpbGRLZXkgZGVuaWVzIGluc3RlYWQgb2YgcGFzc2luZyBhcyB0aGUgc2FtZSBjaGlsZC4KZXhwb3J0IGZ1bmN0aW9uIGVxdWlwbWVudERpZ2VzdChhOiBQaWNrPEhlbHBlckFzc2lnbm1lbnQsICdlcXVpcG1lbnQnPik6IHN0cmluZyB7CiAgcmV0dXJuIGRpZ2VzdE9mKGEuZXF1aXBtZW50ID8/IG51bGwpOwp9CgpleHBvcnQgdHlwZSBIZWxwZXJJZCA9ICdtYW51cycgfCAnZ3Jvayc7CmV4cG9ydCB0eXBlIEJ1ZGdldEVuZm9yY2VtZW50ID0gJ3Byb3ZpZGVyJyB8ICdydW50aW1lJyB8ICdwcm9tcHRfb25seScgfCAndW5rbm93bic7CgovLyBFcXVpcG1lbnQgYmxvY2sgKEQtMDU3IGVxdWlwIHJ1bGUsIDIwMjYtMTEtMDQpOiBhbiBhc3NpZ25tZW50Ci8vIGlzIG5vdCBhY3Rpb25hYmxlIHVudGlsIGl0IHBpbnMgV0hBVCB0aGUgaGVscGVyIHdvcmtzIG9uLAovLyBXSElDSCBzdXJmYWNlL21vZGVsL2F1dGggYmluZGluZyBpdCBtdXN0IHVzZSwgV0hBVCBndWlkYW5jZQovLyBpdCBmb2xsb3dzLCBIT1cgdGhlIHBhcmVudCB3aWxsIGp1ZGdlIHRoZSBvdXRwdXQsIGFuZCBIT1cKLy8gTVVDSCByZXdvcmsgaXMgYWxsb3dlZC4gQWxsb3dsaXN0cyBzYXkgd2hhdCB0aGUgaGVscGVyIE1BWQovLyB0b3VjaDsgZXF1aXBtZW50IHNheXMgd2hhdCB0aGlzIGF0dGVtcHQgSVMuIE1pc3Npbmcgb3IKLy8gdW5waW5uZWQgZXF1aXBtZW50IGlzIGEgZGVueSwgbmV2ZXIgYSBkZWZhdWx0LgpleHBvcnQgaW50ZXJmYWNlIEhlbHBlckVxdWlwbWVudCB7CiAgLy8gVGhlIGV4YWN0IGlucHV0IHRoZSBoZWxwZXIgd29ya3Mgb24sIGNvbnRlbnQtcGlubmVkOiBhCiAgLy8gcmVmZXJlbmNlIHBsdXMgdGhlIHNoYTI1NiBkaWdlc3Qgb2YgaXRzIGNvbnRlbnQgKGRpZ2VzdE9mCiAgLy8gZm9ybSkuIEEgcmVzdWx0IGFuc3dlcmluZyBkaWZmZXJlbnQgaW5wdXQgaXMgbm90IHRoaXMKICAvLyBhc3NpZ25tZW50J3MgcmVzdWx0LgogIHBpbm5lZFNvdXJjZTogeyByZWY6IHN0cmluZzsgZGlnZXN0OiBzdHJpbmcgfTsKICAvLyBUaGUgYWN0dWFsIHN1cmZhY2UgdGhlIGF0dGVtcHQgbXVzdCBydW4gb246IGl0cyBraW5kCiAgLy8gKCdhcGknLCAnYnJvd3Nlci1icmlkZ2UnLCAuLi4pLCB0aGUgbW9kZWwvYWdlbnQgYnVpbGQgdGhlCiAgLy8gcHJvdmlkZXIgd2lsbCBydW4sIGFuZCB0aGUgTkFNRSBvZiB0aGUgY3JlZGVudGlhbCBiaW5kaW5nCiAgLy8gKG5ldmVyIHRoZSBjcmVkZW50aWFsIGl0c2VsZikuIFRoZSBleGVjdXRvciByZWZ1c2VzIGFuCiAgLy8gYWRhcHRlciB3aG9zZSBkZWNsYXJlZCBkZXNjcmlwdG9yIGRpZmZlcnMgKGhlbHBlci1wcm92aWRlcnMKICAvLyBhc3NlcnRBZGFwdGVyTWF0Y2hlc0Fzc2lnbm1lbnQpLgogIHN1cmZhY2U6IHsga2luZDogc3RyaW5nOyBtb2RlbDogc3RyaW5nOyBhdXRoQmluZGluZzogc3RyaW5nIH07CiAgLy8gVGhlIHNraWxsIHRoZSBoZWxwZXIgbXVzdCBmb2xsb3csIGFuZCBvcHRpb25hbGx5IGEgd29ya2VkCiAgLy8gZXhhbXBsZSBvZiBhIHBhc3Npbmcgb3V0cHV0LgogIHNraWxsUmVmOiBzdHJpbmc7CiAgZXhhbXBsZVJlZj86IHN0cmluZzsKICAvLyBBY3Rpb24tbGV2ZWwgYWNjZXB0YW5jZSBjcml0ZXJpYSB0aGUgcGFyZW50IHdpbGwgY2hlY2ssCiAgLy8gdmVyYmF0aW0gc3RyaW5ncywgYXQgbGVhc3Qgb25lLgogIGNyaXRlcmlhOiBzdHJpbmdbXTsKICAvLyBCb3VuZGVkIHJld29yayBmb3IgVEhJUyBhc3NpZ25tZW50OiBob3cgbWFueSBoZWxwZXIKICAvLyBhdHRlbXB0cyB0aGUgcGFyZW50IG1heSBydW4gdW5kZXIgaXQgYmVmb3JlIHRoZSBhc3NpZ25tZW50CiAgLy8gaXRzZWxmIG11c3QgYmUgcmUtbWludGVkLiAwIG1lYW5zIHRoZSBmaXJzdCBhdHRlbXB0IGlzIHRoZQogIC8vIG9ubHkgYXR0ZW1wdC4KICByZXdvcms6IHsgbWF4QXR0ZW1wdHM6IG51bWJlciB9Owp9CgpleHBvcnQgaW50ZXJmYWNlIEhlbHBlckFzc2lnbm1lbnQgewogIC8vIFBhcmVudCBpZGVudGl0eTogZXhhY3RseSBvbmUgYXV0aGVudGljYXRlZCBwcmltYXJ5IHdvcmtlciwKICAvLyBvbmUgcGFyZW50IHRhc2ssIG9uZSBhdHRlbXB0LgogIHBhcmVudFdvcmtlcklkOiBzdHJpbmc7CiAgcGFyZW50VGFza0lkOiBzdHJpbmc7CiAgcGFyZW50QXR0ZW1wdDogbnVtYmVyOwogIC8vIENoaWxkIGlkZW50aXR5OiBkZXJpdmVkLCBuZXZlciBmcmVlLWNob3NlbiAoc2VlIGNoaWxkS2V5KS4KICBzdWJ0YXNrS2V5OiBzdHJpbmc7CiAgaGVscGVySWQ6IEhlbHBlcklkOwogIC8vIFNjb3BlIGZlbmNlOiB0aGUgY2hpbGQgbGl2ZXMgaW4gdGhlIHBhcmVudCdzIGV4YWN0IHNjb3BlLgogIHNjb3BlOiB7IHRlbmFudElkOiBzdHJpbmc7IHdvcmtzcGFjZUlkOiBzdHJpbmc7IHByb2plY3RJZDogc3RyaW5nIH07CiAgLy8gQWxsb3dsaXN0czogdGhlIGhlbHBlciBtYXkgdG91Y2ggb25seSB0aGVzZS4KICBzb3VyY2VBbGxvd2xpc3Q6IHN0cmluZ1tdOwogIHRvb2xBbGxvd2xpc3Q6IHN0cmluZ1tdOwogIC8vIEJ1ZGdldCBmZW5jZTogY2FwIGluIGEgTkFNRUQgdW5pdCwgd2l0aCBhbiBlbmZvcmNlbWVudCBjbGFzcy4KICBidWRnZXQ6IHsgdW5pdDogc3RyaW5nOyBjYXA6IG51bWJlcjsgc3BlbnQ6IG51bWJlcjsgZW5mb3JjZW1lbnQ6IEJ1ZGdldEVuZm9yY2VtZW50OyBoYXJkOiBib29sZWFuIH07CiAgLy8gV2hldGhlciB0aGUgaGVscGVyIHN1cmZhY2UgYm91bmRzIHRoZSBBQ1RVQUwgcGVyLWNhbGwgY29zdAogIC8vIChmaXhlZC1wcmljZSBzdXJmYWNlKSBhcyBvcHBvc2VkIHRvIHByb3ZpZGVyLW1ldGVyZWQgYWN0dWFscwogIC8vIGEgcHJlZmxpZ2h0IGVzdGltYXRlIGNhbm5vdCBib3VuZCAoTWFudXMpLiBSZXF1aXJlZCB0cnVlIGZvcgogIC8vIGFueSBoYXJkIGJ1ZGdldCB0aGF0IGlzIG5vdCBwcm92aWRlci1lbmZvcmNlZDsgYWJzZW50IGNvdW50cwogIC8vIGFzIGZhbHNlIChmYWlsIGNsb3NlZCkuCiAgYWN0dWFsQ29zdEJvdW5kZWQ/OiBib29sZWFuOwogIC8vIExlYXNlIGZlbmNlOiBhYnNvbHV0ZSBleHBpcnk7IGEgZGVhZCBwYXJlbnQgY2Fubm90IGV4dGVuZCBpdC4KICBleHBpcmVzQXRNczogbnVtYmVyOwogIC8vIEltbXV0YWJsZSByZXBseSByb3V0aW5nOiB0aGUgcGFyZW50J3Mgb3duIHJlcGx5IHRhcmdldC4KICByZXBseVRhcmdldDogc3RyaW5nOwogIC8vIEVxdWlwbWVudDogcGlubmVkIHNvdXJjZSwgc3VyZmFjZS9tb2RlbC9hdXRoLCBza2lsbCwKICAvLyBjcml0ZXJpYSwgcmV3b3JrIChzZWUgSGVscGVyRXF1aXBtZW50KS4gUkVRVUlSRUQuCiAgZXF1aXBtZW50OiBIZWxwZXJFcXVpcG1lbnQ7Cn0KCmV4cG9ydCB0eXBlIERlbnlDb2RlID0KICB8ICdQQVJFTlRfUkVRVUlSRUQnIHwgJ0NST1NTX1NDT1BFJyB8ICdFWFBJUkVEJyB8ICdIRUxQRVJfTk9UX0FMTE9XRUQnCiAgfCAnQUxMT1dMSVNUX0VNUFRZJyB8ICdCVURHRVRfVU5LTk9XTicgfCAnQlVER0VUX0VYQ0VFREVEJwogIHwgJ0hBUkRfQlVER0VUX1VORU5GT1JDRUQnIHwgJ1JFUExZX1RBUkdFVF9SRVFVSVJFRCcgfCAnQVRURU1QVF9JTlZBTElEJwogIHwgJ0VRVUlQTUVOVF9SRVFVSVJFRCcgfCAnU09VUkNFX1VOUElOTkVEJyB8ICdTVVJGQUNFX1VOUElOTkVEJwogIHwgJ1NLSUxMX1JFUVVJUkVEJyB8ICdDUklURVJJQV9SRVFVSVJFRCcgfCAnUkVXT1JLX0lOVkFMSUQnOwoKZXhwb3J0IGludGVyZmFjZSBWYWxpZGF0aW9uIHsgb2s6IGJvb2xlYW47IGRlbmllczogRGVueUNvZGVbXSB9CgovLyBUaGUgY2hpbGQgaWRlbXBvdGVuY3kgaWRlbnRpdHk6IG9uZSBwYXJlbnQgdGFzayArIG9uZSBhdHRlbXB0Ci8vICsgb25lIHN1YnRhc2sga2V5IG1hcHMgdG8gZXhhY3RseSBvbmUgY2hpbGQsIGZvcmV2ZXIuIEEgcmV0cnkKLy8gcmUtZGVyaXZlcyB0aGUgc2FtZSBrZXkgYW5kIHJlY29uY2lsZXMgaW5zdGVhZCBvZiBkdXBsaWNhdGluZy4KZXhwb3J0IGZ1bmN0aW9uIGNoaWxkS2V5KGE6IFBpY2s8SGVscGVyQXNzaWdubWVudCwgJ3BhcmVudFRhc2tJZCcgfCAncGFyZW50QXR0ZW1wdCcgfCAnc3VidGFza0tleScgfCAnaGVscGVySWQnPik6IHN0cmluZyB7CiAgcmV0dXJuIGBoZWxwZXI6JHthLmhlbHBlcklkfToke2EucGFyZW50VGFza0lkfToke2EucGFyZW50QXR0ZW1wdH06JHthLnN1YnRhc2tLZXl9YDsKfQoKZXhwb3J0IGZ1bmN0aW9uIHZhbGlkYXRlQXNzaWdubWVudChhOiBIZWxwZXJBc3NpZ25tZW50LCBub3dNczogbnVtYmVyKTogVmFsaWRhdGlvbiB7CiAgY29uc3QgZGVuaWVzOiBEZW55Q29kZVtdID0gW107CiAgaWYgKCFhLnBhcmVudFdvcmtlcklkIHx8ICFhLnBhcmVudFRhc2tJZCkgZGVuaWVzLnB1c2goJ1BBUkVOVF9SRVFVSVJFRCcpOwogIGlmICghTnVtYmVyLmlzSW50ZWdlcihhLnBhcmVudEF0dGVtcHQpIHx8IGEucGFyZW50QXR0ZW1wdCA8IDEpIGRlbmllcy5wdXNoKCdBVFRFTVBUX0lOVkFMSUQnKTsKICBpZiAoYS5oZWxwZXJJZCAhPT0gJ21hbnVzJyAmJiBhLmhlbHBlcklkICE9PSAnZ3JvaycpIGRlbmllcy5wdXNoKCdIRUxQRVJfTk9UX0FMTE9XRUQnKTsKICBpZiAoIWEuc2NvcGU/LnRlbmFudElkIHx8ICFhLnNjb3BlPy53b3Jrc3BhY2VJZCB8fCAhYS5zY29wZT8ucHJvamVjdElkKSBkZW5pZXMucHVzaCgnQ1JPU1NfU0NPUEUnKTsKICAvLyBTdHJpY3QgZGVhZGxpbmU6IHRoZSBleHBpcnkgaW5zdGFudCBpdHNlbGYgaXMgYWxyZWFkeSBkZWFkLgogIGlmICghTnVtYmVyLmlzRmluaXRlKGEuZXhwaXJlc0F0TXMpIHx8ICEobm93TXMgPCBhLmV4cGlyZXNBdE1zKSkgZGVuaWVzLnB1c2goJ0VYUElSRUQnKTsKICBpZiAoIWEuc291cmNlQWxsb3dsaXN0Py5sZW5ndGggfHwgIWEudG9vbEFsbG93bGlzdD8ubGVuZ3RoKSBkZW5pZXMucHVzaCgnQUxMT1dMSVNUX0VNUFRZJyk7CiAgaWYgKCFhLnJlcGx5VGFyZ2V0KSBkZW5pZXMucHVzaCgnUkVQTFlfVEFSR0VUX1JFUVVJUkVEJyk7CiAgLy8gRXF1aXBtZW50IGZlbmNlcyAoRC0wNTcgZXF1aXAgcnVsZSk6IGV2ZXJ5IGZpZWxkIHRoYXQgcGlucwogIC8vIHRoZSBhdHRlbXB0IG11c3QgYmUgcHJlc2VudCBhbmQgd2VsbC1mb3JtZWQ7IGFuIHVucGlubmVkCiAgLy8gYXR0ZW1wdCBpcyBpbmRpc3Rpbmd1aXNoYWJsZSBmcm9tIGFuIGltcHJvdmlzZWQgb25lLgogIGNvbnN0IGVxID0gYS5lcXVpcG1lbnQ7CiAgaWYgKCFlcSB8fCB0eXBlb2YgZXEgIT09ICdvYmplY3QnKSBkZW5pZXMucHVzaCgnRVFVSVBNRU5UX1JFUVVJUkVEJyk7CiAgZWxzZSB7CiAgICBpZiAoIWVxLnBpbm5lZFNvdXJjZT8ucmVmIHx8ICFpc0RpZ2VzdEhleChlcS5waW5uZWRTb3VyY2U/LmRpZ2VzdCkpIGRlbmllcy5wdXNoKCdTT1VSQ0VfVU5QSU5ORUQnKTsKICAgIGlmICghZXEuc3VyZmFjZT8ua2luZCB8fCAhZXEuc3VyZmFjZT8ubW9kZWwgfHwgIWVxLnN1cmZhY2U/LmF1dGhCaW5kaW5nKSBkZW5pZXMucHVzaCgnU1VSRkFDRV9VTlBJTk5FRCcpOwogICAgaWYgKCFlcS5za2lsbFJlZikgZGVuaWVzLnB1c2goJ1NLSUxMX1JFUVVJUkVEJyk7CiAgICBpZiAoIUFycmF5LmlzQXJyYXkoZXEuY3JpdGVyaWEpIHx8ICFlcS5jcml0ZXJpYS5sZW5ndGggfHwgZXEuY3JpdGVyaWEuc29tZSgoYykgPT4gdHlwZW9mIGMgIT09ICdzdHJpbmcnIHx8ICFjLnRyaW0oKSkpCiAgICAgIGRlbmllcy5wdXNoKCdDUklURVJJQV9SRVFVSVJFRCcpOwogICAgaWYgKCFOdW1iZXIuaXNJbnRlZ2VyKGVxLnJld29yaz8ubWF4QXR0ZW1wdHMpIHx8IGVxLnJld29yay5tYXhBdHRlbXB0cyA8IDApIGRlbmllcy5wdXNoKCdSRVdPUktfSU5WQUxJRCcpOwogIH0KICAvLyBSZXNvdXJjZSBhdXRob3JpdHkgbXVzdCBiZSBLTk9XTiBhbmQgU0FORTogYW4gdW5uYW1lZCB1bml0LAogIC8vIGEgbm9uLWZpbml0ZSBvciBuZWdhdGl2ZSBjYXAsIGEgbm9uLWZpbml0ZSBvciBuZWdhdGl2ZSBzcGVudAogIC8vIChyb290IHByb2JlOiBzcGVudD0tMTAwIGFuZCBOYU4gd2VyZSBhY2NlcHRlZCksIG9yIHVua25vd24KICAvLyBlbmZvcmNlbWVudCBuZXZlciBmdW5kcyBhIGNoaWxkLiBBbGwgY2hlY2tzIGZhaWwgY2xvc2VkLgogIGNvbnN0IGIgPSBhLmJ1ZGdldDsKICBpZiAoIWI/LnVuaXQgfHwgIU51bWJlci5pc0Zpbml0ZShiPy5jYXApIHx8IGIuY2FwIDwgMCB8fCAhTnVtYmVyLmlzRmluaXRlKGI/LnNwZW50KSB8fCBiLnNwZW50IDwgMCB8fCBiPy5lbmZvcmNlbWVudCA9PT0gJ3Vua25vd24nKQogICAgZGVuaWVzLnB1c2goJ0JVREdFVF9VTktOT1dOJyk7CiAgZWxzZSB7CiAgICBpZiAoYi5zcGVudCA+IGIuY2FwKSBkZW5pZXMucHVzaCgnQlVER0VUX0VYQ0VFREVEJyk7CiAgICAvLyBUaGUgTWFudXMgbGVzc29uLCBlbmNvZGVkIHR3aWNlLiBBIGhhcmQgYnVkZ2V0IG9uIGEKICAgIC8vIHByb21wdC1vbmx5IHN1cmZhY2UgaXMgbm90IGEgYnVkZ2V0LiBBTkQgYSBydW50aW1lCiAgICAvLyBwcmVmbGlnaHQgZmVuY2UgYm91bmRzIHN1Ym1pc3Npb24gRVNUSU1BVEVTIG9ubHk6IHdoZW4gdGhlCiAgICAvLyBoZWxwZXIncyBBQ1RVQUwgcGVyLWNhbGwgY29zdCBpcyBwcm92aWRlci1tZXRlcmVkIGFuZAogICAgLy8gdW5ib3VuZGVkLCBubyBlc3RpbWF0ZSBjaGVjayBjYW4gbWFrZSBhIGhhcmQgY2FwIHRydWUg4oCUCiAgICAvLyBoYXJkIGJ1ZGdldHMgdGhlbiByZXF1aXJlIHByb3ZpZGVyIGVuZm9yY2VtZW50IHdpdGggYQogICAgLy8gcmVhbCBwcm92aWRlci1zaWRlIGNhcCwgZWxzZSB0aGV5IGFyZSBkZW5pZWQuCiAgICBpZiAoYi5oYXJkICYmIGIuZW5mb3JjZW1lbnQgPT09ICdwcm9tcHRfb25seScpIGRlbmllcy5wdXNoKCdIQVJEX0JVREdFVF9VTkVORk9SQ0VEJyk7CiAgICBlbHNlIGlmIChiLmhhcmQgJiYgYi5lbmZvcmNlbWVudCAhPT0gJ3Byb3ZpZGVyJyAmJiBhLmFjdHVhbENvc3RCb3VuZGVkICE9PSB0cnVlKSBkZW5pZXMucHVzaCgnSEFSRF9CVURHRVRfVU5FTkZPUkNFRCcpOwogIH0KICByZXR1cm4geyBvazogZGVuaWVzLmxlbmd0aCA9PT0gMCwgZGVuaWVzIH07Cn0KCi8vIENyb3NzLXNjb3BlIGd1YXJkIGZvciByZXN1bHQgcmV0dXJuOiBhIGNoaWxkIHJlc3VsdCBpcyBvbmx5Ci8vIGFjY2VwdGFibGUgZm9yIHRoZSBleGFjdCBwYXJlbnQvc2NvcGUgaXQgd2FzIGRlcml2ZWQgdW5kZXIuCmV4cG9ydCBmdW5jdGlvbiByZXN1bHRNYXRjaGVzQXNzaWdubWVudChhOiBIZWxwZXJBc3NpZ25tZW50LCByOiB7IGNoaWxkS2V5OiBzdHJpbmc7IHNjb3BlOiB7IHRlbmFudElkOiBzdHJpbmc7IHdvcmtzcGFjZUlkOiBzdHJpbmc7IHByb2plY3RJZDogc3RyaW5nIH0gfSk6IGJvb2xlYW4gewogIHJldHVybiByLmNoaWxkS2V5ID09PSBjaGlsZEtleShhKQogICAgJiYgci5zY29wZS50ZW5hbnRJZCA9PT0gYS5zY29wZS50ZW5hbnRJZAogICAgJiYgci5zY29wZS53b3Jrc3BhY2VJZCA9PT0gYS5zY29wZS53b3Jrc3BhY2VJZAogICAgJiYgci5zY29wZS5wcm9qZWN0SWQgPT09IGEuc2NvcGUucHJvamVjdElkOwp9CgovLyBQcmUtc3VibWl0IHJ1bnRpbWUgZmVuY2U6IHRoZSBwYXJlbnQgY2FsbHMgdGhpcyBiZWZvcmUgRVZFUlkKLy8gaGVscGVyIHN1Ym1pc3Npb24gdW5kZXIgdGhlIGFzc2lnbm1lbnQuIFdoZW4gaXQgZGVuaWVzLCB0aGUKLy8gc3VibWlzc2lvbiBkb2VzIG5vdCBoYXBwZW4uIFRoZSBmZW5jZSBib3VuZHMgdGhlIEVTVElNQVRFRAovLyBjb3N0IG9mIHN1Ym1pc3Npb25zOyBwZXIgdmFsaWRhdGVBc3NpZ25tZW50LCB0aGF0IHN1cHBvcnRzIGEKLy8gaGFyZC1idWRnZXQgY2xhaW0gT05MWSB3aGVuIGFjdHVhbCBwZXItY2FsbCBjb3N0IGlzIGJvdW5kZWQKLy8gKG9yIHRoZSBwcm92aWRlciBlbmZvcmNlcyB0aGUgY2FwKS4gQSBub24tZmluaXRlIG9yIG5lZ2F0aXZlCi8vIG5leHRDb3N0IGlzIGl0c2VsZiBhIGRlbnkgKHJvb3QgcHJvYmU6IE5hTi9JbmZpbml0eS8tNSB3ZXJlCi8vIGFjY2VwdGVkKS4KZXhwb3J0IGZ1bmN0aW9uIHZhbGlkYXRlQmVmb3JlU3VibWl0KGE6IEhlbHBlckFzc2lnbm1lbnQsIG5leHRDb3N0OiBudW1iZXIsIG5vd01zOiBudW1iZXIpOiBWYWxpZGF0aW9uIHsKICBjb25zdCBiYXNlID0gdmFsaWRhdGVBc3NpZ25tZW50KGEsIG5vd01zKTsKICBjb25zdCBkZW5pZXMgPSBbLi4uYmFzZS5kZW5pZXNdOwogIGlmICghTnVtYmVyLmlzRmluaXRlKG5leHRDb3N0KSB8fCBuZXh0Q29zdCA8IDApIHsgaWYgKCFkZW5pZXMuaW5jbHVkZXMoJ0JVREdFVF9VTktOT1dOJykpIGRlbmllcy5wdXNoKCdCVURHRVRfVU5LTk9XTicpOyB9CiAgZWxzZSBpZiAoYS5idWRnZXQuc3BlbnQgKyBuZXh0Q29zdCA+IGEuYnVkZ2V0LmNhcCAmJiAhZGVuaWVzLmluY2x1ZGVzKCdCVURHRVRfRVhDRUVERUQnKSkKICAgIGRlbmllcy5wdXNoKCdCVURHRVRfRVhDRUVERUQnKTsKICByZXR1cm4geyBvazogZGVuaWVzLmxlbmd0aCA9PT0gMCwgZGVuaWVzIH07Cn0KCmV4cG9ydCBpbnRlcmZhY2UgSGVscGVyUmVzdWx0RW52ZWxvcGUgewogIGNoaWxkS2V5OiBzdHJpbmc7CiAgaGVscGVySWQ6IEhlbHBlcklkOwogIGV4dGVybmFsUmVmOiBzdHJpbmcgfCBudWxsOyAgIC8vIHRoZSBoZWxwZXIgc3VyZmFjZSdzIG93biB0YXNrIHJlZgogIGRpZ2VzdDogc3RyaW5nOyAgICAgICAgICAgICAgICAvLyBjb250ZW50IGRpZ2VzdCBvZiB0aGUgcmVzdWx0IHBheWxvYWQKICBwYXlsb2FkOiB1bmtub3duOyAgICAgICAgICAgICAgLy8gZHVyYWJsZSByZXN1bHQsIHBhcmVudCB2YWxpZGF0ZXMKICBjb3N0VW5pdHM6IG51bWJlcjsgICAgICAgICAgICAgLy8gYWN0dWFscywgaW4gdGhlIGFzc2lnbm1lbnQncyB1bml0Cn0KCi8vIEFkYXB0ZXIgc3VyZmFjZTogb25lIGltcGxlbWVudGF0aW9uIHBlciBoZWxwZXIsIGJvdW5kIHRvIHRoYXQKLy8gaGVscGVyJ3MgT1dOIHN1cHBvcnRlZCB0b29scy4gYGJvdW5kPWZhbHNlYCBhZGFwdGVycyByZWZ1c2UKLy8gc3VibWlzc2lvbiB3aXRoIE5PVF9CT1VORCDigJQgdGhlIGhvbmVzdCBzdGF0ZSB1bnRpbCB0aGUKLy8gY29ubmVjdGlvbiBmb3IgdGhhdCBzdXJmYWNlIGlzIG1hZGUgYW5kIHZlcmlmaWVkLiBObyBhZGFwdGVyCi8vIG1heSBjb3B5IGNyZWRlbnRpYWxzIG9yIGltcGVyc29uYXRlIHRoZSBoZWxwZXIncyBzZXNzaW9uLgpleHBvcnQgaW50ZXJmYWNlIEhlbHBlckFkYXB0ZXIgewogIGhlbHBlcklkOiBIZWxwZXJJZDsKICBzdXJmYWNlOiBzdHJpbmc7ICAgICAgICAgICAgICAgLy8gZS5nLiAnYnJvd3Nlci1icmlkZ2UnIHwgJ2FwaScKICBib3VuZDogYm9vbGVhbjsKICAvLyBUaGUgYWRhcHRlcidzIG93biBkZWNsYXJlZCBpZGVudGl0eSwgY29tcGFyZWQgYWdhaW5zdCB0aGUKICAvLyBhc3NpZ25tZW50J3MgcGlubmVkIGVxdWlwbWVudC5zdXJmYWNlIGJlZm9yZSBhbnkgc3VibWl0OgogIC8vIHRoZSBtb2RlbC9hZ2VudCBidWlsZCBpdCB3aWxsIGFjdHVhbGx5IHJ1biBhbmQgdGhlIE5BTUUgb2YKICAvLyB0aGUgY3JlZGVudGlhbCBiaW5kaW5nIGl0IHVzZXMgKG5ldmVyIHRoZSBjcmVkZW50aWFsKS4KICAvLyBBYnNlbnQgb24gdW5ib3VuZCBhZGFwdGVycyAtIHdoaWNoIHJlZnVzZSBhbnl3YXkuCiAgZGVzY3JpcHRvcj86IHsgbW9kZWw6IHN0cmluZzsgYXV0aEJpbmRpbmc6IHN0cmluZyB9OwogIHN1Ym1pdChhOiBIZWxwZXJBc3NpZ25tZW50LCBpbnB1dDogdW5rbm93bik6IFByb21pc2U8eyBleHRlcm5hbFJlZjogc3RyaW5nIH0+OwogIHJlYWRSZXN1bHQoZXh0ZXJuYWxSZWY6IHN0cmluZyk6IFByb21pc2U8SGVscGVyUmVzdWx0RW52ZWxvcGU+Owp9CgpleHBvcnQgZnVuY3Rpb24gdW5ib3VuZEFkYXB0ZXIoaGVscGVySWQ6IEhlbHBlcklkLCBzdXJmYWNlOiBzdHJpbmcpOiBIZWxwZXJBZGFwdGVyIHsKICBjb25zdCByZWZ1c2UgPSBhc3luYyAoKTogUHJvbWlzZTxuZXZlcj4gPT4geyB0aHJvdyBuZXcgRXJyb3IoJ0hFTFBFUl9OT1RfQk9VTkQnKTsgfTsKICByZXR1cm4geyBoZWxwZXJJZCwgc3VyZmFjZSwgYm91bmQ6IGZhbHNlLCBzdWJtaXQ6IHJlZnVzZSwgcmVhZFJlc3VsdDogcmVmdXNlIH07Cn0K
+// Primary-worker -> helper delegation contract (AGY D-057,
+// 2026-11-03). This module is the PURE contract: it validates an
+// assignment's shape and fences, derives the child idempotency
+// identity, and defines the result envelope. It does NOT by
+// itself create, claim, or settle anything — the binding to the
+// existing canonical queue (authenticated parent principal,
+// persisted child ownership, transactional reservation, result
+// verification) lives in helper-queue.ts and is what makes the
+// runtime claims true. Validation here is necessary, never
+// sufficient. Adapters bind a helper's OWN supported surface
+// (browser bridge preferred); an unbound adapter refuses — it
+// never fakes an ACK or a native binding.
+//
+// Roles (D-057): primary workers (Claude, Muse, Gemini) own
+// the main output and validate/integrate; helpers (Manus, Grok)
+// are subordinate support for reading/extraction/browser/input
+// preparation. No permanent do/QA split: the same contract
+// serves execution and peer-QA assignments.
+
+import { digestOf, isDigestHex } from './digest.js';
+
+// The equipment identity of an assignment: two assignments
+// that differ in equipment are different work, even when every
+// identity field matches. The queue persists this digest in
+// the child payload and binding-checks it on reuse and at
+// result time, so a silent equipment swap under a reused
+// childKey denies instead of passing as the same child.
+export function equipmentDigest(a: Pick<HelperAssignment, 'equipment'>): string {
+  return digestOf(a.equipment ?? null);
+}
+
+export type HelperId = 'manus' | 'grok';
+export type BudgetEnforcement = 'provider' | 'runtime' | 'prompt_only' | 'unknown';
+
+// Equipment block (D-057 equip rule, 2026-11-04): an assignment
+// is not actionable until it pins WHAT the helper works on,
+// WHICH surface/model/auth binding it must use, WHAT guidance
+// it follows, HOW the parent will judge the output, and HOW
+// MUCH rework is allowed. Allowlists say what the helper MAY
+// touch; equipment says what this attempt IS. Missing or
+// unpinned equipment is a deny, never a default.
+export interface HelperEquipment {
+  // The exact input the helper works on, content-pinned: a
+  // reference plus the sha256 digest of its content (digestOf
+  // form). A result answering different input is not this
+  // assignment's result.
+  pinnedSource: { ref: string; digest: string };
+  // The actual surface the attempt must run on: its kind
+  // ('api', 'browser-bridge', ...), the model/agent build the
+  // provider will run, and the NAME of the credential binding
+  // (never the credential itself). The executor refuses an
+  // adapter whose declared descriptor differs (helper-providers
+  // assertAdapterMatchesAssignment).
+  surface: { kind: string; model: string; authBinding: string };
+  // The skill the helper must follow, and optionally a worked
+  // example of a passing output.
+  skillRef: string;
+  exampleRef?: string;
+  // Action-level acceptance criteria the parent will check,
+  // verbatim strings, at least one.
+  criteria: string[];
+  // Bounded rework for THIS assignment: how many helper
+  // attempts the parent may run under it before the assignment
+  // itself must be re-minted. 0 means the first attempt is the
+  // only attempt.
+  rework: { maxAttempts: number };
+}
+
+export interface HelperAssignment {
+  // Parent identity: exactly one authenticated primary worker,
+  // one parent task, one attempt.
+  parentWorkerId: string;
+  parentTaskId: string;
+  parentAttempt: number;
+  // Child identity: derived, never free-chosen (see childKey).
+  subtaskKey: string;
+  helperId: HelperId;
+  // Scope fence: the child lives in the parent's exact scope.
+  scope: { tenantId: string; workspaceId: string; projectId: string };
+  // Allowlists: the helper may touch only these.
+  sourceAllowlist: string[];
+  toolAllowlist: string[];
+  // Budget fence: cap in a NAMED unit, with an enforcement class.
+  budget: { unit: string; cap: number; spent: number; enforcement: BudgetEnforcement; hard: boolean };
+  // Whether the helper surface bounds the ACTUAL per-call cost
+  // (fixed-price surface) as opposed to provider-metered actuals
+  // a preflight estimate cannot bound (Manus). Required true for
+  // any hard budget that is not provider-enforced; absent counts
+  // as false (fail closed).
+  actualCostBounded?: boolean;
+  // Lease fence: absolute expiry; a dead parent cannot extend it.
+  expiresAtMs: number;
+  // Immutable reply routing: the parent's own reply target.
+  replyTarget: string;
+  // Equipment: pinned source, surface/model/auth, skill,
+  // criteria, rework (see HelperEquipment). REQUIRED.
+  equipment: HelperEquipment;
+}
+
+export type DenyCode =
+  | 'PARENT_REQUIRED' | 'CROSS_SCOPE' | 'EXPIRED' | 'HELPER_NOT_ALLOWED'
+  | 'ALLOWLIST_EMPTY' | 'BUDGET_UNKNOWN' | 'BUDGET_EXCEEDED'
+  | 'HARD_BUDGET_UNENFORCED' | 'REPLY_TARGET_REQUIRED' | 'ATTEMPT_INVALID'
+  | 'EQUIPMENT_REQUIRED' | 'SOURCE_UNPINNED' | 'SURFACE_UNPINNED'
+  | 'SKILL_REQUIRED' | 'CRITERIA_REQUIRED' | 'REWORK_INVALID';
+
+export interface Validation { ok: boolean; denies: DenyCode[] }
+
+// The child idempotency identity: one parent task + one attempt
+// + one subtask key maps to exactly one child, forever. A retry
+// re-derives the same key and reconciles instead of duplicating.
+export function childKey(a: Pick<HelperAssignment, 'parentTaskId' | 'parentAttempt' | 'subtaskKey' | 'helperId'>): string {
+  return `helper:${a.helperId}:${a.parentTaskId}:${a.parentAttempt}:${a.subtaskKey}`;
+}
+
+export function validateAssignment(a: HelperAssignment, nowMs: number): Validation {
+  const denies: DenyCode[] = [];
+  if (!a.parentWorkerId || !a.parentTaskId) denies.push('PARENT_REQUIRED');
+  if (!Number.isInteger(a.parentAttempt) || a.parentAttempt < 1) denies.push('ATTEMPT_INVALID');
+  if (a.helperId !== 'manus' && a.helperId !== 'grok') denies.push('HELPER_NOT_ALLOWED');
+  if (!a.scope?.tenantId || !a.scope?.workspaceId || !a.scope?.projectId) denies.push('CROSS_SCOPE');
+  // Strict deadline: the expiry instant itself is already dead.
+  if (!Number.isFinite(a.expiresAtMs) || !(nowMs < a.expiresAtMs)) denies.push('EXPIRED');
+  if (!a.sourceAllowlist?.length || !a.toolAllowlist?.length) denies.push('ALLOWLIST_EMPTY');
+  if (!a.replyTarget) denies.push('REPLY_TARGET_REQUIRED');
+  // Equipment fences (D-057 equip rule): every field that pins
+  // the attempt must be present and well-formed; an unpinned
+  // attempt is indistinguishable from an improvised one.
+  const eq = a.equipment;
+  if (!eq || typeof eq !== 'object') denies.push('EQUIPMENT_REQUIRED');
+  else {
+    if (!eq.pinnedSource?.ref || !isDigestHex(eq.pinnedSource?.digest)) denies.push('SOURCE_UNPINNED');
+    if (!eq.surface?.kind || !eq.surface?.model || !eq.surface?.authBinding) denies.push('SURFACE_UNPINNED');
+    if (!eq.skillRef) denies.push('SKILL_REQUIRED');
+    if (!Array.isArray(eq.criteria) || !eq.criteria.length || eq.criteria.some((c) => typeof c !== 'string' || !c.trim()))
+      denies.push('CRITERIA_REQUIRED');
+    if (!Number.isInteger(eq.rework?.maxAttempts) || eq.rework.maxAttempts < 0) denies.push('REWORK_INVALID');
+  }
+  // Resource authority must be KNOWN and SANE: an unnamed unit,
+  // a non-finite or negative cap, a non-finite or negative spent
+  // (root probe: spent=-100 and NaN were accepted), or unknown
+  // enforcement never funds a child. All checks fail closed.
+  const b = a.budget;
+  if (!b?.unit || !Number.isFinite(b?.cap) || b.cap < 0 || !Number.isFinite(b?.spent) || b.spent < 0 || b?.enforcement === 'unknown')
+    denies.push('BUDGET_UNKNOWN');
+  else {
+    if (b.spent > b.cap) denies.push('BUDGET_EXCEEDED');
+    // The Manus lesson, encoded twice. A hard budget on a
+    // prompt-only surface is not a budget. AND a runtime
+    // preflight fence bounds submission ESTIMATES only: when the
+    // helper's ACTUAL per-call cost is provider-metered and
+    // unbounded, no estimate check can make a hard cap true —
+    // hard budgets then require provider enforcement with a
+    // real provider-side cap, else they are denied.
+    if (b.hard && b.enforcement === 'prompt_only') denies.push('HARD_BUDGET_UNENFORCED');
+    else if (b.hard && b.enforcement !== 'provider' && a.actualCostBounded !== true) denies.push('HARD_BUDGET_UNENFORCED');
+  }
+  return { ok: denies.length === 0, denies };
+}
+
+// Cross-scope guard for result return: a child result is only
+// acceptable for the exact parent/scope it was derived under.
+export function resultMatchesAssignment(a: HelperAssignment, r: { childKey: string; scope: { tenantId: string; workspaceId: string; projectId: string } }): boolean {
+  return r.childKey === childKey(a)
+    && r.scope.tenantId === a.scope.tenantId
+    && r.scope.workspaceId === a.scope.workspaceId
+    && r.scope.projectId === a.scope.projectId;
+}
+
+// Pre-submit runtime fence: the parent calls this before EVERY
+// helper submission under the assignment. When it denies, the
+// submission does not happen. The fence bounds the ESTIMATED
+// cost of submissions; per validateAssignment, that supports a
+// hard-budget claim ONLY when actual per-call cost is bounded
+// (or the provider enforces the cap). A non-finite or negative
+// nextCost is itself a deny (root probe: NaN/Infinity/-5 were
+// accepted).
+export function validateBeforeSubmit(a: HelperAssignment, nextCost: number, nowMs: number): Validation {
+  const base = validateAssignment(a, nowMs);
+  const denies = [...base.denies];
+  if (!Number.isFinite(nextCost) || nextCost < 0) { if (!denies.includes('BUDGET_UNKNOWN')) denies.push('BUDGET_UNKNOWN'); }
+  else if (a.budget.spent + nextCost > a.budget.cap && !denies.includes('BUDGET_EXCEEDED'))
+    denies.push('BUDGET_EXCEEDED');
+  return { ok: denies.length === 0, denies };
+}
+
+export interface HelperResultEnvelope {
+  childKey: string;
+  helperId: HelperId;
+  externalRef: string | null;   // the helper surface's own task ref
+  digest: string;                // content digest of the result payload
+  payload: unknown;              // durable result, parent validates
+  costUnits: number;             // actuals, in the assignment's unit
+}
+
+// Adapter surface: one implementation per helper, bound to that
+// helper's OWN supported tools. `bound=false` adapters refuse
+// submission with NOT_BOUND — the honest state until the
+// connection for that surface is made and verified. No adapter
+// may copy credentials or impersonate the helper's session.
+export interface HelperAdapter {
+  helperId: HelperId;
+  surface: string;               // e.g. 'browser-bridge' | 'api'
+  bound: boolean;
+  // The adapter's own declared identity, compared against the
+  // assignment's pinned equipment.surface before any submit:
+  // the model/agent build it will actually run and the NAME of
+  // the credential binding it uses (never the credential).
+  // Absent on unbound adapters - which refuse anyway.
+  descriptor?: { model: string; authBinding: string };
+  submit(a: HelperAssignment, input: unknown): Promise<{ externalRef: string }>;
+  readResult(externalRef: string): Promise<HelperResultEnvelope>;
+}
+
+export function unboundAdapter(helperId: HelperId, surface: string): HelperAdapter {
+  const refuse = async (): Promise<never> => { throw new Error('HELPER_NOT_BOUND'); };
+  return { helperId, surface, bound: false, submit: refuse, readResult: refuse };
+}
