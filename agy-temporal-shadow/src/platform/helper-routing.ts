@@ -1,1 +1,110 @@
-Ly8gSGVscGVyIHJvdXRpbmcgKEFHWSBPcGVyYXRpbmcgTW9kZWwgdjIuMCByZXNvdXJjZS1maXJzdCBydWxlCi8vICsgRC0wNTcsIDIwMjYtMTEtMDQpOiBjaG9vc2luZyBNYW51cyB2cyBHcm9rIGZvciBhIHN1YnRhc2sgaXMKLy8gYSBNRUFTVVJFRCBkZWNpc2lvbiwgbmV2ZXIgYSBmaXhlZCB3b3JrZXIgbmFtZSBhbmQgbmV2ZXIgYQovLyBoYXJkLWNvZGVkIHByb3ZpZGVyLWZpcnN0IHJ1bGUuIFRoaXMgbW9kdWxlIGlzIFBVUkU6IGl0Ci8vIHBlcmZvcm1zIG5vIEkvTywgY2FsbHMgbm8gcHJvdmlkZXIsIGFuZCByZWFkcyBubyBjcmVkZW50aWFsLgovLyBDYWxsZXJzIHN1cHBseSB0aGUgdGVsZW1ldHJ5IHRoZXkgYWN0dWFsbHkgaG9sZDsgdW5rbm93bgovLyBxdW90YS9jb3N0L2hlYWx0aCBzdGF5cyBVTktOT1dOIGhlcmUgdG9vIC0gaXQgaXMgbmV2ZXIKLy8gZ3Vlc3NlZCwgYW5kIGFuIHVua25vd24gYmFsYW5jZSBjYW5ub3QgZnVuZCBhIGhhcmQtY2FwcGVkCi8vIGF0dGVtcHQuCi8vCi8vIERlY2lzaW9uIG9yZGVyIChjYXBhYmlsaXR5L3F1YWxpdHkgRklSU1QsIHBlciB0aGUgT3BlcmF0aW5nCi8vIE1vZGVsOyByZXNvdXJjZSBvcHRpbWl6YXRpb24gb25seSBhbW9uZyB3aGF0IGFscmVhZHkgcGFzc2VzKToKLy8gICAxLiBFbGlnaWJpbGl0eSBnYXRlOiBoZWxwZXIgaXMgYm91bmQsIG9mZmVycyBhIHN1cmZhY2UgdGhlCi8vICAgICAgYXNzaWdubWVudCdzIGVxdWlwbWVudCBjYW4gcGluLCBhbmQgY292ZXJzIGV2ZXJ5Ci8vICAgICAgcmVxdWlyZWQgY2FwYWJpbGl0eS4KLy8gICAyLiBCdWRnZXQgY29tcGF0aWJpbGl0eTogYSBIQVJEIGJ1ZGdldCByZXF1aXJlcyBwcm92aWRlcgovLyAgICAgIGVuZm9yY2VtZW50IG9yIGJvdW5kZWQgYWN0dWFscyAodGhlIHNhbWUgcnVsZQovLyAgICAgIHZhbGlkYXRlQXNzaWdubWVudCBlbmNvZGVzKSwgYW5kIHdoZW4gdGhlIGJhbGFuY2UgaXMKLy8gICAgICBLTk9XTiBpdCBtdXN0IGNvdmVyIHRoZSBleHBlY3RlZCBjb3N0OyB3aGVuIHRoZSBjYXAgaXMKLy8gICAgICBoYXJkIGFuZCB0aGUgYmFsYW5jZSBpcyBVTktOT1dOIHRoZSBjYW5kaWRhdGUgaXMgb3V0LgovLyAgIDMuIEFtb25nIHRoZSBzdXJ2aXZvcnM6IGhpZ2hlc3QgbWVhc3VyZWQgZml0IHNjb3JlIGZvcgovLyAgICAgIHRoaXMgdGFzayBraW5kOyB0aWVzIGJyZWFrIG9uIGxvd2VyIGV4cGVjdGVkIGNvc3QsIHRoZW4KLy8gICAgICBvbiBoZWxwZXIgaWQgZm9yIGRldGVybWluaXNtLgovLyBXaGVuIG5vdGhpbmcgc3Vydml2ZXMsIHRoZSByb3V0ZSBERU5JRVMgd2l0aCBwZXItY2FuZGlkYXRlCi8vIHJlYXNvbnMgLSB0aGUgcGFyZW50IHRoZW4gcmUtc2NvcGVzIHRoZSBhc3NpZ25tZW50IGluc3RlYWQKLy8gb2Ygc2lsZW50bHkgZmFsbGluZyBiYWNrIHRvIGFuIGluZWxpZ2libGUgaGVscGVyLgppbXBvcnQgdHlwZSB7IEJ1ZGdldEVuZm9yY2VtZW50LCBIZWxwZXJJZCB9IGZyb20gJy4vaGVscGVyLWRlbGVnYXRpb24uanMnOwoKZXhwb3J0IGludGVyZmFjZSBIZWxwZXJDYW5kaWRhdGUgewogIGhlbHBlcklkOiBIZWxwZXJJZDsKICAvLyBUaGUgYWRhcHRlciBmb3IgdGhpcyBoZWxwZXIgaXMgY29ubmVjdGVkIGFuZCB2ZXJpZmllZC4KICBib3VuZDogYm9vbGVhbjsKICAvLyBTdXJmYWNlIGtpbmRzIHRoaXMgaGVscGVyIGNhbiBiZSBwaW5uZWQgdG8gKCdhcGknLAogIC8vICdicm93c2VyLWJyaWRnZScsIC4uLiksIGZyb20gaXRzIGFkYXB0ZXIgZGVzY3JpcHRvcnMuCiAgc3VyZmFjZXM6IHN0cmluZ1tdOwogIC8vIENhcGFiaWxpdGllcyB0aGUgaGVscGVyIGdlbnVpbmVseSBvZmZlcnMgZm9yIHJvdXRpbmcKICAvLyAoZS5nLiAndGV4dCcsICd3ZWItcmVzZWFyY2gnLCAnZXh0cmFjdGlvbicsICdsb25nLWZvcm0nKS4KICBjYXBhYmlsaXRpZXM6IHN0cmluZ1tdOwogIC8vIENhbGxlci1tZWFzdXJlZCBmaXQgZm9yIFRISVMgdGFzayBraW5kLCAwLi4xLCBmcm9tIHByaW9yCiAgLy8gdmVyaWZpZWQgb3V0Y29tZXMuIEFic2VudCA9IHVubWVhc3VyZWQgKHNjb3JlcyAwIGFuZCBpcwogIC8vIHJlcG9ydGVkIGFzIHN1Y2g7IGl0IGlzIG5vdCBhbiBlc3RpbWF0ZSBvZiBxdWFsaXR5KS4KICBmaXRTY29yZT86IG51bWJlcjsKICAvLyBCYWxhbmNlIHRlbGVtZXRyeSBpbiB0aGUgYXNzaWdubWVudCBidWRnZXQncyB1bml0LiBrbm93bgogIC8vIE1VU1QgYmUgZmFsc2Ugd2hlbiB0aGUgY2FsbGVyIGhhcyBubyBjdXJyZW50IHJlYWRpbmcgLQogIC8vIHVuaXRzIGFyZSB0aGVuIG1lYW5pbmdsZXNzIGFuZCBpZ25vcmVkLgogIGJhbGFuY2U6IHsga25vd246IGJvb2xlYW47IHVuaXRzPzogbnVtYmVyIH07CiAgZW5mb3JjZW1lbnQ6IEJ1ZGdldEVuZm9yY2VtZW50OwogIGFjdHVhbENvc3RCb3VuZGVkOiBib29sZWFuOwogIC8vIEV4cGVjdGVkIGNvc3Qgb2YgdGhpcyBhdHRlbXB0IGluIHRoZSBidWRnZXQgdW5pdCwgd2hlbiB0aGUKICAvLyBjYWxsZXIgY2FuIHN0YXRlIG9uZTsgYWJzZW50ID0gdW5rbm93bi4KICBleHBlY3RlZENvc3Q/OiBudW1iZXI7Cn0KCmV4cG9ydCBpbnRlcmZhY2UgUm91dGVSZXF1ZXN0IHsKICByZXF1aXJlZENhcGFiaWxpdGllczogc3RyaW5nW107CiAgLy8gVGhlIHN1cmZhY2Uga2luZCB0aGUgYXNzaWdubWVudCdzIGVxdWlwbWVudCBwaW5zLgogIHN1cmZhY2VLaW5kOiBzdHJpbmc7CiAgYnVkZ2V0OiB7IGNhcDogbnVtYmVyOyBzcGVudDogbnVtYmVyOyBoYXJkOiBib29sZWFuIH07Cn0KCmV4cG9ydCBpbnRlcmZhY2UgUm91dGVEZWNpc2lvbiB7CiAgaGVscGVySWQ6IEhlbHBlcklkOwogIGZpdFNjb3JlOiBudW1iZXI7ICAgICAgICAgIC8vIHRoZSB3aW5uZXIncyBtZWFzdXJlZCBmaXQgKDAgd2hlbiB1bm1lYXN1cmVkKQogIGZpdE1lYXN1cmVkOiBib29sZWFuOwogIHJlYXNvbnM6IHN0cmluZ1tdOyAgICAgICAgIC8vIHdoeSB0aGUgd2lubmVyIHdvbiwgaHVtYW4tcmVhZGFibGUKfQoKZXhwb3J0IGludGVyZmFjZSBSb3V0ZURlbmlhbCB7CiAgZGVuaWVkOiB7IGhlbHBlcklkOiBIZWxwZXJJZDsgcmVhc29uczogc3RyaW5nW10gfVtdOwp9CgpleHBvcnQgZnVuY3Rpb24gcm91dGVIZWxwZXIocmVxOiBSb3V0ZVJlcXVlc3QsIGNhbmRpZGF0ZXM6IEhlbHBlckNhbmRpZGF0ZVtdKTogUm91dGVEZWNpc2lvbiB8IFJvdXRlRGVuaWFsIHsKICBjb25zdCBkZW5pZWQ6IHsgaGVscGVySWQ6IEhlbHBlcklkOyByZWFzb25zOiBzdHJpbmdbXSB9W10gPSBbXTsKICBjb25zdCBzdXJ2aXZvcnM6IHsgYzogSGVscGVyQ2FuZGlkYXRlOyBmaXQ6IG51bWJlcjsgbWVhc3VyZWQ6IGJvb2xlYW4gfVtdID0gW107CiAgZm9yIChjb25zdCBjIG9mIGNhbmRpZGF0ZXMpIHsKICAgIGNvbnN0IHJlYXNvbnM6IHN0cmluZ1tdID0gW107CiAgICBpZiAoIWMuYm91bmQpIHJlYXNvbnMucHVzaCgnTk9UX0JPVU5EJyk7CiAgICBpZiAoIWMuc3VyZmFjZXMuaW5jbHVkZXMocmVxLnN1cmZhY2VLaW5kKSkgcmVhc29ucy5wdXNoKCdTVVJGQUNFX05PVF9PRkZFUkVEJyk7CiAgICBmb3IgKGNvbnN0IGNhcCBvZiByZXEucmVxdWlyZWRDYXBhYmlsaXRpZXMpIGlmICghYy5jYXBhYmlsaXRpZXMuaW5jbHVkZXMoY2FwKSkgcmVhc29ucy5wdXNoKGBDQVBBQklMSVRZX01JU1NJTkc6JHtjYXB9YCk7CiAgICAvLyBCdWRnZXQgY29tcGF0aWJpbGl0eSBtaXJyb3JzIHZhbGlkYXRlQXNzaWdubWVudCdzIGhhcmQKICAgIC8vIGJ1ZGdldCBydWxlIHNvIGEgcm91dGVkIGFzc2lnbm1lbnQgY2Fubm90IGJlIGRlbmllZCBieQogICAgLy8gdGhlIGNvbnRyYWN0IGl0IGlzIHJvdXRlZCBmb3IuCiAgICBpZiAocmVxLmJ1ZGdldC5oYXJkICYmIGMuZW5mb3JjZW1lbnQgPT09ICdwcm9tcHRfb25seScpIHJlYXNvbnMucHVzaCgnSEFSRF9CVURHRVRfVU5FTkZPUkNFRCcpOwogICAgZWxzZSBpZiAocmVxLmJ1ZGdldC5oYXJkICYmIGMuZW5mb3JjZW1lbnQgIT09ICdwcm92aWRlcicgJiYgIWMuYWN0dWFsQ29zdEJvdW5kZWQpIHJlYXNvbnMucHVzaCgnSEFSRF9CVURHRVRfVU5FTkZPUkNFRCcpOwogICAgaWYgKGMuYmFsYW5jZS5rbm93bikgewogICAgICBjb25zdCByb29tID0gTWF0aC5tYXgoMCwgcmVxLmJ1ZGdldC5jYXAgLSByZXEuYnVkZ2V0LnNwZW50KTsKICAgICAgY29uc3QgYXZhaWwgPSBNYXRoLm1pbihyb29tLCBjLmJhbGFuY2UudW5pdHMgPz8gMCk7CiAgICAgIGlmIChjLmV4cGVjdGVkQ29zdCAhPT0gdW5kZWZpbmVkICYmIGMuZXhwZWN0ZWRDb3N0ID4gYXZhaWwpIHJlYXNvbnMucHVzaCgnQkFMQU5DRV9JTlNVRkZJQ0lFTlQnKTsKICAgIH0gZWxzZSBpZiAocmVxLmJ1ZGdldC5oYXJkKSByZWFzb25zLnB1c2goJ0JBTEFOQ0VfVU5LTk9XTl9IQVJEX0JVREdFVCcpOwogICAgaWYgKHJlYXNvbnMubGVuZ3RoKSB7IGRlbmllZC5wdXNoKHsgaGVscGVySWQ6IGMuaGVscGVySWQsIHJlYXNvbnMgfSk7IGNvbnRpbnVlOyB9CiAgICBzdXJ2aXZvcnMucHVzaCh7IGMsIGZpdDogdHlwZW9mIGMuZml0U2NvcmUgPT09ICdudW1iZXInICYmIE51bWJlci5pc0Zpbml0ZShjLmZpdFNjb3JlKSA/IGMuZml0U2NvcmUgOiAwLAogICAgICBtZWFzdXJlZDogdHlwZW9mIGMuZml0U2NvcmUgPT09ICdudW1iZXInICYmIE51bWJlci5pc0Zpbml0ZShjLmZpdFNjb3JlKSB9KTsKICB9CiAgaWYgKCFzdXJ2aXZvcnMubGVuZ3RoKSByZXR1cm4geyBkZW5pZWQgfTsKICBzdXJ2aXZvcnMuc29ydCgoeCwgeSkgPT4KICAgICh5LmZpdCAtIHguZml0KQogICAgfHwgKCh4LmMuZXhwZWN0ZWRDb3N0ID8/IE51bWJlci5QT1NJVElWRV9JTkZJTklUWSkgLSAoeS5jLmV4cGVjdGVkQ29zdCA/PyBOdW1iZXIuUE9TSVRJVkVfSU5GSU5JVFkpKQogICAgfHwgeC5jLmhlbHBlcklkLmxvY2FsZUNvbXBhcmUoeS5jLmhlbHBlcklkKSk7CiAgY29uc3QgdyA9IHN1cnZpdm9yc1swXTsKICByZXR1cm4gewogICAgaGVscGVySWQ6IHcuYy5oZWxwZXJJZCwKICAgIGZpdFNjb3JlOiB3LmZpdCwKICAgIGZpdE1lYXN1cmVkOiB3Lm1lYXN1cmVkLAogICAgcmVhc29uczogWwogICAgICBgZWxpZ2libGU6IGJvdW5kLCBzdXJmYWNlICR7cmVxLnN1cmZhY2VLaW5kfSBvZmZlcmVkLCBjYXBhYmlsaXRpZXMgY292ZXIgWyR7cmVxLnJlcXVpcmVkQ2FwYWJpbGl0aWVzLmpvaW4oJywnKX1dYCwKICAgICAgdy5tZWFzdXJlZCA/IGBoaWdoZXN0IG1lYXN1cmVkIGZpdCAke3cuZml0fWAgOiAnZml0IHVubWVhc3VyZWQgZm9yIGFsbCBlbGlnaWJsZSBjYW5kaWRhdGVzOyBjaG9zZW4gYnkgY29zdC9pZCBvcmRlcicsCiAgICAgIC4uLihkZW5pZWQubGVuZ3RoID8gW2BkZW5pZWQ6ICR7ZGVuaWVkLm1hcCgoZCkgPT4gYCR7ZC5oZWxwZXJJZH0oJHtkLnJlYXNvbnMuam9pbignLCcpfSlgKS5qb2luKCc7ICcpfWBdIDogW10pLAogICAgXSwKICB9Owp9Cg==
+// Helper routing (AGY Operating Model v2.0 resource-first rule
+// + D-057, 2026-11-04): choosing Manus vs Grok for a subtask is
+// a MEASURED decision, never a fixed worker name and never a
+// hard-coded provider-first rule. This module is PURE: it
+// performs no I/O, calls no provider, and reads no credential.
+// Callers supply the telemetry they actually hold; unknown
+// quota/cost/health stays UNKNOWN here too - it is never
+// guessed, and an unknown balance cannot fund a hard-capped
+// attempt.
+//
+// Decision order (capability/quality FIRST, per the Operating
+// Model; resource optimization only among what already passes):
+//   1. Eligibility gate: helper is bound, offers a surface the
+//      assignment's equipment can pin, and covers every
+//      required capability.
+//   2. Budget compatibility: a HARD budget requires provider
+//      enforcement or bounded actuals (the same rule
+//      validateAssignment encodes), and when the balance is
+//      KNOWN it must cover the expected cost; when the cap is
+//      hard and the balance is UNKNOWN the candidate is out.
+//   3. Among the survivors: highest measured fit score for
+//      this task kind; ties break on lower expected cost, then
+//      on helper id for determinism.
+// When nothing survives, the route DENIES with per-candidate
+// reasons - the parent then re-scopes the assignment instead
+// of silently falling back to an ineligible helper.
+import type { BudgetEnforcement, HelperId } from './helper-delegation.js';
+
+export interface HelperCandidate {
+  helperId: HelperId;
+  // The adapter for this helper is connected and verified.
+  bound: boolean;
+  // Surface kinds this helper can be pinned to ('api',
+  // 'browser-bridge', ...), from its adapter descriptors.
+  surfaces: string[];
+  // Capabilities the helper genuinely offers for routing
+  // (e.g. 'text', 'web-research', 'extraction', 'long-form').
+  capabilities: string[];
+  // Caller-measured fit for THIS task kind, 0..1, from prior
+  // verified outcomes. Absent = unmeasured (scores 0 and is
+  // reported as such; it is not an estimate of quality).
+  fitScore?: number;
+  // Balance telemetry in the assignment budget's unit. known
+  // MUST be false when the caller has no current reading -
+  // units are then meaningless and ignored.
+  balance: { known: boolean; units?: number };
+  enforcement: BudgetEnforcement;
+  actualCostBounded: boolean;
+  // Expected cost of this attempt in the budget unit, when the
+  // caller can state one; absent = unknown.
+  expectedCost?: number;
+}
+
+export interface RouteRequest {
+  requiredCapabilities: string[];
+  // The surface kind the assignment's equipment pins.
+  surfaceKind: string;
+  budget: { cap: number; spent: number; hard: boolean };
+}
+
+export interface RouteDecision {
+  helperId: HelperId;
+  fitScore: number;          // the winner's measured fit (0 when unmeasured)
+  fitMeasured: boolean;
+  reasons: string[];         // why the winner won, human-readable
+}
+
+export interface RouteDenial {
+  denied: { helperId: HelperId; reasons: string[] }[];
+}
+
+export function routeHelper(req: RouteRequest, candidates: HelperCandidate[]): RouteDecision | RouteDenial {
+  const denied: { helperId: HelperId; reasons: string[] }[] = [];
+  const survivors: { c: HelperCandidate; fit: number; measured: boolean }[] = [];
+  for (const c of candidates) {
+    const reasons: string[] = [];
+    if (!c.bound) reasons.push('NOT_BOUND');
+    if (!c.surfaces.includes(req.surfaceKind)) reasons.push('SURFACE_NOT_OFFERED');
+    for (const cap of req.requiredCapabilities) if (!c.capabilities.includes(cap)) reasons.push(`CAPABILITY_MISSING:${cap}`);
+    // Budget compatibility mirrors validateAssignment's hard
+    // budget rule so a routed assignment cannot be denied by
+    // the contract it is routed for.
+    if (req.budget.hard && c.enforcement === 'prompt_only') reasons.push('HARD_BUDGET_UNENFORCED');
+    else if (req.budget.hard && c.enforcement !== 'provider' && !c.actualCostBounded) reasons.push('HARD_BUDGET_UNENFORCED');
+    if (c.balance.known) {
+      const room = Math.max(0, req.budget.cap - req.budget.spent);
+      const avail = Math.min(room, c.balance.units ?? 0);
+      if (c.expectedCost !== undefined && c.expectedCost > avail) reasons.push('BALANCE_INSUFFICIENT');
+    } else if (req.budget.hard) reasons.push('BALANCE_UNKNOWN_HARD_BUDGET');
+    if (reasons.length) { denied.push({ helperId: c.helperId, reasons }); continue; }
+    survivors.push({ c, fit: typeof c.fitScore === 'number' && Number.isFinite(c.fitScore) ? c.fitScore : 0,
+      measured: typeof c.fitScore === 'number' && Number.isFinite(c.fitScore) });
+  }
+  if (!survivors.length) return { denied };
+  survivors.sort((x, y) =>
+    (y.fit - x.fit)
+    || ((x.c.expectedCost ?? Number.POSITIVE_INFINITY) - (y.c.expectedCost ?? Number.POSITIVE_INFINITY))
+    || x.c.helperId.localeCompare(y.c.helperId));
+  const w = survivors[0];
+  return {
+    helperId: w.c.helperId,
+    fitScore: w.fit,
+    fitMeasured: w.measured,
+    reasons: [
+      `eligible: bound, surface ${req.surfaceKind} offered, capabilities cover [${req.requiredCapabilities.join(',')}]`,
+      w.measured ? `highest measured fit ${w.fit}` : 'fit unmeasured for all eligible candidates; chosen by cost/id order',
+      ...(denied.length ? [`denied: ${denied.map((d) => `${d.helperId}(${d.reasons.join(',')})`).join('; ')}`] : []),
+    ],
+  };
+}
