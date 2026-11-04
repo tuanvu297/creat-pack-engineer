@@ -1,0 +1,11 @@
+{
+  "status": "NATIVE_INGRESS_VERIFIED",
+  "thread_id": "01a130a2-0a5b-7833-a489-d19c00dcc7db",
+  "turn_id": "01a13e7b-0238-7d52-b95c-37edbb6a7586",
+  "ingress_item_id": "fco_01a13e7b-025e-7373-b69d-a733516a534c",
+  "ingress_item_type": "functionCallOutput",
+  "ack_artifact": "ACK.json",
+  "human_source_thread_id": "01a13499-9300-72a3-8944-87f9b3fd2362",
+  "human_source_message_id": "01a13e76-51d4-78c1-8d5c-e2eb07c5a9cd",
+  "claim_limit": "Existing native thread dispatch and this ACK only; no persistent unattended/cloud wakeup inferred"
+}

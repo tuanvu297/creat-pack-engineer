@@ -1,0 +1,47 @@
+{
+  "task_id": "AGY-CHAT-CONTROL-20261015",
+  "owner_scope": "Latest direct Owner instruction in AI master: train/delegate ChatGPT-like tasks to workers, complete missing connections, control AGY from chat and return results to engineer chat",
+  "recorded_at": "2026-10-15 07:32:07 UTC",
+  "role": "Creat Pack unified engineer",
+  "canonical_delta": "Latest D-045 maximum useful training supersedes earlier fixed one-batch/20% interpretations; D-046 Muse parity and D-047 interop graph applied",
+  "fresh_sources": {
+    "START_HERE": {
+      "id": "10Ph_XvsgytAHsdECGDNkPY94l4EIuTat-4VWtbXrTsY",
+      "modified": "2026-10-15T07:21:40.697Z"
+    },
+    "DECISION_LOG": {
+      "id": "1TFSkLh7ZfAxHq-mYSN-HG2Dp1XJaG_JWcItASe_4tME",
+      "modified": "2026-10-15T07:21:31.176Z"
+    },
+    "QA": {
+      "id": "1S98IZWRhF5rDdthPO-y5ETb1shHRS9bz0f_J22yzcqc",
+      "contract": "1.1"
+    },
+    "issue2_latest_comment": 6186478553,
+    "primary_work": "01a130a2-0a5b-7833-a489-d19c00dcc7db"
+  },
+  "observed": {
+    "browser_gateway": "READY_LOCAL_ONLY_NOT_LIVE_STEEL",
+    "manus_auth": true,
+    "manus_available_existing_credits": 1272,
+    "muse": "AUTH_IDENTITY_PASS; GL bridge read-only; separate CLI last execution evidenceCRM",
+    "previous_bridge": "PID19824 and9736 absent; cached status.json heartbeat stale",
+    "previous_training": "CRM synthetic3workers20/20regression6/6unseen; not general dispatch"
+  },
+  "quota": {
+    "included_codex_allowed": true,
+    "primary_used_percent": 25,
+    "weekly_used_percent": 4,
+    "paid_credits": 0,
+    "policy": "No paid API/purchase; fresh resource gating per actual provider call"
+  },
+  "design": "Extend existing bounded bridge into supplied-text/task-contract and engineering-analysis worker adapter with durable queue and callback targeting existing Engineer chat; reuse existing provider adapters without altering other active missions",
+  "constraints": [
+    "No new Work",
+    "No replay accepted/pending tasks",
+    "No synced sources edits",
+    "No production/CRM writes or publish/purchase/credential change",
+    "Do not claim native chat wakeup or independent acceptance from durable callback alone"
+  ],
+  "callback_target": "01a13499-9300-72a3-8944-87f9b3fd2362"
+}

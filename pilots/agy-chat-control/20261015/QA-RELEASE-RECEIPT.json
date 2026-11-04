@@ -1,0 +1,50 @@
+{
+  "at": "2026-10-15T08:05:19.867441+00:00",
+  "package_name": "agy-chat-control",
+  "package_version": "0.2.0",
+  "zip_sha256": "445ed4a6f1d2d2afb01a371963ef4588fb0b8dfc49dce9a862e2e76c74e1aea3",
+  "PACKAGE_BUILT": "PASS",
+  "INSTALL_TEST_PASS": "PASS_SCOPED_WINDOWS_PYTHON_STDLIB_FRESH_ZIP_EXTRACTION",
+  "LOCAL_FUNCTION_PASS": "PASS_100_TESTS",
+  "AUTH_VERIFIED": "OBSERVED_P1_INCLUDED_CODEX_AND_CURRENT_PROVIDER_ROUNDTRIPS; future sessions not certified",
+  "LIVE_EXECUTION_PASS": "PASS_SCOPED_P1_TEXT_AND_PROVIDER_ROUNDTRIPS",
+  "INTEGRATED_PASS": "PASS_SCOPED_P1_ENGINEER_DELEGATED_CONTROL_COMPILATION; FULL_UNATTENDED_NATIVE_WAKE_EXTERNAL_LIMIT",
+  "suites": [
+    {
+      "suite": "tests",
+      "count": 78,
+      "status": "PASS"
+    },
+    {
+      "suite": "provider-interop",
+      "count": 16,
+      "status": "PASS"
+    },
+    {
+      "suite": "training",
+      "count": 6,
+      "status": "PASS"
+    }
+  ],
+  "entrypoint_smoke": "3 help entrypoints PASS; PowerShell actual start/restart evidence separate",
+  "manifest_verified": true,
+  "reproducible_zip": true,
+  "P1_runtime_snapshot": "f1b97de69fcc3371bc327098e7ca4f7a488c2d626180a1938b6ed939fe118869",
+  "P1_inventory_match": "14/14 in installed ZIP; later isolated training/docs/metadata are separate candidates covered by release manifest",
+  "signature_scan": "PASS; finite patterns/whitelist",
+  "test_status_note": "Builder manifest intentionally leaves higher levels UNVERIFIED. This external receipt binds observed checks and scoped evidence to exact archive hash. No blanket runtime/production/commercial PASS.",
+  "provider_handoff": "FAIL observed compiledchildlease Manus/Muse; FAIL Gemini retry/schema; safe casejudgments reported separately; no child actions executed",
+  "native_callback": "Durable GitHub delivery verified for P1; root actual native review verified; continuous detached daemon wakeup EXTERNAL_LIMIT",
+  "new_stored_Work": 0,
+  "commercial_ready": "UNVERIFIED",
+  "limits": [
+    "Only supplied-text analysis/planning/code review; no arbitrary shell/CRM/publish/fileexecution rights",
+    "Persistent unattended native cloud/Engineer chat wakeup remainsEXTERNAL_LIMIT",
+    "Finite installed trial policy24h/max10newtextmissions; current policy and status outside package",
+    "No login/boot service installed; explicit wrapper restart after shutdown",
+    "Windows only tested; alpha app-server compatibility/productionuptime unverified",
+    "Signature screening finite; no claim to detect everysecret",
+    "Provider training/cards are localcandidates; not weighttraining/globalpromotion",
+    "Existing source/oldnonce/CRM accepted tasks must not be replayed"
+  ]
+}

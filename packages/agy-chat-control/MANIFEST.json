@@ -1,0 +1,423 @@
+{
+  "authentication_requirements": [
+    "Existing signed-in ChatGPT included route and fresh quota",
+    "Existing authorized private GitHub connector",
+    "Host-local signing key/private journal external to package",
+    "Provider adapter cards do not delegate credentials or unknown paidAPI rights"
+  ],
+  "created_at": "2026-10-15T08:00:00+00:00",
+  "created_at_policy": "SOURCE_DATE_EPOCH or Unix epoch; real handoff time in external receipt",
+  "declared_test_status": {
+    "INTEGRATED_PASS": "Scoped controlcompilation/independentAGYreview; unattendednativewake unverified",
+    "LIVE_EXECUTION_PASS": "See P1 sourcehash and realproviderturn",
+    "LOCAL_FUNCTION_PASS": "See evidence/TEST-RESULT.json and independentpeer"
+  },
+  "dependencies": [
+    {
+      "name": "Python standard library",
+      "version": "3.12.14 tested"
+    },
+    {
+      "name": "Installed Codex app-server",
+      "version": "0.162.0-alpha.17.2 tested; experimental"
+    }
+  ],
+  "entrypoints": [
+    "bin/compile_task.py",
+    "bin/agy_queue.py",
+    "scripts/start.ps1",
+    "scripts/restart.ps1",
+    "src/daemon.py"
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "6ea19304bec23c2c93d214acb2779418f680696b59319d9ccdd25710a63e7317",
+      "size": 4997
+    },
+    {
+      "path": "VERSION",
+      "sha256": "1f930dd1f133c1f97a94fe3acb8db34372cf4c01ffdb2b3ff4ca72f9494121e9",
+      "size": 6
+    },
+    {
+      "path": "bin/agy_queue.py",
+      "sha256": "50fbd24863793c3acb272a456cf088bf1b0f3551d03e62428753086312b24abc",
+      "size": 973
+    },
+    {
+      "path": "bin/compile_task.py",
+      "sha256": "7e11b144d1f1c8a1e2cab75f70ab27b1e136caf189cd19842268c02711e71489",
+      "size": 1438
+    },
+    {
+      "path": "config/package.json",
+      "sha256": "9a49fa30aaac6b27d7af1c9815449b73d62cf2113c5eec3b73005312da465b74",
+      "size": 2807
+    },
+    {
+      "path": "config/runtime.example.json",
+      "sha256": "44f304e029b767768b4a3d3c60e0dab1cd579e0b191e0c7760a55dcce7b4999c",
+      "size": 754
+    },
+    {
+      "path": "docs/BACKGROUND-AND-STEEL.md",
+      "sha256": "578debaa082e0f89e98546b2f173854f1c12f21dbf93e734294e00738b7fa795",
+      "size": 3077
+    },
+    {
+      "path": "docs/CONTROL-CHAT-RECIPE.md",
+      "sha256": "8016925f06e56604a91246c14fa9f7a7d0b486a7a6c5cc8d1fb5bfcaf04483a1",
+      "size": 2741
+    },
+    {
+      "path": "docs/QA-REPORT-20261015.md",
+      "sha256": "81ae3688dd1a0d474b6843f583e3c24345d3783f297489d6f934f369ae6beae4",
+      "size": 3722
+    },
+    {
+      "path": "evidence/BOOTSTRAP-20261015.json",
+      "sha256": "89755faf99e007b480024498981624ecacdf705a48827da66c90bb8fab9f295c",
+      "size": 2236
+    },
+    {
+      "path": "evidence/CONTROL-PILOT-INTENT.json",
+      "sha256": "b5450fa66d9a87b5b9c714997d99b00e6436180c791233de88d92f780ceca7a3",
+      "size": 1909
+    },
+    {
+      "path": "evidence/NATIVE-REVIEW-RECEIPT-P1.json",
+      "sha256": "60e357f0eb65949d5b5666e87530a7c9c3f6600a198a7c0d9bf7b9ab400570a9",
+      "size": 688
+    },
+    {
+      "path": "evidence/PEER-LIVE-P1.json",
+      "sha256": "581ac6375c56129f36d5d6978673614f7ad5f8a0258a13aecf6c714cee70bac3",
+      "size": 5053
+    },
+    {
+      "path": "evidence/PEER-QA-20261015.json",
+      "sha256": "1028ab993fcd63113faa8b9d9dac8c79d07f867821ef1bdb52a2b7b8fc572446",
+      "size": 8440
+    },
+    {
+      "path": "evidence/PEER-TRAINING-ADDENDUM.json",
+      "sha256": "57283a05d8847af6f33b8992221666f86d4750119eb7540dc487ae0fa7d4e0e7",
+      "size": 8595
+    },
+    {
+      "path": "evidence/RESTART-READBACK.json",
+      "sha256": "b9fd3b34eb0d35b10ae6c9e76b1d550376766ee2c46c65b4ac18bc4ee45be4ce",
+      "size": 1007
+    },
+    {
+      "path": "evidence/ROOT-ROUTE-DELTA.json",
+      "sha256": "51da196a943bf39d8e047f3b8b2140998251fd613545678618e8ebf756d0f90e",
+      "size": 1171
+    },
+    {
+      "path": "evidence/SANITIZED-PILOT-JOURNAL-P1.json",
+      "sha256": "2902a219bcdeae9740d2f1e8d94ac007888615e3b2c17b31b878dc51a26a29fb",
+      "size": 19703
+    },
+    {
+      "path": "evidence/SECRET-SCAN.json",
+      "sha256": "bbbb1401d990bf03f9d5dbdb06120d1090c1fe734a4241739f5dfbf7298b1270",
+      "size": 284
+    },
+    {
+      "path": "evidence/SOURCE-SNAPSHOT.json",
+      "sha256": "0a9284c0ea83ac6f6ea7a324405169a9c7f05107cbf0502809590e1f82b4c8b4",
+      "size": 2055
+    },
+    {
+      "path": "evidence/TEST-RESULT.json",
+      "sha256": "f82962df53b0d4e89f8bfe978ea207249128b23e05fabc978d598e139d3fb8ac",
+      "size": 967
+    },
+    {
+      "path": "evidence/TEST-provider-interop.txt",
+      "sha256": "258dce3bfdae7ff328b5f2ea551db16308ea31c488c7aa2a2f08fcf506f56cf3",
+      "size": 1920
+    },
+    {
+      "path": "evidence/TEST-tests.txt",
+      "sha256": "85bc0677aa232958b7af6d5eca3e99998f3565c4e4e1556024057dd6bcc1fca1",
+      "size": 8615
+    },
+    {
+      "path": "evidence/TEST-training.txt",
+      "sha256": "eb44ed97f9a454e9604596129b850d78dde4a53cdd5400d5ae3b39497d3877bb",
+      "size": 793
+    },
+    {
+      "path": "evidence/WORKER-DISPATCH-INTENT.json",
+      "sha256": "6efcd73445c40f5f1423bd90cad6497aa80dcdb88bff9a7fbdff2d958f394bac",
+      "size": 832
+    },
+    {
+      "path": "evidence/gemini-G1/ACTUAL-OUTPUT.json",
+      "sha256": "d0e92d2dc0c5a2283744b96fe91afe3dc97b165c202c3dc4bc990ef88c4435ac",
+      "size": 1750
+    },
+    {
+      "path": "evidence/gemini-G1/INTENT.json",
+      "sha256": "b0f2f6256ced568ef262ae18f73b8ba2ed30c25ad1b06d491f75b0dbc0bfe505",
+      "size": 934
+    },
+    {
+      "path": "evidence/gemini-G1/PROMPT.txt",
+      "sha256": "74b5fa48ccc42dfa679f5a2fa702f73f3e8a66852699918d515bb307989e79dd",
+      "size": 1887
+    },
+    {
+      "path": "evidence/gemini-G1/PROOF.jpg",
+      "sha256": "18d7637c8dbe007aa8ebddf0669df027fef7f3de5bb0d7e846fe11430abd50ac",
+      "size": 40574
+    },
+    {
+      "path": "evidence/gemini-G1/ROOT-EVALUATION.json",
+      "sha256": "943260939f47763a0124241bf910c74c1466437f3895f8ec1d6b9a29260e42e6",
+      "size": 1753
+    },
+    {
+      "path": "provider-interop/ACK-INGRESS-RECEIPT.json",
+      "sha256": "6ad95451921a78b82cf4e091e58ffbabd018a9730e58dc448d056f8732b8ae07",
+      "size": 545
+    },
+    {
+      "path": "provider-interop/BOOTSTRAP_FRESHNESS.json",
+      "sha256": "f088830bcd80b7957368b9ffcc7d1298213cf02737dccc41773989325dbb748e",
+      "size": 1734
+    },
+    {
+      "path": "provider-interop/CORRECTION-RESULT.json",
+      "sha256": "b15040d552df4ebcbcd1c77d760e18c040713cfa7d4e6c9008e5df0f50288151",
+      "size": 2345
+    },
+    {
+      "path": "provider-interop/README.md",
+      "sha256": "e635ea3854dbf41c9d0817fbfd38787b45a903710e75287814206e965982b855",
+      "size": 3034
+    },
+    {
+      "path": "provider-interop/RESULT-TIMEBOX.json",
+      "sha256": "73ceb76548133819fc3516cd2b7d9e51158b311c292371e5121474b7e83b7c12",
+      "size": 3015
+    },
+    {
+      "path": "provider-interop/RESULT.json",
+      "sha256": "f1e0d84048d949dd090109ecc9f64f4b1afc26bd0936a502bae851afd176179b",
+      "size": 3689
+    },
+    {
+      "path": "provider-interop/TEST-RESULT.json",
+      "sha256": "dedfa26d28cd38c44ee1c8f217d8966fc0c036146243dadae441bcc02e2f2aa3",
+      "size": 2368
+    },
+    {
+      "path": "provider-interop/artifacts/manus/staging/plan.md",
+      "sha256": "7099bc6af11541b075395793c43ceed75aa64254b1c80f227bf5785ad7103aa1",
+      "size": 640
+    },
+    {
+      "path": "provider-interop/artifacts/muse/staging/plan.md",
+      "sha256": "5f5eb7dcaac5eb9cb5712f973c97f2cdc154082398a590b573e245a0f5fb960f",
+      "size": 390
+    },
+    {
+      "path": "provider-interop/cards/gemini.json",
+      "sha256": "fa05e92a0f3fc4fc3cd7a1b1f943c9e563c11ea7df65c4e178ffac04a609e5e7",
+      "size": 4482
+    },
+    {
+      "path": "provider-interop/cards/manus-initial.json",
+      "sha256": "cda2a075917bc0c190f3d06152c2f8e98cc97cf974f75fbaa2e1231624a78dad",
+      "size": 5765
+    },
+    {
+      "path": "provider-interop/cards/manus.json",
+      "sha256": "43e1a1a445aed408fa220a7cf57b15fa124a9859013bf4f2ecb54068164ac630",
+      "size": 6471
+    },
+    {
+      "path": "provider-interop/cards/muse-initial.json",
+      "sha256": "cc4ab004862832ac2910a0138176a89edaaf506d65f058260adf7c07816f21fd",
+      "size": 5846
+    },
+    {
+      "path": "provider-interop/cards/muse.json",
+      "sha256": "de147a07492f2dc28f3244b55c0d5b917e706a8ff86ff2c0843ae18af57a2ba2",
+      "size": 6574
+    },
+    {
+      "path": "provider-interop/compiled-prompt.example.txt",
+      "sha256": "3eb035285bd83f760e06e765ea240b1773a64f904bdf21e4c94b88b6d849db35",
+      "size": 2514
+    },
+    {
+      "path": "provider-interop/holdout-cases.json",
+      "sha256": "a41a71c09da1b2a3d604187e79441c415c394e88fc2631fbaac354da537991fc",
+      "size": 720
+    },
+    {
+      "path": "provider-interop/interop-graph.json",
+      "sha256": "be382c1219f6ddffa234023aa411af410db11aa942f07340247b01758ed3b227",
+      "size": 3028
+    },
+    {
+      "path": "provider-interop/interop_contract.py",
+      "sha256": "1c664ff3e2d6d95013f29e6fe12f7694274d54ff5f87d433ee62c3e02f0a456d",
+      "size": 5026
+    },
+    {
+      "path": "provider-interop/manus-actual-output.json",
+      "sha256": "d76d9624e7963e0ceb9f107bbe6fcc40dedbd4a41e839cb91f48c1749ddbac6e",
+      "size": 3207
+    },
+    {
+      "path": "provider-interop/manus-correction-actual-output.json",
+      "sha256": "96aff886618474074e5adeab20b7bda8875aa0cb1570eb1b017f2317cd6f0bac",
+      "size": 5392
+    },
+    {
+      "path": "provider-interop/muse-actual-output.json",
+      "sha256": "80a71ed0c79d44803423d3df836a78c413a1f3fd96f4178cefda743cc5c4f4dd",
+      "size": 2930
+    },
+    {
+      "path": "provider-interop/muse-correction-actual-output.json",
+      "sha256": "8500ab95410cf46a26ec97f8b57b2bbb75782e404ec752009758b7b5dc9cab74",
+      "size": 5397
+    },
+    {
+      "path": "provider-interop/probe-evaluation.json",
+      "sha256": "e095eb2aac2ad3ae945c0df98ee139b06a0bb95f7b187e3576f0f7b7ce7c3b29",
+      "size": 4914
+    },
+    {
+      "path": "provider-interop/sealed-holdout-oracle.json",
+      "sha256": "a116cead9636896eb3b7d18a5688e4b30e0730c44ba9b467f1408f9c6f2dac2d",
+      "size": 290
+    },
+    {
+      "path": "provider-interop/task-envelope.example.json",
+      "sha256": "23276b873e4833dfbe37901f8593d971a5ee92cf9ff69be74bee508e2020633f",
+      "size": 3089
+    },
+    {
+      "path": "provider-interop/test_interop_contract.py",
+      "sha256": "319a048e23dd5a54203ed87383e55764209ac87b6b725514cbc057cee773c64e",
+      "size": 4017
+    },
+    {
+      "path": "scripts/restart.ps1",
+      "sha256": "7e33ee60ae58021907ee46e3a5773fd8437dd42180281d95efb10ce3279bfa26",
+      "size": 487
+    },
+    {
+      "path": "scripts/start.ps1",
+      "sha256": "39e28448f08a5f204e4826363b321304e7f8b2122f61dd89369f74003b92c28f",
+      "size": 1399
+    },
+    {
+      "path": "src/appserver_client.py",
+      "sha256": "f064c013194626427ed8fa523192b2c0d9e854f6266d656fe698850df68368d5",
+      "size": 8276
+    },
+    {
+      "path": "src/daemon.py",
+      "sha256": "1ef2cc30c4fe29e1198162f6cbbc6218eb58e9c0372dba09bb7662b716eba588",
+      "size": 12017
+    },
+    {
+      "path": "src/queue_store.py",
+      "sha256": "217d2319a583a90213b89eed56ba3a7f4c92bf5d2ce0d1f5b375443788d7d64f",
+      "size": 19372
+    },
+    {
+      "path": "src/runtime_health.py",
+      "sha256": "ae03211dcad972b91630a75232ef7d6a87d7fec2ecdf3628e89a817e46233e83",
+      "size": 1671
+    },
+    {
+      "path": "src/text_contract.py",
+      "sha256": "bf4618cb4d460c01def773b84f940b4595e1ae05caa34eec1d86945fbdedb6c3",
+      "size": 2536
+    },
+    {
+      "path": "tests/test_queue.py",
+      "sha256": "0128ee464d7e4ca0be5453a8a3b3acb1e74516d1a32e2fc6869af1d7f3f1b8d3",
+      "size": 16763
+    },
+    {
+      "path": "tests/test_text_contract.py",
+      "sha256": "340be7fd603c2807d9813f16ec912b579f6155c55517208532fefc8d5a63fdb2",
+      "size": 6767
+    },
+    {
+      "path": "tests/test_transport.py",
+      "sha256": "f95e16819643d9e111cf981282e23105f3a2f7390ab1fe74cc7f46badfc62906",
+      "size": 1460
+    },
+    {
+      "path": "training/README.md",
+      "sha256": "2aa6a30fe910578e3febdba8826b0e16eb6913e0d375a233cde471424bdd8a70",
+      "size": 1354
+    },
+    {
+      "path": "training/task_compiler.py",
+      "sha256": "4e60eb8b3ad8c5c15ae360a5e817d5344c68d89afbd6816c36f8861c29ecac83",
+      "size": 1353
+    },
+    {
+      "path": "training/test_task_compiler.py",
+      "sha256": "b32095db775b85185d8a9648846b7767e6b2fee09e4e56c8f3ad82d5e1c577d2",
+      "size": 2699
+    }
+  ],
+  "input_contract": {
+    "authorization": "authenticated configured GitHub author; finite expiry/cap; fresh fenced signed lease and actual PID ACK beforePLAN",
+    "identity": "mission/task/attempt/idempotency/owner scope/callback fixed by external bounded policy",
+    "input_limit": "22000 serializedASCII chars; objective4000/context16000/acceptance1..10x500 within aggregate",
+    "prefix": "AGY_MISSION_V2 newline strictJSON",
+    "task_classes": [
+      "supplied_text_analysis",
+      "task_compile",
+      "code_review"
+    ]
+  },
+  "known_limits": [
+    "Only supplied-text analysis/planning/code review; no arbitrary shell/CRM/publish/fileexecution rights",
+    "Persistent unattended native cloud/Engineer chat wakeup remainsEXTERNAL_LIMIT",
+    "Finite installed trial policy24h/max10newtextmissions; current policy and status outside package",
+    "No login/boot service installed; explicit wrapper restart after shutdown",
+    "Windows only tested; alpha app-server compatibility/productionuptime unverified",
+    "Signature screening finite; no claim to detect everysecret",
+    "Provider training/cards are localcandidates; not weighttraining/globalpromotion",
+    "Existing source/oldnonce/CRM accepted tasks must not be replayed"
+  ],
+  "output_contract": {
+    "callback_target": "Existing Engineer AI master01a13499-9300-72a3-8944-87f9b3fd2362; durable issue2 inbox plus actual host/native readback when available",
+    "schema": "task_id,summary,steps,evidence,limitations,needs_owner_action",
+    "schema_limit": "6000 serializedASCII chars;callback24000 beforePOST",
+    "truth": "schema validated output is not semanticPASS; callback/independentAGY review/actual native acceptance separate"
+  },
+  "package_name": "agy-chat-control",
+  "package_version": "0.2.0",
+  "purpose": "Owner chat control and bounded supplied-text worker delegation with evidence returned to existing Engineer chat",
+  "runtime_requirements": [
+    "Python>=3.11, tested3.12.14 Windows",
+    "Existing authenticated Codex app-server tested0.162.0-alpha.17.2",
+    "Existing private GitHub connector",
+    "PowerShell start/restart wrappers"
+  ],
+  "test_status": {
+    "AUTH_VERIFIED": "UNVERIFIED",
+    "INSTALL_TEST_PASS": "UNVERIFIED",
+    "INTEGRATED_PASS": "UNVERIFIED",
+    "LIVE_EXECUTION_PASS": "UNVERIFIED",
+    "LOCAL_FUNCTION_PASS": "UNVERIFIED",
+    "PACKAGE_BUILT": "PASS"
+  }
+}

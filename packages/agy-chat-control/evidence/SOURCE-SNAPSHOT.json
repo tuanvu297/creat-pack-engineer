@@ -1,0 +1,61 @@
+{
+  "source_hash": "f1b97de69fcc3371bc327098e7ca4f7a488c2d626180a1938b6ed939fe118869",
+  "inventory": [
+    {
+      "path": "bin/agy_queue.py",
+      "sha256": "50fbd24863793c3acb272a456cf088bf1b0f3551d03e62428753086312b24abc"
+    },
+    {
+      "path": "bin/compile_task.py",
+      "sha256": "7e11b144d1f1c8a1e2cab75f70ab27b1e136caf189cd19842268c02711e71489"
+    },
+    {
+      "path": "config/runtime.example.json",
+      "sha256": "44f304e029b767768b4a3d3c60e0dab1cd579e0b191e0c7760a55dcce7b4999c"
+    },
+    {
+      "path": "docs/CONTROL-CHAT-RECIPE.md",
+      "sha256": "8016925f06e56604a91246c14fa9f7a7d0b486a7a6c5cc8d1fb5bfcaf04483a1"
+    },
+    {
+      "path": "scripts/restart.ps1",
+      "sha256": "7e33ee60ae58021907ee46e3a5773fd8437dd42180281d95efb10ce3279bfa26"
+    },
+    {
+      "path": "scripts/start.ps1",
+      "sha256": "39e28448f08a5f204e4826363b321304e7f8b2122f61dd89369f74003b92c28f"
+    },
+    {
+      "path": "src/appserver_client.py",
+      "sha256": "f064c013194626427ed8fa523192b2c0d9e854f6266d656fe698850df68368d5"
+    },
+    {
+      "path": "src/daemon.py",
+      "sha256": "1ef2cc30c4fe29e1198162f6cbbc6218eb58e9c0372dba09bb7662b716eba588"
+    },
+    {
+      "path": "src/queue_store.py",
+      "sha256": "217d2319a583a90213b89eed56ba3a7f4c92bf5d2ce0d1f5b375443788d7d64f"
+    },
+    {
+      "path": "src/runtime_health.py",
+      "sha256": "ae03211dcad972b91630a75232ef7d6a87d7fec2ecdf3628e89a817e46233e83"
+    },
+    {
+      "path": "src/text_contract.py",
+      "sha256": "bf4618cb4d460c01def773b84f940b4595e1ae05caa34eec1d86945fbdedb6c3"
+    },
+    {
+      "path": "tests/test_queue.py",
+      "sha256": "0128ee464d7e4ca0be5453a8a3b3acb1e74516d1a32e2fc6869af1d7f3f1b8d3"
+    },
+    {
+      "path": "tests/test_text_contract.py",
+      "sha256": "340be7fd603c2807d9813f16ec912b579f6155c55517208532fefc8d5a63fdb2"
+    },
+    {
+      "path": "tests/test_transport.py",
+      "sha256": "f95e16819643d9e111cf981282e23105f3a2f7390ab1fe74cc7f46badfc62906"
+    }
+  ]
+}

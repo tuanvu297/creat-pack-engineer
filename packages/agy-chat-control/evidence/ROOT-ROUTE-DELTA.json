@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-15T08:01:58.096839+00:00",
+  "historical_source": "provider-interop/cards/gemini.json remains as-of worker preflight07:41",
+  "current": {
+    "Gemini": "OBSERVED Chrome3/Flash G1 actual prompt and JSON output; current activehost route recovered",
+    "Manus": "OBSERVED fresh task output and correction; compiledchildleaseFAIL retained",
+    "Muse": "OBSERVED fresh thread output and correction; compiledchildleaseFAIL retained",
+    "chat_control": "OBSERVED P1 AGY_ACCEPTED scoped",
+    "native_unattended_engineer_wake": "EXTERNAL_LIMIT",
+    "Steel_Gemini": "UNVERIFIED; no newSteel session, no credential/profile transfer"
+  },
+  "training_scope": "Project-local candidate contextual training; QA v1.1; no globalpromotion",
+  "provider_finding": "Corrective Manus/Muse schema fixed,3/3new judgments and planPASS, but root delegated compiler hardcoded expired childlease. Actual provider grants separately fresh; no compiledchildactionexecuted.",
+  "host_correction": "training/task_compiler.py derives lease expiry dynamically and revalidates strict task; actual sender must refresh eligibility/auth/grant and validate atsendtime"
+}

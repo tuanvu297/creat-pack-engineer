@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-15T08:10:21.627Z",
+  "mission": "AGY-CHAT-CONTROL-20261015",
+  "kind": "FINAL_NATIVE_CALLBACK_READBACK",
+  "status": "DELIVERY_VERIFIED_SCOPED",
+  "target_chat_id": "6acb1ce3-e37c-83ec-9eb7-f795fd5243c1",
+  "target_chat_title": "AGY Dispatch Result Watch",
+  "native_turn_id": "857ad4d5-c9e2-40ae-9e35-0ebc40dcb346",
+  "reviewer_message_id": "aaa69789-2ff7-4d58-b8ab-f60cd74aa0e0",
+  "zip_sha256": "445ed4a6f1d2d2afb01a371963ef4588fb0b8dfc49dce9a862e2e76c74e1aea3",
+  "hash_acknowledged": true,
+  "accepted_scope": "ENGINEER_DELEGATED_CONTROL_CHAT_SUPPLIED_TEXT_COMPILATION",
+  "overall": "PARTIAL",
+  "native_unattended_wake": "EXTERNAL_LIMIT",
+  "owner_only_0_2_0_UX": "UNVERIFIED",
+  "verification": "Actual read_thread completed turn/agentMessage, not send tool ACK; active root host readback",
+  "supersedes_pending_observation": "SYNC-RECEIPT.json native callback sent-not-yet-readback remains historical; this append-only receipt confirms later actual delivery",
+  "owner_result": "Delivered by active root Engineer in current chat final"
+}

@@ -1,0 +1,36 @@
+{
+  "at": "2026-10-15T08:08:33.372Z",
+  "package_name": "agy-chat-control",
+  "version": "0.2.0",
+  "zip_sha256": "445ed4a6f1d2d2afb01a371963ef4588fb0b8dfc49dce9a862e2e76c74e1aea3",
+  "github": {
+    "commit": "6205a37a50004969b441d14daf47f71ebe3e45e5",
+    "tree": "d917f322bc58cad635722a028deb88abe5793958",
+    "count": 73,
+    "failures": [],
+    "pr": "https://github.com/tuanvu297/creat-pack-engineer/pull/7",
+    "draft": true,
+    "merged": false
+  },
+  "drive": {
+    "zip_id": "1PFyLvenpXbqvXOFLyLWu_rbKa_S1oGeR",
+    "qa_id": "1Rmt3icn1DO_l98KW7pFMrNfdrKVYS1TO",
+    "readback": [
+      {
+        "file_id": "sediment://file_00000000a78481f5818baab393d4b525",
+        "bytes": 149298,
+        "sha256": "445ed4a6f1d2d2afb01a371963ef4588fb0b8dfc49dce9a862e2e76c74e1aea3",
+        "exact_byte_match": true
+      },
+      {
+        "file_id": "sediment://file_00000000d39481f8bd36bda48caca892",
+        "bytes": 2721,
+        "sha256": "c45855f93e30f0104d645e37abbc54e16e4689e72a2d7ba476f244e4f01f162a",
+        "exact_byte_match": true
+      }
+    ]
+  },
+  "issue2_comment": 6187514330,
+  "native_control_callback": "SENT_NOT_YET_NATIVE_READBACK",
+  "overall": "PARTIAL; P1 accepted scoped; unattended native wake EXTERNAL_LIMIT"
+}

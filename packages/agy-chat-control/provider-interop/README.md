@@ -1,0 +1,15 @@
+# Provider interop candidate — QA1.1
+
+Root engineer owns integration and final acceptance. This isolated folder does not alter the main runtime/config/canon. Native human authority, ingress ACK and finite task lease are recorded before PLAN. Current RESULT.json is PARTIAL; RESULT-TIMEBOX.json preserves closure before the read-only correction addendum.
+
+Start with cards/manus.json, cards/muse.json, cards/gemini.json and interop-graph.json. They describe ChatGPT-like supplied-text planning, summarizing, review, task compilation and staging artifacts. Reasoning ability does not attach the user's desktop, Drive, GitHub, CRM or browser tools to a provider. Two fresh live routes are proven; Gemini currently lacks a Chrome binding and has unknown API-billing eligibility. Historical CRM results are preserved, not reused as new execution.
+
+interop_contract.py is inert local validation/compilation only. Its task example is expiring synthetic data, not authority to dispatch. Trusted controller must bind human authority, fresh resource readback, a dynamically derived lease and expected callback, then call validate_task immediately before side effects. Never trust a worker-provided callback/lease/authority claim by itself. The helper is not an OS/user security boundary and never authenticates ownership or dispatches providers.
+
+Initial prompt defects: both providers copied literal output_schema=describe and omitted lease because the supplied example was defective. These outputs are rejected by local tests. Root approved one corrective prompt each: new QA cases3/3 and batch plan correct on both; actual concrete schema is fixed. However the corrective packet hardcoded an expiry earlier than its eventual issue time. That is a Codex Work compiler defect; compiled child tasks fail LEASE_EXPIRED_OR_INVALID. Separate actual provider continuation grants were fresh; no child task/external action executed. No further provider correction is authorized in this finite subtask. Root should fix the dynamic pre-dispatch guard before any future retest.
+
+Preserve probe-evaluation.json, actual outputs, correction prompts, CORRECTION-RESULT.json and tests. Critical false PASS=0 on observed cases does not certify six-direction mutual training or global QA_ALIGNMENT. Manus initial H1 severity miss is corrected on fresh A2 scenarios, but the complete handoff remains unaccepted.
+
+Do not re-run prepare/send/probe scripts as examples: they contain completed task identities and are historical execution/evidence recipes. Resume collection only from existing provider IDs/phase markers. API keys/cookies/controller keys/grants/private journals remain outside this folder. No purchase, global skill installation, new Work, schedule or CRM production write was performed.
+
+The finite closure callback was24seconds after the requested cutoff; preserved explicitly in CORRECTION-RESULT.json. Following that closure only already-submitted responses were collected/read and locally checked; no additional inference prompts were sent.

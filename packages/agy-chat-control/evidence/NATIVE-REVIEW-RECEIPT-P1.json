@@ -1,0 +1,13 @@
+{
+  "verification_method": "mcp__codex_app.read_thread",
+  "target_chat_id": "6acb1ce3-e37c-83ec-9eb7-f795fd5243c1",
+  "native_turn_id": "5496ca3d-8d45-42fb-9cd7-5da0914775f8",
+  "reviewer_message_id": "f8f4d8a2-c788-4513-b420-8b855ba5bd4e",
+  "status": "PASS_SCOPED",
+  "result_sha256": "8700dca588cdb3fc84e5c1da4ebcf337a18b81fcf2b3094ad0adf83af3686f9c",
+  "accepted_scope": "ENGINEER_DELEGATED_CONTROL_CHAT_SUPPLIED_TEXT_COMPILATION",
+  "engineer_chat_observer": "01a13499-9300-72a3-8944-87f9b3fd2362",
+  "source_snapshot_sha256": "f1b97de69fcc3371bc327098e7ca4f7a488c2d626180a1938b6ed939fe118869",
+  "native_unattended_wake": "UNVERIFIED",
+  "observed_at": "2026-10-15 07:50:46 UTC"
+}

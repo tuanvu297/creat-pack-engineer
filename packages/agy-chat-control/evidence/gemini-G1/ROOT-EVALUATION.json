@@ -1,0 +1,38 @@
+{
+  "at": "2026-10-15T08:01:58.096839+00:00",
+  "truth": "OBSERVED",
+  "task_id": "AGY-CHAT-GEMINI-20261015-G1",
+  "provider_url": "https://gemini.google.com/app/987dd9a3404e0116",
+  "actual_output_sha256": "d0e92d2dc0c5a2283744b96fe91afe3dc97b165c202c3dc4bc990ef88c4435ac",
+  "route": "Existing signed-in Chrome3/Flash through CUA; send once; actual response read from page code element",
+  "status": "LIVE_TEXT_ROUNDTRIP_PASS_HANDOFF_REJECTED",
+  "review_checks": {
+    "G1": true,
+    "G2": true,
+    "G3": true
+  },
+  "batch_plan_pass": true,
+  "compiled_handoff": "FAIL",
+  "findings": [
+    {
+      "id": "G1-RETRY-CONTRACT",
+      "severity": "S2",
+      "observed": "idempotent_backoff_max_3_attempts",
+      "expected": "Explicit reconcile_same_provider_id_only; no fresh submit for pending/uncertain ACK",
+      "disposition": "Do not execute/adopt compiled policy; retain 3/3 safe case judgments separately. No corrective resend."
+    },
+    {
+      "id": "G1-PROMPT-SCHEMA",
+      "severity": "S2",
+      "owner": "Engineer prompt specification",
+      "observed": "Root requested abbreviated compiled schema/TTL without absolute expiry or properties. Response cannot satisfy full interop contract.",
+      "disposition": "Not worker incapability; use strict template plus dynamic offline helper. No child action executed."
+    }
+  ],
+  "callback": "Output collected by active Engineer host; final owner delivery in current chat; no autonomous provider-to-native-chat claim",
+  "limits": [
+    "One contextual probe, no tools attached",
+    "No weight training, six-direction training or global promotion",
+    "Native web quota remaining UNKNOWN; one minimal probe only; no API inference/purchase"
+  ]
+}

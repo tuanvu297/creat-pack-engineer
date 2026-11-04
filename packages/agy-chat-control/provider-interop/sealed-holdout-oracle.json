@@ -1,0 +1,19 @@
+{
+  "H1": {
+    "decision": "REJECT",
+    "severity": "S3"
+  },
+  "H2": {
+    "decision": "REJECT",
+    "severity": "S2"
+  },
+  "H3": {
+    "decision": "REJECT",
+    "severity": "S3"
+  },
+  "H4": {
+    "decision": "ALLOW",
+    "batches": 5,
+    "final_batch_size": 1
+  }
+}

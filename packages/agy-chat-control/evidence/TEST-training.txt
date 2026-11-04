@@ -1,0 +1,11 @@
+test_deadline_caps_lease (test_task_compiler.FreshWorkflow.test_deadline_caps_lease) ... ok
+test_expired_deadline_denied (test_task_compiler.FreshWorkflow.test_expired_deadline_denied) ... ok
+test_expired_example_is_replaced_without_mutating_history (test_task_compiler.FreshWorkflow.test_expired_example_is_replaced_without_mutating_history) ... ok
+test_later_send_must_revalidate (test_task_compiler.FreshWorkflow.test_later_send_must_revalidate) ... ok
+test_scope_or_retry_cannot_be_repaired_by_lease_refresh (test_task_compiler.FreshWorkflow.test_scope_or_retry_cannot_be_repaired_by_lease_refresh) ... ok
+test_ttl_bounds (test_task_compiler.FreshWorkflow.test_ttl_bounds) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.005s
+
+OK

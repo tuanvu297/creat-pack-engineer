@@ -1,0 +1,28 @@
+{
+  "task_id": "AGY-CHAT-GEMINI-20261015-G1",
+  "worker_id": "GEMINI-WEB",
+  "attempt": 1,
+  "idempotency_key": "AGY-CHAT-GEMINI-20261015-G1:ONCE",
+  "callback_target": "01a13499-9300-72a3-8944-87f9b3fd2362",
+  "QA_CONTRACT_VERSION": "1.1",
+  "source_version": "CHAT-DELEGATION-LESSON-0.2.0",
+  "lease": {
+    "workflow_id": "LEASE-GEMINI-G1-20261015",
+    "issued_at": "2026-10-15 07:54:26 UTC",
+    "scope": "One synthetic supplied-text response only; no delegated desktop/tool/action permissions",
+    "ttl_seconds": 600
+  },
+  "status": "UI_SEND_INTENT_RESERVED_NOT_ACK",
+  "browser": {
+    "name": "Chrome",
+    "id": "3",
+    "profile": "William",
+    "tab_id": "1190465865",
+    "url_before": "https://gemini.google.com/app"
+  },
+  "resource": {
+    "route": "Existing signed-in web Flash; no API key or purchase",
+    "remaining_quota": "UNKNOWN",
+    "decision": "One minimal synthetic supplied-text probe, no retries"
+  }
+}

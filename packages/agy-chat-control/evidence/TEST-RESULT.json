@@ -1,0 +1,31 @@
+{
+  "at": "2026-10-15T08:03:08.498288+00:00",
+  "scope": "Fresh whitelist staging, stdlib-only Python runtime; no network/provider calls",
+  "runtime": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "suites": [
+    {
+      "suite": "tests",
+      "returncode": 0,
+      "log": "TEST-tests.txt"
+    },
+    {
+      "suite": "provider-interop",
+      "returncode": 0,
+      "log": "TEST-provider-interop.txt"
+    },
+    {
+      "suite": "training",
+      "returncode": 0,
+      "log": "TEST-training.txt"
+    }
+  ],
+  "expected_counts": {
+    "tests": 78,
+    "provider-interop": 16,
+    "training": 6
+  },
+  "LOCAL_FUNCTION_PASS": "PASS_100_TESTS",
+  "INSTALL_TEST_PASS": "UNVERIFIED_PENDING_ZIP_EXTRACTION",
+  "live_evidence": "P1 source snapshot14files and separate actual provider outputs, not implied by these local tests",
+  "secrets": "No private runtime DB/key/config/providergrant/rawtranscripts included"
+}

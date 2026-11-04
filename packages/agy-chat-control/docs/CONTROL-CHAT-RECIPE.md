@@ -1,0 +1,13 @@
+# Owner chat → worker → Engineer
+
+Use existing chats. Owner may describe an analysis/plan/code-review task in natural language; control compiles one envelope, no command-copy into Work. New tasks use AGY_MISSION_V2, not consumed nonce A1/A2 identities. Do not attach real credentials or private customer data.
+
+Fixed policy fields for installed trial: target_executor=AGY-CHAT-TEXT-EXECUTOR; attempt=1; owner_scope_ref=OWNER_CHAT_CONTROL_WORKERS_20261015; callback_target=01a13499-9300-72a3-8944-87f9b3fd2362; QA_CONTRACT_VERSION=1.1; task_kind in supplied_text_analysis/task_compile/code_review. mission_id starts AGY-CHAT-, unique task_id and idempotency_key. Variable objective/context/acceptance are supplied text within adapter bounds. Never grant shell/CRM/publish rights by inserting a different kind or instructions in context. The trial's external expiry/cap are finite, shown by engineering handoff; no arbitrary future quota expansion.
+
+Existing GitHub connector add_comment_to_issue repository tuanvu297/creat-pack-engineer issue2, body AGY_MISSION_V2 newline strictJSON. Persist returned ID, verify readback, and do not repost after timeout. Daemon owns claim/grant/ACK/model turn/heartbeat/result storage/callback GET. Read current status before claiming a worker is running; old status.json can be stale.
+
+Output schema success is not semantic QA. Read actual callback result, inspect task criteria and source references, then create a separate AGY_ACCEPTANCE_V1 review only with QA1.1 AC01..AC10/result/callback binding/evidence IDs. This yields AGY_REVIEW_REPORTED. Only actual independent native receipt confirmation yields AGY_ACCEPTED.
+
+Engineer receives results in existing AI master chat. Active authorized native Work/Engineer can use supported messaging and actual readback for delivery; native message ACK, completed worker output and independent AGY acceptance are separate. Detached app-server alone does not expose a verified cloud-chat wakeup tool, so durable inbox is not proof of native notification. On next Owner message, ingest waiting result rather than resubmit. Do not claim all-task/always-on autonomy from this text adapter.
+
+Provider interoperability cards cover Manus/Muse/Gemini separately: use current eligible task class and actual route, fresh task/lease, included resources and per-provider idempotency. GL bridge Muse history is read-only; separate authorized CLI is a distinct route. Gemini web needs current Chrome-capable binding; unknown API billing does not authorize fallback. Muse and ChatGPT have parity when eligible; do not hardcode ChatGPT-first or treat a browser/tool problem as model weakness. Learned rules remain project-local candidates until current promotion gates pass.

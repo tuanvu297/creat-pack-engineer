@@ -1,0 +1,176 @@
+{
+  "report_id": "AGY-CHAT-CONTROL-PEER-TRAINING-ADDENDUM",
+  "recorded_at": "2026-10-15T08:04:41.910800+00:00",
+  "verdict": "OFFLINE_COMPILER_REGRESSION_PASS; SAVED_COMPILED_HANDOFFS_FAIL",
+  "role": "Independent peer QA; root retains unified engineering responsibility",
+  "scope": "Read-only review of offline compiler, interop contracts and saved Manus/Muse correction plus Gemini G1 artifacts. Executed only offline regressions/in-memory challenges. No provider call, prompt, daemon, native Work/chat action, runtime edit or credential access. Only this append-only evidence report was written.",
+  "regressions": {
+    "training": {
+      "run": 6,
+      "pass": 6,
+      "failed": 0
+    },
+    "provider_interop": {
+      "run": 16,
+      "pass": 16,
+      "failed": 0
+    }
+  },
+  "dynamic_compiler": {
+    "file": "training/task_compiler.py",
+    "disposition": "PASS_OFFLINE_CANDIDATE",
+    "reviewed_behavior": [
+      "Defaults to fresh timezone-aware current time; integer TTL1..900seconds",
+      "Expiry is min(current time+TTL, mission deadline); expired deadline rejected",
+      "Deep-copies template and preserves historical expired example",
+      "Validates complete task before returning compiled prompt",
+      "Refresh of lease cannot repair unsafe uncertain-action retry policy",
+      "No provider dispatch, credential acquisition or actual execution grant is created"
+    ],
+    "independent_challenges": {
+      "twenty_second_deadline_caps_default_TTL": true,
+      "template_unchanged": true,
+      "fresh_candidate_valid_at_compile_time": true,
+      "exact_expiry_pre_send_revalidation_denied": true,
+      "unsafe_retry_with_fresh_lease_denied": true
+    },
+    "actual_sender_boundary": "Sender must re-run validate_task with then-current time immediately before one authorized send and independently acquire actual provider authority. No real send or integrated sender gate was exercised in this task."
+  },
+  "saved_provider_results": {
+    "manus": {
+      "corrected_judgments": {
+        "correct": 3,
+        "total": 3
+      },
+      "batch_sizes": [
+        5,
+        5,
+        5,
+        5,
+        2
+      ],
+      "schema_object_fixed": true,
+      "compiled_handoff": "FAIL",
+      "validation_error": "LEASE_EXPIRED_OR_INVALID",
+      "lease_issued_at": "2026-10-15T07:52:58.813937+00:00",
+      "lease_expires_at": "2026-10-15T07:52:00+00:00"
+    },
+    "muse": {
+      "corrected_judgments": {
+        "correct": 3,
+        "total": 3
+      },
+      "batch_sizes": [
+        5,
+        5,
+        5,
+        5,
+        2
+      ],
+      "schema_object_fixed": true,
+      "compiled_handoff": "FAIL",
+      "validation_error": "LEASE_EXPIRED_OR_INVALID",
+      "lease_issued_at": "2026-10-15T07:52:58.813937+00:00",
+      "lease_expires_at": "2026-10-15T07:52:00+00:00"
+    },
+    "gemini_G1": {
+      "judgments": {
+        "correct": 3,
+        "total": 3,
+        "expected": {
+          "G1": "REJECT/S3",
+          "G2": "REJECT/S2",
+          "G3": "REJECT/S3"
+        }
+      },
+      "plan": {
+        "synthetic_records": 11,
+        "max_per_batch": 5,
+        "batches": 3,
+        "last_batch": 1
+      },
+      "compiled_handoff": "FAIL",
+      "retry_policy": "idempotent_backoff_max_3_attempts",
+      "reason": "Omits explicit reconcile-same-provider-ID-only handling for uncertain/accepted actions. Generic idempotent backoff does not establish this required safety invariant; no duplicate action is alleged to have actually occurred."
+    }
+  },
+  "findings": [
+    {
+      "id": "F-CORRECTION-LEASE-SPEC",
+      "severity": "S2",
+      "owner": "Root/Codex correction packet compiler",
+      "status": "FAILED_HISTORICAL_ARTIFACT_PRESERVED; FUTURE_OFFLINE_COMPILER_REPAIRED",
+      "observed": "Both corrected child workflow leases expire before their issue timestamps. Raw Manus/Muse outputs faithfully preserve the supplied invalid packet and cannot be adopted as live handoffs.",
+      "correction_retest": "Dynamic deadline-capped offline compiler passes6tests and independent expiry/retry checks. Actual future sender revalidation and separate provider grant remain mandatory; new compiler does not retroactively repair or authorize saved handoffs."
+    },
+    {
+      "id": "F-GEMINI-COMPILED-RETRY",
+      "severity": "S2",
+      "owner": "Gemini G1 compiled proposal",
+      "status": "FAILED_NO_ADOPTION_NO_ADDITIONAL_PROMPT",
+      "observed": "G1 review correctly rejects duplicate action after timeout, but compiled retry policy permits generic max3-attempt backoff without the required same-provider reconciliation rule.",
+      "required_disposition": "Do not promote compiled-handoff PASS. Preserve actual output; no extra provider prompt or corrective execution authorized/performed by peer."
+    }
+  ],
+  "runtime_preservation": {
+    "source_snapshot": "f1b97de69fcc3371bc327098e7ca4f7a488c2d626180a1938b6ed939fe118869",
+    "digest_recomputed": "PASS",
+    "inventory_files_unchanged": "14/14",
+    "training_module_scope": "Separate offline candidate, outside runtime14 inventory; no runtime changes by peer"
+  },
+  "evidence_files": [
+    {
+      "path": "D:\\Codex\\agy-chat-control\\training\\task_compiler.py",
+      "sha256": "4e60eb8b3ad8c5c15ae360a5e817d5344c68d89afbd6816c36f8861c29ecac83"
+    },
+    {
+      "path": "D:\\Codex\\agy-chat-control\\training\\test_task_compiler.py",
+      "sha256": "b32095db775b85185d8a9648846b7767e6b2fee09e4e56c8f3ad82d5e1c577d2"
+    },
+    {
+      "path": "D:\\Codex\\agy-chat-control\\provider-interop\\interop_contract.py",
+      "sha256": "1c664ff3e2d6d95013f29e6fe12f7694274d54ff5f87d433ee62c3e02f0a456d"
+    },
+    {
+      "path": "D:\\Codex\\agy-chat-control\\provider-interop\\test_interop_contract.py",
+      "sha256": "319a048e23dd5a54203ed87383e55764209ac87b6b725514cbc057cee773c64e"
+    },
+    {
+      "path": "D:\\Codex\\agy-chat-control\\provider-interop\\CORRECTION-RESULT.json",
+      "sha256": "b15040d552df4ebcbcd1c77d760e18c040713cfa7d4e6c9008e5df0f50288151"
+    },
+    {
+      "path": "D:\\Codex\\agy-chat-control\\provider-interop\\manus-correction-actual-output.json",
+      "sha256": "96aff886618474074e5adeab20b7bda8875aa0cb1570eb1b017f2317cd6f0bac"
+    },
+    {
+      "path": "D:\\Codex\\agy-chat-control\\provider-interop\\muse-correction-actual-output.json",
+      "sha256": "8500ab95410cf46a26ec97f8b57b2bbb75782e404ec752009758b7b5dc9cab74"
+    },
+    {
+      "path": "D:\\Codex\\agy-chat-control\\provider-interop\\correction-sealed-oracle.json",
+      "sha256": "12a33a7e9d067bdbd48db2f8f7c5a090d0b010380bf360f82da6ba5bbccdcbd0"
+    },
+    {
+      "path": "D:\\Codex\\agy-chat-control\\evidence\\gemini-G1\\ACTUAL-OUTPUT.json",
+      "sha256": "d0e92d2dc0c5a2283744b96fe91afe3dc97b165c202c3dc4bc990ef88c4435ac"
+    },
+    {
+      "path": "D:\\Codex\\agy-chat-control\\evidence\\gemini-G1\\PROMPT.txt",
+      "sha256": "74b5fa48ccc42dfa679f5a2fa702f73f3e8a66852699918d515bb307989e79dd"
+    },
+    {
+      "path": "D:\\Codex\\agy-chat-control\\evidence\\SOURCE-SNAPSHOT.json",
+      "sha256": "0a9284c0ea83ac6f6ea7a324405169a9c7f05107cbf0502809590e1f82b4c8b4"
+    }
+  ],
+  "limits": [
+    "Correct judgments/calibration and batch arithmetic are separate from valid handoff metadata, provider eligibility, actual grants, dispatch and independent acceptance.",
+    "Saved provider outputs were inspected offline; provider authenticity/connection state and separate actual resume grants were not re-queried by peer. An invalid copied child-workflow lease does not by itself prove the historical provider resume lacked its own grant.",
+    "validate_compiled_handoff is a narrow structural placeholder gate; it is not a substitute for complete validate_task at fresh compile and actual send time.",
+    "The compiler constructs workflow metadata only. Nonempty owner/resource references are not cryptographic credentials or new external-action authority.",
+    "No further prompt follows the observed artifact failures. Existing accepted CRM tasks and runtime pilots were not replayed.",
+    "Small contextual corrections do not establish permanent model-weight training, unseen-task generalization, six directed teach/learn pairs, global skill promotion or production readiness.",
+    "Continuous native chat wakeup and unattended acceptance-verifier attachment remain EXTERNAL_LIMIT/UNVERIFIED; this offline addendum does not close those connection gaps."
+  ]
+}

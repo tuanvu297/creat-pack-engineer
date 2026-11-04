@@ -1,0 +1,132 @@
+{
+  "QA_CONTRACT_VERSION": "1.1",
+  "results": {
+    "manus": {
+      "AUTH_VERIFIED": true,
+      "ACTUAL_ACK": true,
+      "ACTUAL_OUTPUT": true,
+      "HOLDOUT_DECISION_PASS": 4,
+      "HOLDOUT_STRICT_PASS": 3,
+      "HOLDOUT_TOTAL": 4,
+      "CRITICAL_FALSE_PASS": 0,
+      "SEVERITY_MISSED_CRITICAL": 1,
+      "COMPILED_HANDOFF_ACCEPTANCE": "FAIL_PROVIDED_TEMPLATE_PLACEHOLDER_AND_MISSING_LEASE",
+      "checks": [
+        {
+          "id": "H1",
+          "pass": false,
+          "diff": {
+            "severity": {
+              "expected": "S3",
+              "actual": "S2"
+            }
+          }
+        },
+        {
+          "id": "H2",
+          "pass": true,
+          "diff": {}
+        },
+        {
+          "id": "H3",
+          "pass": true,
+          "diff": {}
+        },
+        {
+          "id": "H4",
+          "pass": true,
+          "diff": {}
+        }
+      ],
+      "artifact": "D:\\Codex\\agy-chat-control\\provider-interop\\artifacts\\manus\\staging\\plan.md",
+      "observed_tools_self_report": [
+        "functions.read"
+      ],
+      "observed_tool_claim_limit": "Self-report is not attachment to user desktop/Drive/GitHub or independent execution trace",
+      "LIVE_ROUTE": "VERIFIED_SUPPLIED_TEXT_ROUNDTRIP",
+      "ONE_PROMPT_INTEROP_PASS": false,
+      "QA_ALIGNMENT": "NOT_CERTIFIED",
+      "terminal": "Manus stopped/background=false/pagination=false"
+    },
+    "muse": {
+      "AUTH_VERIFIED": true,
+      "ACTUAL_ACK": true,
+      "ACTUAL_OUTPUT": true,
+      "HOLDOUT_DECISION_PASS": 4,
+      "HOLDOUT_STRICT_PASS": 4,
+      "HOLDOUT_TOTAL": 4,
+      "CRITICAL_FALSE_PASS": 0,
+      "SEVERITY_MISSED_CRITICAL": 0,
+      "COMPILED_HANDOFF_ACCEPTANCE": "FAIL_PROVIDED_TEMPLATE_PLACEHOLDER_AND_MISSING_LEASE",
+      "checks": [
+        {
+          "id": "H1",
+          "pass": true,
+          "diff": {}
+        },
+        {
+          "id": "H2",
+          "pass": true,
+          "diff": {}
+        },
+        {
+          "id": "H3",
+          "pass": true,
+          "diff": {}
+        },
+        {
+          "id": "H4",
+          "pass": true,
+          "diff": {}
+        }
+      ],
+      "artifact": "D:\\Codex\\agy-chat-control\\provider-interop\\artifacts\\muse\\staging\\plan.md",
+      "observed_tools_self_report": [],
+      "observed_tool_claim_limit": "Self-report is not attachment to user desktop/Drive/GitHub or independent execution trace",
+      "LIVE_ROUTE": "VERIFIED_SUPPLIED_TEXT_ROUNDTRIP",
+      "ONE_PROMPT_INTEROP_PASS": false,
+      "QA_ALIGNMENT": "NOT_CERTIFIED",
+      "terminal": "Matching task marker returned complete staged file; Muse worker terminal metadata not exposed by wrapper, therefore no job-lifecycle stopped claim"
+    }
+  },
+  "findings": [
+    {
+      "finding_id": "F-COMPILE-MANUS",
+      "severity": "S2",
+      "acceptance": "AC2",
+      "observed": {
+        "output_schema": "describe",
+        "lease_present": false
+      },
+      "expected": "Concrete schema object and bounded lease + source/identity/callback",
+      "owner": "Interop prompt compiler (Codex Work)",
+      "cause": "Provided example literally used describe and omitted lease despite prose asking for it. This is a supplied-template/spec defect, not established worker inability.",
+      "disposition": "Reusable strict contract fixed locally; live provider retest UNVERIFIED; no second call within this delegated one-prompt limit."
+    },
+    {
+      "finding_id": "F-QA-MANUS-H1",
+      "severity": "S2",
+      "acceptance": "AC3/QASEVERITY",
+      "observed": "REJECT correctly but labels unknown pending-operation duplicate create S2",
+      "expected": "S3 critical external-action/idempotency risk under sealed fixture rubric",
+      "disposition": "OPEN_CALIBRATION; do not certify QA_ALIGNMENT. No actual unsafe action or false PASS occurred."
+    },
+    {
+      "finding_id": "F-COMPILE-MUSE",
+      "severity": "S2",
+      "acceptance": "AC2",
+      "observed": {
+        "output_schema": "describe",
+        "lease_present": false
+      },
+      "expected": "Concrete schema object and bounded lease + source/identity/callback",
+      "owner": "Interop prompt compiler (Codex Work)",
+      "cause": "Provided example literally used describe and omitted lease despite prose asking for it. This is a supplied-template/spec defect, not established worker inability.",
+      "disposition": "Reusable strict contract fixed locally; live provider retest UNVERIFIED; no second call within this delegated one-prompt limit."
+    }
+  ],
+  "rubric_notes": [
+    "Manus applicable_batches alias normalized to batches because original prose schema was not strict; original output retained. Numeric5/1 correct.",
+    "4-case minimal local supplied-text readiness only, not daily/six-direction QA calibration."
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "codex_binary":"ABSOLUTE_EXISTING_CODEX_PATH",
+  "primary_monitor_thread":"01a130a2-0a5b-7833-a489-d19c00dcc7db",
+  "status_port":8789,
+  "poll_seconds":8,
+  "turn_timeout":180,
+  "source_snapshot_sha256":"RELEASE_SOURCE_HASH",
+  "authorization":{
+    "mode":"BOUNDED_SUPPLIED_TEXT",
+    "github_login":"tuanvu297",
+    "expires_at":0,
+    "owner_scope_ref":"OWNER_CHAT_CONTROL_WORKERS_20261015",
+    "allowed_kinds":["supplied_text_analysis","task_compile","code_review"],
+    "mission_prefix":"AGY-CHAT-",
+    "target_executor":"AGY-CHAT-TEXT-EXECUTOR",
+    "callback_target":"01a13499-9300-72a3-8944-87f9b3fd2362",
+    "max_missions":10
+  },
+  "mission":{"mission_id":"AGY-CHAT-EXAMPLE","callback_target":"01a13499-9300-72a3-8944-87f9b3fd2362"}
+}

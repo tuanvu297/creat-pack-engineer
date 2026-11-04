@@ -1,0 +1,43 @@
+{
+  "task_id": "AGY-CHAT-CONTROL-20261015:WORKER-INTEROP",
+  "status": "PASS_FOR_SCOPED_INTEROP",
+  "at": "2026-10-15 07:35:36 UTC",
+  "sources": [
+    {
+      "id": "10Ph_XvsgytAHsdECGDNkPY94l4EIuTat-4VWtbXrTsY",
+      "modified": "2026-10-15T07:32:55.598Z",
+      "characters": 48576
+    },
+    {
+      "id": "1TFSkLh7ZfAxHq-mYSN-HG2Dp1XJaG_JWcItASe_4tME",
+      "modified": "2026-10-15T07:21:31.176Z",
+      "characters": 54979
+    },
+    {
+      "id": "1S98IZWRhF5rDdthPO-y5ETb1shHRS9bz0f_J22yzcqc",
+      "modified": "2026-10-11T23:18:55.728Z",
+      "characters": 19251
+    },
+    {
+      "id": "1lzVPQWz2kiFk2Kwhq-D_l-O-oE5bLpARLe6mRSYMnbs",
+      "modified": "2026-10-09T15:29:43.783Z",
+      "characters": 14949
+    },
+    {
+      "id": "1mFB9ugcXq9v0K9geDvO8K2-zgn3rWHvSLCAMmct7760",
+      "modified": "2026-10-12T08:00:41.415Z",
+      "characters": 16846
+    },
+    {
+      "id": "14tBker2pncck_w0ab0lQxhuEsboL7H8u8KlxfZ7ydz8",
+      "modified": "2026-10-12T13:47:18.952Z",
+      "characters": 91681
+    }
+  ],
+  "QA_CONTRACT_VERSION": "1.1",
+  "policy": "Latest D045 MAXIMUM USEFUL TRAINING supersedes old onebatch/20% cap; D046 Muse parity; D047 observablegraph. This delegated task additionally limits current live test to one short new prompt/provider.",
+  "receipt": "ACK.json stored before PLAN; actual native ingress is functionCallOutput fco_01a13e7b-025e-7373-b69d-a733516a534c, not userMessage. Direct human authority independently verified in engineer chat.",
+  "scope": "Only provider-interop; no root source/global config/canon writes or oldCRM replay",
+  "callback": "01a13499-9300-72a3-8944-87f9b3fd2362",
+  "root_bootstrap_delta": "START HERE is newer than root initial receipt: 07:32:55.598Z read fresh"
+}

@@ -1,0 +1,40 @@
+{
+  "at": "2026-10-15T08:01:58.096839+00:00",
+  "status": "PASS_SCOPED",
+  "health": {
+    "status": "RUNNING",
+    "daemon_alive_verified": true,
+    "emitted_at": 1792051317.1120658,
+    "pid": 24260
+  },
+  "new_pid": 24260,
+  "old_pid": 16612,
+  "old_stopped_snapshot_observed": true,
+  "accepted_missions": [
+    [
+      "AGY-CHAT-CONTROL-20261015-P1",
+      "AGY_ACCEPTED"
+    ]
+  ],
+  "intents_after_restart": [
+    {
+      "kind": "CALLBACK_POST",
+      "state": "ACKED",
+      "count": 1
+    },
+    {
+      "kind": "MODEL_TURN",
+      "state": "ACKED",
+      "count": 1
+    }
+  ],
+  "sqlite_integrity": "ok",
+  "P1_source_snapshot": "f1b97de69fcc3371bc327098e7ca4f7a488c2d626180a1938b6ed939fe118869",
+  "source_inventory_matches": "14/14",
+  "no_replay": "One modelturn and one callback total retained across restart",
+  "limits": [
+    "No boot/login service installed",
+    "Future uptime not certified",
+    "Local live config/key/SQLite not exported"
+  ]
+}

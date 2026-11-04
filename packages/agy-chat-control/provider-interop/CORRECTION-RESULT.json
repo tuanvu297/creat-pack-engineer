@@ -1,0 +1,65 @@
+{
+  "at": "2026-10-15T07:55:33.444176+00:00",
+  "status": "POST_CLOSURE_READ_ONLY_EVIDENCE_ADDENDUM",
+  "results": {
+    "manus": {
+      "ack": {
+        "task_id": "AGY-CHAT-CONTROL-20261015:INTEROP:MANUS",
+        "attempt": 1,
+        "QA_CONTRACT_VERSION": "1.1",
+        "phase": "CORRECTIVE-A2"
+      },
+      "new_review_checks": {
+        "R1": true,
+        "R2": true,
+        "R3": true
+      },
+      "new_review_pass": 3,
+      "new_review_total": 3,
+      "batch_plan_pass": true,
+      "schema_object_fixed": true,
+      "compiled_task_live_validation_error": "LEASE_EXPIRED_OR_INVALID",
+      "compiled_handoff_PASS": false,
+      "lease": {
+        "owner": "MANUS",
+        "issued_at": "2026-10-15T07:52:58.813937+00:00",
+        "expires_at": "2026-10-15T07:52:00+00:00",
+        "max_submissions": 1
+      }
+    },
+    "muse": {
+      "ack": {
+        "task_id": "AGY-CHAT-CONTROL-20261015:INTEROP:MUSE",
+        "attempt": 1,
+        "QA_CONTRACT_VERSION": "1.1",
+        "phase": "CORRECTIVE-A2"
+      },
+      "new_review_checks": {
+        "R1": true,
+        "R2": true,
+        "R3": true
+      },
+      "new_review_pass": 3,
+      "new_review_total": 3,
+      "batch_plan_pass": true,
+      "schema_object_fixed": true,
+      "compiled_task_live_validation_error": "LEASE_EXPIRED_OR_INVALID",
+      "compiled_handoff_PASS": false,
+      "lease": {
+        "owner": "MUSE",
+        "issued_at": "2026-10-15T07:52:58.813937+00:00",
+        "expires_at": "2026-10-15T07:52:00+00:00",
+        "max_submissions": 1
+      }
+    }
+  },
+  "timebox_callback_lateness_seconds": 24,
+  "new_prompts_after_cutoff": 0,
+  "finding": {
+    "id": "F-CORRECTION-LEASE-SPEC",
+    "severity": "S2",
+    "owner": "Codex Work correction compiler",
+    "observed": "Corrective prepared packet hardcoded07:52expiry but preparation/send occurred07:53, making example child workflow lease invalid. Actual provider resume grants were separately fresh and task-authorized; no compiled child action executed.",
+    "disposition": "Do not promote overall handoff PASS. Preserve prompts/results. Future compile must run interop_contract.validate_task with current time before dispatch and derive expiry dynamically from deadline. No third provider prompt authorized/performed."
+  }
+}
