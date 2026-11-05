@@ -130,19 +130,47 @@ test("helper fences: creation fence, locked begin/record, equipment binding, dur
     assert.equal((env.payload as any).text, 'held-out answer');
 
     // ---- W5: the verified result is durable in the queue.
-    assert.deepEqual(await recordHelperResult(rt, scope, gemini, a1, env), { recorded: true, alreadyRecorded: false });
-    assert.deepEqual(await recordHelperResult(rt, scope, gemini, a1, env), { recorded: false, alreadyRecorded: true },
+    assert.deepEqual(await recordHelperResult(rt, scope, gemini, a1, env, lt, att), { recorded: true, alreadyRecorded: false });
+    assert.deepEqual(await recordHelperResult(rt, scope, gemini, a1, env, lt, att), { recorded: false, alreadyRecorded: true },
       're-recording the same result reconciles, never duplicates');
     const runtime2 = new Pool({ connectionString: process.env.AGY_TEST_DATABASE_URL, options: `-c search_path=${schema},public -c role=${role}` });
     const back = await loadRecordedHelperResult(runtime2, scope, a1);
     assert.ok(back, 'recorded result read back from a fresh pool');
     assert.equal(back!.digest, env.digest); assert.equal(back!.externalRef, 'heldout1'); assert.equal(back!.costUnits, 15);
     assert.equal((back!.payload as any).text, 'held-out answer', 'result survives the verifying process - it lives in the queue');
+    const stored = (await qu(`SELECT payload FROM agy_tasks WHERE task_id=$1`, [childId]))[0].payload.submission_result;
+    assert.equal(stored.childAttempt, att);
+    assert.equal(stored.costKnown, true);
+    assert.equal(stored.costUnits, 15);
     await runtime2.end();
     const otherPayload = { text: 'a different answer' };
     const otherEnv = { ...env, payload: otherPayload, digest: digestOf(otherPayload) };
-    await assert.rejects(() => recordHelperResult(rt, scope, gemini, a1, otherEnv as any), /RESULT_ALREADY_RECORDED/,
+    await assert.rejects(() => recordHelperResult(rt, scope, gemini, a1, otherEnv as any, lt, att), /RESULT_ALREADY_RECORDED/,
       'a different result for the recorded submission is denied, never overwritten');
+
+    // A result that cannot meter its actual cost remains UNKNOWN after
+    // JSONB persistence. A stale child lease cannot write it.
+    const unknownAssignment = assignment({ subtaskKey: 'unknown-cost' });
+    const unknownChild = await createDelegatedChild(rt, scope, gemini, op, unknownAssignment, specL);
+    const unknownClaim = await surface(gemini, scope, 'claim', {});
+    assert.equal(unknownClaim.task.taskId, unknownChild.childTaskId);
+    await beginHelperSubmission(rt, scope, gemini, unknownChild.childTaskId,
+      unknownClaim.task.leaseToken, unknownClaim.task.attempt);
+    await recordHelperSubmission(rt, scope, gemini, unknownChild.childTaskId,
+      unknownClaim.task.leaseToken, unknownClaim.task.attempt, 'unknown-ref');
+    const unknownPayload = { text: 'unmetered answer' };
+    const unknownEnv = { childKey: childKey(unknownAssignment), helperId: 'manus' as const,
+      externalRef: 'unknown-ref', payload: unknownPayload, digest: digestOf(unknownPayload),
+      costUnits: Number.NaN };
+    await assert.rejects(() => recordHelperResult(rt, scope, gemini, unknownAssignment,
+      unknownEnv, 'wrong-child-lease', unknownClaim.task.attempt), /CHILD_LEASE_DENIED/);
+    assert.deepEqual(await recordHelperResult(rt, scope, gemini, unknownAssignment, unknownEnv,
+      unknownClaim.task.leaseToken, unknownClaim.task.attempt), { recorded: true, alreadyRecorded: false });
+    const unknownStored = (await qu(`SELECT payload FROM agy_tasks WHERE task_id=$1`,
+      [unknownChild.childTaskId]))[0].payload.submission_result;
+    assert.equal(unknownStored.costKnown, false); assert.equal(unknownStored.costUnits, null);
+    const unknownBack = await loadRecordedHelperResult(rt, scope, unknownAssignment);
+    assert.ok(unknownBack && Number.isNaN(unknownBack.costUnits), 'UNKNOWN remains UNKNOWN after JSONB round trip');
 
     // ---- W2: a parent attempt roll kills begin/record under the dead attempt.
     const a2 = assignment({ subtaskKey: 'xfer-2' });
@@ -167,3 +195,5 @@ test("helper fences: creation fence, locked begin/record, equipment binding, dur
     await runtime?.end().catch(() => {}); await owner.end().catch(() => {}); await admin.end().catch(() => {});
   }
 });
+
+
