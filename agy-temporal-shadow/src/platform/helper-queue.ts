@@ -244,7 +244,15 @@ export async function recordHelperSubmission(pool: Pool, scope: ProjectScope, pr
     if (!['CLAIMED', 'RUNNING'].includes(row.status)) throw new Error('CHILD_NOT_ACTIVE');
     if (!row.lease_expires_at || new Date(row.lease_expires_at).getTime() <= dbNowMs) throw new Error('LEASE_EXPIRED');
     checkParentRow(parent, principal.workerId ?? '', Number(row.payload?.parent_attempt), undefined, dbNowMs);
-    if (Number(row.payload?.submission_attempt) !== attempt) throw new Error('SUBMISSION_ATTEMPT_MISMATCH');
+    // The attempt fence applies only once a begin has put the
+    // child IN_FLIGHT under some attempt (begin writes
+    // submission_attempt atomically with that state). With no
+    // begin there is nothing to mismatch: the denial is the
+    // UPDATE's own state guard below (SUBMISSION_RECORD_DENIED)
+    // - peer-QA 2026-11-05: the unconditional check also fired
+    // on the record-before-begin path and masked that denial.
+    if (row.payload?.submission_state === 'IN_FLIGHT'
+      && Number(row.payload?.submission_attempt) !== attempt) throw new Error('SUBMISSION_ATTEMPT_MISMATCH');
     const upd = await client.query(
       `UPDATE agy_tasks SET payload=payload || jsonb_build_object('submission_ref', $5::text, 'submission_state', 'SUBMITTED'), updated_at=now()
         WHERE task_id=$1 AND claimed_by=$2 AND lease_token=$3 AND attempt=$4 AND payload->>'submission_state'='IN_FLIGHT'`,
