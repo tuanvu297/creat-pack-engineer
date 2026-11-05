@@ -82,6 +82,8 @@ export function routeHelper(req: RouteRequest, candidates: HelperCandidate[]): R
     // the contract it is routed for.
     if (req.budget.hard && c.enforcement === 'prompt_only') reasons.push('HARD_BUDGET_UNENFORCED');
     else if (req.budget.hard && c.enforcement !== 'provider' && !c.actualCostBounded) reasons.push('HARD_BUDGET_UNENFORCED');
+    if (req.budget.hard && (c.expectedCost === undefined || !Number.isFinite(c.expectedCost) || c.expectedCost < 0))
+      reasons.push('COST_UNKNOWN_HARD_BUDGET');
     if (c.balance.known) {
       const room = Math.max(0, req.budget.cap - req.budget.spent);
       const avail = Math.min(room, c.balance.units ?? 0);
@@ -108,3 +110,5 @@ export function routeHelper(req: RouteRequest, candidates: HelperCandidate[]): R
     ],
   };
 }
+
+
