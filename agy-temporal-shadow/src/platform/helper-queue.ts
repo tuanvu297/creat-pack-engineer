@@ -210,13 +210,15 @@ export async function beginHelperSubmission(pool: Pool, scope: ProjectScope, pri
     if (!row.lease_expires_at || new Date(row.lease_expires_at).getTime() <= dbNowMs) throw new Error('LEASE_EXPIRED');
     checkParentRow(parent, principal.workerId ?? '', Number(row.payload?.parent_attempt), undefined, dbNowMs);
     const p = row.payload ?? {};
+    if ((p.submission_ref || p.submission_state === 'IN_FLIGHT')
+      && Number(p.submission_attempt) !== attempt) throw new Error('SUBMISSION_ATTEMPT_MISMATCH');
     if (p.submission_ref) return { state: 'SUBMITTED', externalRef: String(p.submission_ref) } as SubmissionState;
     if (p.submission_state === 'IN_FLIGHT') return { state: 'IN_FLIGHT', externalRef: null } as SubmissionState;
     const upd = await client.query(
-      `UPDATE agy_tasks SET payload=payload || '{"submission_state":"IN_FLIGHT"}'::jsonb, updated_at=now()
+      `UPDATE agy_tasks SET payload=payload || jsonb_build_object('submission_state','IN_FLIGHT','submission_attempt',$5::integer), updated_at=now()
         WHERE task_id=$1 AND claimed_by=$2 AND lease_token=$3 AND attempt=$4
           AND NOT (payload ? 'submission_ref') AND coalesce(payload->>'submission_state','') <> 'IN_FLIGHT'`,
-      [childTaskId, principal.workerId, leaseToken, attempt]);
+      [childTaskId, principal.workerId, leaseToken, attempt, attempt]);
     // Under the row lock the flip must land; rowCount 0 would
     // mean the locked view was not the row updated - fail
     // closed as IN_FLIGHT rather than claiming a fresh begin.
@@ -242,6 +244,7 @@ export async function recordHelperSubmission(pool: Pool, scope: ProjectScope, pr
     if (!['CLAIMED', 'RUNNING'].includes(row.status)) throw new Error('CHILD_NOT_ACTIVE');
     if (!row.lease_expires_at || new Date(row.lease_expires_at).getTime() <= dbNowMs) throw new Error('LEASE_EXPIRED');
     checkParentRow(parent, principal.workerId ?? '', Number(row.payload?.parent_attempt), undefined, dbNowMs);
+    if (Number(row.payload?.submission_attempt) !== attempt) throw new Error('SUBMISSION_ATTEMPT_MISMATCH');
     const upd = await client.query(
       `UPDATE agy_tasks SET payload=payload || jsonb_build_object('submission_ref', $5::text, 'submission_state', 'SUBMITTED'), updated_at=now()
         WHERE task_id=$1 AND claimed_by=$2 AND lease_token=$3 AND attempt=$4 AND payload->>'submission_state'='IN_FLIGHT'`,
@@ -335,7 +338,7 @@ export async function verifyHelperResult(pool: Pool, scope: ProjectScope, princi
   const key = childKey(a);
   const job = (await sp.query(`SELECT job_id FROM agy_jobs WHERE idempotency_key=$1`, [key])).rows[0];
   if (!job) throw new Error('CHILD_NOT_FOUND');
-  const t = (await sp.query(`SELECT payload, claimed_by FROM agy_tasks WHERE job_id=$1 ORDER BY created_at LIMIT 1`, [job.job_id])).rows[0];
+  const t = (await sp.query(`SELECT payload, claimed_by, attempt FROM agy_tasks WHERE job_id=$1 ORDER BY created_at LIMIT 1`, [job.job_id])).rows[0];
   const p = t?.payload ?? {};
   // Persisted ownership and reply routing are immutable: if the
   // stored child no longer names this parent and reply target,
@@ -349,6 +352,7 @@ export async function verifyHelperResult(pool: Pool, scope: ProjectScope, princi
   // the SUBMITTED state - not an in-flight guess, not another
   // operation's ref.
   if (p.submission_state !== 'SUBMITTED') throw new Error('SUBMISSION_STATE_MISMATCH');
+  if (Number(p.submission_attempt) !== Number(t.attempt)) throw new Error('SUBMISSION_ATTEMPT_MISMATCH');
   if (typeof p.submission_ref !== 'string' || env.externalRef !== p.submission_ref) throw new Error('RESULT_REF_MISMATCH');
   return { verified: true };
 }
@@ -368,7 +372,8 @@ export async function verifyHelperResult(pool: Pool, scope: ProjectScope, princi
 // overwrite - provenance of what the parent integrated must
 // not be rewritable after the fact.
 export async function recordHelperResult(pool: Pool, scope: ProjectScope, principal: Principal, a: HelperAssignment,
-  env: HelperResultEnvelope): Promise<{ recorded: boolean; alreadyRecorded: boolean }> {
+  env: HelperResultEnvelope, childLeaseToken: string, childAttempt: number): Promise<{ recorded: boolean; alreadyRecorded: boolean }> {
+  if (!childLeaseToken || !Number.isInteger(childAttempt) || childAttempt < 1) throw new Error('CHILD_LEASE_REQUIRED');
   await verifyHelperResult(pool, scope, principal, a, env);
   const sp = scoped(pool, scope);
   const binding = await loadSubmissionBinding(pool, scope, a);
@@ -378,15 +383,24 @@ export async function recordHelperResult(pool: Pool, scope: ProjectScope, princi
     assertChildBinding(p, a, binding.childKey);
     if (p.submission_state !== 'SUBMITTED' || p.submission_ref !== env.externalRef)
       throw new Error('SUBMISSION_STATE_MISMATCH');
+    if (Number(p.submission_attempt) !== childAttempt) throw new Error('SUBMISSION_ATTEMPT_MISMATCH');
+    const costKnown = !Number.isNaN(env.costUnits);
     const existing = p.submission_result;
     if (existing) {
       if (existing.childKey === binding.childKey && existing.digest === env.digest
-        && existing.externalRef === env.externalRef)
+        && existing.externalRef === env.externalRef && existing.childAttempt === childAttempt
+        && existing.costKnown === costKnown
+        && (costKnown ? existing.costUnits === env.costUnits : existing.costUnits === null))
         return { recorded: false, alreadyRecorded: true };
       throw new Error('RESULT_ALREADY_RECORDED');
     }
+    if (row.claimed_by !== principal.workerId || String(row.lease_token ?? '') !== childLeaseToken
+      || Number(row.attempt) !== childAttempt) throw new Error('CHILD_LEASE_DENIED');
+    if (!['CLAIMED', 'RUNNING'].includes(row.status)) throw new Error('CHILD_NOT_ACTIVE');
+    if (!row.lease_expires_at || new Date(row.lease_expires_at).getTime() <= dbNowMs)
+      throw new Error('LEASE_EXPIRED');
     const record = { childKey: binding.childKey, helperId: a.helperId, externalRef: env.externalRef,
-      digest: env.digest, costUnits: env.costUnits, payload: env.payload ?? null,
+      digest: env.digest, childAttempt, costKnown, costUnits: costKnown ? env.costUnits : null, payload: env.payload ?? null,
       recorded_at: new Date(dbNowMs).toISOString() };
     const upd = await client.query(
       `UPDATE agy_tasks SET payload=payload || jsonb_build_object('submission_result', $2::jsonb), updated_at=now()
@@ -412,8 +426,15 @@ export async function loadRecordedHelperResult(pool: Pool, scope: ProjectScope,
   // carry its own digest honestly - a tampered or drifted
   // record reads as corruption, not as a result.
   if (r.childKey !== key || r.helperId !== a.helperId || r.externalRef !== p.submission_ref
+    || Number(r.childAttempt) !== Number(p.submission_attempt)
     || digestOf(r.payload) !== r.digest)
     throw new Error('RECORDED_RESULT_MISMATCH');
+  if ((r.costKnown === true && (typeof r.costUnits !== 'number' || !Number.isFinite(r.costUnits) || r.costUnits < 0))
+    || (r.costKnown === false && r.costUnits !== null)
+    || (r.costKnown !== true && r.costKnown !== false))
+    throw new Error('RECORDED_COST_INVALID');
   return { childKey: r.childKey, helperId: r.helperId, externalRef: r.externalRef,
-    digest: r.digest, payload: r.payload, costUnits: r.costUnits };
+    digest: r.digest, payload: r.payload, costUnits: r.costKnown ? r.costUnits : Number.NaN };
 }
+
+
