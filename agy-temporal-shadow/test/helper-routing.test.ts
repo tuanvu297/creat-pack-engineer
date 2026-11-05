@@ -54,3 +54,15 @@ test('routing: surface the assignment cannot pin is ineligible; ties break on co
   const d2: any = routeHelper(soft, tie as any);
   assert.equal(d2.helperId, 'manus', 'equal fit -> lower expected cost wins');
 });
+
+test('routing: hard budget denies unknown attempt cost with a known balance', () => {
+  const hard = { ...soft, budget: { cap: 100, spent: 0, hard: true } };
+  for (const expectedCost of [undefined, Number.NaN, -1]) {
+    const candidate: HelperCandidate = { ...grok, enforcement: 'provider', actualCostBounded: false,
+      balance: { known: true, units: 0 }, expectedCost };
+    const decision: any = routeHelper(hard, [candidate]);
+    assert.ok(decision.denied?.[0].reasons.includes('COST_UNKNOWN_HARD_BUDGET'));
+  }
+});
+
+
