@@ -105,7 +105,7 @@ async function withParentChildLocks<T>(sp: Pool, childTaskId: string,
   } finally { client.release(); }
 }
 
-function assertChildBinding(p: any, a: HelperAssignment, key: string): void {
+export function assertChildBinding(p: any, a: HelperAssignment, key: string): void {
   if (p.parent_task_id !== a.parentTaskId || Number(p.parent_attempt) !== a.parentAttempt
     || p.callback_target !== a.replyTarget || p.child_key !== key || p.helper_id !== a.helperId
     || p.equipment_digest !== equipmentDigest(a))
@@ -116,7 +116,15 @@ export interface ChildSpec { estimatedQuota: number; estimatedCost: number; requ
   /** Possession proof for the parent lease; verified against the
       persisted row when provided. The worker surface always
       provides it. */
-  parentLeaseToken?: string }
+  parentLeaseToken?: string;
+  /** The delegation input, persisted in the child payload so a
+      daemon claiming the child later can execute the delegation
+      from the queue record alone (self-describing child). */
+  input?: unknown;
+  /** Engine execution window for the claiming host. Helper
+      provider tasks are long-running; the default queue window
+      (300s) would abort the host's view mid-submission. */
+  timeoutSeconds?: number }
 
 // Two principals, by design: the WORKER principal is the
 // authenticated parent making the delegation request (verified
@@ -169,10 +177,21 @@ export async function createDelegatedChild(pool: Pool, scope: ProjectScope, prin
     tasks: [{ name: key, idempotencyKey: `${key}:task`, taskType: 'helper_delegation',
       requiredCapabilities: spec.requiredCapabilities, requiredPermissions: ['read'],
       permissionGranted: true, safetyApproved: true,
-      estimatedQuota: spec.estimatedQuota, estimatedCost: spec.estimatedCost, maxRetry: 0, priority: 50,
+      estimatedQuota: spec.estimatedQuota, estimatedCost: spec.estimatedCost, priority: 50,
+      // Exactly ONE queue-level retry: every replay-unsafe
+      // state is fenced at begin (SUBMITTED reconciles,
+      // IN_FLIGHT attempt-mismatches closed, FAILED_TERMINAL
+      // returns its receipt) - the single retry exists so a
+      // FAILED_RETRYABLE child can be re-claimed under a new
+      // attempt and re-armed, and nothing else can use it to
+      // replay an uncertain effect.
+      maxRetry: 1,
+      timeoutSeconds: spec.timeoutSeconds ?? 900,
       payload: { mission_id: mission, target_worker_id: a.parentWorkerId, callback_target: a.replyTarget,
         parent_task_id: a.parentTaskId, parent_attempt: a.parentAttempt, child_key: key, helper_id: a.helperId,
-        equipment_digest: equipmentDigest(a), equipment: a.equipment } }] },
+        equipment_digest: equipmentDigest(a), equipment: a.equipment,
+        subtask_key: a.subtaskKey, budget: a.budget, source_allowlist: a.sourceAllowlist,
+        tool_allowlist: a.toolAllowlist, expires_at_ms: a.expiresAtMs, helper_input: spec.input } }] },
     { parentFence: { parentTaskId: a.parentTaskId, parentWorkerId: principal.workerId,
         parentAttempt: a.parentAttempt, parentLeaseToken: spec.parentLeaseToken } });
   const t = (await sp.query(`SELECT task_id, payload FROM agy_tasks WHERE job_id=$1 ORDER BY created_at LIMIT 1`, [job.jobId])).rows[0];
@@ -188,7 +207,28 @@ export async function createDelegatedChild(pool: Pool, scope: ProjectScope, prin
   return { childJobId: job.jobId, childTaskId: t.task_id, childKey: key, created: true };
 }
 
-export type SubmissionState = { state: 'NEW' | 'IN_FLIGHT' | 'SUBMITTED'; externalRef: string | null };
+// Durable receipt for a submission the provider definitively
+// did NOT accept (root QA 2026-11-06): without it, a
+// deterministic submit error wedged the child IN_FLIGHT
+// forever - no host could tell a dead submission from an
+// uncertain one, and no later run could safely proceed.
+// retryable=true means the provider refused BEFORE acceptance
+// (e.g. rate limit): a LATER claim attempt may re-arm the
+// child. retryable=false is terminal for this child: no
+// attempt may ever submit it again.
+export interface SubmissionFailureReceipt {
+  code: string;
+  retryable: boolean;
+  attempt: number;
+  failedAtMs: number;
+}
+
+export type SubmissionState =
+  | { state: 'NEW'; externalRef: null }
+  | { state: 'IN_FLIGHT'; externalRef: null }
+  | { state: 'SUBMITTED'; externalRef: string }
+  | { state: 'FAILED_TERMINAL'; externalRef: null; failure: SubmissionFailureReceipt }
+  | { state: 'FAILED_RETRYABLE'; externalRef: null; failure: SubmissionFailureReceipt };
 
 // Atomic submission fence: exactly one caller flips the child
 // from no-submission to IN_FLIGHT under its live parent lease;
@@ -214,8 +254,23 @@ export async function beginHelperSubmission(pool: Pool, scope: ProjectScope, pri
       && Number(p.submission_attempt) !== attempt) throw new Error('SUBMISSION_ATTEMPT_MISMATCH');
     if (p.submission_ref) return { state: 'SUBMITTED', externalRef: String(p.submission_ref) } as SubmissionState;
     if (p.submission_state === 'IN_FLIGHT') return { state: 'IN_FLIGHT', externalRef: null } as SubmissionState;
+    // Durable failure receipts (see SubmissionFailureReceipt):
+    // a terminal failure is a fact every later attempt must
+    // observe - never a state to flip back into a submission.
+    if (p.submission_state === 'FAILED_TERMINAL')
+      return { state: 'FAILED_TERMINAL', externalRef: null, failure: p.submission_failure } as SubmissionState;
+    if (p.submission_state === 'FAILED_RETRYABLE') {
+      const failedAttempt = Number(p.submission_attempt);
+      if (attempt < failedAttempt) throw new Error('SUBMISSION_ATTEMPT_MISMATCH');
+      if (attempt === failedAttempt)
+        return { state: 'FAILED_RETRYABLE', externalRef: null, failure: p.submission_failure } as SubmissionState;
+      // A strictly later claim attempt re-arms the child:
+      // fall through to the flip, which stamps the new
+      // submission_attempt. The failure history stays in
+      // submission_failures for audit.
+    }
     const upd = await client.query(
-      `UPDATE agy_tasks SET payload=payload || jsonb_build_object('submission_state','IN_FLIGHT','submission_attempt',$5::integer), updated_at=now()
+      `UPDATE agy_tasks SET payload=(payload - 'submission_failure') || jsonb_build_object('submission_state','IN_FLIGHT','submission_attempt',$5::integer), updated_at=now()
         WHERE task_id=$1 AND claimed_by=$2 AND lease_token=$3 AND attempt=$4
           AND NOT (payload ? 'submission_ref') AND coalesce(payload->>'submission_state','') <> 'IN_FLIGHT'`,
       [childTaskId, principal.workerId, leaseToken, attempt, attempt]);
@@ -258,6 +313,53 @@ export async function recordHelperSubmission(pool: Pool, scope: ProjectScope, pr
         WHERE task_id=$1 AND claimed_by=$2 AND lease_token=$3 AND attempt=$4 AND payload->>'submission_state'='IN_FLIGHT'`,
       [childTaskId, principal.workerId, leaseToken, attempt, externalRef]);
     if ((upd.rowCount ?? 0) === 0) throw new Error('SUBMISSION_RECORD_DENIED');
+  });
+}
+
+// Durably record that a begun submission definitively did
+// NOT reach the provider (root QA 2026-11-06). Same locked-
+// transaction discipline as begin/record: parent row, then
+// child row, every fence re-run on the locked rows, then the
+// write. Only the attempt that holds the IN_FLIGHT begin may
+// record its failure; recording twice for the same attempt
+// returns the existing receipt. The receipt is the ONLY way
+// a child leaves IN_FLIGHT without a submission ref - an
+// uncertain submission never gets one and stays IN_FLIGHT
+// for binding-based reconciliation.
+export async function recordHelperSubmissionFailure(pool: Pool, scope: ProjectScope, principal: Principal,
+  childTaskId: string, leaseToken: string, attempt: number,
+  failure: { code: string; retryable: boolean }): Promise<SubmissionFailureReceipt> {
+  if (principal.role !== 'worker' || !principal.workerId) throw new Error('PARENT_REQUIRED');
+  if (typeof failure?.code !== 'string' || !failure.code.trim()) throw new Error('SUBMISSION_FAILURE_CODE_INVALID');
+  const sp = scoped(pool, scope);
+  return withParentChildLocks(sp, childTaskId, async (client, parent, row, dbNowMs) => {
+    if (row.claimed_by !== principal.workerId) throw new Error('PARENT_NOT_OWNER');
+    if (String(row.lease_token) !== leaseToken || Number(row.attempt) !== attempt) throw new Error('LEASE_DENIED');
+    if (!['CLAIMED', 'RUNNING'].includes(row.status)) throw new Error('CHILD_NOT_ACTIVE');
+    if (!row.lease_expires_at || new Date(row.lease_expires_at).getTime() <= dbNowMs) throw new Error('LEASE_EXPIRED');
+    checkParentRow(parent, principal.workerId ?? '', Number(row.payload?.parent_attempt), undefined, dbNowMs);
+    const p = row.payload ?? {};
+    // Idempotent per attempt: the same attempt re-recording
+    // its failure gets the persisted receipt back.
+    if ((p.submission_state === 'FAILED_TERMINAL' || p.submission_state === 'FAILED_RETRYABLE')
+      && Number(p.submission_attempt) === attempt && p.submission_failure)
+      return p.submission_failure as SubmissionFailureReceipt;
+    if (p.submission_state === 'IN_FLIGHT'
+      && Number(p.submission_attempt) !== attempt) throw new Error('SUBMISSION_ATTEMPT_MISMATCH');
+    if (p.submission_state !== 'IN_FLIGHT') throw new Error('SUBMISSION_RECORD_DENIED');
+    const receipt: SubmissionFailureReceipt = {
+      code: failure.code.slice(0, 200), retryable: failure.retryable === true, attempt, failedAtMs: dbNowMs };
+    const upd = await client.query(
+      `UPDATE agy_tasks SET payload=payload || jsonb_build_object(
+          'submission_state', $5::text, 'submission_failure', $6::jsonb,
+          'submission_failures', coalesce(payload->'submission_failures','[]'::jsonb) || $6::jsonb),
+        updated_at=now()
+        WHERE task_id=$1 AND claimed_by=$2 AND attempt=$4 AND lease_token = $3
+          AND payload->>'submission_state'='IN_FLIGHT'`,
+      [childTaskId, principal.workerId, leaseToken, attempt,
+        receipt.retryable ? 'FAILED_RETRYABLE' : 'FAILED_TERMINAL', JSON.stringify(receipt)]);
+    if ((upd.rowCount ?? 0) === 0) throw new Error('SUBMISSION_RECORD_DENIED');
+    return receipt;
   });
 }
 
