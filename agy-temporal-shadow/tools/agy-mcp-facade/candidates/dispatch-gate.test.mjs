@@ -23,6 +23,7 @@ test('P0 no-provider task gets one durable reservation', async () => {
 });
 test('identity and scope fail closed before reservation', async () => {
   await rejected('SCOPE_DENIED', { principal: { ...principal, scopes: ['agy.read'] } });
+  await rejected('SCOPE_DENIED', { principal: { ...principal, identityId: undefined } });
   await rejected('IDENTITY_NOT_ALLOWLISTED', { policy: { ...policy, serverAllowlist: [] } });
   await rejected('ROLE_DENIED', { principal: { ...principal, role: 'viewer' } });
   await rejected('RUN_DENIED', { task: { ...task, runId: 'other' } });
@@ -37,6 +38,7 @@ test('revocation, time and rate policy fail closed', async () => {
   await rejected('IDENTITY_REVOKED', { principal: { ...principal, revocation: 'HARD_REVOKE' } });
   await rejected('DRAIN_NO_NEW_CLAIM', { principal: { ...principal, revocation: 'DRAIN' } });
   await rejected('TIMESTAMP_DENIED', { task: { ...task, timestampMs: 0 } });
+  await rejected('TIMESTAMP_DENIED', { policy: { ...policy, replayWindowMs: undefined } });
   await rejected('RATE_POLICY_MISSING', { policy: { ...policy, rateLimit: undefined } });
   await rejected('RUN_EXPIRED', { policy: { ...policy, runExpiresAtMs: now } });
 });
