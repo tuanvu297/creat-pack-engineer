@@ -9,8 +9,16 @@
 //    the OAuth endpoints + RFC 8414/9728 metadata, and /mcp sits
 //    behind the SDK's requireBearerAuth with the AGY provider
 //    (S256 PKCE, audience-bound tokens, scope 'agy.read').
-// Either way the tools are the same two READ-ONLY tools and the
+// Either way the two READ-ONLY tools are served and the
 // upstream call uses the facade's own scoped identity token.
+// The WRITE tool agy.dispatch (execution-grant package
+// v1.2.1, D-G7) is registered ONLY when a dispatch control
+// configuration is injected (cfg.dispatchControl) and ONLY
+// works in oauth mode, where every call carries a per-client
+// OAuth identity - bearer mode has no per-client identity, so
+// the dispatch handler refuses there. All section-6.1
+// controls are enforced server-side in dispatch-control.mjs
+// plus the per-tool scope check below.
 import express from 'express';
 import { timingSafeEqual } from 'node:crypto';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
@@ -23,9 +31,18 @@ const MAX_BODY = 65536;
 const SCOPE_PART = /^[A-Za-z0-9_-]+$/;
 const UUID = /^[a-f0-9-]{36}$/;
 
-export function buildMcpServer({ upstreamUrl, upstreamToken, allowedScopes }) {
+export function buildMcpServer({ upstreamUrl, upstreamToken, allowedScopes, dispatchControl = null, authInfo = null }) {
   const upstreamJson = async (path) => {
     const res = await fetch(`${upstreamUrl}${path}`, { headers: { authorization: `Bearer ${upstreamToken}` } });
+    const text = await res.text();
+    let body;
+    try { body = JSON.parse(text); } catch { throw new Error(`upstream ${path} returned non-JSON (HTTP ${res.status})`); }
+    return { status: res.status, body };
+  };
+  const upstreamPostJson = async (path, payload) => {
+    const res = await fetch(`${upstreamUrl}${path}`, { method: 'POST',
+      headers: { authorization: `Bearer ${upstreamToken}`, 'content-type': 'application/json' },
+      body: JSON.stringify(payload) });
     const text = await res.text();
     let body;
     try { body = JSON.parse(text); } catch { throw new Error(`upstream ${path} returned non-JSON (HTTP ${res.status})`); }
@@ -55,6 +72,55 @@ export function buildMcpServer({ upstreamUrl, upstreamToken, allowedScopes }) {
       if (status !== 200 && status !== 404) throw new Error(`UPSTREAM_ERROR (HTTP ${status})`);
       return { content: [{ type: 'text', text: JSON.stringify(body) }] };
     });
+  if (dispatchControl) {
+    // agy.dispatch - the facade's ONLY write tool (grant
+    // package v1.2.1 section 3.1/6.1). Creates exactly one
+    // provider-less task by calling the gateway's proven
+    // POST /v1/agy/dispatch action with a Mission contract in
+    // the exact shape src/temporal/contracts.ts +
+    // bridge.validateMission require (payload restricted to
+    // the synthetic fixture shape, so a dispatched P0 task
+    // cannot smuggle provider calls, endpoints or
+    // instructions). P0 HELLO timeouts follow the MB-043
+    // contract (lease 300 s, 30 min run window).
+    server.tool('agy.dispatch',
+      'Create ONE provider-less task (phase-allowlisted task types only) in the caller\'s pinned scope, via the AGY gateway dispatch action. WRITE. Enforced server-side (grant package 6.1): dispatch allowlist, dispatcher role, run window, per-identity rate limit, idempotency anti-replay (idempotency_key + nonce + timestamp).',
+      { tenant_id: z.string(), workspace_id: z.string(), project_id: z.string(),
+        task_type: z.string(), run_id: z.string(), mission_id: z.string(), task_id: z.string(),
+        executor_worker_id: z.string(), objective: z.string(),
+        idempotency_key: z.string(), nonce: z.string(), timestamp: z.number() },
+      async ({ tenant_id, workspace_id, project_id, task_type, run_id, mission_id, task_id,
+        executor_worker_id, objective, idempotency_key, nonce, timestamp }, extra) => {
+        const auth = extra?.authInfo ?? authInfo;
+        if (!auth) throw new Error('DISPATCH_AUTH_REQUIRED');
+        if (!(auth.scopes ?? []).includes('agy.dispatch')) throw new Error('ACTION_DENIED');
+        if (!SCOPE_PART.test(tenant_id) || !SCOPE_PART.test(workspace_id) || !SCOPE_PART.test(project_id)) {
+          throw new Error('SCOPE_PART_INVALID');
+        }
+        const scope = `${tenant_id}/${workspace_id}/${project_id}`;
+        if (!allowedScopes.includes(scope)) throw new Error(`SCOPE_NOT_ALLOWED: ${scope}`);
+        const verdict = dispatchControl.check({ clientId: auth.clientId,
+          role: auth.extra?.role ?? null, status: auth.extra?.status ?? 'active',
+          scope, taskType: task_type, runId: run_id, idempotencyKey: idempotency_key, nonce, timestamp });
+        if (verdict.replay) {
+          return { content: [{ type: 'text', text: JSON.stringify({ ...verdict.result, duplicate: true, reconciled: 'facade-ledger' }) }] };
+        }
+        const mission = { tenantId: tenant_id, workspaceId: workspace_id, projectId: project_id,
+          mission_id, task_id, attempt: 1, idempotency_key, objective, executor_worker_id,
+          source_ref: `mcp-facade:agy.dispatch:${auth.extra?.subject ?? auth.clientId}`,
+          qa_contract_version: '1.1', mode: 'TEMPORAL_SHADOW',
+          payload: { value: 0, delay_ms: 0, fixture: 'normal' },
+          ack_timeout_ms: 300_000, result_timeout_ms: 300_000, qa_timeout_ms: 300_000, max_corrections: 0 };
+        const { status, body } = await upstreamPostJson('/v1/agy/dispatch', { mission });
+        if (status === 401 || status === 403) throw new Error(`UPSTREAM_AUTH_FAILED (HTTP ${status})`);
+        if (status !== 200) throw new Error(`UPSTREAM_ERROR (HTTP ${status}): ${body?.error ?? 'unknown'}`);
+        const result = { dispatched: true, duplicate: body.duplicate === true,
+          workflow_id: body.workflow_id ?? null, run_id: body.run_id ?? null,
+          evidence_class: body.evidence_class ?? null, scope, task_id, idempotency_key };
+        verdict.record(result);
+        return { content: [{ type: 'text', text: JSON.stringify(result) }] };
+      });
+  }
   return server;
 }
 
@@ -82,7 +148,7 @@ export function createFacadeApp(cfg) {
     const body = await readBoundedJson(req, res);
     if (body === null) return;
     const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined });
-    const server = buildMcpServer(cfg);
+    const server = buildMcpServer({ ...cfg, authInfo: req.auth ?? null });
     await server.connect(transport);
     await transport.handleRequest(req, res, body);
   };
@@ -113,7 +179,7 @@ export function createFacadeApp(cfg) {
       provider: cfg.oauthProvider,
       issuerUrl,
       resourceServerUrl: resourceUrl,
-      scopesSupported: ['agy.read'],
+      scopesSupported: ['agy.read', 'agy.dispatch'],
       resourceName: 'AGY MCP facade (read-only candidate)',
     }));
     app.post('/oauth/consent-decision', express.urlencoded({ extended: false, limit: '16kb' }),
