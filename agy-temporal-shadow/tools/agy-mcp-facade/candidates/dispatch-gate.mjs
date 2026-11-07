@@ -1,6 +1,7 @@
 // Source-only candidate. This gate does not register an MCP tool or grant access.
 // The caller must supply an authenticated principal and a durable server-side
 // idempotency store. A prompt, a client claim, or a cached token is insufficient.
+import { createHash } from 'node:crypto';
 const id = /^[A-Za-z0-9_-]{1,128}$/;
 const hex = /^[a-f0-9]{32,128}$/;
 const valid = (pattern, value) => typeof value === 'string' && pattern.test(value);
@@ -26,6 +27,7 @@ export async function authorizeDispatch({ principal, task, policy, store, now = 
   if (principal.runId !== task.runId || policy.runId !== task.runId) deny('RUN_DENIED');
   if (!valid(id, task.runId) || !valid(id, task.taskId) || !valid(hex, task.idempotencyKey) || !valid(hex, task.nonce))
     deny('TASK_IDENTITY_INVALID');
+  if (!valid(id, task.attemptId)) deny('ATTEMPT_IDENTITY_INVALID');
   if (!Number.isInteger(policy.replayWindowMs) || policy.replayWindowMs < 1 ||
       !Number.isFinite(task.timestampMs) || Math.abs(now - task.timestampMs) > policy.replayWindowMs)
     deny('TIMESTAMP_DENIED');
@@ -38,10 +40,18 @@ export async function authorizeDispatch({ principal, task, policy, store, now = 
     deny('PROVIDER_ROUTE_DENIED');
   // The store operation must be atomic and durable across process restarts.
   // It owns the nonce, rate counter, key->operation binding and replay result.
+  // A replay may not redirect a result or substitute another worker/scope/attempt.
+  const bindingDigest = createHash('sha256').update(JSON.stringify([
+    principal.identityId, task.tenantId, task.workspaceId, task.projectId,
+    task.runId, task.taskId, task.attemptId, task.targetWorkerId,
+    task.callbackTarget, task.taskType, task.adapter, task.spendCap,
+  ])).digest('hex');
   const result = await store.reserve({ identityId: principal.identityId, runId: task.runId,
-    taskId: task.taskId, idempotencyKey: task.idempotencyKey, nonce: task.nonce,
+    taskId: task.taskId, attemptId: task.attemptId, idempotencyKey: task.idempotencyKey,
+    bindingDigest, nonce: task.nonce,
     timestampMs: task.timestampMs, rateLimit: policy.rateLimit, rateWindowMs: policy.rateWindowMs });
   if (!result || !['NEW', 'EXISTING'].includes(result.status) || !result.operationId) deny('RESERVATION_FAILED');
+  if (result.bindingDigest !== bindingDigest) deny('RESERVATION_BINDING_CONFLICT');
   if (result.status === 'EXISTING' && result.taskId !== task.taskId) deny('IDEMPOTENCY_CONFLICT');
   return { status: result.status, operationId: result.operationId, taskId: task.taskId };
 }
