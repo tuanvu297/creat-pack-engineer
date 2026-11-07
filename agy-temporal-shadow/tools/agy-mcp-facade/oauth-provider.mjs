@@ -35,7 +35,15 @@ import { randomBytes, createHmac, timingSafeEqual } from 'node:crypto';
 import { sha256hex } from './oauth-store.mjs';
 import { InvalidGrantError, InvalidTokenError, InvalidScopeError, InvalidClientMetadataError } from '@modelcontextprotocol/sdk/server/auth/errors.js';
 
-export const SUPPORTED_SCOPES = ['agy.read'];
+// Scope ceiling of the facade. 'agy.dispatch' was added by
+// the execution-grant package v1.2.1 change (D-G7): it is a
+// per-client ceiling entry only - the write tool additionally
+// enforces the section-6.1 server-side controls (allowlist,
+// dispatcher role, run window, rate limit, anti-replay) in
+// dispatch-control.mjs, so holding this scope is never by
+// itself sufficient to create a task.
+export const SUPPORTED_SCOPES = ['agy.read', 'agy.dispatch'];
+export const CLIENT_STATUSES = ['active', 'drain', 'revoked'];
 const CODE_TTL_MS = 5 * 60_000;
 const ACCESS_TTL_MS = 60 * 60_000;
 const REFRESH_TTL_MS = 30 * 24 * 60 * 60_000;
@@ -62,6 +70,16 @@ export function createAgyOAuthProvider({ store, clients, operatorSecret, signing
     // URI is captured from a real connect attempt and registered
     // - the supported bootstrap flow in the deploy runbook.
     for (const s of c.scopes ?? []) if (!SUPPORTED_SCOPES.includes(s)) throw new Error(`oauth: client ${c.client_id} requests unsupported scope ${s}`);
+    // Grant package v1.2.1: optional per-client role (the
+    // dispatch control requires role 'dispatcher' - 6.1.2)
+    // and revocation status (6.1.7/section 9): 'active'
+    // (default) | 'drain' | 'revoked'. Status lives in the
+    // registry config exactly like the subject binding, so -
+    // per the O1 semantics verifyAccessToken already enforces
+    // - editing it and restarting changes what outstanding
+    // tokens may do, immediately at their next use.
+    if (c.role !== undefined && typeof c.role !== 'string') throw new Error(`oauth: client ${c.client_id} role must be a string`);
+    if (c.status !== undefined && !CLIENT_STATUSES.includes(c.status)) throw new Error(`oauth: client ${c.client_id} has unknown status ${c.status}`);
     byId.set(c.client_id, c);
   }
   const signBlob = (obj) => {
@@ -143,7 +161,9 @@ export function createAgyOAuthProvider({ store, clients, operatorSecret, signing
 <h1>Connect a client to the AGY MCP facade</h1>
 <p>Client: <b>${esc(client.client_name ?? client.client_id)}</b> (${esc(client.client_id)})<br>
 Scopes requested: <b>${esc(scopes.join(' '))}</b><br>Resource: <b>${esc(params.resource?.toString() ?? resourceUrl)}</b></p>
-<p>This facade is READ-ONLY in this candidate. Approving mints a single-use authorization code for the identity <b>${esc(cfg.subject)}</b>.</p>
+<p>${scopes.includes('agy.dispatch')
+        ? 'This client may read and may CREATE provider-less tasks via agy.dispatch (write), under the section-6.1 server-side controls.'
+        : 'This facade is READ-ONLY for this client.'} Approving mints a single-use authorization code for the identity <b>${esc(cfg.subject)}</b>.</p>
 <form method="POST" action="/oauth/consent-decision">
 <input type="hidden" name="blob" value="${esc(blob)}">
 <label>Operator approval secret <input type="password" name="operator_secret" autocomplete="off" required></label>
@@ -217,6 +237,7 @@ Scopes requested: <b>${esc(scopes.join(' '))}</b><br>Resource: <b>${esc(params.r
       const cur = byId.get(rec.clientId);
       if (!cur) throw new InvalidGrantError('client is no longer registered');
       if (rec.subject !== cur.subject) throw new InvalidGrantError('client subject binding changed; re-authorize');
+      if ((cur.status ?? 'active') === 'revoked') throw new InvalidGrantError('client revoked (HARD_REVOKE)');
       if (rec.scopes.some((s) => !(cur.scopes ?? []).includes(s))) throw new InvalidGrantError('token scopes exceed the client current ceiling');
       if (rec.rotatedTo) {   // reuse of a rotated token = theft signal
         await store.revokeFamily(rec.familyId);
@@ -268,9 +289,19 @@ Scopes requested: <b>${esc(scopes.join(' '))}</b><br>Resource: <b>${esc(params.r
       const cur = byId.get(rec.clientId);
       if (!cur) throw new InvalidTokenError('client is no longer registered');
       if (rec.subject !== cur.subject) throw new InvalidTokenError('client subject binding changed');
+      // HARD_REVOKE (grant package v1.2.1, 6.1.6/6.1.7 +
+      // section 9): once the client's registered status is
+      // 'revoked', EVERY outstanding access token is refused
+      // at its next use - including a token a connector is
+      // still holding - for every tool, result submission
+      // included. There is no grace path here; the graceful
+      // mode is 'drain', which keeps the token verifiable and
+      // lets the tool layer narrow what it may do.
+      if ((cur.status ?? 'active') === 'revoked') throw new InvalidTokenError('client revoked (HARD_REVOKE)');
       if (rec.scopes.some((s) => !(cur.scopes ?? []).includes(s))) throw new InvalidTokenError('token scopes exceed the client current ceiling');
       return { token, clientId: rec.clientId, scopes: rec.scopes, expiresAt: Math.floor(rec.expiresAt / 1000),
-        resource: new URL(rec.resource), extra: { subject: rec.subject } };
+        resource: new URL(rec.resource),
+        extra: { subject: rec.subject, role: cur.role ?? null, status: cur.status ?? 'active' } };
     },
 
     async revokeToken(client, request) {
