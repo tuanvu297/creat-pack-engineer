@@ -4,11 +4,16 @@ import { authorizeDispatch } from './dispatch-gate.mjs';
 
 const now = 100000;
 const principal = { identityId: 'gemini-real', role: 'worker', authenticated: true,
-  scopes: ['agy.dispatch'], runId: 'run-p0', revocation: null };
+  scopes: ['agy.dispatch'], runId: 'run-p0', revocation: null,
+  tenantId: 'gl', workspaceId: 'legacy-workspace', projectId: 'GL_AUTOMATION' };
 const task = { runId: 'run-p0', taskId: 'task-a0', taskType: 'inventory', adapter: 'offline',
-  idempotencyKey: 'a'.repeat(64), nonce: 'b'.repeat(64), timestampMs: now, spendCap: 0 };
+  idempotencyKey: 'a'.repeat(64), nonce: 'b'.repeat(64), timestampMs: now, spendCap: 0,
+  tenantId: 'gl', workspaceId: 'legacy-workspace', projectId: 'GL_AUTOMATION',
+  targetWorkerId: 'gemini-real', callbackTarget: 'CHATGPT_ASSISTANT_CONTROL_PLANE' };
 const policy = { serverAllowlist: ['gemini-real'], allowedRoles: ['worker'], allowedTaskTypes: ['inventory'],
   allowedAdapters: ['offline'], noProviderTaskTypes: ['inventory'], noProviderAdapters: ['offline'],
+  tenantId: 'gl', workspaceId: 'legacy-workspace', projectId: 'GL_AUTOMATION',
+  allowedTargetWorkerIds: ['gemini-real'], allowedCallbackTargets: ['CHATGPT_ASSISTANT_CONTROL_PLANE'],
   runId: 'run-p0', runExpiresAtMs: now + 1000, replayWindowMs: 1000, rateLimit: 2, rateWindowMs: 1000 };
 const store = { calls: 0, async reserve(v) { this.calls++; return { status: 'NEW', operationId: 'op-1', taskId: v.taskId }; } };
 const call = (overrides = {}) => authorizeDispatch({ principal, task, policy, store, now, ...overrides });
@@ -27,6 +32,9 @@ test('identity and scope fail closed before reservation', async () => {
   await rejected('IDENTITY_NOT_ALLOWLISTED', { policy: { ...policy, serverAllowlist: [] } });
   await rejected('ROLE_DENIED', { principal: { ...principal, role: 'viewer' } });
   await rejected('RUN_DENIED', { task: { ...task, runId: 'other' } });
+  await rejected('PROJECT_SCOPE_DENIED', { task: { ...task, projectId: 'other' } });
+  await rejected('TARGET_WORKER_DENIED', { task: { ...task, targetWorkerId: 'other' } });
+  await rejected('CALLBACK_TARGET_DENIED', { task: { ...task, callbackTarget: 'other' } });
 });
 test('P0 provider and spend controls are independent', async () => {
   await rejected('SPEND_CAP_DENIED', { task: { ...task, spendCap: 1 } });
@@ -37,6 +45,7 @@ test('P0 provider and spend controls are independent', async () => {
 test('revocation, time and rate policy fail closed', async () => {
   await rejected('IDENTITY_REVOKED', { principal: { ...principal, revocation: 'HARD_REVOKE' } });
   await rejected('DRAIN_NO_NEW_CLAIM', { principal: { ...principal, revocation: 'DRAIN' } });
+  await rejected('REVOCATION_STATE_DENIED', { principal: { ...principal, revocation: 'SUSPENDED' } });
   await rejected('TIMESTAMP_DENIED', { task: { ...task, timestampMs: 0 } });
   await rejected('TIMESTAMP_DENIED', { policy: { ...policy, replayWindowMs: undefined } });
   await rejected('RATE_POLICY_MISSING', { policy: { ...policy, rateLimit: undefined } });
