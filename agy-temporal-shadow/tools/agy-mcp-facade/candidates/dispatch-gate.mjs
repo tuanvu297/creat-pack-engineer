@@ -11,9 +11,16 @@ export async function authorizeDispatch({ principal, task, policy, store, now = 
   if (!principal || !task || !policy || !store) deny('DISPATCH_CONTEXT_MISSING');
   if (principal.revocation === 'HARD_REVOKE') deny('IDENTITY_REVOKED');
   if (principal.revocation === 'DRAIN') deny('DRAIN_NO_NEW_CLAIM');
+  if (principal.revocation !== null && principal.revocation !== 'ACTIVE') deny('REVOCATION_STATE_DENIED');
   if (!valid(id, principal.identityId) || !principal.authenticated || !principal.scopes?.includes('agy.dispatch')) deny('SCOPE_DENIED');
   if (!policy.serverAllowlist?.includes(principal.identityId)) deny('IDENTITY_NOT_ALLOWLISTED');
   if (!policy.allowedRoles?.includes(principal.role)) deny('ROLE_DENIED');
+  for (const field of ['tenantId', 'workspaceId', 'projectId']) {
+    if (!valid(id, principal[field]) || !valid(id, task[field]) || principal[field] !== task[field] || policy[field] !== task[field])
+      deny('PROJECT_SCOPE_DENIED');
+  }
+  if (!valid(id, task.targetWorkerId) || !policy.allowedTargetWorkerIds?.includes(task.targetWorkerId)) deny('TARGET_WORKER_DENIED');
+  if (!valid(id, task.callbackTarget) || !policy.allowedCallbackTargets?.includes(task.callbackTarget)) deny('CALLBACK_TARGET_DENIED');
   if (!policy.allowedTaskTypes?.includes(task.taskType)) deny('TASK_TYPE_DENIED');
   if (!policy.allowedAdapters?.includes(task.adapter)) deny('ADAPTER_DENIED');
   if (principal.runId !== task.runId || policy.runId !== task.runId) deny('RUN_DENIED');
