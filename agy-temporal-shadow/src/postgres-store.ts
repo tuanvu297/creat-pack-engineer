@@ -8,6 +8,8 @@ import type { ProjectScope } from './platform/scope.js';
 import { selectProjectDemand } from './platform/allocation.js';
 import { workerGatePasses } from './platform/worker-gate.js';
 
+export interface ParentFence { parentTaskId: string; parentWorkerId: string; parentAttempt: number; parentLeaseToken?: string }
+
 export class PostgresStore implements EngineStore {
   constructor(readonly pool: Pool, readonly scope?:ProjectScope) {}
   // Transaction-wide owner deadline fence (qualification route
@@ -31,7 +33,7 @@ export class PostgresStore implements EngineStore {
     const now=(await client.query(`SELECT clock_timestamp() AS now`)).rows[0].now;
     return new Date(now).getTime()>=deadlineMs;
   }
-  async createJob(input: { tenantId: string; idempotencyKey: string; objective: string; mode: any; passThreshold: number; tasks: TaskSpec[]; deadlineMs?: number }) {
+  async createJob(input: { tenantId: string; idempotencyKey: string; objective: string; mode: any; passThreshold: number; tasks: TaskSpec[]; deadlineMs?: number; parentFence?: ParentFence }) {
     const client = await this.pool.connect();
     // Absolute owner fence at the mutation transaction itself
     // (candidate, opt-in via deadlineMs): the database's real clock
@@ -46,14 +48,38 @@ export class PostgresStore implements EngineStore {
       const now = (await client.query(`SELECT clock_timestamp() AS now`)).rows[0].now;
       if (new Date(now).getTime() >= input.deadlineMs) throw new Error('JOB_CREATION_DEADLINE_EXCEEDED');
     };
+    // Parent fence (opt-in, helper delegation): the SAME
+    // discipline as the deadline fence, applied to the parent
+    // task a delegated child is minted under. The parent row is
+    // locked FOR UPDATE on THIS transaction's client and every
+    // ownership/attempt/lease condition is re-checked against
+    // the database clock when the transaction opens AND again
+    // before commit - so the verify and the create are one
+    // atomic unit on one connection. A caller that verified the
+    // parent on a DIFFERENT connection/transaction (the old
+    // split-pool shape) could commit a child under a parent
+    // whose lease expired mid-window, because expiry is a
+    // wall-clock event, not a row write the lock can see.
+    const parentFenceCheck = async () => {
+      const f = input.parentFence; if (!f) return;
+      const row = (await client.query(`SELECT claimed_by, attempt, status, lease_expires_at, lease_token, clock_timestamp() AS db_now FROM agy_tasks WHERE task_id=$1 FOR UPDATE`, [f.parentTaskId])).rows[0];
+      if (!row) throw new Error('PARENT_NOT_FOUND');
+      if (row.claimed_by !== f.parentWorkerId) throw new Error('PARENT_NOT_OWNER');
+      if (Number(row.attempt) !== f.parentAttempt) throw new Error('PARENT_ATTEMPT_MISMATCH');
+      if (f.parentLeaseToken !== undefined && String(row.lease_token ?? '') !== f.parentLeaseToken) throw new Error('PARENT_LEASE_DENIED');
+      if (!['CLAIMED', 'RUNNING'].includes(row.status)) throw new Error('PARENT_NOT_ACTIVE');
+      if (!row.lease_expires_at || new Date(row.lease_expires_at).getTime() <= new Date(row.db_now).getTime()) throw new Error('PARENT_LEASE_EXPIRED');
+    };
     try {
       await client.query("BEGIN");
       await fence();
+      await parentFenceCheck();
       if(this.scope && input.tenantId!==this.scope.tenantId)throw new Error('PROJECT_SCOPE_DENIED');
       const conflict=this.scope?'tenant_id,workspace_id,project_id,idempotency_key':'tenant_id,idempotency_key';
       const job = await client.query(`INSERT INTO agy_jobs(tenant_id,idempotency_key,objective,mode,pass_threshold) VALUES($1,$2,$3,$4,$5) ON CONFLICT(${conflict}) DO NOTHING RETURNING job_id`, [input.tenantId,input.idempotencyKey,input.objective,input.mode,input.passThreshold]);
       if (!job.rowCount) {
         const existing = await client.query(`SELECT job_id FROM agy_jobs WHERE tenant_id=$1 AND idempotency_key=$2`, [input.tenantId,input.idempotencyKey]);
+        await parentFenceCheck();
         await client.query("COMMIT"); return { jobId: existing.rows[0].job_id, duplicate: true };
       }
       const jobId = job.rows[0].job_id;
@@ -61,6 +87,7 @@ export class PostgresStore implements EngineStore {
       for (const task of input.tasks) { const row = await client.query(`INSERT INTO agy_tasks(job_id,idempotency_key,name,task_type,payload,required_capabilities,priority,max_retry,timeout_seconds,policy,importance,expected_value) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING task_id`, [jobId,task.idempotencyKey,task.name,task.taskType,task.payload??{},task.requiredCapabilities??[],queuePriority(task),task.maxRetry??2,task.timeoutSeconds??300,task,task.importance??.5,task.expectedValue??.5]); ids.set(task.idempotencyKey,row.rows[0].task_id); }
       for (const task of input.tasks) if (task.dependsOn?.length) await client.query(`UPDATE agy_tasks SET depends_on=$1 WHERE job_id=$2 AND idempotency_key=$3`, [task.dependsOn.map((key) => { const id=ids.get(key); if(!id) throw new Error(`Unknown dependency: ${key}`); return id; }),jobId,task.idempotencyKey]);
       await fence();
+      await parentFenceCheck();
       await client.query("COMMIT"); return { jobId, duplicate: false };
     } catch (error) { await client.query("ROLLBACK"); throw error; } finally { client.release(); }
   }
@@ -108,7 +135,7 @@ export class PostgresStore implements EngineStore {
         if(request.gate){
           const payloadRows=(await client.query(`SELECT task_id,payload FROM agy_tasks`)).rows;
           const payloadById=new Map(payloadRows.map((r:any)=>[r.task_id,r.payload]));
-          dispatch=dispatchAll.filter((d:any)=>workerGatePasses(request.gate!,{...d.policy,payload:payloadById.get(d.task_id)}));
+          dispatch=dispatchAll.filter((d:any)=>workerGatePasses(request.gate!,{...d.policy,taskId:d.task_id,payload:payloadById.get(d.task_id)}));
         }
         const selected=selectProjectDemand(dispatch.map(d=>({project:{tenantId:d.tenant_id,workspaceId:d.workspace_id,projectId:d.project_id,name:d.name,status:d.project_status,priority:d.project_priority,resourcePolicy:d.resource_policy,permissions:d.permissions,sourceOfTruthRef:'not-loaded',policyRef:'not-loaded',defaultSkillPack:'',policies:{},createdAt:0,updatedAt:0},
           jobId:d.job_id,taskId:d.task_id,task:d.policy,active:Number(d.active),quotaUsed:Number(d.quota_used),spendUsed:Number(d.spend_used),passThreshold:Number(d.pass_threshold),excluded:[...d.failed_workers,...d.health.filter((h:any)=>new Date(h.until).getTime()>Date.now()).map((h:any)=>h.workerId)],
@@ -121,7 +148,7 @@ export class PostgresStore implements EngineStore {
         const blocked=(await client.query(`SELECT worker_id FROM agy_project_worker_health WHERE blocked_until>now()`)).rows;
         for(const profile of profiles)if(blocked.some(r=>r.worker_id===profile.workerId)){profile.ready=false;profile.status='DEGRADED';}
         const usage=(await client.query(`SELECT (SELECT count(*) FROM agy_tasks WHERE status IN ('CLAIMED','RUNNING')) AS active,
-          coalesce(sum(coalesce(actual_quota,expected_quota)),0) AS quota,coalesce(sum(coalesce(actual_cost,expected_cost)),0) AS cost FROM agy_resource_reservations`)).rows[0];
+          coalesce(sum(coalesce(actual_quota,expected_quota)),0) AS quota,coalesce(sum(coalesce(actual_cost,expected_cost)),0) AS cost FROM agy_resource_reservations WHERE state IN ('HELD','SETTLED')`)).rows[0];
         if(Number(usage.active)>=Number(project.resource_policy.maxConcurrentTasks??0)) {await client.query('COMMIT');return null;}
         // Project budgets are enforced alongside the global provider balance/reserve.
         for(const profile of profiles) {

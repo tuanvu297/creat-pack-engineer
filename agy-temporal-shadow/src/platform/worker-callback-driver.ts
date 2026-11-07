@@ -102,7 +102,6 @@ export function createWorkerCallbackDriver(raw: Pool, opts: {
     console.log(JSON.stringify({ event, ...(detail ?? {}) })));
   let state: CallbackDriverState = 'DISABLED';
   let timer: NodeJS.Timeout | undefined;
-  let startedAt = 0;
   let ticking = false;
 
   const scope = cfg.scope;
@@ -116,11 +115,20 @@ export function createWorkerCallbackDriver(raw: Pool, opts: {
     return receiver.lookup(opts.operator, scope, expect.callback_id);
   });
 
-  // The effective deadline is the EARLIER of the absolute owner
-  // deadline and the local timebox — a restart can only ever shorten
-  // the remaining window, never extend it (B2).
-  const deadline = () => Math.min(cfg.expiresAtMs ?? Number.POSITIVE_INFINITY,
-    startedAt + (cfg.timeboxMs ?? 3_600_000));
+  // The delivery deadline is the owner's ABSOLUTE window expiry —
+  // and nothing else. An earlier version also capped it at
+  // startedAt + timeboxMs (B2: "a restart can only ever shorten the
+  // window"); live evidence from run-20261102-restore3 (2026-11-02)
+  // showed that cap expiring the driver 8 minutes after container
+  // boot while the owner window still had hours left, so a callback
+  // recorded inside the window was never dispatched until an
+  // operator restarted the service by hand. Delivering a callback
+  // that was recorded inside the window is an already-authorized
+  // effect, not a new grant: the absolute expiry still bounds every
+  // pass, and a restart recomputes the same absolute deadline, so
+  // B2's anti-extension property is preserved. timeboxMs remains
+  // parsed for config compatibility but no longer shortens delivery.
+  const deadline = () => cfg.expiresAtMs ?? Number.POSITIVE_INFINITY;
 
   async function tick(): Promise<void> {
     if (state !== 'RUNNING' || ticking || !scope || !cfg.missionId) return;
@@ -166,17 +174,25 @@ export function createWorkerCallbackDriver(raw: Pool, opts: {
       if (r.expired || expireNow()) return;
       if (r.delivered || r.unknown || r.failed) log('CALLBACK_DRIVER_PASS', { delivered: r.delivered, unknown: r.unknown, failed: r.failed, mission: cfg.missionId, runId: cfg.runId });
     } catch (e: any) {
-      log('CALLBACK_DRIVER_PASS_ERROR', { error: String(e?.message ?? e).slice(0, 200), runId: cfg.runId });
+      const msg = String(e?.message ?? e);
+      if (/Cannot use a pool after calling end|called end on the pool/i.test(msg)) {
+        // Shutdown race: the owning process is ending the pool
+        // (redeploy/restart). Stop quietly instead of logging a
+        // pass error on every interval against a dead pool.
+        stop();
+        log('CALLBACK_DRIVER_POOL_ENDED', { mission: cfg.missionId, runId: cfg.runId });
+        return;
+      }
+      log('CALLBACK_DRIVER_PASS_ERROR', { error: msg.slice(0, 200), runId: cfg.runId });
     } finally { ticking = false; }
   }
 
   function start(): CallbackDriverState {
     if (!cfg.enabled || !scope || !cfg.missionId) { state = 'DISABLED'; return state; }
     if (!cfg.expiresAtMs || !cfg.runId) { state = 'DISABLED'; log('CALLBACK_DRIVER_CONFIG_INCOMPLETE', { mission: cfg.missionId, reason: 'EXPIRES_AT_AND_RUN_ID_REQUIRED' }); return state; }
-    if ((cfg.timeboxMs ?? 3_600_000) <= 0 || cfg.expiresAtMs <= Date.now()) { state = 'EXPIRED'; log('CALLBACK_DRIVER_EXPIRED', { mission: cfg.missionId, runId: cfg.runId }); return state; }
+    if (cfg.expiresAtMs <= Date.now()) { state = 'EXPIRED'; log('CALLBACK_DRIVER_EXPIRED', { mission: cfg.missionId, runId: cfg.runId }); return state; }
     if (!opts.operator) { state = 'NO_OPERATOR'; log('CALLBACK_DRIVER_NO_OPERATOR', { mission: cfg.missionId }); return state; }
     if (state === 'RUNNING') return state;
-    startedAt = Date.now();
     state = 'RUNNING';
     log('CALLBACK_DRIVER_STARTED', { scope: `${scope.tenantId}/${scope.workspaceId}/${scope.projectId}`,
       mission: cfg.missionId, runId: cfg.runId, limit: cfg.limit ?? 1, expiresAt: new Date(cfg.expiresAtMs).toISOString() });

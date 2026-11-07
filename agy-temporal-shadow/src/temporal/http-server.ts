@@ -48,7 +48,7 @@ export function createGatewayHttpServer(deps:GatewayHttpDependencies){
     throw new Error('CALLBACK_ROUTE_NOT_FOUND');
    }
    if(req.method!=='POST')throw new Error('POST_REQUIRED');
-   const workerMatch=/^\/v1\/worker\/tenants\/([A-Za-z0-9_-]+)\/workspaces\/([A-Za-z0-9_-]+)\/projects\/([A-Za-z0-9_-]+)\/(arrive|recover|claim|ack|heartbeat|checkpoint|result|readback)$/.exec(req.url??'');
+   const workerMatch=/^\/v1\/worker\/tenants\/([A-Za-z0-9_-]+)\/workspaces\/([A-Za-z0-9_-]+)\/projects\/([A-Za-z0-9_-]+)\/(arrive|recover|claim|ack|heartbeat|checkpoint|result|readback|delegate)$/.exec(req.url??'');
    if(workerMatch){
     if(!deps.worker)throw new Error('WORKER_SURFACE_DISABLED');
     const wchunks:Buffer[]=[];let wsize=0;

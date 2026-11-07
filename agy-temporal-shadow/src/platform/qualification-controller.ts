@@ -65,12 +65,20 @@ import { digestOf } from "./digest.js";
 //   bind BEFORE a lock wait and do not fence anything (proven
 //   against PostgreSQL 18; see PostgresStore.heartbeat).
 //   RUN OWNERSHIP, FAIL-CLOSED (D2). Before granting, any
-//   persisted history this run does not own — a previous run's
+//   persisted state this run does not own — a previous run's
 //   marker, any job whose idempotency key is not this run's, a
 //   run job without exactly one task, or a worker already holding
 //   quota without this run's grant — BLOCKS the controller
 //   (needs_owner_repair). (A worker that is merely READY from an
 //   early arrival holds no cap and is presence, not a grant.)
+//   SETTLED-HISTORY EXCEPTION (2026-11-02): a previous run whose
+//   marker is expired and whose work is provably settled (see
+//   assessPriorRun) no longer blocks: its marker is archived
+//   verbatim into the append-only policies.qualificationRunHistory
+//   and its rows are kept, so a new grant never again requires
+//   deleting completed evidence (the G2 owner repair deleted 17
+//   rows across 11 tables by hand). Unsettled or unexpired prior
+//   runs block exactly as before.
 //   GUARDED CLEANUP, CANONICAL ACCOUNTING (E3). Past the
 //   deadline, cleanup runs under the same scope lock: it fences
 //   on the grant marker (a foreign-owned scope is never touched),
@@ -135,6 +143,60 @@ export type QualificationState = 'DISABLED' | 'RUNNING' | 'ACTIVE' | 'STOPPED' |
 interface RunMarker { run_id: string; expires_at: string; granted_at: string; phase: 'PREPARING' | 'GRANTED' }
 
 type Querier = { query: (sql: string, params?: unknown[]) => Promise<any> };
+
+// ------------------------------------------------------------------
+// Prior-run archival assessment (pure; unit-tested without a DB).
+//
+// The original D2 design failed closed on ANY trace of a previous
+// run: a later grant stayed BLOCKED until an operator deleted the
+// completed run's job, task, events and callback rows by hand
+// (owner repair of 2026-11-02: 17 rows across 11 tables for the G2
+// run). Deleting completed evidence to unblock new work is the
+// failure this replaces. A prior run is ARCHIVABLE — its marker is
+// moved, verbatim, into the append-only policies.qualificationRun
+// History and its job/task/callback rows are left untouched — only
+// when every fact below proves the run is fully settled:
+//   - the prior marker's own deadline has passed (an unexpired
+//     marker is a live grant: never archivable, never weakened);
+//   - a GRANTED marker always has its job (a missing job is an
+//     inconsistency, cf. GRANT_JOB_MISSING on the monitor path);
+//     a PREPARING marker without a job is the documented
+//     died-before-phase-B state and has nothing live to settle;
+//   - no task of the run is in a live state and no lease is live
+//     (QUEUED is terminal here only because the marker is expired:
+//     the worker surface caps every lease at the run's deadline,
+//     so an expired run's task can never be claimed afterwards);
+//   - every callback recorded for the run is DELIVERED — a
+//     PENDING/SENDING/BLOCKED callback is undelivered evidence and
+//     keeps the run unarchivable instead of being buried.
+// Anything else keeps the historical BLOCKED behaviour.
+// ------------------------------------------------------------------
+export interface PriorRunFacts {
+  markerPhase: 'PREPARING' | 'GRANTED';
+  markerExpiresAtMs: number;
+  jobPresent: boolean;
+  taskStatuses: string[];
+  liveLease: boolean;
+  callbackStatuses: string[];
+}
+
+export type PriorRunAssessment =
+  | 'ARCHIVABLE'
+  | 'PREVIOUS_RUN_GRANT_PRESENT'
+  | 'PREVIOUS_RUN_NOT_SETTLED'
+  | 'PREVIOUS_RUN_JOB_MISSING';
+
+export function assessPriorRun(facts: PriorRunFacts, nowMs: number): PriorRunAssessment {
+  if (!(nowMs > facts.markerExpiresAtMs)) return 'PREVIOUS_RUN_GRANT_PRESENT';
+  if (!facts.jobPresent) {
+    return facts.markerPhase === 'GRANTED' ? 'PREVIOUS_RUN_JOB_MISSING' : 'ARCHIVABLE';
+  }
+  if (facts.liveLease) return 'PREVIOUS_RUN_NOT_SETTLED';
+  const TASK_SETTLED = new Set(['QA', 'COMPLETED', 'FAILED', 'CANCELLED', 'QUEUED']);
+  if (facts.taskStatuses.some((s) => !TASK_SETTLED.has(s))) return 'PREVIOUS_RUN_NOT_SETTLED';
+  if (facts.callbackStatuses.some((s) => s !== 'DELIVERED')) return 'PREVIOUS_RUN_NOT_SETTLED';
+  return 'ARCHIVABLE';
+}
 
 export function parseQualificationConfig(env: Record<string, string | undefined>): { config: QualificationConfig; reason?: string } {
   if (env.AGY_QUALIFICATION_ENABLED !== 'true') return { config: { enabled: false }, reason: 'NOT_ENABLED' };
@@ -223,6 +285,122 @@ export function createQualificationController(raw: Pool, opts: {
     (proj?.policies && typeof proj.policies === 'object' && proj.policies.qualificationRun) || null;
   async function findRunJob(q: Querier) {
     return (await q.query(`SELECT job_id FROM agy_jobs WHERE idempotency_key=$1`, [cfg.runId])).rows[0];
+  }
+
+  // Job ids already archived into policies.qualificationRunHistory
+  // are completed history, not foreign work (used by the phase-A
+  // job census below).
+  function historyJobIdsOf(proj: any): Set<string> {
+    const h = (proj?.policies && Array.isArray(proj.policies.qualificationRunHistory))
+      ? proj.policies.qualificationRunHistory : [];
+    return new Set(h.map((e: any) => e?.job_id).filter((x: any) => typeof x === 'string'));
+  }
+
+  // Settles a previous run inside the caller's phase-A transaction:
+  // on ARCHIVABLE it appends the run's full marker + census to
+  // policies.qualificationRunHistory (append-only) and removes ONLY
+  // the policies.qualificationRun pointer. No job, task, event,
+  // checkpoint, receipt or callback row is deleted or rewritten —
+  // the run's evidence stays in place and stays readable. On any
+  // doubt it writes nothing and returns the BLOCKED reason the
+  // caller must surface (the pre-fix behaviour).
+  async function tryArchivePriorRun(client: PoolClient, proj: any, marker: RunMarker)
+    : Promise<{ ok: true } | { ok: false; reason: string }> {
+    const dbNow = (await client.query(`SELECT clock_timestamp() AS now`)).rows[0].now;
+    const nowMs = new Date(dbNow).getTime();
+    const job = (await client.query(`SELECT job_id FROM agy_jobs WHERE idempotency_key=$1`, [marker.run_id])).rows[0];
+    let taskRows: any[] = [];
+    let callbackRows: any[] = [];
+    if (job) {
+      taskRows = (await client.query(`SELECT task_id, status, lease_expires_at FROM agy_tasks WHERE job_id=$1 ORDER BY created_at`, [job.job_id])).rows;
+      callbackRows = (await client.query(`SELECT status FROM agy_worker_callbacks WHERE job_id=$1`, [job.job_id])).rows;
+    }
+    const verdict = assessPriorRun({
+      markerPhase: marker.phase,
+      markerExpiresAtMs: Date.parse(marker.expires_at),
+      jobPresent: !!job,
+      taskStatuses: taskRows.map((t: any) => String(t.status)),
+      // A lease counts as live only on a live task: a QA row can
+      // retain a future lease_expires_at (the store does not null
+      // it at result time), but reclaim only ever touches
+      // CLAIMED/RUNNING rows, so that timestamp is inert there.
+      // Qualification leases are additionally capped at the run
+      // deadline by the worker surface, so an expired run's live
+      // task cannot hold a live lease either way.
+      liveLease: taskRows.some((t: any) => (t.status === 'CLAIMED' || t.status === 'RUNNING')
+        && t.lease_expires_at && new Date(t.lease_expires_at).getTime() > nowMs),
+      callbackStatuses: callbackRows.map((c: any) => String(c.status)),
+    }, nowMs);
+    if (verdict !== 'ARCHIVABLE') return { ok: false, reason: verdict };
+    // QA correction R1/R2 (2026-11-02): archiving also retires the
+    // run's still-runnable tasks and closes its accounting,
+    // atomically with the marker swap and BEFORE the new grant
+    // activates the project — an unclaimed task of the archived run
+    // can never be claimed under the new run's scope-wide deadline
+    // (worker-gate has no run fence and the claim stamps the CURRENT
+    // request deadline), and its settled reservations stop counting
+    // against the new run's per-run cap. Evidence is retained: task
+    // rows keep their payload under terminal CANCELLED (with a task
+    // event), reservation rows keep actual_quota under CLOSED.
+    let retiredTaskIds: string[] = [];
+    let closedReservations = 0;
+    if (job) {
+      const retired = await client.query(
+        `UPDATE agy_tasks SET status='CANCELLED', updated_at=now()
+         WHERE job_id=$1 AND status IN ('QUEUED','RETRY') RETURNING task_id`, [job.job_id]);
+      retiredTaskIds = retired.rows.map((r: any) => r.task_id);
+      for (const taskId of retiredTaskIds) {
+        await client.query(
+          `INSERT INTO agy_task_events(job_id,task_id,event_type,to_status,worker_id,detail)
+           VALUES($1,$2,'RUN_ARCHIVED_TASK_RETIRED','CANCELLED',$3,$4)`,
+          [job.job_id, taskId, QUALIFICATION_WORKER_ID,
+           JSON.stringify({ archived_run: marker.run_id, archived_by_run: cfg.runId })]);
+      }
+      const closed = await client.query(
+        `UPDATE agy_resource_reservations SET state='CLOSED'
+         WHERE job_id=$1 AND state='SETTLED' RETURNING reservation_id`, [job.job_id]);
+      closedReservations = closed.rowCount ?? 0;
+      await client.query(
+        `UPDATE agy_resource_reservations SET state='EXPIRED'
+         WHERE job_id=$1 AND state='HELD'`, [job.job_id]);
+    }
+    // The archived run's window is closed, so its worker cap and
+    // connector return to the dormant state its own cleanup would
+    // have left. Without this, a run whose cleanup never ran (the
+    // process was down at expiry — the exact restore2/restore3
+    // pattern) strands a live cap and the next grant blocks with
+    // WORKER_CAP_WITHOUT_GRANT. The expired marker is the window
+    // authority for this scope, so no live window can own that cap.
+    // Phase A re-grants both for the new run in this transaction.
+    await client.query(`UPDATE agy_workers SET status='OFFLINE', quota_remaining=null WHERE worker_id=$1`,
+      [QUALIFICATION_WORKER_ID]);
+    await client.query(`UPDATE agy_connectors SET enabled=false
+      WHERE tenant_id=$1 AND workspace_id=$2 AND project_id=$3 AND connector_id=$4`,
+      [QUALIFICATION_SCOPE.tenantId, QUALIFICATION_SCOPE.workspaceId, QUALIFICATION_SCOPE.projectId, QUAL_CONNECTOR_ID]);
+    const entry = {
+      run_id: marker.run_id,
+      job_id: job?.job_id ?? null,
+      task_ids: taskRows.map((t: any) => t.task_id),
+      retired_task_ids: retiredTaskIds,
+      reservations_closed: closedReservations,
+      marker,
+      archived_at: new Date(nowMs).toISOString(),
+      archived_by_run: cfg.runId,
+    };
+    const history = [...historyEntriesOf(proj), entry];
+    await client.query(`UPDATE agy_projects SET policies =
+        (COALESCE(policies,'{}'::jsonb) - 'qualificationRun') || $4::jsonb
+      WHERE tenant_id=$1 AND workspace_id=$2 AND project_id=$3`,
+      [QUALIFICATION_SCOPE.tenantId, QUALIFICATION_SCOPE.workspaceId, QUALIFICATION_SCOPE.projectId,
+       JSON.stringify({ qualificationRunHistory: history })]);
+    log('QUALIFICATION_RUN_ARCHIVED', { runId: marker.run_id, archivedByRun: cfg.runId,
+      jobId: entry.job_id, tasks: entry.task_ids.length, callbacks: callbackRows.length });
+    return { ok: true };
+  }
+
+  function historyEntriesOf(proj: any): any[] {
+    return (proj?.policies && Array.isArray(proj.policies.qualificationRunHistory))
+      ? proj.policies.qualificationRunHistory : [];
   }
 
   // R1 — sanitized evidence snapshot (READ-ONLY). ControlPlane
@@ -399,6 +577,39 @@ export function createQualificationController(raw: Pool, opts: {
       [QUALIFICATION_SCOPE.tenantId, QUALIFICATION_SCOPE.workspaceId, QUALIFICATION_SCOPE.projectId,
        QUAL_CONNECTOR_ID, QUAL_ADAPTER, QUAL_PERMISSIONS]);
   }
+  async function ensureConnectorEnabled(q: Querier): Promise<void> {
+    // insertConnector uses ON CONFLICT DO NOTHING, so a connector
+    // row left disabled by a previous run's cleanup is never
+    // re-enabled by the insert — restore3's arrive failed with
+    // ARRIVAL_NOT_GRANTED until an operator enabled the row by
+    // hand (2026-11-02). A fresh grant is exactly the authorization
+    // to enable it again; do it explicitly, inside the grant tx.
+    // A connector disabled DURING a live window is untouched: this
+    // runs only on the fresh-grant path, and the PREPARING-recovery
+    // validation still blocks on a disabled connector as an owner
+    // intervention.
+    await q.query(`UPDATE agy_connectors SET enabled=true
+      WHERE tenant_id=$1 AND workspace_id=$2 AND project_id=$3 AND connector_id=$4 AND enabled=false`,
+      [QUALIFICATION_SCOPE.tenantId, QUALIFICATION_SCOPE.workspaceId, QUALIFICATION_SCOPE.projectId, QUAL_CONNECTOR_ID]);
+  }
+
+  async function recomputeWorkerQuotaUsed(q: Querier): Promise<void> {
+    // resource_profile.quotaUsed is a cached counter a completed
+    // run can leave stale: after G2 settled, quotaUsed stayed 1
+    // with quotaCap 1, and restore3's claims all failed the
+    // allocator's quota check until an operator reset it by hand.
+    // At grant time — the one moment the counter must be truthful —
+    // recompute it from the worker's live HELD reservations instead
+    // of trusting the cache. A genuinely held reservation still
+    // counts, so a real leak surfaces as a failed allocation
+    // rather than being silently zeroed.
+    await q.query(`UPDATE agy_workers SET resource_profile =
+        jsonb_set(COALESCE(resource_profile,'{}'::jsonb), '{quotaUsed}',
+          to_jsonb((SELECT COALESCE(SUM(expected_quota),0)::int
+                    FROM agy_resource_reservations WHERE worker_id=$1 AND state='HELD')))
+      WHERE worker_id=$1`, [QUALIFICATION_WORKER_ID]);
+  }
+
   async function transition(q: Querier): Promise<void> {
     // Cap-only window transition, CAS-shaped: quota is filled ONLY
     // from NULL (the dormant/rolled-back state). A consumed cap (0)
@@ -445,8 +656,18 @@ export function createQualificationController(raw: Pool, opts: {
     try {
       phaseA = await withScopeTx(async (client) => {
       if (pastDeadline()) return 'EXPIRED';
-      const proj = await readProject(client);
-      const marker = markerOf(proj);
+      let proj = await readProject(client);
+      let marker = markerOf(proj);
+      if (marker && marker.run_id !== cfg.runId) {
+        // A previous run's marker no longer hard-blocks the scope
+        // when the run is provably settled: archive it (append-only
+        // history, evidence rows untouched) and continue. Anything
+        // unsettled keeps the historical BLOCKED behaviour.
+        const arch = await tryArchivePriorRun(client, proj, marker);
+        if (!arch.ok) { blockReason = arch.reason; return 'BLOCKED'; }
+        proj = await readProject(client);
+        marker = markerOf(proj);
+      }
       if (marker && marker.run_id !== cfg.runId) { blockReason = 'PREVIOUS_RUN_GRANT_PRESENT'; return 'BLOCKED'; }
       if (marker && marker.expires_at !== expiresIso()) { blockReason = 'RUN_ID_REUSED_WITH_DIFFERENT_DEADLINE'; return 'BLOCKED'; }
       if (marker?.phase === 'GRANTED') {
@@ -457,11 +678,15 @@ export function createQualificationController(raw: Pool, opts: {
         if ((await countTasks(client, job.job_id)) !== 1) { blockReason = 'RUN_JOB_TASK_COUNT_INVALID'; return 'BLOCKED'; }
         return 'ALREADY';
       }
-      // Fail closed on history this run does not own (D2).
+      // Fail closed on work this run does not own (D2) — except
+      // jobs already archived into qualificationRunHistory, which
+      // are settled history, not foreign work.
       const jobs = (await client.query(`SELECT job_id, idempotency_key FROM agy_jobs ORDER BY created_at`)).rows;
-      if (jobs.some((j: any) => j.idempotency_key !== cfg.runId)) { blockReason = 'FOREIGN_JOB_IN_SCOPE'; return 'BLOCKED'; }
-      if (jobs.length > 1) { blockReason = 'MULTIPLE_JOBS_FOR_RUN'; return 'BLOCKED'; }
-      if (jobs.length === 1 && (await countTasks(client, jobs[0].job_id)) !== 1) { blockReason = 'RUN_JOB_TASK_COUNT_INVALID'; return 'BLOCKED'; }
+      const historyIds = historyJobIdsOf(proj);
+      const ownJobs = jobs.filter((j: any) => j.idempotency_key === cfg.runId);
+      if (jobs.some((j: any) => j.idempotency_key !== cfg.runId && !historyIds.has(j.job_id))) { blockReason = 'FOREIGN_JOB_IN_SCOPE'; return 'BLOCKED'; }
+      if (ownJobs.length > 1) { blockReason = 'MULTIPLE_JOBS_FOR_RUN'; return 'BLOCKED'; }
+      if (ownJobs.length === 1 && (await countTasks(client, ownJobs[0].job_id)) !== 1) { blockReason = 'RUN_JOB_TASK_COUNT_INVALID'; return 'BLOCKED'; }
       if (marker) {
         // PREPARING recovery (F3): phase A is atomic, so a durable
         // PREPARING marker means registry + transition ALREADY
@@ -501,6 +726,8 @@ export function createQualificationController(raw: Pool, opts: {
       await insertConnector(client);
       await insertWorker(client);
       await transition(client);
+      await ensureConnectorEnabled(client);
+      await recomputeWorkerQuotaUsed(client);
       // Final fence (H1): the writes above may have waited on row
       // or trigger locks across the cutoff; if the clock read
       // taken now — after all of them — shows it passed, the
@@ -616,6 +843,27 @@ export function createQualificationController(raw: Pool, opts: {
           await client.query(
             `UPDATE agy_tasks SET lease_expires_at = LEAST(lease_expires_at, now() - interval '1 second')
              WHERE job_id=$1 AND status IN ('CLAIMED','RUNNING') AND lease_token IS NOT NULL`, [job.job_id]);
+        }
+        // QA correction R1: an expired run's unclaimed work is
+        // retired in this same transaction — after the deadline it
+        // can never be claimed legitimately, and leaving it QUEUED
+        // would let a FUTURE run's scope-wide claim deadline pick it
+        // up (the worker gate carries no run fence). Rows are
+        // retained as evidence (terminal CANCELLED + task event).
+        // Reservation accounting is deliberately NOT touched here:
+        // cleanup must never rewrite a result-settled reservation
+        // (T3b invariant) — the per-run accounting closure happens
+        // at archival time in the next grant, when the run is
+        // provably settled (see tryArchivePriorRun).
+        const retired = await client.query(
+          `UPDATE agy_tasks SET status='CANCELLED', updated_at=now()
+           WHERE job_id=$1 AND status IN ('QUEUED','RETRY') RETURNING task_id`, [job.job_id]);
+        for (const r of retired.rows) {
+          await client.query(
+            `INSERT INTO agy_task_events(job_id,task_id,event_type,to_status,worker_id,detail)
+             VALUES($1,$2,'RUN_EXPIRED_TASK_RETIRED','CANCELLED',$3,$4)`,
+            [job.job_id, r.task_id, QUALIFICATION_WORKER_ID,
+             JSON.stringify({ run_id: cfg.runId, reason: 'RUN_EXPIRED_UNCLAIMED' })]);
         }
       }
       await client.query(`UPDATE agy_connectors SET enabled=false

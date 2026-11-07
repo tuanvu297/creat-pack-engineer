@@ -2,7 +2,7 @@ import type { Pool } from 'pg';
 import { authorize,type Principal } from './auth.js';
 import { ProjectPool } from './scoped-pool.js';
 import { validateScope,type ProjectScope } from './scope.js';
-import { PostgresStore } from '../postgres-store.js';
+import { PostgresStore, type ParentFence } from '../postgres-store.js';
 import { routeTasks } from '../scheduler.js';
 import type { TaskSpec,ScheduleMode } from '../types.js';
 import { operationsApi } from '../operations-api.js';
@@ -14,7 +14,7 @@ export class ProjectService {
   this.scope=validateScope(scope);authorize(principal,this.scope,'read');
   this.pool=new ProjectPool(raw,this.scope,principal.subject).asPool();this.store=new PostgresStore(this.pool,this.scope);
  }
- async execute(path:string,method:string,body:any={}) {
+ async execute(path:string,method:string,body:any={},opts?:{parentFence?:ParentFence}) {
   const action=method==='GET'?'read':path.startsWith('/approvals/')?'approve':path.startsWith('/qa/')?'qa':'write';
   authorize(this.principal,this.scope,action);
   if(path==='/runtime/status'&&method==='GET')return runtimeStatus(this.pool);
@@ -27,7 +27,7 @@ export class ProjectService {
    const tasks=body.tasks as TaskSpec[];
    for(const task of tasks)if((task.requiredPermissions??[]).some(p=>!project.permissions.includes(p)))throw new Error('PROJECT_PERMISSION_DENIED');
    const routing=routeTasks(tasks,body.mode as ScheduleMode|undefined);
-   return {...await this.store.createJob({tenantId:this.scope.tenantId,idempotencyKey:body.idempotency_key,objective:body.objective,mode:routing.mode,passThreshold:body.pass_threshold??.8,tasks:routing.tasks,deadlineMs:typeof body.deadline_ms==='number'?body.deadline_ms:undefined}),routing:routing.rationale};
+   return {...await this.store.createJob({tenantId:this.scope.tenantId,idempotencyKey:body.idempotency_key,objective:body.objective,mode:routing.mode,passThreshold:body.pass_threshold??.8,tasks:routing.tasks,deadlineMs:typeof body.deadline_ms==='number'?body.deadline_ms:undefined,parentFence:opts?.parentFence}),routing:routing.rationale};
   }
   const job=/^\/jobs\/([a-f0-9-]{36})$/.exec(path);
   if(job&&method==='GET') {const row=(await this.pool.query('SELECT * FROM agy_jobs WHERE job_id=$1',[job[1]])).rows[0];return row?{job:row,tasks:(await this.pool.query('SELECT * FROM agy_tasks WHERE job_id=$1',[job[1]])).rows}:undefined;}

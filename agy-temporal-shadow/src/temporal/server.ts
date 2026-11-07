@@ -35,7 +35,7 @@ async function main(){
   // leases at the owner's absolute deadline (no lease outlives the
   // window, even across a service outage at the deadline).
   const qualCfg=parseQualificationConfig(process.env);
-  const workerSurface=createWorkerSurface(pool,{leaseDeadlineMs:(s)=>qualCfg.config.enabled&&s.tenantId===QUALIFICATION_SCOPE.tenantId&&s.workspaceId===QUALIFICATION_SCOPE.workspaceId&&s.projectId===QUALIFICATION_SCOPE.projectId?qualCfg.config.expiresAtMs:undefined});
+  const workerSurface=createWorkerSurface(pool,{delegationSystemPrincipal:(s)=>findCallbackOperator(identities,s),leaseDeadlineMs:(s)=>qualCfg.config.enabled&&s.tenantId===QUALIFICATION_SCOPE.tenantId&&s.workspaceId===QUALIFICATION_SCOPE.workspaceId&&s.projectId===QUALIFICATION_SCOPE.projectId?qualCfg.config.expiresAtMs:undefined});
   const server=createGatewayHttpServer({identities,worker:workerSurface,callbacks:createCallbackReceiver(pool),ui:process.env.AGY_WORKER_UI_SESSION_SECRET?createWorkerUi({identities,surface:workerSurface,secret:process.env.AGY_WORKER_UI_SESSION_SECRET}):undefined,execute:async(m,p,action,body)=>{
    if(action==='r11_control'){authorize(p,m,'write');validateMission(m);return hostedR11Control(body?.command);}
    return gateway.execute(m,p,action,body);
@@ -54,8 +54,16 @@ async function main(){
   // AGY_CALLBACK_DRIVER_ENABLED=true + an explicit scope + a mission
   // allowlist; acts as the existing scoped operator, in-process.
   const driverCfg=parseCallbackDriverConfig(process.env);
+  // Driver/controller handles are retained so shutdown can stop
+  // their timers BEFORE the pool is ended in the finally block.
+  // Without this, a redeploy's SIGTERM ended the pool while the
+  // intervals were still live, and their ticks logged
+  // pool-after-end errors against the dead pool (observed live
+  // during the run-20261102-restore3 restart, 2026-11-02).
+  let driver:ReturnType<typeof createWorkerCallbackDriver>|undefined;
+  let qual:ReturnType<typeof createQualificationController>|undefined;
   if(driverCfg.config.enabled&&driverCfg.config.scope){
-   const driver=createWorkerCallbackDriver(pool,{config:driverCfg.config,operator:findCallbackOperator(identities,driverCfg.config.scope)});
+   driver=createWorkerCallbackDriver(pool,{config:driverCfg.config,operator:findCallbackOperator(identities,driverCfg.config.scope)});
    console.log(JSON.stringify({event:'CALLBACK_DRIVER_STATE',state:driver.start()}));
   }
   // Qualification provisioning controller (candidate): DEFAULT
@@ -66,11 +74,11 @@ async function main(){
   // (qualCfg was parsed above, before the worker surface, so the
   // same deadline also caps qualification leases.)
   if(qualCfg.config.enabled){
-   const qual=createQualificationController(pool,{config:qualCfg.config});
+   qual=createQualificationController(pool,{config:qualCfg.config});
    console.log(JSON.stringify({event:'QUALIFICATION_CONTROLLER_STATE',state:qual.start()}));
   }
   await new Promise<void>(resolve=>{
-   const shutdown=()=>{server.close(()=>resolve());server.closeIdleConnections();};
+   const shutdown=()=>{try{driver?.stop();}catch{} try{qual?.stop();}catch{} server.close(()=>resolve());server.closeIdleConnections();};
    process.once('SIGINT',shutdown);process.once('SIGTERM',shutdown);
   });
  }finally{await connection?.close();await pool.end();}

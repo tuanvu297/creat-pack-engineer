@@ -1,7 +1,8 @@
 import { timingSafeEqual,createHash } from 'node:crypto';
 import { assertScope,validateScope,type ProjectScope } from './scope.js';
 export type Role='operator'|'worker'|'reviewer'|'approver'|'platform-admin';
-export interface Principal {subject:string;role:Role;scopes:ProjectScope[];workerId?:string}
+export type Action='read'|'write'|'execute'|'qa'|'approve'|'platform';
+export interface Principal {subject:string;role:Role;scopes:ProjectScope[];workerId?:string;actions?:Action[]}
 export interface IdentityConfig extends Principal {token:string}
 export function authenticate(authorization:string|undefined,identities:IdentityConfig[]):Principal {
   const token=authorization?.startsWith('Bearer ')?authorization.slice(7):'';
@@ -9,8 +10,13 @@ export function authenticate(authorization:string|undefined,identities:IdentityC
   const config=identities.find(i=>timingSafeEqual(digest,createHash('sha256').update(i.token).digest()));
   if(!config)throw new Error('UNAUTHORIZED');const {token:_,...principal}=config;return structuredClone(principal);
 }
-export function authorize(principal:Principal,scope:ProjectScope,action:'read'|'write'|'execute'|'qa'|'approve'|'platform') {
+export function authorize(principal:Principal,scope:ProjectScope,action:Action) {
   validateScope(scope);
+  // Optional per-identity action allowlist: when present it
+  // NARROWS the role grant for every role, platform-admin
+  // included (an issuer that lists actions gets exactly those).
+  // Absent = the legacy role-based behaviour, unchanged.
+  if(principal.actions&&!principal.actions.includes(action))throw new Error('ACTION_DENIED');
   if(principal.role==='platform-admin')return;
   if(!principal.scopes.some(s=>{try{assertScope(scope,s);return true;}catch{return false;}}))throw new Error('PROJECT_SCOPE_DENIED');
   const roles:Record<string,Role[]>={read:['operator','worker','reviewer','approver'],write:['operator'],execute:['worker'],qa:['reviewer'],approve:['approver'],platform:[]};
@@ -18,7 +24,7 @@ export function authorize(principal:Principal,scope:ProjectScope,action:'read'|'
 }
 export function identitiesFromEnv(env=process.env):IdentityConfig[] {
   if(env.AGY_IDENTITIES_JSON){const list=JSON.parse(env.AGY_IDENTITIES_JSON) as IdentityConfig[];
-    if(!Array.isArray(list)||!list.length||list.some(i=>!i.subject||!i.token||!['operator','worker','reviewer','approver','platform-admin'].includes(i.role)||!Array.isArray(i.scopes)))throw new Error('INVALID_IDENTITIES');
+    if(!Array.isArray(list)||!list.length||list.some(i=>!i.subject||!i.token||!['operator','worker','reviewer','approver','platform-admin'].includes(i.role)||!Array.isArray(i.scopes)||(i.actions!==undefined&&(!Array.isArray(i.actions)||!i.actions.length||i.actions.some((a:string)=>!['read','write','execute','qa','approve','platform'].includes(a))))))throw new Error('INVALID_IDENTITIES');
     for(const i of list)for(const s of i.scopes)validateScope(s);
     if(new Set(list.map(i=>i.token)).size!==list.length)throw new Error('IDENTITY_TOKEN_COLLISION');return list;
   }
