@@ -10,7 +10,7 @@
   "private": true,
   "scripts": {
     "start": "node server.mjs",
-    "test": "node --test test/facade.http.test.mjs test/oauth.flow.test.mjs test/oauth.security.test.mjs test/oauth.negative.test.mjs test/oauth-store.pg.test.mjs"
+    "test": "node --test test/facade.http.test.mjs test/oauth.flow.test.mjs test/oauth.security.test.mjs test/oauth.negative.test.mjs test/oauth-store.pg.test.mjs test/dispatch.test.mjs"
   },
   "type": "module",
   "version": "0.3.2"
