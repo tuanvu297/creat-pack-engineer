@@ -4,6 +4,7 @@ import {authenticate,authorize,identitiesFromEnv} from './auth.js';
 import {ProjectService} from './service.js';
 import {validateScope,type ProjectScope} from './scope.js';
 import {DurableDispatcher,type RuntimeLane} from './dispatcher.js';
+import {withHelperDelegation} from './helper-lane.js';
 import {ConnectorError} from '../adapters.js';
 
 if(process.env.AGY_STAGE_ONLY!=='true')throw new Error('STAGING_ONLY');
@@ -41,7 +42,11 @@ try {
     '{runtimeProfile,health_freshness,observed_at}',to_jsonb($2::bigint)),updated_at=now() WHERE worker_id=$1`,[workerId,Date.now()]);
    if(adapter.runtimeProfile)adapter.runtimeProfile.health_freshness.observed_at=Date.now();
   }return h;};
-  lanes.push({key:JSON.stringify([scope,workerId,b.connectorId]),workerId,store:service.store,adapter:liveAdapter,
+  // Helper delegation (D-057): helper_delegation children claimed by this
+  // lane execute through the delegation host loop, never the connector.
+  // The wrapper passes every other task through untouched.
+  const laneAdapter=withHelperDelegation(liveAdapter,{pool,scope,parent:principal});
+  lanes.push({key:JSON.stringify([scope,workerId,b.connectorId]),workerId,store:service.store,adapter:laneAdapter,
    report:async(state,outcome,error)=>{await service.pool.query(`INSERT INTO agy_runtime_workers(instance_id,worker_id,connector_id,state,expires_at,last_outcome,error_code)
     VALUES($1,$2,$3,$4,now()+($5::double precision*interval '1 millisecond'),$6,$7)
     ON CONFLICT(tenant_id,workspace_id,project_id,instance_id,worker_id,connector_id) DO UPDATE
