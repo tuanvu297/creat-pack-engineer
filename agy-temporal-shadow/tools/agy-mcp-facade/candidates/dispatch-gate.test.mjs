@@ -7,7 +7,7 @@ const principal = { identityId: 'gemini-real', role: 'worker', authenticated: tr
   scopes: ['agy.dispatch'], runId: 'run-p0', revocation: null,
   tenantId: 'gl', workspaceId: 'legacy-workspace', projectId: 'GL_AUTOMATION' };
 const task = { runId: 'run-p0', taskId: 'task-a0', taskType: 'inventory', adapter: 'offline',
-  idempotencyKey: 'a'.repeat(64), nonce: 'b'.repeat(64), timestampMs: now, spendCap: 0,
+  attemptId: 'attempt-1', idempotencyKey: 'a'.repeat(64), nonce: 'b'.repeat(64), timestampMs: now, spendCap: 0,
   tenantId: 'gl', workspaceId: 'legacy-workspace', projectId: 'GL_AUTOMATION',
   targetWorkerId: 'gemini-real', callbackTarget: 'CHATGPT_ASSISTANT_CONTROL_PLANE' };
 const policy = { serverAllowlist: ['gemini-real'], allowedRoles: ['worker'], allowedTaskTypes: ['inventory'],
@@ -15,7 +15,7 @@ const policy = { serverAllowlist: ['gemini-real'], allowedRoles: ['worker'], all
   tenantId: 'gl', workspaceId: 'legacy-workspace', projectId: 'GL_AUTOMATION',
   allowedTargetWorkerIds: ['gemini-real'], allowedCallbackTargets: ['CHATGPT_ASSISTANT_CONTROL_PLANE'],
   runId: 'run-p0', runExpiresAtMs: now + 1000, replayWindowMs: 1000, rateLimit: 2, rateWindowMs: 1000 };
-const store = { calls: 0, async reserve(v) { this.calls++; return { status: 'NEW', operationId: 'op-1', taskId: v.taskId }; } };
+const store = { calls: 0, async reserve(v) { this.calls++; return { status: 'NEW', operationId: 'op-1', taskId: v.taskId, bindingDigest: v.bindingDigest }; } };
 const call = (overrides = {}) => authorizeDispatch({ principal, task, policy, store, now, ...overrides });
 const rejected = async (code, overrides) => {
   const before = store.calls;
@@ -52,9 +52,9 @@ test('revocation, time and rate policy fail closed', async () => {
   await rejected('RUN_EXPIRED', { policy: { ...policy, runExpiresAtMs: now } });
 });
 test('replay can only resolve to original task and operation', async () => {
-  const replayStore = { async reserve(v) { return { status: 'EXISTING', operationId: 'op-1', taskId: v.taskId }; } };
+  const replayStore = { async reserve(v) { return { status: 'EXISTING', operationId: 'op-1', taskId: v.taskId, bindingDigest: v.bindingDigest }; } };
   assert.equal((await call({ store: replayStore })).operationId, 'op-1');
-  await assert.rejects(call({ store: { async reserve() { return { status: 'EXISTING', operationId: 'op-2', taskId: 'another' }; } } }),
+  await assert.rejects(call({ store: { async reserve(v) { return { status: 'EXISTING', operationId: 'op-2', taskId: 'another', bindingDigest: v.bindingDigest }; } } }),
     /IDEMPOTENCY_CONFLICT/);
 });
 
