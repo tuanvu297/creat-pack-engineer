@@ -65,6 +65,10 @@ class ReleaseTests(unittest.TestCase):
         self.assertTrue(release.screen(".env", b""))
         self.assertFalse(release.screen(".env.example", b"API_KEY=YOUR_API_KEY\n"))
 
+    def test_environment_reference_is_not_an_embedded_secret(self):
+        self.assertFalse(release.screen("src/server.ts", b"const secret=process.env.AGY_WORKER_UI_SESSION_SECRET"))
+        self.assertTrue(release.screen("src/server.ts", b"const secret='aRealLookingLongCredential123'"))
+
     def test_secret_blocks_release(self):
         (self.root / "cookies.txt").write_text("not a live cookie", encoding="utf-8")
         with self.assertRaises(ValueError): release.build(self.root, Path(self.temp.name) / "out")
@@ -173,3 +177,4 @@ class WorkerTests(unittest.TestCase):
         with self.assertRaises(ValueError): worker.execute(self.task, self.root)
 
 if __name__ == "__main__": unittest.main()
+
