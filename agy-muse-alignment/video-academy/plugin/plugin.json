@@ -1,0 +1,29 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "agy-muse-video-academy",
+  "version": "0.1.0",
+  "description": "Portable AGY video production, engineering and QA training skills. Skills only; does not connect or execute Muse.",
+  "author": {
+    "name": "AGY"
+  },
+  "keywords": [
+    "video",
+    "muse",
+    "training",
+    "qa",
+    "handoff"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "AGY Muse Video Academy",
+        "shortDescription": "Video skills and QA handoff",
+        "longDescription": "Project-scoped lessons, prompts, connection contracts and offline checks for a future Muse execution handoff. No hosted runtime, provider credentials, video generation or live Muse connection is included.",
+        "developerName": "AGY",
+        "category": "Creativity",
+        "capabilities": [],
+        "defaultPrompt": "Prepare a video task for Muse using the current AGY sources and verify evidence before acceptance."
+      }
+    }
+  }
+}
