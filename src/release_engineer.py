@@ -56,7 +56,8 @@ def screen(name, data):
                 if value.startswith("process.env."):
                     continue
                 # This exact deterministic test fixture is intentionally public.
-                if (name == "agy-temporal-shadow/test/worker-ui.integration.test.ts" and
+                if (name == "agy-temporal-shadow/test/worker-ui.integration.test.ts" or
+                        name.endswith("/agy-temporal-shadow/test/worker-ui.integration.test.ts")) and (
                         sha(value.encode("utf-8")) == "d95f39b47f6d9c40ed9a3ded47ce04a134f95d5aa5ba6c841528728218cdaf58"):
                     continue
             hits.append({"file": name, "line": text.count("\n", 0, match.start()) + 1, "rule": rule})
